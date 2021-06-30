@@ -4,7 +4,7 @@ Created on Tue Jun 29 11:06:12 2021
 
 @author: igalk
 """
-No documentati
+
 import os 
 os.getcwd()
 

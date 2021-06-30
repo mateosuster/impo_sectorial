@@ -4,9 +4,6 @@ Created on Tue Jun 29 11:04:54 2021
 
 @author: igalk
 """
-
-print ("hola")
-
 import os 
 os.getcwd()
 
@@ -21,26 +18,25 @@ from procesamiento import *
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
-impo_17 = pd.read_csv(  "data/IMPO_2017.csv", sep=";")
-
-impo_17 = pd.read_csv(  "C:/Archivos/repos/impo_sectorial/scripts/data/IMPO_2017.csv", sep=";")
-clae = pd.read_csv( "C:/Archivos/repos/impo_sectorial/scripts/data/clae_nombre.csv")
-comercio = pd.read_csv("C:/Archivos/repos/impo_sectorial/scripts/data/comercio_clae.csv", encoding="latin1")
-cuit_clae = pd.read_csv( "C:/Archivos/repos/impo_sectorial/scripts/data/cuit 2017 impo_con_actividad.csv")
-bec = pd.read_csv( "C:/Archivos/repos/impo_sectorial/scripts/data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
-#parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
-#transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
-bec_to_clae = pd.read_csv("C:/Archivos/repos/impo_sectorial/scripts/data/bec_to_clae.csv")
-
-
-# impo_17 = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/IMPO_2017.csv", sep=";")
-# clae = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/clae_nombre.csv")
-# comercio = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/comercio_clae.csv", encoding="latin1")
-# cuit_clae = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/cuit 2017 impo_con_actividad.csv")
-# bec = pd.read_csv( "C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/HS2012-17-BEC5 -- 08 Nov 2018.csv")
+# impo_17 = pd.read_csv(  "C:/Archivos/repos/impo_sectorial/scripts/data/IMPO_2017.csv", sep=";")
+# clae = pd.read_csv( "C:/Archivos/repos/impo_sectorial/scripts/data/clae_nombre.csv")
+# comercio = pd.read_csv("C:/Archivos/repos/impo_sectorial/scripts/data/comercio_clae.csv", encoding="latin1")
+# cuit_clae = pd.read_csv( "C:/Archivos/repos/impo_sectorial/scripts/data/cuit 2017 impo_con_actividad.csv")
+# bec = pd.read_csv( "C:/Archivos/repos/impo_sectorial/scripts/data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
 # #parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
 # #transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
-# bec_to_clae = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/bec_to_clae.csv")
+# bec_to_clae = pd.read_csv("C:/Archivos/repos/impo_sectorial/scripts/data/bec_to_clae.csv")
+
+
+
+impo_17 = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/IMPO_2017.csv", sep=";")
+clae = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/clae_nombre.csv")
+comercio = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/comercio_clae.csv", encoding="latin1")
+cuit_clae = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/cuit 2017 impo_con_actividad.csv")
+bec = pd.read_csv( "C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/HS2012-17-BEC5 -- 08 Nov 2018.csv")
+#parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
+#transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
+bec_to_clae = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/bec_to_clae.csv")
 
 
 
@@ -83,8 +79,18 @@ join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingenci
 print (join_final)
 
 
+#############################################
+#         ASIGNACIÓN y MATRIZ               #
+#############################################
 
 
+
+
+
+
+#############################################
+#             Visualización                 #
+#############################################
 
 
 

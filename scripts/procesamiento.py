@@ -26,16 +26,27 @@ def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):
     return x
     
 def def_calc_pond(impo,cont): #quedó a medio camino
-    # impo.apply()
-    # ncm = impo.iloc[0]["HS6"]
-    # letra_2= impo.iloc[0]["letra1"]
-    # letra_3= impo.iloc[0]["letra1"]
-    cont.loc[10121,"letra1_pond"] = x
-    return cont.loc[10121,"letra1_pond"]
-
-
-tabla_contingencia.loc[10121, "A"] 
-tabla_contingencia.loc[10121] 
+    for a in range(len(impo)):
+        cuit= impo.iloc[a]["CUIT_IMPOR"]
+        letra_1= impo.iloc[a]["letra1"]
+        letra_2= impo.iloc[a]["letra2"]
+        letra_3= impo.iloc[a]["letra3"]
+        print(cuit, letra_1, letra_2, letra_3)
+        
+        x=[]
+        for b in ([letra_1, letra_2, letra_3]):
+            ncm = impo.iloc[a]["HS6"]
+            ncm_val = cont.loc[ncm][b]
+            x.append(ncm_val)
+        
+        total=x[0]+x[1]+x[2]
+        act1_pond=x[0]/total
+        act2_pond=x[1]/total
+        act3_pond=x[2]/total
+        impo.at[a, "letra1_pond"] = act1_pond
+        impo.at[a, "letra2_pond"] = act2_pond
+        impo.at[a, "letra3_pond"] = act3_pond
+        print(ncm, x, total, act1_pond, act2_pond, act3_pond)
 
 
 
