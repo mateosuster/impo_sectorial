@@ -47,6 +47,6 @@ def def_calc_pond(impo,cont): #quedó a medio camino
         impo.at[a, "letra2_pond"] = act2_pond
         impo.at[a, "letra3_pond"] = act3_pond
         print(ncm, x, total, act1_pond, act2_pond, act3_pond)
-
+        return
 
 
