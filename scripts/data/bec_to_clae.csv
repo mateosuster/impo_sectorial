@@ -1,0 +1,9 @@
+BEC Category,bec_to_clae,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U
+"1.Agriculture, forestry, fishing, food, beverages, tobacco ","A, C",A,,C,,,,,,,,,,,,,,,,,,
+"2.Mining, quarrying, refinery, fuels, chemicals, electricity, water, waste treatment ","B, C, D, E",,B,C,D,E,,,,,,,,,,,,,,,,
+"3.Construction, wood, glass, stone, basic metals, housing, electrical appliances, furniture  ","C, B, F",,,C,,,F,,,,,,,,,,,,,,,
+"4.Textile, apparel, shoes ",C,,,C,,,,,,,,,,,,,,,,,,
+"5.Transport equipment and services, travel, postal services","C, H, I, N",,,C,,,,,H,I,,,,,,,,,,,,
+"6.ICT, media, computers, business and financial services","C, J, K, L, M,N, S, T, U",,,C,,,,,,,J,K,L,M,N,,,,,S,T,U
+"7.Health, pharmaceuticals, education, cultural, sport","C, P, Q, R,M",,,C,,,,,,,,,,,,,P,Q,R,,,
+"8.Government, military and other",O,,,,,,,,,,,,,,,O,,,,,,
