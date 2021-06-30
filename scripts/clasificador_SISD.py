@@ -5,6 +5,7 @@ Created on Tue Jun 29 11:04:54 2021
 @author: igalk
 """
 
+print ("hola")
 
 import os 
 os.getcwd()
