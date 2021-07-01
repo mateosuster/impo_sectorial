@@ -11,9 +11,9 @@ import pandas as pd
 import numpy as np
 import matplotlib as math
 
-
 from Bases import *
 from procesamiento import *
+from matriz import *
 
 #############################################
 # Cargar bases con las que vamos a trabajar #
@@ -76,7 +76,7 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
 
 join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
-print (join_final)
+
 
 
 #############################################
@@ -84,7 +84,7 @@ print (join_final)
 #############################################
 
 
-
+hola()
 
 
 

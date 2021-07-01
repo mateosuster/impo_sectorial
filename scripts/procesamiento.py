@@ -26,16 +26,17 @@ def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):
     return x
     
 def def_calc_pond(impo,cont): #quedó a medio camino
-    for a in range(len(impo)):
-        cuit= impo.iloc[a]["CUIT_IMPOR"]
-        letra_1= impo.iloc[a]["letra1"]
-        letra_2= impo.iloc[a]["letra2"]
-        letra_3= impo.iloc[a]["letra3"]
+    join_final = impo.copy()
+    for a in range(len(join_final)):
+        cuit= join_final.iloc[a]["CUIT_IMPOR"]
+        letra_1= join_final.iloc[a]["letra1"]
+        letra_2= join_final.iloc[a]["letra2"]
+        letra_3= join_final.iloc[a]["letra3"]
         print(cuit, letra_1, letra_2, letra_3)
         
         x=[]
         for b in ([letra_1, letra_2, letra_3]):
-            ncm = impo.iloc[a]["HS6"]
+            ncm = join_final.iloc[a]["HS6"]
             ncm_val = cont.loc[ncm][b]
             x.append(ncm_val)
         
@@ -43,10 +44,10 @@ def def_calc_pond(impo,cont): #quedó a medio camino
         act1_pond=x[0]/total
         act2_pond=x[1]/total
         act3_pond=x[2]/total
-        impo.at[a, "letra1_pond"] = act1_pond
-        impo.at[a, "letra2_pond"] = act2_pond
-        impo.at[a, "letra3_pond"] = act3_pond
+        join_final.at[a, "letra1_pond"] = act1_pond
+        join_final.at[a, "letra2_pond"] = act2_pond
+        join_final.at[a, "letra3_pond"] = act3_pond
         print(ncm, x, total, act1_pond, act2_pond, act3_pond)
-        return
+    return join_final
 
 
