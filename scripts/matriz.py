@@ -8,8 +8,8 @@ Created on Thu Jul  1 10:44:28 2021
 import pandas as pd
 
 def def_insumo_matriz(for_fill, raw_data):
-    for a in range(len(raw_data)):
-                      
+#    for a in range(len(raw_data)):
+    for a in range(1:100):
         for b, c, d, e in zip(["letra1", "letra2", "letra3"],
                               ["vta_bk", "vta_bk2", "vta_bk3"],
                               ["vta_sec","vta_sec2", "vta_sec3"],
