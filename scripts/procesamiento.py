@@ -25,7 +25,7 @@ def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):
     
     return x
     
-def def_calc_pond(impo,cont): #quedó a medio camino
+def def_calc_pond(impo,cont):
     join_final = impo.copy()
     for a in range(len(join_final)):
         cuit= join_final.iloc[a]["CUIT_IMPOR"]
@@ -49,5 +49,4 @@ def def_calc_pond(impo,cont): #quedó a medio camino
         join_final.at[a, "letra3_pond"] = act3_pond
         print(ncm, x, total, act1_pond, act2_pond, act3_pond)
     return join_final
-
 

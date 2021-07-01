@@ -83,8 +83,17 @@ join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingenci
 #         ASIGNACIÓN y MATRIZ               #
 #############################################
 
+#creamos df para guardar los insumos de la matriz
+insumo_matriz = pd.DataFrame()
+insumo_matriz ["cuit"]=""
+insumo_matriz ["hs6"]=""
+insumo_matriz ["valor_pond"]=""    
+insumo_matriz ["si"]=""    
+insumo_matriz ["sd"]=""
+insumo_matriz ["ue_dest"]=""
 
-hola()
+matriz = def_insumo_matriz(insumo_matriz, join_final)
+#asignación por probabilidad de G-bk
 
 
 
