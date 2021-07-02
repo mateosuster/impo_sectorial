@@ -92,15 +92,50 @@ insumo_matriz ["si"]=""
 insumo_matriz ["sd"]=""
 insumo_matriz ["ue_dest"]=""
 
-matriz = def_insumo_matriz(insumo_matriz, join_final)
+matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
 #asignación por probabilidad de G-bk
+matriz_c_prob = def_matriz_c_prob(matriz_sisd)
 
-
-
+z = pd.pivot_table(matriz_c_prob, values='valor_pond', index=['si'], columns=['sd'], aggfunc=np.sum, fill_value=0)
+cols=list(z.columns.values)
+cols.pop(cols.index("CONS"))
+z=z[cols+["CONS"]]
+z= z.append(pd.Series(name='T'))
+z= z.replace(np.nan,0)
 #############################################
 #             Visualización                 #
 #############################################
 
+z_visual = z.drop(['CONS'], axis=1).to_numpy()
+diagonal = np.diag(z_visual)
+
+row_sum = np.nansum(z_visual , axis=1)
+
+col_sum  = np.nansum(z_visual , axis=0)
+
+sectores = list(map(chr, range(65, 85)))
+
+diag_total_col = diagonal/col_sum
+
+g_total_col = z_visual[6][:]/col_sum
+
+comercio_y_propio = pd.DataFrame({"Propio": diag_total_col , 'Comercio': g_total_col} , index = sectores)
+
+
+
+
+
+
+
+
+
+
+# Top 5 de importaciones de cada sector
+#top 5 de impo
+x = to_matriz.groupby(["HS6", "HS6Desc", "destino"],  as_index=False)['valor'].sum("valor")
+
+top_5_impo = x.reset_index(drop = True).sort_values(by = ["destino", "valor"],ascending = False)
+top_5_impo  = top_5_impo.groupby(["destino"], as_index = True).head(5)
 
 
 
