@@ -9,7 +9,7 @@ os.getcwd()
 
 import pandas as pd
 import numpy as np
-import matplotlib as math
+import matplotlib.pyplot as plt
 
 from Bases import *
 from procesamiento import *
@@ -94,9 +94,9 @@ insumo_matriz ["ue_dest"]=""
 
 matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
 #asignación por probabilidad de G-bk
-matriz_c_prob = def_matriz_c_prob(matriz_sisd)
+matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
 
-z = pd.pivot_table(matriz_c_prob, values='valor_pond', index=['si'], columns=['sd'], aggfunc=np.sum, fill_value=0)
+z = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['si'], columns=['sd'], aggfunc=np.sum, fill_value=0)
 cols=list(z.columns.values)
 cols.pop(cols.index("CONS"))
 z=z[cols+["CONS"]]
@@ -121,24 +121,48 @@ g_total_col = z_visual[6][:]/col_sum
 
 comercio_y_propio = pd.DataFrame({"Propio": diag_total_col , 'Comercio': g_total_col} , index = sectores)
 
+y_pos = np.arange(len(sectores))
 
+impo_tot_sec = pd.DataFrame({"Importaciones totales": col_sum/(10**6)}, index=sectores)  
 
+impo_tot_sec.sort_values(by = "Importaciones totales", ascending= False, inplace = True)
 
+params = {'legend.fontsize': 'x-large',
+          'figure.figsize': (20, 5),
+         'axes.labelsize': 'x-large',
+         'axes.titlesize': 20,
+         'xtick.labelsize':'x-large',
+         'ytick.labelsize':'x-large'}
+plt.rcParams.update(params)
+ 
 
+plt.bar(y_pos , impo_tot_sec.iloc[:,0])
+plt.xticks(y_pos , impo_tot_sec.index)
+plt.title("Importaciones totales destinadas a cada sector", fontsize = 20)
+plt.ylabel("Millones de USD")
+plt.xlabel("Sector")
+plt.savefig('impo_totales.png')
 
+#graf division comercio y propio
 
-
+comercio_y_propio.sort_values(by = 'Propio', ascending = False).plot(kind = "bar", 
+                                                                     stacked = True, ylabel = "%", xlabel = "Sector",
+                                                                     title = "Sector abastecedor de importaciones (en porcentaje)")
+plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
+# plt.title(fontsize = 15)
+plt.savefig('figs/comercio_y_propio.png')
 
 
 # Top 5 de importaciones de cada sector
 #top 5 de impo
-x = to_matriz.groupby(["HS6", "HS6Desc", "destino"],  as_index=False)['valor'].sum("valor")
+x = matriz_sisd_final.groupby(["hs6", "sd"], as_index=False)['valor_pond'].sum("valor_pond")
 
-top_5_impo = x.reset_index(drop = True).sort_values(by = ["destino", "valor"],ascending = False)
-top_5_impo  = top_5_impo.groupby(["destino"], as_index = True).head(5)
+top_5_impo = x.reset_index(drop = True).sort_values(by = ["sd", "valor_pond"],ascending = False)
+top_5_impo  = top_5_impo.groupby(["sd"], as_index = True).head(5)
 
+top_5_impo  = pd.merge(left=top_5_impo, right=letras, left_on="sd", right_on="letra", how="left").drop(["sd", "letra"], axis=1)
 
-
+top_5_impo  = pd.merge(left=top_5_impo, right=bec[["HS6","HS6Desc"]], left_on="hs6", right_on="HS6", how="left").drop("HS6", axis=1)
 
 
 
