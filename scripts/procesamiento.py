@@ -6,6 +6,8 @@ Created on Tue Jun 29 15:46:35 2021
 """
 import pandas as pd
 import numpy as np
+from tqdm import tqdm
+
 
 def def_contingencia(join_impo_clae_bec_bk_comercio):
     #a nivel letra
@@ -38,15 +40,15 @@ def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):
     
 def def_calc_pond(impo,cont):
     join_final = impo.copy()
-    for a in range(len(join_final)):
-        cuit= join_final.iloc[a]["CUIT_IMPOR"]
+    for a in tqdm(range(len(join_final))):
+        # cuit= join_final.iloc[a]["CUIT_IMPOR"]
         letra_1= join_final.iloc[a]["letra1"]
         letra_2= join_final.iloc[a]["letra2"]
         letra_3= join_final.iloc[a]["letra3"]
-        print(cuit, letra_1, letra_2, letra_3)
+        # print(cuit, letra_1, letra_2, letra_3)
         
         x=[]
-        for b in ([letra_1, letra_2, letra_3]):
+        for b in tqdm(([letra_1, letra_2, letra_3])):
             ncm = join_final.iloc[a]["HS6"]
             ncm_val = cont.loc[ncm][b]
             x.append(ncm_val)
@@ -58,6 +60,6 @@ def def_calc_pond(impo,cont):
         join_final.at[a, "letra1_pond"] = act1_pond
         join_final.at[a, "letra2_pond"] = act2_pond
         join_final.at[a, "letra3_pond"] = act3_pond
-        print(ncm, x, total, act1_pond, act2_pond, act3_pond)
+        # print(ncm, x, total, act1_pond, act2_pond, act3_pond)
     return join_final
 

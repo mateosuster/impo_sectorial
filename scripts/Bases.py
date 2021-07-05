@@ -61,13 +61,13 @@ def predo_comercio(comercio, clae):
     return comercio_reclasificado
 
 def predo_cuit_clae(cuit_clae, tipo_cuit):
+    cuit_personas = cuit_clae[(cuit_clae["letra1"].isnull()) & (cuit_clae["letra2"].isnull()) & (cuit_clae["letra3"].isnull())]
+    cuit_empresas = cuit_clae[~cuit_clae['cuit'].isin(cuit_personas['cuit'])]
+    
     if tipo_cuit == "personas":
-        return cuit_clae[(cuit_clae["letra1"].isnull()) & (cuit_clae["letra2"].isnull()) & (cuit_clae["letra3"].isnull())]
+        return cuit_personas 
         
     else:
-        cuit_personas = cuit_clae[(cuit_clae["letra1"].isnull()) & (cuit_clae["letra2"].isnull()) & (cuit_clae["letra3"].isnull())]
-        cuit_empresas = cuit_clae[~cuit_clae['cuit'].isin(cuit_personas['cuit'])]
-        
         #reemplzao faltantes de letra1 con letra2, y faltantes letra 2 con letra 3
         cuit_empresas['letra1'].fillna(cuit_empresas['letra2'], inplace = True) 
         cuit_empresas['actividad1'].fillna(cuit_empresas['actividad2'], inplace = True) 
