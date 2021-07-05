@@ -5,11 +5,12 @@ Created on Thu Jul  1 10:44:28 2021
 @author: igalk
 """
 
+from tqdm import tqdm
 import pandas as pd
 
 def def_insumo_matriz(for_fill, raw_data):
-#    for a in range(len(raw_data)):
-    for a in range(1,100):
+    for a in tqdm(range(len(raw_data))):
+    # for a in tqdm(range(1,100)):
         for b, c, d, e in zip(["letra1", "letra2", "letra3"],
                               ["vta_bk", "vta_bk2", "vta_bk3"],
                               ["vta_sec","vta_sec2", "vta_sec3"],
@@ -35,9 +36,9 @@ def def_insumo_matriz(for_fill, raw_data):
                       "si": raw_data.iloc[a]["letra1"],
                       "sd": letra_sd,
                       "ue_dest": "nan"}
-            print (values)
+            # print (values)
             for_fill= for_fill.append(values, ignore_index=True)
-            print (a/len(raw_data),"%")
+            # print (a/len(raw_data),"%")
     return for_fill
     
 def def_matriz_c_prob(prob):
