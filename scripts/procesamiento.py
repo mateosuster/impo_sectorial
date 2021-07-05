@@ -8,12 +8,23 @@ import pandas as pd
 import numpy as np
 
 def def_contingencia(join_impo_clae_bec_bk_comercio):
-    impo_by_product_1 = join_impo_clae_bec_bk_comercio.groupby(["HS6", "letra1" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra1": "letra"})
-    impo_by_product_2 = join_impo_clae_bec_bk_comercio.groupby(["HS6", "letra2" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra2": "letra"})
-    impo_by_product_3 = join_impo_clae_bec_bk_comercio.groupby(["HS6", "letra3" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra3": "letra"})
+    #a nivel letra
+    # impo_by_product_1 = join_impo_clae_bec_bk_comercio.groupby(["HS6", "letra1" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra1": "letra"})
+    # impo_by_product_2 = join_impo_clae_bec_bk_comercio.groupby(["HS6", "letra2" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra2": "letra"})
+    # impo_by_product_3 = join_impo_clae_bec_bk_comercio.groupby(["HS6", "letra3" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra3": "letra"})
+    
+    join_impo_clae_bec_bk_comercio_2d = join_impo_clae_bec_bk_comercio.copy()
+    
+    join_impo_clae_bec_bk_comercio_2d['actividad1'] = join_impo_clae_bec_bk_comercio_2d['actividad1'].astype(str).str[:2]
+    join_impo_clae_bec_bk_comercio_2d['actividad2'] = join_impo_clae_bec_bk_comercio_2d['actividad2'].astype(str).str[:2]
+    join_impo_clae_bec_bk_comercio_2d['actividad3'] = join_impo_clae_bec_bk_comercio_2d['actividad3'].astype(str).str[:2]
+    #a dos digitos
+    impo_by_product_1 = join_impo_clae_bec_bk_comercio_2d.groupby(["HS6", "actividad1" ], as_index = False).agg({'valor': sum}).rename(columns = {"actividad1": "actividad"})
+    impo_by_product_2 = join_impo_clae_bec_bk_comercio_2d.groupby(["HS6", "actividad2" ], as_index = False).agg({'valor': sum}).rename(columns = {"actividad2": "actividad"})
+    impo_by_product_3 = join_impo_clae_bec_bk_comercio_2d.groupby(["HS6", "actividad3" ], as_index = False).agg({'valor': sum}).rename(columns = {"actividad3": "actividad"})
     
     impo_by_product = impo_by_product_1.append([impo_by_product_2,impo_by_product_3], ignore_index=True)
-    table = pd.pivot_table(impo_by_product, values='valor', index=['HS6'], columns=['letra'], aggfunc=np.sum, fill_value=0)
+    table = pd.pivot_table(impo_by_product, values='valor', index=['HS6'], columns=['actividad'], aggfunc=np.sum, fill_value=0)
     return table
 
 def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):

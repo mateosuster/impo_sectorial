@@ -165,8 +165,7 @@ top_5_impo  = pd.merge(left=top_5_impo, right=letras, left_on="sd", right_on="le
 top_5_impo  = pd.merge(left=top_5_impo, right=bec[["HS6","HS6Desc"]], left_on="hs6", right_on="HS6", how="left").drop("HS6", axis=1)
 
 
-
-
+top_5_impo.to_csv("top_5_impo.csv")
 
 
 
