@@ -45,7 +45,7 @@ predo_impo_17(impo_17)
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
 
-clae_6d = predo_cuit_clae_6d(cuit_clae)
+cuit_clae_6d = predo_cuit_clae_6d(cuit_clae)
 
 cuit_personas = predo_cuit_clae(cuit_clae_6d, "personas")
 cuit_empresas = predo_cuit_clae(cuit_clae_6d, "empresas")

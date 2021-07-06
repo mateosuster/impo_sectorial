@@ -61,17 +61,6 @@ def predo_comercio(comercio, clae):
     return comercio_reclasificado
 
 
-def predo_clae_6d(clae):
-   
-    for i in (["actvidad1", "actvidad2", "actvidad3"]):
-        
-        # clae['actvidad1'] = clae['actvidad1'].str.zfill(6)
-        
-        clae[i] = clae.loc[clae[i].notnull(),i].astype(int).astype(str)
-        clae.loc[clae[i].notnull(), i] = clae[i].apply(lambda x: '{0:0>6}'.format(x))
-    
-    return clae 
-
 def predo_cuit_clae_6d(clae):
    
     for i in ["actividad1", "actividad2", "actividad3"]:
@@ -150,14 +139,21 @@ def def_join_impo_clae_bec(join_impo_clae, bec_bk):
     
 
 def def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio):
+    
+    comercio["clae6"] = comercio["clae6"].astype(str) 
+    
     comercio2 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = { "vta_vehiculos":"vta_vehiculos2",
                                                                                    "vta_bk": "vta_bk2", "vta_sec": "vta_sec2"})
+    
+    
 
     comercio3 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = { "vta_vehiculos":"vta_vehiculos3",
                                                                                    "vta_bk": "vta_bk3", "vta_sec": "vta_sec3"})
 
     # join de la matriz con el sector comercio
     ## Comercio 1
+    
+    
     impo17_bec_complete = pd.merge(join_impo_clae_bec_bk, comercio.drop(["letra", "clae6_desc"], axis = 1), 
                              how = "left", left_on = "actividad1", right_on = "clae6")
     
