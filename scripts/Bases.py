@@ -69,15 +69,20 @@ def predo_cuit_clae(cuit_clae, tipo_cuit):
         
     else:
         #reemplzao faltantes de letra1 con letra2, y faltantes letra 2 con letra 3
-        cuit_empresas['letra1'].fillna(cuit_empresas['letra2'], inplace = True) 
-        cuit_empresas['actividad1'].fillna(cuit_empresas['actividad2'], inplace = True) 
+        cuit_empresas['letra1'].fillna(cuit_empresas['letra2'], inplace = True)
+        cuit_empresas['letra1'].fillna(cuit_empresas['letra3'], inplace = True)
+        cuit_empresas['letra2'].fillna(cuit_empresas['letra1'], inplace = True) 
+        cuit_empresas['letra3'].fillna(cuit_empresas['letra1'], inplace = True) 
+        
+        cuit_empresas['actividad1'].fillna(cuit_empresas['actividad2'], inplace = True)
+        cuit_empresas['actividad1'].fillna(cuit_empresas['actividad3'], inplace = True)
+        cuit_empresas['actividad2'].fillna(cuit_empresas['actividad1'], inplace = True) 
+        cuit_empresas['actividad3'].fillna(cuit_empresas['actividad1'], inplace = True) 
+         
         #cuit_empresas['letra2'].fillna(cuit_empresas['letra3'], inplace = True) #innecesario, porque no cambia la cuenta (quien tiene NaN en letra 2 tambien tiene NaN letra 3)
         
         #completo relleno de faltantes con letra 1
-        cuit_empresas['letra2'].isnull().sum()
-        cuit_empresas['letra3'].isnull().sum()
-        cuit_empresas['letra2'].fillna(cuit_empresas['letra1'], inplace = True) 
-        cuit_empresas['letra3'].fillna(cuit_empresas['letra1'], inplace = True) 
+        
 
         cuit_clae_letra = cuit_empresas.drop(["padron_contribuyentes","actividad_mectra", "letra_mectra"], axis = 1 , inplace = False)
                 
@@ -106,6 +111,7 @@ def predo_bec_bk(bec, bec_to_clae):
 def def_join_impo_clae(impo_17, cuit_empresas):
     impo_clae = pd.merge(impo_17, cuit_empresas, left_on = "CUIT_IMPOR", right_on = "cuit", how = "right")
     impo_clae.drop(["cuit", "denominacion"], axis=1, inplace = True)
+    
        
     return impo_clae
 
@@ -141,8 +147,12 @@ def def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio):
     ## Comercio 3
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio3 , 
                           how = "left", left_on = "actividad3", right_on = "clae6")
-    impo17_bec_complete.drop("clae6", axis=1, inplace = True) 
-
+    impo17_bec_complete.drop("clae6", axis=1, inplace = True)
+    
+    impo17_bec_complete['actividad1'] = impo17_bec_complete['actividad1'].astype(str).str[:2]
+    impo17_bec_complete['actividad2'] = impo17_bec_complete['actividad2'].astype(str).str[:2]
+    impo17_bec_complete['actividad3'] = impo17_bec_complete['actividad3'].astype(str).str[:2]
+    
     return  impo17_bec_complete   
 
     

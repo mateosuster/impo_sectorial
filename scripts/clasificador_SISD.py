@@ -70,7 +70,7 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 #      ponderación por ncm y letra          #
 #############################################
 
-join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
+join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio)
 
 join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
 
@@ -89,8 +89,9 @@ insumo_matriz ["si"]=""
 insumo_matriz ["sd"]=""
 insumo_matriz ["ue_dest"]=""
 
-# matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
-matriz_sisd = pd.read_csv("data/matriz_pesada.csv")
+matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
+#matriz_sisd.to_csv("data/matriz_pesada_2d.csv")
+#matriz_sisd.read_csv("data/matriz_pesada_2d.csv")
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
