@@ -96,8 +96,8 @@ insumo_matriz ["sd"]=""
 insumo_matriz ["ue_dest"]=""
 
 matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
-#matriz_sisd.to_csv("data/matriz_pesada_2d.csv")
-#matriz_sisd.read_csv("data/matriz_pesada_2d.csv")
+matriz_sisd.to_csv("data/matriz_pesada_2d.csv")
+#matriz_sisd = pd.read_csv("data/matriz_pesada_2d.csv")
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)

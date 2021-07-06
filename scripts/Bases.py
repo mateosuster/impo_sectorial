@@ -90,7 +90,13 @@ def predo_cuit_clae(cuit_clae, tipo_cuit):
         cuit_empresas['actividad1'].fillna(cuit_empresas['actividad2'], inplace = True)
         cuit_empresas['actividad1'].fillna(cuit_empresas['actividad3'], inplace = True)
         cuit_empresas['actividad2'].fillna(cuit_empresas['actividad1'], inplace = True) 
-        cuit_empresas['actividad3'].fillna(cuit_empresas['actividad1'], inplace = True) 
+        cuit_empresas['actividad3'].fillna(cuit_empresas['actividad1'], inplace = True)
+        
+        cuit_empresas.at[cuit_empresas['actividad1'].str.startswith("00", na=False),'actividad1'] = cuit_empresas['actividad2']
+        cuit_empresas.at[cuit_empresas['actividad1'].str.startswith("00", na=False),'actividad1'] = cuit_empresas['actividad3']
+        cuit_empresas.at[cuit_empresas['actividad2'].str.startswith("00", na=False),'actividad2'] = cuit_empresas['actividad1']
+        cuit_empresas.at[cuit_empresas['actividad3'].str.startswith("00", na=False),'actividad3'] = cuit_empresas['actividad1']
+        
          
         #cuit_empresas['letra2'].fillna(cuit_empresas['letra3'], inplace = True) #innecesario, porque no cambia la cuenta (quien tiene NaN en letra 2 tambien tiene NaN letra 3)
         
