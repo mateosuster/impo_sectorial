@@ -20,7 +20,7 @@ from matriz import *
 # =============================================================================
 
 #Mateo
-# os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
 os.getcwd()
 
 #############################################
@@ -44,15 +44,9 @@ bec_to_clae = pd.read_csv("data/bec_to_clae.csv")
 predo_impo_17(impo_17)
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
-
-clae_6d = predo_cuit_clae_6d(cuit_clae)
-
-cuit_personas = predo_cuit_clae(cuit_clae_6d, "personas")
-cuit_empresas = predo_cuit_clae(cuit_clae_6d, "empresas")
+cuit_personas = predo_cuit_clae(cuit_clae, "personas")
+cuit_empresas = predo_cuit_clae(cuit_clae, "empresas")
 bec_bk = predo_bec_bk(bec, bec_to_clae)
-
-
-
 
 
 #############################################
@@ -76,7 +70,7 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 #      ponderación por ncm y letra          #
 #############################################
 
-join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio)
+join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
 
 join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
 
@@ -95,9 +89,8 @@ insumo_matriz ["si"]=""
 insumo_matriz ["sd"]=""
 insumo_matriz ["ue_dest"]=""
 
-matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
-#matriz_sisd.to_csv("data/matriz_pesada_2d.csv")
-#matriz_sisd.read_csv("data/matriz_pesada_2d.csv")
+# matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
+matriz_sisd = pd.read_csv("data/matriz_pesada.csv")
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
@@ -110,8 +103,6 @@ z=z[cols+["CONS"]] #ubicacion del consumo ultima colummna
 
 z= z.append(pd.Series(name='T')) #imputacion de T
 z= z.replace(np.nan,0)
-
-
 
 #############################################
 #             Visualización                 #
@@ -188,7 +179,8 @@ top_5_impo  = pd.merge(left=top_5_impo, right=bec[["HS6","HS6Desc"]], left_on="h
 
 top_5_impo.to_excel("data/top5_impo.xlsx")
 
-top_5_impo.to_csv("top_5_impo.csv")
+
+
 
 
 
