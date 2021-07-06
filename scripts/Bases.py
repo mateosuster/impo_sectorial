@@ -60,6 +60,18 @@ def predo_comercio(comercio, clae):
                                        right = comercio.drop(["clae6_desc", "clae3"], axis = 1), left_on="clae6", right_on = "clae6", how="left" ) 
     return comercio_reclasificado
 
+
+def predo_clae_6d(clae):
+   
+    for i in (["actvidad1", "actvidad2", "actvidad3"]):
+        
+    clae['actvidad1'] = clae['actvidad1'].str.zfill(6)
+    #agregar un cero!
+    
+    
+    return clae 
+
+
 def predo_cuit_clae(cuit_clae, tipo_cuit):
     cuit_personas = cuit_clae[(cuit_clae["letra1"].isnull()) & (cuit_clae["letra2"].isnull()) & (cuit_clae["letra3"].isnull())]
     cuit_empresas = cuit_clae[~cuit_clae['cuit'].isin(cuit_personas['cuit'])]

@@ -44,8 +44,15 @@ bec_to_clae = pd.read_csv("data/bec_to_clae.csv")
 predo_impo_17(impo_17)
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
-cuit_personas = predo_cuit_clae(cuit_clae, "personas")
-cuit_empresas = predo_cuit_clae(cuit_clae, "empresas")
+clae_6d = predo_clae_6d(clae)
+
+cuit_clae = pd.read_csv( "data/cuit 2017 impo_con_actividad.csv")
+cuit_clae["prueba"] = cuit_clae.loc[,'actividad1'].astype(int).astype(str)
+cuit_clae["prueba"] = cuit_clae["prueba"].apply(lambda x: '{0:0>6}'.format(x)).str.replace("000nan", None)
+
+
+cuit_personas = predo_cuit_clae(cuit_clae_6d, "personas")
+cuit_empresas = predo_cuit_clae(cuit_clae_6d, "empresas")
 bec_bk = predo_bec_bk(bec, bec_to_clae)
 
 
