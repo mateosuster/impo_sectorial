@@ -20,7 +20,7 @@ from matriz import *
 # =============================================================================
 
 #Mateo
-# os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
 os.getcwd()
 
 #############################################
@@ -78,8 +78,8 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio)
 
-join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
-
+# join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
+join_final = pd.read_csv("data/impo_con_ponderaciones.csv")
 
 
 #############################################
@@ -95,9 +95,9 @@ insumo_matriz ["si"]=""
 insumo_matriz ["sd"]=""
 insumo_matriz ["ue_dest"]=""
 
-matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
-matriz_sisd.to_csv("data/matriz_pesada_2d.csv")
-#matriz_sisd = pd.read_csv("data/matriz_pesada_2d.csv")
+# matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
+# matriz_sisd.to_csv("data/matriz_pesada_2d.csv")
+matriz_sisd = pd.read_csv("data/matriz_pesada_2d.csv")
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
@@ -108,9 +108,14 @@ cols=list(z.columns.values)
 cols.pop(cols.index("CONS"))
 z=z[cols+["CONS"]] #ubicacion del consumo ultima colummna
 
-z= z.append(pd.Series(name='T')) #imputacion de T
+
+z= z.append(pd.Series(name='CONS')) #creacion de consumo
 z= z.replace(np.nan,0)
 
+z.shape
+
+set(list(z.columns)).symmetric_difference( set(list( z.index ) ) )
+[x for x in list(z.index)  if x not in  list(z.columns) ] # OK pero son tipos de datos distintos
 
 
 #############################################
@@ -186,9 +191,8 @@ top_5_impo  = top_5_impo.groupby(["sd"], as_index = True).head(5)
 top_5_impo  = pd.merge(left=top_5_impo, right=letras, left_on="sd", right_on="letra", how="left").drop(["sd", "letra"], axis=1)
 top_5_impo  = pd.merge(left=top_5_impo, right=bec[["HS6","HS6Desc"]], left_on="hs6", right_on="HS6", how="left").drop("HS6", axis=1)
 
-top_5_impo.to_excel("data/top5_impo.xlsx")
 
-top_5_impo.to_csv("top_5_impo.csv")
+top_5_impo.to_csv("data/resultados/top_5_impo.csv")
 
 
 

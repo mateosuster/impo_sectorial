@@ -37,7 +37,7 @@ def def_calc_pond(impo,cont):
         # print(cuit, letra_1, letra_2, letra_3)
         
         x=[]
-        for b in tqdm(([letra_1, letra_2, letra_3])):
+        for b in [letra_1, letra_2, letra_3]:
             ncm = join_final.iloc[a]["HS6"]
             ncm_val = cont.loc[ncm][b]
             x.append(ncm_val)

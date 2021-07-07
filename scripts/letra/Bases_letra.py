@@ -43,6 +43,10 @@ def predo_sectores_nombres(clae):
                       how = "left", left_on = "letra", right_on = "letra")
     letras.drop_duplicates(subset = 'letra', inplace = True)
     letras = pd.DataFrame(letras)
+    
+    cons = pd.DataFrame([{"letra": "CONS", "letra_desc": "CONSUMO"}] )
+    letras  = pd.concat([letras, cons] , axis =0)
+    
     return letras
 
 

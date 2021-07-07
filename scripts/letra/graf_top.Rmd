@@ -1,0 +1,20 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+
+top5_impo <- readr::read_csv("C:/Archivos/repos/impo_sectorial/scripts/data/resultados/top5_impo.csv")
+
+filtro =c("CONS", "C", "F", "H", "B", "E", "A")
+
+ggplot(top5_impo %>% filter(letra %in% filtro), aes(short_name, impo_relativa))+
+  geom_col()+
+  facet_wrap(~letra, scales = "free", ncol=2)+
+  theme(axis.text.x = element_text(angle = 30, vjust = 0.5, hjust=1))
+```
+
