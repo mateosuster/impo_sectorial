@@ -131,6 +131,9 @@ sectores_desc = {"A":	"Agricultura",  "B":	"Minas y canteras", "C":	"Industria",
                  "U": "Serv. organizaciones" , "CONS": "Consumo" }
 sectores_desc.pop("U")
 
+sectores = pd.DataFrame( { "desc":sectores_desc.values(), "letra": sectores_desc.keys() })
+
+
 #diagonal sobre total col y comercio sobre total
 diag_total_col = diagonal/col_sum
 g_total_col = z_visual[6][:]/col_sum
@@ -194,10 +197,56 @@ top_5_impo.to_csv("../data/resultados/top5_impo.csv")
 top_5_impo.to_excel("../data/resultados/top5_impo.xlsx")
 
 
+##### grafico 4
+
+#carga balance cambiario
+bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
+bce_cambiario.drop(bce_cambiario.columns[16:], axis=1, inplace=True)
+bce_cambiario.rename(columns= {"Años": "anio", "ANEXO": "partida", "Denominación": "sector" }, inplace= True)
+
+#conversion a numeros
+to_num_cols= bce_cambiario.columns[4:]
+bce_cambiario[to_num_cols] = bce_cambiario[to_num_cols].apply(pd.to_numeric,errors='coerce')
+
+#filtro
+bce_cambiario_filter = bce_cambiario[(bce_cambiario["anio"] ==2017) & (bce_cambiario["partida"].isin([7,8,10]) )].drop([ "anio", "partida", "C-V"], axis=1) 
+
+impo_tot_bcra = bce_cambiario_filter.groupby( "sector", as_index = True).sum().sum(axis= 1).reset_index()
+
+#suma de importaciones
+#quedaron afuera informaticam oleaginosas y cerealeros
+A= impo_tot_bcra.iloc[[0]].sum() #agro
+B= impo_tot_bcra.iloc[[22]].sum() #minas
+C = impo_tot_bcra.iloc[[2,11,12,13,14,20,23]].sum() #industria
+D= impo_tot_bcra.iloc[[6,9]].sum() #energia 
+E= impo_tot_bcra.iloc[[1]].sum()  #agua
+F= impo_tot_bcra.iloc[[5]].sum()  #construccion
+G= impo_tot_bcra.iloc[[3]].sum() #comercio
+H= impo_tot_bcra.iloc[[27]].sum() #transporte
+I= impo_tot_bcra.iloc[[8,28]].sum() #hoteles y gastronomia
+J= impo_tot_bcra.iloc[[4]].sum() #comunicaciones
+K= impo_tot_bcra.iloc[[7,25]].sum() #finanzas
+O= impo_tot_bcra.iloc[[24]].sum() #sector publico
+R= impo_tot_bcra.iloc[[8]].sum() #serv culturales
+
+impo_bcra_letra =  pd.DataFrame([A,B,C,D,E,F,G,H,I,J,K,O,R], index= ["A","B","C","D","E","F","G","H","I","J","K","O","R"]).drop("sector", axis = 1).reset_index().rename(columns= {"index": "letra", 0: "impo_bcra"} )
+
+comparacion = pd.merge(impo_tot_sec, impo_bcra_letra, left_on= "letra", right_on= "letra", how="right" )
+comparacion = pd.merge(comparacion, sectores , left_on= "letra", right_on= "letra", how="left" )
+comparacion["impo_tot"] = np.log(comparacion["impo_tot"]/10**6) 
+comparacion["impo_bcra"] = np.log(comparacion["impo_bcra"]) 
+
+comparacion.sort_values(by = 'impo_tot', ascending = False).plot(x="desc", y = ["impo_tot", "impo_bcra"], kind="bar", rot=75,
+                 ylabel = "Millones de dólares, escala logarítmica", xlabel = "Sector \n \n Fuente: Elaboración propia en base a BCRA, Aduana y AFIP")#,)
+plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
+plt.tight_layout(pad=2.5)
+plt.title( "Importacion total sectorial. Comparación de estimaciones en escala logarítmica",  fontsize = 25)
+plt.legend(["SI-SD", "BCRA"])
+plt.savefig('../data/resultados/comparacion_estimaciones.png')
 
 
-
-
+#carga para CIIU
+isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
 
 
 
