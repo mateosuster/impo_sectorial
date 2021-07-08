@@ -82,13 +82,13 @@ join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones.csv")
 #############################################
 
 #creamos df para guardar los insumos de la matriz
-insumo_matriz = pd.DataFrame()
-insumo_matriz ["cuit"]=""
-insumo_matriz ["hs6"]=""
-insumo_matriz ["valor_pond"]=""    
-insumo_matriz ["si"]=""    
-insumo_matriz ["sd"]=""
-insumo_matriz ["ue_dest"]=""
+# insumo_matriz = pd.DataFrame()
+# insumo_matriz ["cuit"]=""
+# insumo_matriz ["hs6"]=""
+# insumo_matriz ["valor_pond"]=""    
+# insumo_matriz ["si"]=""    
+# insumo_matriz ["sd"]=""
+# insumo_matriz ["ue_dest"]=""
 
 # matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
 matriz_sisd = pd.read_csv("../data/resultados/matriz_pesada.csv")
@@ -111,7 +111,7 @@ z= z.replace(np.nan,0)
 
 
 #############################################
-#             Visualización                 #
+#             Matriz Numpy                 #
 #############################################
 
 # transformacion a array de np
@@ -137,13 +137,17 @@ sectores = pd.DataFrame( { "desc":sectores_desc.values(), "letra": sectores_desc
 #diagonal sobre total col y comercio sobre total
 diag_total_col = diagonal/col_sum
 g_total_col = z_visual[6][:]/col_sum
-comercio_y_propio = pd.DataFrame({"Propio": diag_total_col , 'Comercio': g_total_col} , index = sectores_desc.values())
+comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = sectores_desc.values())
 
 
 #importaciones totales (ordenadas)
 impo_tot_sec = pd.DataFrame({"impo_tot": col_sum, "letra":sectores_desc.keys() }, index=sectores_desc.values())  
 impo_tot_sec.sort_values(by = "impo_tot", ascending= False, inplace = True)
 
+
+# =============================================================================
+#                       Visualizacion
+# =============================================================================
 #parametro para graficos
 params = {'legend.fontsize': 'x-large',
           'figure.figsize': (20, 10),
@@ -153,7 +157,6 @@ params = {'legend.fontsize': 'x-large',
          'ytick.labelsize':'x-large'}
 plt.rcParams.update(params)
  
-
 
 ##### grafico 1
 #posiciones para graf
@@ -171,18 +174,19 @@ plt.savefig('../data/resultados/impo_totales_letra.png')
 
 ##### grafico 2
 #graf division comercio y propio
-comercio_y_propio.sort_values(by = 'Propio', ascending = False).plot(kind = "bar", rot = 75,
-                                                                     stacked = True, ylabel = "%", xlabel = "Sector \n \n Fuente: Elaboración propia en base a Aduana y AFIP")#,
-                                                                     # title = "Sector abastecedor de importaciones (en porcentaje)")
-plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
-plt.tight_layout(pad=2.5)
-plt.title( "Sector abastecedor de importaciones (en porcentaje)",  fontsize = 25)
+import matplotlib.ticker as mtick
+ax = comercio_y_propio.sort_values(by = 'Propio', ascending = False).plot(kind = "bar", rot = 75,
+                                                                     stacked = True, ylabel = "%", xlabel = "Sector \n \n Fuente: Elaboración propia en base a Aduana y AFIP")
+                                                                     
+ax.yaxis.set_major_formatter(mtick.PercentFormatter())
+ax.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
+plt.tight_layout(pad=3)
+plt.title( "Sector abastecedor de importaciones (en porcentaje)",  fontsize = 30)
 plt.savefig('../data/resultados/comercio_y_propio_letra.png')
 
 
-##### grafico 3
+##### insumos tabla 1
 # Top 5 de importaciones de cada sector
-
 x = matriz_sisd_final.groupby(["hs6", "sd"], as_index=False)['valor_pond'].sum("valor_pond")
 top_5_impo = x.reset_index(drop = True).sort_values(by = ["sd", "valor_pond"],ascending = False)
 top_5_impo  = top_5_impo.groupby(["sd"], as_index = True).head(5)
@@ -192,14 +196,13 @@ top_5_impo  = pd.merge(top_5_impo  , impo_tot_sec, left_on="letra", right_on="le
 top_5_impo["impo_relativa"] = top_5_impo["valor_pond"]/top_5_impo["impo_tot"] 
 top_5_impo["short_name"] = top_5_impo["HS6Desc"].str.slice(0,15)
 
-
 top_5_impo.to_csv("../data/resultados/top5_impo.csv")
 top_5_impo.to_excel("../data/resultados/top5_impo.xlsx")
 
 
-##### grafico 4
+##### grafico 3
 
-#carga balance cambiario
+######## carga balance cambiario
 bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
 bce_cambiario.drop(bce_cambiario.columns[16:], axis=1, inplace=True)
 bce_cambiario.rename(columns= {"Años": "anio", "ANEXO": "partida", "Denominación": "sector" }, inplace= True)
@@ -231,24 +234,46 @@ R= impo_tot_bcra.iloc[[8]].sum() #serv culturales
 
 impo_bcra_letra =  pd.DataFrame([A,B,C,D,E,F,G,H,I,J,K,O,R], index= ["A","B","C","D","E","F","G","H","I","J","K","O","R"]).drop("sector", axis = 1).reset_index().rename(columns= {"index": "letra", 0: "impo_bcra"} )
 
+
+######## carga para CIIU
+isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
+isic=isic.iloc[:,[0,2]]
+isic.columns= ["HS6", "ISIC"]
+
+dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
+dic_ciiu = dic_ciiu.iloc[:, [0,-2,-1] ]
+dic_ciiu.columns = ["ISIC", "letra", "letra_desc"]
+
+ciiu = pd.merge(isic, dic_ciiu, how= "left" , left_on ="ISIC", right_on ="ISIC")
+
+ciiu["letra"].unique()
+impo_ciiu["letra"].unique()
+impo_ciiu["letra_desc"].unique()
+
+impo_ciiu =pd.merge(join_impo_clae_bec_bk[["HS6", "valor"]], ciiu, how = "left" ,right_on="HS6", left_on="HS6")
+impo_ciiu_letra =impo_ciiu[impo_ciiu["letra"].notnull()].groupby("letra")["valor"].sum()
+
+as_list = impo_ciiu_letra.index.tolist()
+idx = as_list.index("D")
+as_list[idx] = "C"
+impo_ciiu_letra.index = as_list
+
+impo_ciiu_letra = pd.DataFrame(impo_ciiu_letra).reset_index() 
+impo_ciiu_letra.columns = ["letra", "impo_ciiu"]
+
+######### COMPARACION
 comparacion = pd.merge(impo_tot_sec, impo_bcra_letra, left_on= "letra", right_on= "letra", how="right" )
+comparacion = pd.merge(comparacion, impo_ciiu_letra, left_on= "letra", right_on= "letra", how="left" )
+
 comparacion = pd.merge(comparacion, sectores , left_on= "letra", right_on= "letra", how="left" )
 comparacion["impo_tot"] = np.log(comparacion["impo_tot"]/10**6) 
 comparacion["impo_bcra"] = np.log(comparacion["impo_bcra"]) 
+comparacion["impo_ciiu"] = np.log(comparacion["impo_ciiu"]) 
 
-comparacion.sort_values(by = 'impo_tot', ascending = False).plot(x="desc", y = ["impo_tot", "impo_bcra"], kind="bar", rot=75,
-                 ylabel = "Millones de dólares, escala logarítmica", xlabel = "Sector \n \n Fuente: Elaboración propia en base a BCRA, Aduana y AFIP")#,)
+comparacion.sort_values(by = 'impo_tot', ascending = False).plot(x="desc", y = ["impo_tot", "impo_bcra", "impo_ciiu"], kind="bar", rot=75,
+                 ylabel = "Millones de dólares, escala logarítmica", xlabel = "Sector \n \n Fuente: Elaboración propia en base a BCRA, Aduana y AFIP. La estimación del BCRA no es exclusiva de Bienes de Capital")#,)
 plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
-plt.tight_layout(pad=2.5)
-plt.title( "Importacion total sectorial. Comparación de estimaciones en escala logarítmica",  fontsize = 25)
-plt.legend(["SI-SD", "BCRA"])
+plt.tight_layout(pad=3)
+plt.title( "Importacion sectorial. Comparación de estimaciones en escala logarítmica",  fontsize = 30)
+plt.legend(["SI-SD", "BCRA", "CIIU"])
 plt.savefig('../data/resultados/comparacion_estimaciones.png')
-
-
-#carga para CIIU
-isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
-
-
-
-
-
