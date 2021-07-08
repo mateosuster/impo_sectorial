@@ -11,7 +11,7 @@ Created on Tue Jun 29 11:04:54 2021
 import os 
 
 #Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/letra")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
 os.getcwd()
 
 
@@ -27,12 +27,12 @@ from matriz_letra import *
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
-impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
-clae = pd.read_csv( "../data/clae_nombre.csv")
-comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
-cuit_clae = pd.read_csv( "../data/cuit 2017 impo_con_actividad.csv")
-bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
-bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
+impo_17 = pd.read_csv(  "data/IMPO_2017.csv", sep=";")
+clae = pd.read_csv( "data/clae_nombre.csv")
+comercio = pd.read_csv("data/comercio_clae.csv", encoding="latin1")
+cuit_clae = pd.read_csv( "data/cuit 2017 impo_con_actividad.csv")
+bec = pd.read_csv( "data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
+bec_to_clae = pd.read_csv("data/bec_to_clae.csv")
 
 # parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
 # transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
@@ -74,7 +74,7 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
 
 # join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
-join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones.csv")
+join_final = pd.read_csv("data/resultados/impo_con_ponderaciones.csv")
 
 
 #############################################
@@ -91,7 +91,7 @@ join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones.csv")
 # insumo_matriz ["ue_dest"]=""
 
 # matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
-matriz_sisd = pd.read_csv("../data/resultados/matriz_pesada.csv")
+matriz_sisd = pd.read_csv("data/resultados/matriz_pesada.csv")
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
@@ -164,25 +164,25 @@ y_pos = np.arange(len(sectores_desc.values()))
 
 plt.bar(y_pos , impo_tot_sec.iloc[:,0]/(10**6) )
 plt.xticks(y_pos , impo_tot_sec.index, rotation = 75)
-plt.title("Importaciones totales destinadas a cada sector", fontsize = 30)
+plt.title("Importaciones de bienes de capital destinadas a cada sector", fontsize = 30)
 plt.ylabel("Millones de USD")
-plt.xlabel("Sector \n \n Fuente: Elaboración propia en base a Aduana y AFIP")
+plt.xlabel("Sector \n \n Fuente: CEPXXI en base a Aduana, AFIP y UN Comtrade")
 # plt.subplots_adjust(bottom=0.7,top=0.83)
 plt.tight_layout()
-plt.savefig('../data/resultados/impo_totales_letra.png')
+plt.savefig('data/resultados/impo_totales_letra.png')
 
 
 ##### grafico 2
 #graf division comercio y propio
 import matplotlib.ticker as mtick
 ax = comercio_y_propio.sort_values(by = 'Propio', ascending = False).plot(kind = "bar", rot = 75,
-                                                                     stacked = True, ylabel = "%", xlabel = "Sector \n \n Fuente: Elaboración propia en base a Aduana y AFIP")
+                                                                     stacked = True, ylabel = "%", xlabel = "Sector \n \n Fuente: CEPXXII en base a Aduana, AFIP y UN Comtrade")
                                                                      
 ax.yaxis.set_major_formatter(mtick.PercentFormatter())
 ax.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
 plt.tight_layout(pad=3)
-plt.title( "Sector abastecedor de importaciones (en porcentaje)",  fontsize = 30)
-plt.savefig('../data/resultados/comercio_y_propio_letra.png')
+plt.title( "Sector abastecedor de importaciones de bienes de capital (en porcentaje)",  fontsize = 30)
+plt.savefig('data/resultados/comercio_y_propio_letra.png')
 
 
 ##### insumos tabla 1
@@ -196,14 +196,14 @@ top_5_impo  = pd.merge(top_5_impo  , impo_tot_sec, left_on="letra", right_on="le
 top_5_impo["impo_relativa"] = top_5_impo["valor_pond"]/top_5_impo["impo_tot"] 
 top_5_impo["short_name"] = top_5_impo["HS6Desc"].str.slice(0,15)
 
-top_5_impo.to_csv("../data/resultados/top5_impo.csv")
-top_5_impo.to_excel("../data/resultados/top5_impo.xlsx")
+top_5_impo.to_csv("data/resultados/top5_impo.csv")
+top_5_impo.to_excel("data/resultados/top5_impo.xlsx")
 
 
 ##### grafico 3
 
 ######## carga balance cambiario
-bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
+bce_cambiario = pd.read_csv("data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
 bce_cambiario.drop(bce_cambiario.columns[16:], axis=1, inplace=True)
 bce_cambiario.rename(columns= {"Años": "anio", "ANEXO": "partida", "Denominación": "sector" }, inplace= True)
 
@@ -214,7 +214,7 @@ bce_cambiario[to_num_cols] = bce_cambiario[to_num_cols].apply(pd.to_numeric,erro
 #filtro
 bce_cambiario_filter = bce_cambiario[(bce_cambiario["anio"] ==2017) & (bce_cambiario["partida"].isin([7,8,10]) )].drop([ "anio", "partida", "C-V"], axis=1) 
 
-impo_tot_bcra = bce_cambiario_filter.groupby( "sector", as_index = True).sum().sum(axis= 1).reset_index()
+impo_tot_bcra = bce_cambiario_filter.groupby( "sector", as_index = True).sum().sum(axis= 1).reset_index().rename(columns= { 0: "impo_bcra"} )
 
 #suma de importaciones
 #quedaron afuera informaticam oleaginosas y cerealeros
@@ -236,19 +236,15 @@ impo_bcra_letra =  pd.DataFrame([A,B,C,D,E,F,G,H,I,J,K,O,R], index= ["A","B","C"
 
 
 ######## carga para CIIU
-isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
+isic = pd.read_csv("data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
 isic=isic.iloc[:,[0,2]]
 isic.columns= ["HS6", "ISIC"]
 
-dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
+dic_ciiu = pd.read_excel("data/Diccionario CIIU3.xlsx")
 dic_ciiu = dic_ciiu.iloc[:, [0,-2,-1] ]
 dic_ciiu.columns = ["ISIC", "letra", "letra_desc"]
 
 ciiu = pd.merge(isic, dic_ciiu, how= "left" , left_on ="ISIC", right_on ="ISIC")
-
-ciiu["letra"].unique()
-impo_ciiu["letra"].unique()
-impo_ciiu["letra_desc"].unique()
 
 impo_ciiu =pd.merge(join_impo_clae_bec_bk[["HS6", "valor"]], ciiu, how = "left" ,right_on="HS6", left_on="HS6")
 impo_ciiu_letra =impo_ciiu[impo_ciiu["letra"].notnull()].groupby("letra")["valor"].sum()
@@ -271,9 +267,12 @@ comparacion["impo_bcra"] = np.log(comparacion["impo_bcra"])
 comparacion["impo_ciiu"] = np.log(comparacion["impo_ciiu"]) 
 
 comparacion.sort_values(by = 'impo_tot', ascending = False).plot(x="desc", y = ["impo_tot", "impo_bcra", "impo_ciiu"], kind="bar", rot=75,
-                 ylabel = "Millones de dólares, escala logarítmica", xlabel = "Sector \n \n Fuente: Elaboración propia en base a BCRA, Aduana y AFIP. La estimación del BCRA no es exclusiva de Bienes de Capital")#,)
+                 ylabel = "Millones de dólares, escala logarítmica", xlabel = "Sector \n \n Fuente: CEPXXI en base a BCRA, Aduana, AFIP y UN Comtrade. La estimación del BCRA no es exclusiva de Bienes de Capital")#,)
 plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
 plt.tight_layout(pad=3)
 plt.title( "Importacion sectorial. Comparación de estimaciones en escala logarítmica",  fontsize = 30)
-plt.legend(["SI-SD", "BCRA", "CIIU"])
-plt.savefig('../data/resultados/comparacion_estimaciones.png')
+plt.legend(["SI-SD (BK)", "BCRA (BK+CI+CONS)", "CIIU (BK)"])
+plt.savefig('data/resultados/comparacion_estimaciones.png')
+
+
+
