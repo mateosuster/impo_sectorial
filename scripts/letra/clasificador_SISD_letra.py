@@ -11,7 +11,7 @@ Created on Tue Jun 29 11:04:54 2021
 import os 
 
 #Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
+#os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
 os.getcwd()
 
 
@@ -22,6 +22,7 @@ import matplotlib.pyplot as plt
 from Bases_letra import *
 from procesamiento_letra import *
 from matriz_letra import *
+
 
 
 #############################################
@@ -95,6 +96,27 @@ matriz_sisd = pd.read_csv("data/resultados/matriz_pesada.csv")
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
+
+
+##########################################
+#groupby para el mca producto-. Poner el el archivo de visualización
+#matriz_mca = matriz_sisd_final.copy()
+
+#matriz_mca = matriz_mca.drop(["Unnamed: 0","cuit", "si", "ue_dest"], axis=1)
+
+#matriz_mca = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['hs6'], columns=['sd'], aggfunc=np.sum, fill_value=0)
+
+#matriz_mca.to_csv("matriz_mca_letra.csv")
+
+matriz_mca = pd.read_csv("/content/matriz_mca_letra.csv")
+matriz_mca.set_index("hs6", inplace=True)
+ca = prince.CA()
+ca = ca.fit(matriz_mca)
+ca.plot_coordinates(matriz_mca, show_col_labels=True, show_row_labels=False, figsize=(8, 8))
+
+
+
+####################################
 
 #matriz rotada
 z = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['si'], columns=['sd'], aggfunc=np.sum, fill_value=0)

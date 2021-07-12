@@ -22,7 +22,7 @@ from pre_visualizacion import *
 # =============================================================================
 
 #Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
+#os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
 os.getcwd()
 
 #############################################
