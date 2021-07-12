@@ -8,7 +8,17 @@ Created on Thu Jul  1 10:44:28 2021
 from tqdm import tqdm
 import pandas as pd
 
-def def_insumo_matriz(for_fill, raw_data):
+def def_insumo_matriz(raw_data):
+    
+    #creamos df para guardar los insumos de la matriz
+    for_fill = pd.DataFrame()
+    for_fill ["cuit"]=""
+    for_fill ["hs6"]=""
+    for_fill ["valor_pond"]=""    
+    for_fill ["si"]=""    
+    for_fill ["sd"]=""
+    for_fill ["ue_dest"]=""
+        
     for a in tqdm(range(len(raw_data))):
     # for a in tqdm(range(1,100)):
         for b, c, d, e, f in zip(["letra1", "letra2", "letra3"],
@@ -63,6 +73,9 @@ def def_matriz_c_prob(prob):
     calc_none.drop("valor_prob", axis=1, inplace=True)
         
     matriz_sisd_final = pd.concat([sisd_final[sisd_final["sd"].notnull()], calc_none])
+    
+    matriz_sisd_final["si"] = matriz_sisd_final["si"].astype(str)
+
     
     return matriz_sisd_final
                    

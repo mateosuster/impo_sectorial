@@ -61,6 +61,26 @@ def predo_comercio(comercio, clae):
     return comercio_reclasificado
 
 
+
+def predo_industria_2d(clae):
+    industria_2d = clae[clae["letra"]=="C"][["clae2", "clae2_desc"]].drop_duplicates() 
+    industria_2d["clae2"] = industria_2d["clae2"].astype(str).str.slice(0,2)
+    
+    desc_2d = ["Alimentos", "Bebidas", "Tabaco", "Textiles", "Prendas de vestir", "Productos de cuero",
+           "Productos de madera", "Productos de papel", "Imprentas", "Productos de coque",
+           "Químicos", "Farmacéuticos", "Caucho y vidrio", "Minerales no metálicos", "Hierro y acero",
+           "Productos metálicos", "Electrónicos", "Maquinaria", "Aparatos uso doméstico", 
+           "Equipos de automotores", "Equipo de transporte", "Muebles", "Manufacturas diversas", "Reparación maquinaria"]
+    industria_2d.insert(2, "desc", desc_2d)
+    return industria_2d
+
+
+def predo_comercio_2d(clae):
+    comercio_2d = clae[clae["letra"]=="G"][["clae2", "clae2_desc"]].drop_duplicates() 
+    comercio_2d["clae2"] = comercio_2d["clae2"].astype(str).str.slice(0,2)
+    return comercio_2d
+
+
 def predo_cuit_clae_6d(clae):
    
     for i in ["actividad1", "actividad2", "actividad3"]:
