@@ -293,7 +293,7 @@ plt.savefig('data/resultados/comparacion_estimaciones.png')
 # Análisis de correspondencia
 # =============================================================================
 
-matriz_mca= predo_mca(matriz_sisd_final, np.sum) #"np.sum"
+matriz_mca= predo_mca(matriz_sisd_final, "count") #"np.sum"
 
 ca = prince.CA()
 ca = ca.fit(matriz_mca)
