@@ -11,29 +11,31 @@ Created on Tue Jun 29 11:04:54 2021
 import os 
 
 #Mateo
-#os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/letra")
 os.getcwd()
 
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import prince
+from prince import ca
 
 from Bases_letra import *
 from procesamiento_letra import *
 from matriz_letra import *
-
+from pre_visualizacion_letra import *
 
 
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
-impo_17 = pd.read_csv(  "data/IMPO_2017.csv", sep=";")
-clae = pd.read_csv( "data/clae_nombre.csv")
-comercio = pd.read_csv("data/comercio_clae.csv", encoding="latin1")
-cuit_clae = pd.read_csv( "data/cuit 2017 impo_con_actividad.csv")
-bec = pd.read_csv( "data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
-bec_to_clae = pd.read_csv("data/bec_to_clae.csv")
+impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
+clae = pd.read_csv( "../data/clae_nombre.csv")
+comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
+cuit_clae = pd.read_csv( "../data/cuit 2017 impo_con_actividad.csv")
+bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
+bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
 
 # parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
 # transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
@@ -75,7 +77,7 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
 
 # join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
-join_final = pd.read_csv("data/resultados/impo_con_ponderaciones.csv")
+join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones.csv")
 
 
 #############################################
@@ -92,28 +94,10 @@ join_final = pd.read_csv("data/resultados/impo_con_ponderaciones.csv")
 # insumo_matriz ["ue_dest"]=""
 
 # matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
-matriz_sisd = pd.read_csv("data/resultados/matriz_pesada.csv")
+matriz_sisd = pd.read_csv("../data/resultados/matriz_pesada.csv").drop("Unnamed: 0", axis = 1)
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
-
-
-##########################################
-#groupby para el mca producto-. Poner el el archivo de visualización
-#matriz_mca = matriz_sisd_final.copy()
-
-#matriz_mca = matriz_mca.drop(["Unnamed: 0","cuit", "si", "ue_dest"], axis=1)
-
-#matriz_mca = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['hs6'], columns=['sd'], aggfunc=np.sum, fill_value=0)
-
-#matriz_mca.to_csv("matriz_mca_letra.csv")
-
-matriz_mca = pd.read_csv("/content/matriz_mca_letra.csv")
-matriz_mca.set_index("hs6", inplace=True)
-ca = prince.CA()
-ca = ca.fit(matriz_mca)
-ca.plot_coordinates(matriz_mca, show_col_labels=True, show_row_labels=False, figsize=(8, 8))
-
 
 
 ####################################
@@ -211,21 +195,29 @@ plt.savefig('data/resultados/comercio_y_propio_letra.png')
 # Top 5 de importaciones de cada sector
 x = matriz_sisd_final.groupby(["hs6", "sd"], as_index=False)['valor_pond'].sum("valor_pond")
 top_5_impo = x.reset_index(drop = True).sort_values(by = ["sd", "valor_pond"],ascending = False)
-top_5_impo  = top_5_impo.groupby(["sd"], as_index = True).head(5)
+top_5_impo  = top_5_impo.groupby(["sd"], as_index = True).head(10)
 top_5_impo  = pd.merge(left=top_5_impo, right=letras, left_on="sd", right_on="letra", how="left").drop(["sd"], axis=1)
 top_5_impo  = pd.merge(left=top_5_impo, right=bec[["HS6","HS6Desc"]], left_on="hs6", right_on="HS6", how="left").drop("HS6", axis=1)
 top_5_impo  = pd.merge(top_5_impo  , impo_tot_sec, left_on="letra", right_on="letra", how = "left")
 top_5_impo["impo_relativa"] = top_5_impo["valor_pond"]/top_5_impo["impo_tot"] 
 top_5_impo["short_name"] = top_5_impo["HS6Desc"].str.slice(0,15)
 
-top_5_impo.to_csv("data/resultados/top5_impo.csv")
-top_5_impo.to_excel("data/resultados/top5_impo.xlsx")
+top_5_impo.to_csv("../data/resultados/top5_impo.csv")
+top_5_impo.to_excel("../data/resultados/top5_impo.xlsx")
 
 
 ##### grafico 3
 
+########### STP
+stp = pd.read_csv("../data/bsk-prod-series.csv")
+stp["anio"] = stp["indice_tiempo"].str.slice(0,4)
+stp_anual = stp.groupby("anio")["transporte"].sum()
+
+transporte_stp = stp_anual.loc["2017"]
+
+
 ######## carga balance cambiario
-bce_cambiario = pd.read_csv("data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
+bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
 bce_cambiario.drop(bce_cambiario.columns[16:], axis=1, inplace=True)
 bce_cambiario.rename(columns= {"Años": "anio", "ANEXO": "partida", "Denominación": "sector" }, inplace= True)
 
@@ -258,11 +250,11 @@ impo_bcra_letra =  pd.DataFrame([A,B,C,D,E,F,G,H,I,J,K,O,R], index= ["A","B","C"
 
 
 ######## carga para CIIU
-isic = pd.read_csv("data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
+isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
 isic=isic.iloc[:,[0,2]]
 isic.columns= ["HS6", "ISIC"]
 
-dic_ciiu = pd.read_excel("data/Diccionario CIIU3.xlsx")
+dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 dic_ciiu = dic_ciiu.iloc[:, [0,-2,-1] ]
 dic_ciiu.columns = ["ISIC", "letra", "letra_desc"]
 
@@ -295,6 +287,57 @@ plt.tight_layout(pad=3)
 plt.title( "Importacion sectorial. Comparación de estimaciones en escala logarítmica",  fontsize = 30)
 plt.legend(["SI-SD (BK)", "BCRA (BK+CI+CONS)", "CIIU (BK)"])
 plt.savefig('data/resultados/comparacion_estimaciones.png')
+
+
+# =============================================================================
+# Análisis de correspondencia
+# =============================================================================
+
+matriz_mca= predo_mca(matriz_sisd_final, np.sum) #"np.sum"
+
+ca = prince.CA()
+ca = ca.fit(matriz_mca)
+
+#ca.plot_coordinates(matriz_mca,show_col_labels=False, show_row_labels=True, figsize=(8, 8))
+x = ca.row_coordinates(matriz_mca)
+y = ca.column_coordinates(matriz_mca)
+
+#sectores al autovalor de x
+x["sector"] = matriz_mca.index
+z=["A","B","C","D","E","F"]
+j=["CONS"]
+x["tipo_sector"] = np.where(x['sector'].isin(z), 'Bs', 'Ss')
+x["tipo_sector"] = np.where(x['sector'].isin(j), 'CONS', x["tipo_sector"])
+#matriz_mca = matriz_mca.drop(["sector"], axis=1)
+#print (x)
+
+
+#labels
+labels = ca.explained_inertia_
+x_label = 'Component 0 ('+ str(round(labels[0]*100,2))+'% inertia)'
+y_label = 'Component 1 ('+ str(round(labels[1]*100,2))+'% inertia)'
+
+#figure
+
+colors = {'Bs':'red', 'Ss':'darkmagenta', 'CONS':'yellow'}
+
+plt.figure(num=None, figsize=(7, 7), dpi=100, facecolor='w', edgecolor='k')
+ax2 = plt.scatter(y[0], y[1], marker='x', label='NCM')
+ax = plt.scatter(x[0], x[1], marker='^', label='Sectores', c=x['tipo_sector'].map(colors))
+# ax = plt.scatter(x[0], x[1], marker=x["sector"], label='Sectores', c=x['tipo_sector'].map(colors))
+
+# q = x[0]
+# p = x[1]
+# for xi, yi, label in zip(q, p, x["sector"] ):
+#     plt.scatter.annotate(label, (xi, yi))
+
+plt.xlabel(x_label)
+plt.ylabel(y_label)
+plt.grid()
+plt.legend()
+plt.axhline(y=0, color='k')
+plt.axvline(x=0, color='k')
+plt.title("Análisis de correspondencia con suma de total importado")
 
 
 

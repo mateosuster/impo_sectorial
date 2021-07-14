@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
-
+import seaborn as sns
 
 from Bases import *
 from procesamiento import *
@@ -22,14 +22,14 @@ from pre_visualizacion import *
 # =============================================================================
 
 #Mateo
-#os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
 os.getcwd()
 
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
 impo_17 = pd.read_csv(  "data/IMPO_2017.csv", sep=";")
-clae = pd.read_csv( "data/clae_nombre.csv")
+clae = pd.read_csv( "data/clae_agg.csv")
 comercio = pd.read_csv("data/comercio_clae.csv", encoding="latin1")
 cuit_clae = pd.read_csv( "data/cuit 2017 impo_con_actividad.csv")
 bec = pd.read_csv( "data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
@@ -92,7 +92,7 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio)
 
 # join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
-join_final = pd.read_csv("data/resultados/impo_con_ponderaciones_2d.csv")
+join_final = pd.read_csv("data/resultados/impo_con_ponderaciones_2d.csv",  encoding= 'unicode_escape')
 
 
 #############################################
@@ -100,8 +100,8 @@ join_final = pd.read_csv("data/resultados/impo_con_ponderaciones_2d.csv")
 #############################################
 
 # matriz_sisd = def_insumo_matriz( join_final)
-# matriz_sisd.to_csv("data/matriz_pesada_2d.csv")
-matriz_sisd = pd.read_csv("data/resultados/matriz_pesada_2d.csv")
+# matriz_sisd.to_csv("data/matriz_pesada_2d.csv", index = False) 
+matriz_sisd = pd.read_csv("data/resultados/matriz_pesada_2d.csv").drop("Unnamed: 0", axis = 1)
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
@@ -183,4 +183,18 @@ plt.legend(["SI-SD (BK)", "CIIU (BK)"])
 plt.savefig("data/resultados/comparacion_ciiu_2d.png")
 
 
+
+sns.set_context('talk')
+
+#Creamos una grilla de 2 filas por 1 columna, con tamaño (10,10)
+fig, ax = plt.subplots(nrows=2,ncols=1,figsize=(10,10))
+
+tidy_bcra = pd.melt(comparacion_bcra, id_vars = "sector", value_vars = ["impo_sisd", "impo_bcra"])
+tidy_ciiu = pd.melt(comparacion_ciiu, id_vars = "desc", value_vars = ["impo_sisd", "impo_ciiu"])
+
+sns.barplot(x = "sector", y = "value", hue ="variable",ax=ax[0] , data = tidy_bcra)
+ax[0].set_title("Importacion sectorial de bienes de capital de la industria manufacturera \n Comparación con estimación del BCRA",  fontsize = 30)
+
+sns.barplot(data = tidy_ciiu , x = "desc" , y = "value", hue = "variable" ,ax=ax[1])
+ax[1].set_title('Comparación con estimación del BCRA')
 

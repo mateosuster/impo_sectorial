@@ -125,9 +125,7 @@ def dic_clae_ciiu(isic, dic_ciiu ):
 def join_sisd_ciiu(join_impo_clae_bec_bk, dic_clae_ciiu ,impo_tot_sec, industria_2d):
     
     impo_ciiu =pd.merge(join_impo_clae_bec_bk[["HS6", "valor"]], dic_clae_ciiu , how = "left" ,right_on="HS6", left_on="HS6")
-    
     impo_ciiu_indu = impo_ciiu[impo_ciiu["clae6"].isin(industria_2d["clae2"])]
-    
     impo_ciiu_letra =impo_ciiu_indu.groupby("clae6")["valor"].apply(lambda x: x.sum()/10**6).reset_index()
     
     comparacion_ciiu = pd.merge(impo_tot_sec.reset_index(), impo_ciiu_letra, how="right", left_on = "clae_2d", right_on = "clae6" ).drop("clae6", axis = 1).rename(columns = { "valor":"impo_ciiu", "Importaciones totales": "impo_sisd" }  ).sort_values(by = "impo_sisd", ascending = False)

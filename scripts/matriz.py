@@ -75,6 +75,7 @@ def def_matriz_c_prob(prob):
     matriz_sisd_final = pd.concat([sisd_final[sisd_final["sd"].notnull()], calc_none])
     
     matriz_sisd_final["si"] = matriz_sisd_final["si"].astype(str)
+    matriz_sisd_final["si"] = matriz_sisd_final["si"].apply(lambda x: '{0:0>2}'.format(x))
 
     
     return matriz_sisd_final
