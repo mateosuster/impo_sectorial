@@ -15,6 +15,9 @@ def predo_mca(matriz_sisd_final, do):
     matriz_mca = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['hs6'], columns=['sd'], 
                                 aggfunc= do, fill_value=0)
     
+    # matriz_mca.groupby(["hs6", "sd"]).count().reset_index() 
+    
+    
     # matriz_mca.set_index("hs6", inplace=True)
     matriz_mca  = matriz_mca.transpose()
     
