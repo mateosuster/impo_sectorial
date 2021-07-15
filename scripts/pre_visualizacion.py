@@ -56,7 +56,8 @@ def top_5(matriz_sisd_final, industria_2d, bec, impo_tot_sec):
     top_5_impo  = pd.merge(left=top_5_impo, right=industria_2d, left_on="sd", right_on="clae2", how="left").drop(["sd", "desc"], axis=1)
     top_5_impo  = pd.merge(left=top_5_impo, right=bec[["HS6","HS6Desc"]], left_on="hs6", right_on="HS6", how="left").drop("HS6", axis=1)
     top_5_impo  = pd.merge(top_5_impo  , impo_tot_sec, left_on="clae2", right_on="clae_2d", how = "left")
-    top_5_impo["impo_relativa"] = top_5_impo["valor_pond"]/(top_5_impo["Importaciones totales"] * 10**6) 
+    top_5_impo["Importaciones totales"] = top_5_impo["Importaciones totales"] * 10**6
+    top_5_impo["impo_relativa"] = top_5_impo["valor_pond"]/(top_5_impo["Importaciones totales"]) 
     
     return top_5_impo
 

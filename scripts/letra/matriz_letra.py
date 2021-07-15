@@ -7,8 +7,19 @@ Created on Thu Jul  1 10:44:28 2021
 
 from tqdm import tqdm
 import pandas as pd
+import numpy as np
 
-def def_insumo_matriz(for_fill, raw_data):
+def def_insumo_matriz( raw_data):
+    
+    #creamos df para guardar los insumos de la matriz
+    for_fill = pd.DataFrame()
+    for_fill ["cuit"]=""
+    for_fill ["hs6"]=""
+    for_fill ["valor_pond"]=""    
+    for_fill ["si"]=""    
+    for_fill ["sd"]=""
+    for_fill ["ue_dest"]=""
+
     for a in tqdm(range(len(raw_data))):
     # for a in tqdm(range(1,100)):
         for b, c, d, e in zip(["letra1", "letra2", "letra3"],
@@ -63,20 +74,16 @@ def def_matriz_c_prob(prob):
     return matriz_sisd_final
                    
     
+def to_matriz(matriz_sisd_final):
+    z = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['si'], columns=['sd'], aggfunc=np.sum, fill_value=0)
+    cols=list(z.columns.values)
+    cols.pop(cols.index("CONS"))
+    z=z[cols+["CONS"]] #ubicacion del consumo ultima colummna
     
-    # z = pd.pivot_table(prob, values='valor_pond', index=['hs6'], columns=['sd'], aggfunc=np.sum, fill_value=0)
-
+    z= z.append(pd.Series(name='T')) #imputacion de T
+    z= z.replace(np.nan,0)
     
+    z= z.append(pd.Series(name='CONS')) #imputacion de CONS
+    z= z.replace(np.nan,0)
     
-    # if x["importador"] == "G":
-    #     if x["vta_bk"]==0:
-    #         return x['importador']
-    #     elif x["vta_sec"]==0:
-    #         return "CONS"
-    #     else:
-    #         return None #np.nan #asigno por probabilidad
-        
-    # elif x['importador'] != "G":
-    #      return x['importador']
-     
-        
+    return z
