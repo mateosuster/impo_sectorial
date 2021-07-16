@@ -65,7 +65,6 @@ cuit_empresas = predo_cuit_clae(cuit_clae_6d, "empresas")
 bec_bk = predo_bec_bk(bec, bec_to_clae)
 
 impo_tot_bcra  = predo_bce_cambiario(bce_cambiario )
-
 clae_ciiu = dic_clae_ciiu(isic, dic_ciiu )
 
 
@@ -183,18 +182,29 @@ plt.legend(["SI-SD (BK)", "CIIU (BK)"])
 plt.savefig("data/resultados/comparacion_ciiu_2d.png")
 
 
+# Grafico 5
+#data
+tidy_bcra = pd.melt(comparacion_bcra.rename(columns= {"impo_sisd": "SISD", "impo_bcra":"BCRA"}), id_vars = "sector", value_vars = ["SISD", "BCRA"])
+tidy_ciiu = pd.melt(comparacion_ciiu.rename(columns= {"impo_sisd": "SISD", "impo_ciiu":"CIIU"}), id_vars = "desc", value_vars = ["SISD", "CIIU"])
 
 sns.set_context('talk')
+sns.set(font_scale = 2)
+fig, ax = plt.subplots(nrows=2,ncols=1,figsize=(26,15))
+plt.suptitle("Importacion de bienes de capital de la industria manufacturera", size = 30)
 
-#Creamos una grilla de 2 filas por 1 columna, con tamaño (10,10)
-fig, ax = plt.subplots(nrows=2,ncols=1,figsize=(10,10))
+sns.barplot(x = "sector", y = "value", hue ="variable",ax=ax[0] , data = tidy_bcra, palette = ["C1", "b"])#, hue_order= ['SISD', 'BCRA'])
+ax[0].set_title("Comparación con estimación BCRA",  fontsize = 20)
+ax[0].set_xticklabels(ax[0].get_xticklabels(), rotation = 35, size = 17)
+ax[0].set(xlabel= "", ylabel= "Millones de dólares")
+ax[0].legend(title='')
 
-tidy_bcra = pd.melt(comparacion_bcra, id_vars = "sector", value_vars = ["impo_sisd", "impo_bcra"])
-tidy_ciiu = pd.melt(comparacion_ciiu, id_vars = "desc", value_vars = ["impo_sisd", "impo_ciiu"])
 
-sns.barplot(x = "sector", y = "value", hue ="variable",ax=ax[0] , data = tidy_bcra)
-ax[0].set_title("Importacion sectorial de bienes de capital de la industria manufacturera \n Comparación con estimación del BCRA",  fontsize = 30)
+sns.barplot(data = tidy_ciiu , x = "desc" , y = "value", hue = "variable", ax=ax[1], palette = ["C1", "g"])
+ax[1].set_title('Comparación con estimación CIIU',  fontsize = 20)
+ax[1].set_xticklabels(ax[1].get_xticklabels(), rotation = 35, size = 17)
+ax[1].set(xlabel= "", ylabel= "Millones de dólares")
+sns.set_style("ticks", {"xtick.major.size":1, "ytick.major.size":8})
+ax[1].legend(title='')#, labels=['SISD', 'BCRA'])
+fig.tight_layout()
 
-sns.barplot(data = tidy_ciiu , x = "desc" , y = "value", hue = "variable" ,ax=ax[1])
-ax[1].set_title('Comparación con estimación del BCRA')
-
+plt.savefig("data/resultados/comparacion_2d.png")
