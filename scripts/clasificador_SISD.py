@@ -44,7 +44,11 @@ bce_cambiario = pd.read_csv("data/balance_cambiario.csv", skiprows = 3, error_ba
 # carga CIIU
 isic = pd.read_csv("data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
 dic_ciiu = pd.read_excel("data/Pasar de CLAE6 a CIIU3.xlsx")
-        
+
+# bases preprocesadas
+matriz_sisd = pd.read_csv("data/resultados/matriz_pesada_2d.csv").drop("Unnamed: 0", axis = 1)
+join_final = pd.read_csv("data/resultados/impo_con_ponderaciones_2d.csv",  encoding= 'unicode_escape')
+
 
 #############################################
 #           preparación bases               #
@@ -91,7 +95,6 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio)
 
 # join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
-join_final = pd.read_csv("data/resultados/impo_con_ponderaciones_2d.csv",  encoding= 'unicode_escape')
 
 
 #############################################
@@ -100,7 +103,6 @@ join_final = pd.read_csv("data/resultados/impo_con_ponderaciones_2d.csv",  encod
 
 # matriz_sisd = def_insumo_matriz( join_final)
 # matriz_sisd.to_csv("data/matriz_pesada_2d.csv", index = False) 
-matriz_sisd = pd.read_csv("data/resultados/matriz_pesada_2d.csv").drop("Unnamed: 0", axis = 1)
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
@@ -127,12 +129,21 @@ params = {'legend.fontsize': 'x-large',
 plt.rcParams.update(params)
  
 
-##### grafico 1
+##### Bases para graficos
 impo_tot_sec = impo_total(z, industria_2d)
+comercio_y_propio  = impo_comercio_y_propio(z, industria_2d , comercio_2d)
+top_5_impo = top_5(matriz_sisd_final, industria_2d, bec, impo_tot_sec)
 
-#posiciones para graf
-y_pos = np.arange(len(industria_2d["desc"]))
+y_pos = np.arange(len(industria_2d["desc"])) #posiciones para graf
 
+#comparacion
+comparacion_bcra = merge_bcra(impo_tot_sec, impo_tot_bcra)
+comparacion_ciiu = join_sisd_ciiu(join_impo_clae_bec_bk, clae_ciiu ,impo_tot_sec,  industria_2d)
+tidy_bcra = pd.melt(comparacion_bcra.rename(columns= {"impo_sisd": "SISD", "impo_bcra":"BCRA"}), id_vars = "sector", value_vars = ["SISD", "BCRA"])
+tidy_ciiu = pd.melt(comparacion_ciiu.rename(columns= {"impo_sisd": "SISD", "impo_ciiu":"CIIU"}), id_vars = "desc", value_vars = ["SISD", "CIIU"])
+
+
+# Grafico 1
 plt.bar(y_pos , impo_tot_sec.iloc[:,0])
 plt.xticks(y_pos , impo_tot_sec.index, rotation = 75)
 plt.title("Importaciones de bienes de capital destinadas a industria manufacturera", fontsize = 30)
@@ -144,7 +155,6 @@ plt.savefig('data/resultados/impo_totales_2d.png')
 
 ##### grafico 2
 #graf division comercio y propio
-comercio_y_propio  = impo_comercio_y_propio(z, industria_2d , comercio_2d)
 ax = comercio_y_propio.plot(kind = "bar",  rot = 75, stacked = True, ylabel = "%", xlabel = "Sector \n \n Fuente: CEPXXI en base a Aduana y AFIP")
 ax.yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
@@ -155,12 +165,10 @@ plt.savefig('data/resultados/comercio_y_propio_2d.png')
 
 ##### tabla 1 
 # Top 5 de importaciones de cada sector
-top_5_impo = top_5(matriz_sisd_final, industria_2d, bec, impo_tot_sec)
-top_5_impo.to_excel("data/resultados/top_5_impo_2d.xlsx")
+# top_5_impo.to_excel("data/resultados/top_5_impo_2d.xlsx")
 
 
 #### grafico 3
-comparacion_bcra = merge_bcra(impo_tot_sec, impo_tot_bcra)
 comparacion_bcra.plot(x="sector", y = ["impo_sisd", "impo_bcra"], kind="bar", rot=15,
                  ylabel = "Millones de dólares", xlabel = "Sector \n \n Fuente: CEPXXI en base a BCRA, Aduana, AFIP y UN Comtrade. La estimación del BCRA no es exclusiva de Bienes de Capital")#,)
 plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
@@ -172,7 +180,6 @@ plt.savefig("data/resultados/comparacion_bcra_2d.png")
 
 
 #### grafico 4
-comparacion_ciiu = join_sisd_ciiu(join_impo_clae_bec_bk, clae_ciiu ,impo_tot_sec,  industria_2d)
 comparacion_ciiu.plot(x="desc", y = ["impo_sisd", "impo_ciiu"], kind="bar", rot=15, color = ["C1", "g"],
                  ylabel = "Millones de dólares", xlabel = "Sector \n \n Fuente: CEPXXI en base a Aduana, AFIP y UN Comtrade")
 plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
@@ -183,9 +190,6 @@ plt.savefig("data/resultados/comparacion_ciiu_2d.png")
 
 
 # Grafico 5
-#data
-tidy_bcra = pd.melt(comparacion_bcra.rename(columns= {"impo_sisd": "SISD", "impo_bcra":"BCRA"}), id_vars = "sector", value_vars = ["SISD", "BCRA"])
-tidy_ciiu = pd.melt(comparacion_ciiu.rename(columns= {"impo_sisd": "SISD", "impo_ciiu":"CIIU"}), id_vars = "desc", value_vars = ["SISD", "CIIU"])
 
 sns.set_context('talk')
 sns.set(font_scale = 2)
