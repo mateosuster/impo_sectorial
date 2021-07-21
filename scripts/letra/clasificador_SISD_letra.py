@@ -19,6 +19,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
+import seaborn as sns
 
 import prince
 from prince import ca
@@ -58,8 +59,6 @@ cuit_personas = predo_cuit_clae(cuit_clae, "personas")
 cuit_empresas = predo_cuit_clae(cuit_clae, "empresas")
 bec_bk = predo_bec_bk(bec, bec_to_clae)
 
-impo_bcra_letra=predo_bce_cambiario(bce_cambiario)
-impo_ciiu_letra = impo_ciiu_letra(isic, dic_ciiu,join_impo_clae_bec_bk )
 
 #############################################
 #                joins                      #
@@ -86,6 +85,12 @@ join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(jo
 
 # join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
 join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones.csv")
+
+
+filtro = ["HS6", "CUIT_IMPOR", "valor", "letra1", "letra2", "letra3", 
+"vta_bk", "vta_sec", "vta_bk2", "vta_sec2", "vta_bk3", "vta_sec3", 
+"letra1_pond", "letra2_pond", "letra3_pond"]
+join_final = join_final.sort_values("HS6")[filtro]
 
 
 #############################################
@@ -115,12 +120,13 @@ comercio_y_propio = impo_comercio_y_propio(z, sectores_desc)
 #                       Visualizacion
 # =============================================================================
 #parametro para graficos
-params = {'legend.fontsize': 'x-large',
+params = {'legend.fontsize': 20,
           'figure.figsize': (20, 10),
-         'axes.labelsize': 'x-large',
+         'axes.labelsize': 15,
          'axes.titlesize': 30,
-         'xtick.labelsize':'x-large',
-         'ytick.labelsize':'x-large'}
+          'xtick.labelsize':20,
+          'ytick.labelsize':20
+         }
 plt.rcParams.update(params)
  
 
@@ -130,7 +136,7 @@ y_pos = np.arange(len(sectores_desc.values()))
 
 plt.bar(y_pos , impo_tot_sec.iloc[:,0]/(10**6) )
 plt.xticks(y_pos , impo_tot_sec.index, rotation = 75)
-plt.title("Importaciones de bienes de capital destinadas a cada sector", fontsize = 30)
+plt.title("Importaciones de bienes de capital destinadas a cada sector")#, fontsize = 30)
 plt.ylabel("Millones de USD")
 plt.xlabel("Sector \n \n Fuente: CEPXXI en base a Aduana, AFIP y UN Comtrade")
 # plt.subplots_adjust(bottom=0.7,top=0.83)
@@ -146,13 +152,19 @@ ax = comercio_y_propio.plot(kind = "bar", rot = 75,
 ax.yaxis.set_major_formatter(mtick.PercentFormatter())
 ax.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
 plt.tight_layout(pad=3)
-plt.title( "Sector abastecedor de importaciones de bienes de capital (en porcentaje)",  fontsize = 30)
+plt.title( "Sector abastecedor de importaciones de bienes de capital (en porcentaje)")#,  fontsize = 30)
+
 plt.savefig('data/resultados/comercio_y_propio_letra.png')
 
 
 ##### insumos tabla 1
 # Top 5 de importaciones de cada sector
 top_5_impo = top_5(matriz_sisd_final, letras, bec, impo_tot_sec)
+
+#CUITS QUE IMPORTAN TOP HS6 Industria
+# top_industria = top_5_impo[top_5_impo["letra"]=="C"]["hs6"].iloc[[0,3]]
+# cuit_top_c = join_impo_clae[join_impo_clae["HS6"].isin(top_industria )].sort_values("valor",ascending=False)#["CUIT_IMPOR"].unique()
+# cuit_empresas[cuit_empresas["cuit"].isin(cuit_top_c)]
 
 # top_5_impo.to_csv("../data/resultados/top5_impo.csv")
 top_5_impo.to_excel("../data/resultados/top5_impo.xlsx")
@@ -169,21 +181,38 @@ transporte_stp = stp_anual.loc["2017"]
 
     
 ######### COMPARACION CON BCRA Y CIIU
+impo_bcra_letra=predo_bce_cambiario(bce_cambiario)
+impo_ciiu_letra = impo_ciiu_letra(isic, dic_ciiu,join_impo_clae_bec_bk )
+
 comparacion = pd.merge(impo_tot_sec, impo_bcra_letra, left_on= "letra", right_on= "letra", how="right" )
 comparacion = pd.merge(comparacion, impo_ciiu_letra, left_on= "letra", right_on= "letra", how="left" )
 
-comparacion = pd.merge(comparacion, sectores , left_on= "letra", right_on= "letra", how="left" )
-comparacion["impo_tot"] = np.log(comparacion["impo_tot"]/10**6) 
-comparacion["impo_bcra"] = np.log(comparacion["impo_bcra"]) 
-comparacion["impo_ciiu"] = np.log(comparacion["impo_ciiu"]) 
+comparacion = pd.merge(comparacion, pd.DataFrame( {"letra": sectores_desc.keys(), "desc":sectores_desc.values() }), left_on= "letra", right_on= "letra", how="left" )
+comparacion["impo_tot"] = comparacion["impo_tot"] /(10**6)
+comparacion["impo_bcra"] = comparacion["impo_bcra"]
+comparacion["impo_ciiu"] = comparacion["impo_ciiu"] 
 
-comparacion.sort_values(by = 'impo_tot', ascending = False).plot(x="desc", y = ["impo_tot", "impo_bcra", "impo_ciiu"], kind="bar", rot=75,
-                 ylabel = "Millones de dólares, escala logarítmica", xlabel = "Sector \n \n Fuente: CEPXXI en base a BCRA, Aduana, AFIP y UN Comtrade. La estimación del BCRA no es exclusiva de Bienes de Capital")#,)
+
+import plotinpy as pnp
+
+comparacion.sort_values(by = 'impo_tot', ascending = False).plot(x="desc", y = ["impo_tot", "impo_bcra"
+                                                                                # ,"impo_ciiu"
+                                                                                ], kind="bar", rot=75,
+                 ylabel = "Millones de dólares", xlabel = "Sector \n \n Fuente: CEPXXI en base a BCRA, Aduana, AFIP y UN Comtrade. La estimación del BCRA no es exclusiva de Bienes de Capital")#,)
 plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
 plt.tight_layout(pad=3)
-plt.title( "Importacion sectorial. Comparación de estimaciones en escala logarítmica",  fontsize = 30)
+plt.title( "Importacion sectorial. Comparación de estimaciones")
 plt.legend(["SI-SD (BK)", "BCRA (BK+CI+CONS)", "CIIU (BK)"])
-plt.savefig('data/resultados/comparacion_estimaciones.png')
+# pnp.plot_bars_with_breaks(
+#      [1, 20, 30],
+#     [(15, 25)]
+#     )
+
+plt.savefig('../data/resultados/comparacion_estimaciones.png')
+
+comparacion_tidy = comparacion.melt(id_vars= "desc", value_vars=["impo_tot", "impo_bcra", "impo_ciiu"])#,var_name ="value" )
+sns.barplot(data=comparacion_tidy , x="desc", y ="value", hue="variable")
+
 
 
 # =============================================================================

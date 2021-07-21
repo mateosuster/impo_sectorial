@@ -56,7 +56,7 @@ def top_5(matriz_sisd_final, letras, bec, impo_tot_sec):
 
     x = matriz_sisd_final.groupby(["hs6", "sd"], as_index=False)['valor_pond'].sum("valor_pond")
     top_5_impo = x.reset_index(drop = True).sort_values(by = ["sd", "valor_pond"],ascending = False)
-    top_5_impo  = top_5_impo.groupby(["sd"], as_index = True).head(10)
+    top_5_impo  = top_5_impo.groupby(["sd"], as_index = True).head(5)
     top_5_impo  = pd.merge(left=top_5_impo, right=letras, left_on="sd", right_on="letra", how="left").drop(["sd"], axis=1)
     top_5_impo  = pd.merge(left=top_5_impo, right=bec[["HS6","HS6Desc"]], left_on="hs6", right_on="HS6", how="left").drop("HS6", axis=1)
     top_5_impo  = pd.merge(top_5_impo  , impo_tot_sec, left_on="letra", right_on="letra", how = "left")
