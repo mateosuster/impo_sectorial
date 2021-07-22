@@ -9,12 +9,12 @@ from tqdm import tqdm
 import pandas as pd
 import numpy as np
 
-def def_insumo_matriz( raw_data):
+def def_insumo_matriz(raw_data):
     
     #creamos df para guardar los insumos de la matriz
     for_fill = pd.DataFrame()
     for_fill ["cuit"]=""
-    for_fill ["hs6"]=""
+    for_fill ["hs6_d12"]=""
     for_fill ["valor_pond"]=""    
     for_fill ["si"]=""    
     for_fill ["sd"]=""
@@ -42,12 +42,12 @@ def def_insumo_matriz( raw_data):
                
             
             values = {'cuit': raw_data.iloc[a]["CUIT_IMPOR"],
-                      "hs6": raw_data.iloc[a]["HS6"],
+                      "hs6_d12": raw_data.iloc[a]["HS6_d12"],
                       "valor_pond":raw_data.iloc[a]["valor"]*raw_data.iloc[a][e] ,
                       "si": raw_data.iloc[a]["letra1"],
                       "sd": letra_sd,
                       "ue_dest": "nan"}
-            # print (values)
+            #print (values)
             for_fill= for_fill.append(values, ignore_index=True)
             # print (a/len(raw_data),"%")
     return for_fill
@@ -60,12 +60,12 @@ def def_matriz_c_prob(prob):
     
    
     calc_prob = calc_prob[calc_prob["sd"].notnull()]
-    calc_prob = calc_prob[calc_prob["sd"]!="G"].groupby(["hs6","sd"])["valor_pond"].agg("sum")
+    calc_prob = calc_prob[calc_prob["sd"]!="G"].groupby(["hs6_d12","sd"])["valor_pond"].agg("sum")
     calc_prob = calc_prob.groupby(level=0).apply(lambda x: x/float(x.sum())).reset_index().rename(columns={"valor_pond":"valor_prob"})
    
     
     calc_none = calc_none[calc_none["sd"].isnull()]
-    calc_none = pd.merge(left=calc_none.drop("sd", axis=1), right=calc_prob, left_on="hs6", right_on = "hs6", how="left")
+    calc_none = pd.merge(left=calc_none.drop("sd", axis=1), right=calc_prob, left_on="hs6_d12", right_on = "hs6_d12", how="left")
     calc_none["valor_pond"] = calc_none["valor_pond"] * calc_none["valor_prob"] 
     calc_none.drop("valor_prob", axis=1, inplace=True)
         

@@ -9,13 +9,25 @@ import numpy as np
 from tqdm import tqdm
 
 
-def def_contingencia(join_impo_clae_bec_bk_comercio):
-    impo_by_product_1 = join_impo_clae_bec_bk_comercio.groupby(["HS6", "letra1" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra1": "letra"})
-    impo_by_product_2 = join_impo_clae_bec_bk_comercio.groupby(["HS6", "letra2" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra2": "letra"})
-    impo_by_product_3 = join_impo_clae_bec_bk_comercio.groupby(["HS6", "letra3" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra3": "letra"})
+def def_contingencia(join_impo_clae_bec_bk_comercio, hs_6d=True):
+    if hs_6d:
+        impo_by_product_1 = join_impo_clae_bec_bk_comercio.groupby(["HS6", "letra1" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra1": "letra"})
+        impo_by_product_2 = join_impo_clae_bec_bk_comercio.groupby(["HS6", "letra2" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra2": "letra"})
+        impo_by_product_3 = join_impo_clae_bec_bk_comercio.groupby(["HS6", "letra3" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra3": "letra"})
     
-    impo_by_product = impo_by_product_1.append([impo_by_product_2,impo_by_product_3], ignore_index=True)
-    table = pd.pivot_table(impo_by_product, values='valor', index=['HS6'], columns=['letra'], aggfunc=np.sum, fill_value=0)
+        impo_by_product = impo_by_product_1.append([impo_by_product_2,impo_by_product_3], ignore_index=True)
+        table = pd.pivot_table(impo_by_product, values='valor', index=['HS6'], columns=['letra'], aggfunc=np.sum, fill_value=0)
+        
+        
+    else:
+        impo_by_product_1 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra1" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra1": "letra"})
+        impo_by_product_2 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra2" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra2": "letra"})
+        impo_by_product_3 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra3" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra3": "letra"})
+    
+        impo_by_product = impo_by_product_1.append([impo_by_product_2,impo_by_product_3], ignore_index=True)
+        table = pd.pivot_table(impo_by_product, values='valor', index=['HS6_d12'], columns=['letra'], aggfunc=np.sum, fill_value=0)
+        
+    
     return table
 
 def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):
@@ -38,7 +50,7 @@ def def_calc_pond(impo,cont):
         
         x=[]
         for b in [letra_1, letra_2, letra_3]:
-            ncm = join_final.iloc[a]["HS6"]
+            ncm = join_final.iloc[a]["HS6_d12"]
             ncm_val = cont.loc[ncm][b]
             x.append(ncm_val)
         

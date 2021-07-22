@@ -11,7 +11,11 @@ Created on Tue Jun 29 11:04:54 2021
 import os 
 
 #Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/letra")
+#os.chdir("C:/Archivos/repos/impo_sectorial/scripts/letra")
+#os.getcwd()
+
+#igal
+os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/letra")
 os.getcwd()
 
 
@@ -23,8 +27,8 @@ import seaborn as sns
 import plotinpy as pnp
 
 
-import prince
-from prince import ca
+# import prince
+# from prince import ca
 
 
 from Bases_letra import *
@@ -54,7 +58,7 @@ dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 #           preparación bases               #
 #############################################
 
-predo_impo_17(impo_17)
+#predo_impo_17(impo_17)
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
 cuit_personas = predo_cuit_clae(cuit_clae, "personas")
@@ -67,7 +71,7 @@ impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
 impo_d12.rename(columns = {'ANYO':"anio", 'POSIC_SIM':"HS6_d12", 
                            'CIF':"valor"}, inplace=True)
 impo_d12 = impo_d12[[ "CUIT_IMPOR", "NOMBRE", "HS6_d12", "valor"]]
-impo_d12["HS6"]= impo_d12["HS6_d12"].str.slice(0,6)
+impo_d12["HS6"]= impo_d12["HS6_d12"].str.slice(0,6).astype(int)
 
 #STP
 dic_stp = pd.read_excel("C:/Archivos/repos/impo_sectorial/scripts/data/bsk-prod-clasificacion.xlsx")
@@ -83,6 +87,8 @@ agro_stp = dic_stp[dic_stp["demanda"].str.contains("agrí", case = False)]
 # join_impo_clae = def_join_impo_clae(impo_17, cuit_empresas)
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
 
+
+
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
 
@@ -93,7 +99,7 @@ join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_cl
 #              producto-sector              #
 #############################################
 
-tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
+tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio, hs_6d=False)
 
 #############################################
 #      ponderación por ncm y letra          #
@@ -101,22 +107,24 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
 
-# join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
-join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones.csv")
+join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
+#join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d.csv", index=False)
+#join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones.csv")
+join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d.csv")
 
-
-filtro = ["HS6", "CUIT_IMPOR", "valor", "letra1", "letra2", "letra3", 
-"vta_bk", "vta_sec", "vta_bk2", "vta_sec2", "vta_bk3", "vta_sec3", 
-"letra1_pond", "letra2_pond", "letra3_pond"]
-join_final = join_final.sort_values("HS6")[filtro]
+# filtro = ["HS6", "CUIT_IMPOR", "valor", "letra1", "letra2", "letra3", 
+# "vta_bk", "vta_sec", "vta_bk2", "vta_sec2", "vta_bk3", "vta_sec3", 
+# "letra1_pond", "letra2_pond", "letra3_pond"]
+# join_final = join_final.sort_values("HS6")[filtro]
 
 
 #############################################
 #         ASIGNACIÓN y MATRIZ               #
 #############################################
 
-# matriz_sisd = def_insumo_matriz(insumo_matriz, join_final)
-matriz_sisd = pd.read_csv("../data/resultados/matriz_pesada.csv").drop("Unnamed: 0", axis = 1)
+#matriz_sisd = def_insumo_matriz(join_final)
+#matriz_sisd.to_csv("../data/resultados/matriz_pesada_12d.csv", index= False)
+matriz_sisd = pd.read_csv("../data/resultados/matriz_pesada_12d.csv")
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
