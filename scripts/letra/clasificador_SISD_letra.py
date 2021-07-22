@@ -20,6 +20,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 import seaborn as sns
+import plotinpy as pnp
+
 
 import prince
 from prince import ca
@@ -60,11 +62,27 @@ cuit_empresas = predo_cuit_clae(cuit_clae, "empresas")
 bec_bk = predo_bec_bk(bec, bec_to_clae)
 
 
+#impo 12 d
+impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
+impo_d12.rename(columns = {'ANYO':"anio", 'POSIC_SIM':"HS6_d12", 
+                           'CIF':"valor"}, inplace=True)
+impo_d12 = impo_d12[[ "CUIT_IMPOR", "NOMBRE", "HS6_d12", "valor"]]
+impo_d12["HS6"]= impo_d12["HS6_d12"].str.slice(0,6)
+
+#STP
+dic_stp = pd.read_excel("C:/Archivos/repos/impo_sectorial/scripts/data/bsk-prod-clasificacion.xlsx")
+dic_stp.columns = ["NCM", "desc", "ciiu", "desc_gral", "utilizacion", "demanda"]
+dic_stp.dropna(thresh = 3, inplace= True)
+agro_stp = dic_stp[dic_stp["demanda"].str.contains("agrí", case = False)]
+
 #############################################
 #                joins                      #
 #############################################
 
-join_impo_clae = def_join_impo_clae(impo_17, cuit_empresas)
+
+# join_impo_clae = def_join_impo_clae(impo_17, cuit_empresas)
+join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
+
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
 
@@ -178,7 +196,6 @@ stp["anio"] = stp["indice_tiempo"].str.slice(0,4)
 stp_anual = stp.groupby("anio")["transporte"].sum()
 
 transporte_stp = stp_anual.loc["2017"]
-
     
 ######### COMPARACION CON BCRA Y CIIU
 impo_bcra_letra=predo_bce_cambiario(bce_cambiario)
@@ -193,7 +210,6 @@ comparacion["impo_bcra"] = comparacion["impo_bcra"]
 comparacion["impo_ciiu"] = comparacion["impo_ciiu"] 
 
 
-import plotinpy as pnp
 
 comparacion.sort_values(by = 'impo_tot', ascending = False).plot(x="desc", y = ["impo_tot", "impo_bcra"
                                                                                 # ,"impo_ciiu"
@@ -212,7 +228,6 @@ plt.savefig('../data/resultados/comparacion_estimaciones.png')
 
 comparacion_tidy = comparacion.melt(id_vars= "desc", value_vars=["impo_tot", "impo_bcra", "impo_ciiu"])#,var_name ="value" )
 sns.barplot(data=comparacion_tidy , x="desc", y ="value", hue="variable")
-
 
 
 # =============================================================================
