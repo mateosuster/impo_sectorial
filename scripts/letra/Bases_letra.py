@@ -65,8 +65,31 @@ def predo_comercio(comercio, clae):
     return comercio_reclasificado
 
 def predo_cuit_clae(cuit_clae, tipo_cuit):
+    
+    cuit_clae6 = cuit_clae[cuit_clae["Numero_actividad_cuit"]<=6].drop(["Clae6_desc","Fecha_actividad", "Cantidad_actividades_cuit"], axis =1)
+
+    cuit_clae6 = cuit_clae6.set_index(["CUIT", "Numero_actividad_cuit"], append=True)
+
+    cuit_clae6 = cuit_clae6.unstack().droplevel(0, axis=1)
+    
+    cuit_clae6 = cuit_clae6.groupby("CUIT").sum().astype(int)
+    
+    cuit_clae6.columns = ["actividad1","actividad2","actividad3","actividad4","actividad5","actividad6"]
+    
+    cuit_clae_letra = pd.merge(cuit_clae, clae[["clae6", "letra"]], left_on="Clae6", right_on= "clae6", how = "left").drop(["clae6", "Clae6"], axis =1)
+    
+    cuit_clae_letra = cuit_clae_letra.groupby("CUIT")["letra"].agg(",".join)
+    
+    cuit_clae_letra = pd.DataFrame(cuit_clae_letra.groupby("CUIT")["letra"].agg(",".join)).reset_index()
+    
+    cuit_clae_letra["letra"].str.split(pat=",", expand=True)
+   
+    
+
+    
     cuit_personas = cuit_clae[(cuit_clae["letra1"].isnull()) & (cuit_clae["letra2"].isnull()) & (cuit_clae["letra3"].isnull())]
     cuit_empresas = cuit_clae[~cuit_clae['cuit'].isin(cuit_personas['cuit'])]
+    
     
     if tipo_cuit == "personas":
         return cuit_personas 

@@ -43,7 +43,11 @@ from pre_visualizacion_letra import *
 impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
 clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
-cuit_clae = pd.read_csv( "../data/cuit 2017 impo_con_actividad.csv")
+
+#cuit_clae = pd.read_csv( "../data/cuit 2017 impo_con_actividad.csv")
+cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
+
+
 bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
 bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
 
