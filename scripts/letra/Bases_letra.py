@@ -66,9 +66,10 @@ def predo_comercio(comercio, clae):
 
 def predo_cuit_clae(cuit_clae, tipo_cuit):
     
-    cuit_clae6 = cuit_clae[cuit_clae["Numero_actividad_cuit"]<=6].drop(["Clae6_desc","Fecha_actividad", "Cantidad_actividades_cuit"], axis =1)
+    cuit_clae = cuit_clae[cuit_clae["Numero_actividad_cuit"]<=6].drop(["Clae6_desc","Fecha_actividad", "Cantidad_actividades_cuit"], axis =1)
 
-    cuit_clae6 = cuit_clae6.set_index(["CUIT", "Numero_actividad_cuit"], append=True)
+    #procesamiento de los 6 digitos
+    cuit_clae6 = cuit_clae.set_index(["CUIT", "Numero_actividad_cuit"], append=True)
 
     cuit_clae6 = cuit_clae6.unstack().droplevel(0, axis=1)
     
@@ -76,16 +77,70 @@ def predo_cuit_clae(cuit_clae, tipo_cuit):
     
     cuit_clae6.columns = ["actividad1","actividad2","actividad3","actividad4","actividad5","actividad6"]
     
-    cuit_clae_letra = pd.merge(cuit_clae, clae[["clae6", "letra"]], left_on="Clae6", right_on= "clae6", how = "left").drop(["clae6", "Clae6"], axis =1)
+    #garantizo que todos los cuit tengan actividaes
+    cuit_clae6.loc[cuit_clae6['actividad6']<100, ['actividad6']] = 0
+    cuit_clae6.loc[cuit_clae6['actividad5']<100, ['actividad5']] = cuit_clae6['actividad6']
+    cuit_clae6.loc[cuit_clae6['actividad4']<100, ['actividad4']] = cuit_clae6['actividad5']
+    cuit_clae6.loc[cuit_clae6['actividad3']<100, ['actividad3']] = cuit_clae6['actividad4']
+    cuit_clae6.loc[cuit_clae6['actividad2']<100, ['actividad2']] = cuit_clae6['actividad3']
+    cuit_clae6.loc[cuit_clae6['actividad1']<100, ['actividad1']] = cuit_clae6['actividad2']
     
-    cuit_clae_letra = cuit_clae_letra.groupby("CUIT")["letra"].agg(",".join)
+    #relleno los que tienen solo act 1
+    cuit_clae6["suma"] = cuit_clae6.loc[:,["actividad2","actividad3","actividad4","actividad5","actividad6"]].sum(axis=1)
     
-    cuit_clae_letra = pd.DataFrame(cuit_clae_letra.groupby("CUIT")["letra"].agg(",".join)).reset_index()
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad2']] = cuit_clae6['actividad1']
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad3']] = cuit_clae6['actividad1']    
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad4']] = cuit_clae6['actividad1']    
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad5']] = cuit_clae6['actividad1']
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad6']] = cuit_clae6['actividad1']
     
-    cuit_clae_letra["letra"].str.split(pat=",", expand=True)
-   
+    #relleno los que tienen hasta act 2
+    cuit_clae6["suma"] = cuit_clae6.loc[:,["actividad3","actividad4","actividad5","actividad6"]].sum(axis=1)    
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad3']] = cuit_clae6['actividad1']
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad5']] = cuit_clae6['actividad1']
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad4']] = cuit_clae6['actividad2']
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad6']] = cuit_clae6['actividad2']
     
-
+    #relleno los que tienen hasta act 3
+    cuit_clae6["suma"] = cuit_clae6.loc[:,["actividad4","actividad5","actividad6"]].sum(axis=1)    
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad4']] = cuit_clae6['actividad1']
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad5']] = cuit_clae6['actividad2']
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad6']] = cuit_clae6['actividad3']
+    
+    #relleno los que tienen hasta act 4
+    cuit_clae6["suma"] = cuit_clae6.loc[:,["actividad5","actividad6"]].sum(axis=1)    
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad5']] = cuit_clae6['actividad1']
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad6']] = cuit_clae6['actividad2']
+    
+    #relleno los que tienen hasta act 5
+    cuit_clae6["suma"] = cuit_clae6.loc[:,["actividad6"]].sum(axis=1)    
+    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad6']] = cuit_clae6['actividad1']
+    
+    cuit_clae6 = cuit_clae6.drop(["suma"], axis=1)
+    
+    #procesamiento a letras
+    clae["clae6"] = clae["clae6"].astype("Int64").astype(str)
+    cuit_clae6 = cuit_clae6.reset_index().astype(str)
+    
+    letra1 = pd.merge(cuit_clae6[["CUIT","actividad1"]].astype(str), clae[["clae6", "letra"]], left_on="actividad1", right_on="clae6", how="left").drop(["actividad1", "clae6"], axis=1).rename(columns={"letra": "letra1"})
+    letra2 = pd.merge(cuit_clae6[["CUIT","actividad2"]].astype(str), clae[["clae6", "letra"]], left_on="actividad2", right_on="clae6", how="left").drop(["actividad2", "clae6"], axis=1).rename(columns={"letra": "letra2"})
+    letra3 = pd.merge(cuit_clae6[["CUIT","actividad3"]].astype(str), clae[["clae6", "letra"]], left_on="actividad3", right_on="clae6", how="left").drop(["actividad3", "clae6"], axis=1).rename(columns={"letra": "letra3"})
+    letra4 = pd.merge(cuit_clae6[["CUIT","actividad4"]].astype(str), clae[["clae6", "letra"]], left_on="actividad4", right_on="clae6", how="left").drop(["actividad4", "clae6"], axis=1).rename(columns={"letra": "letra4"})
+    letra5 = pd.merge(cuit_clae6[["CUIT","actividad5"]].astype(str), clae[["clae6", "letra"]], left_on="actividad5", right_on="clae6", how="left").drop(["actividad5", "clae6"], axis=1).rename(columns={"letra": "letra5"})
+    letra6 = pd.merge(cuit_clae6[["CUIT","actividad6"]].astype(str), clae[["clae6", "letra"]], left_on="actividad6", right_on="clae6", how="left").drop(["actividad6", "clae6"], axis=1).rename(columns={"letra": "letra6"})
+    
+    
+    cuit_clae6 = cuit_clae6.merge(letra1, left_on="CUIT", right_on="CUIT")
+    cuit_clae6 = cuit_clae6.merge(letra2, left_on="CUIT", right_on="CUIT")
+    cuit_clae6 = cuit_clae6.merge(letra3, left_on="CUIT", right_on="CUIT")
+    cuit_clae6 = cuit_clae6.merge(letra4, left_on="CUIT", right_on="CUIT")
+    cuit_clae6 = cuit_clae6.merge(letra5, left_on="CUIT", right_on="CUIT")
+    cuit_clae6 = cuit_clae6.merge(letra6, left_on="CUIT", right_on="CUIT")
+    
+        
+    #######################################################################################
+        
+    #######################################################################################
     
     cuit_personas = cuit_clae[(cuit_clae["letra1"].isnull()) & (cuit_clae["letra2"].isnull()) & (cuit_clae["letra3"].isnull())]
     cuit_empresas = cuit_clae[~cuit_clae['cuit'].isin(cuit_personas['cuit'])]
