@@ -75,7 +75,8 @@ def def_matriz_c_prob(prob):
                    
     
 def to_matriz(matriz_sisd_final):
-    z = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['si'], columns=['sd'], aggfunc=np.sum, fill_value=0)
+    #probar con index = hs6
+    z = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['si'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
     cols=list(z.columns.values)
     cols.pop(cols.index("CONS"))
     z=z[cols+["CONS"]] #ubicacion del consumo ultima colummna

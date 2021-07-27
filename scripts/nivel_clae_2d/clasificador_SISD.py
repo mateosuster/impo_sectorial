@@ -4,7 +4,15 @@ Created on Tue Jun 29 11:04:54 2021
 
 @author: igalk
 """
+# =============================================================================
+# Directorio de trabajo
+# =============================================================================
 import os 
+
+#Mateo
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_clae_2d")
+os.getcwd()
+
 
 import pandas as pd
 import numpy as np
@@ -17,37 +25,30 @@ from procesamiento import *
 from matriz import *
 from pre_visualizacion import *
 
-# =============================================================================
-# Directorio de trabajo
-# =============================================================================
-
-#Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts")
-os.getcwd()
 
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
-impo_17 = pd.read_csv(  "data/IMPO_2017.csv", sep=";")
-clae = pd.read_csv( "data/clae_agg.csv")
-comercio = pd.read_csv("data/comercio_clae.csv", encoding="latin1")
-cuit_clae = pd.read_csv( "data/cuit 2017 impo_con_actividad.csv")
-bec = pd.read_csv( "data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
-bec_to_clae = pd.read_csv("data/bec_to_clae.csv")
+impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
+clae = pd.read_csv( "../data/clae_agg.csv")
+comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
+cuit_clae = pd.read_csv( "../data/cuit 2017 impo_con_actividad.csv")
+bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
+bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
 
 # parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
 # transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
 
 #carga balance cambiario
-bce_cambiario = pd.read_csv("data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
+bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
 
 # carga CIIU
-isic = pd.read_csv("data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
-dic_ciiu = pd.read_excel("data/Pasar de CLAE6 a CIIU3.xlsx")
+isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
+dic_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
 
 # bases preprocesadas
-matriz_sisd = pd.read_csv("data/resultados/matriz_pesada_2d.csv").drop("Unnamed: 0", axis = 1)
-join_final = pd.read_csv("data/resultados/impo_con_ponderaciones_2d.csv",  encoding= 'unicode_escape')
+matriz_sisd = pd.read_csv("../data/resultados/matriz_pesada_2d.csv").drop("Unnamed: 0", axis = 1)
+join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_2d.csv",  encoding= 'unicode_escape')
 
 
 #############################################
@@ -150,7 +151,7 @@ plt.title("Importaciones de bienes de capital destinadas a industria manufacture
 plt.ylabel("Millones de USD")
 plt.xlabel("Sector \n \n Fuente: CEPXXI en base a Aduana y AFIP")
 plt.tight_layout()
-plt.savefig('data/resultados/impo_totales_2d.png')
+plt.savefig('resultados/impo_totales_2d.png')
     
 
 ##### grafico 2
@@ -160,12 +161,12 @@ ax.yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
 plt.title("Sector abastecedor de importaciones de bienes de capital de la industria (en porcentaje)", fontsize = 30)
 plt.tight_layout(pad=3)
-plt.savefig('data/resultados/comercio_y_propio_2d.png')
+plt.savefig('resultados/comercio_y_propio_2d.png')
 
 
 ##### tabla 1 
 # Top 5 de importaciones de cada sector
-# top_5_impo.to_excel("data/resultados/top_5_impo_2d.xlsx")
+top_5_impo.to_excel("resultados/top_5_impo_2d.xlsx")
 
 
 #### grafico 3
@@ -175,7 +176,7 @@ plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
 plt.tight_layout(pad=7)
 plt.title( "Importacion sectorial de bienes de capital de la industria manufacturera \n Comparación de estimaciones",  fontsize = 30)
 plt.legend(["SI-SD (BK)", "BCRA (BK+CI+CONS)"])
-plt.savefig("data/resultados/comparacion_bcra_2d.png")
+plt.savefig("resultados/comparacion_bcra_2d.png")
 
 
 
@@ -186,7 +187,7 @@ plt.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
 plt.tight_layout(pad=7)
 plt.title( "Importacion sectorial de bienes de capital de la industria manufacturera \n Comparación de estimaciones",  fontsize = 30)
 plt.legend(["SI-SD (BK)", "CIIU (BK)"])
-plt.savefig("data/resultados/comparacion_ciiu_2d.png")
+plt.savefig("resultados/comparacion_ciiu_2d.png")
 
 
 # Grafico 5
@@ -211,4 +212,4 @@ sns.set_style("ticks", {"xtick.major.size":1, "ytick.major.size":8})
 ax[1].legend(title='')#, labels=['SISD', 'BCRA'])
 fig.tight_layout()
 
-plt.savefig("data/resultados/comparacion_2d.png")
+plt.savefig("resultados/comparacion_2d.png")
