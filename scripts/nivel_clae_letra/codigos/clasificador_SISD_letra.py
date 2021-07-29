@@ -14,6 +14,9 @@ import os
 os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_clae_letra/codigos")
 os.getcwd()
 
+#igal
+os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_clae_letra/codigos")
+os.getcwd()
 
 import pandas as pd
 import numpy as np
@@ -115,7 +118,7 @@ matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
 
 #matriz rotada
 z =to_matriz(matriz_sisd_final)
-
+ncm_sector = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['hs6'], columns=['sd'], aggfunc=np.sum, fill_value=0)
 
 #############################################
 #             Matriz Numpy                 #
