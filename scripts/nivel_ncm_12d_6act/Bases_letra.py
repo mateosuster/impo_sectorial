@@ -35,6 +35,18 @@ def predo_impo_17(impo_17):
     return impo_17.rename(columns = {"POSIC_SIM" : "HS6", 'CIF': "valor"} , inplace = True)
 
 
+def predo_impo_12d(impo_d12):
+
+    impo_d12.rename(columns = {'ANYO':"anio", 'POSIC_SIM':"HS6_d12", 
+                               'CIF':"valor", "CUIT_IMPOR":"cuit",
+                               "UMED_ESTAD": "unidad_medida", "CANT_UNEST": "cantidad"}, inplace=True)
+    impo_d12 = impo_d12[[ "cuit", "NOMBRE", "HS6_d12", "valor", "unidad_medida", "cantidad"]]
+    impo_d12["HS6"]= impo_d12["HS6_d12"].str.slice(0,6).astype(int)
+    impo_d12["cuit"] =impo_d12["cuit"].astype(str)
+    
+    return impo_d12
+
+
 def predo_sectores_nombres(clae):
     letras_np = pd.unique(clae['letra'])
     letras_np= np.delete(letras_np, 0)
@@ -60,8 +72,11 @@ def predo_comercio(comercio, clae):
     comercio["clae3"].fillna( method = "ffill", inplace = True)
     del comercio['Unnamed: 1']
     comercio.drop(comercio.iloc[:,6: ], axis= 1, inplace= True) 
+    
     comercio_reclasificado =  pd.merge( left =clae[clae["letra"] =="G"][["letra", "clae6", "clae6_desc"]], 
                                        right = comercio.drop(["clae6_desc", "clae3"], axis = 1), left_on="clae6", right_on = "clae6", how="left" ) 
+    
+    comercio_reclasificado["clae6"] = comercio_reclasificado["clae6"].astype(str)
     return comercio_reclasificado
 
 def predo_cuit_clae(cuit_clae , clae):
@@ -157,9 +172,19 @@ def predo_bec_bk(bec, bec_to_clae):
     
     return bec_bk
 
+
+def predo_stp(dic_stp ):
+
+    dic_stp.columns = ["NCM", "desc", "ciiu", "desc_gral", "utilizacion", "demanda"]
+    dic_stp.dropna(thresh = 3, inplace= True)
+    agro_stp = dic_stp[dic_stp["demanda"].str.contains("agrí", case = False)]
+
+    return dic_stp
+
+
 def def_join_impo_clae(impo_17, cuit_empresas):
-    impo_clae = pd.merge(impo_17, cuit_empresas, left_on = "CUIT_IMPOR", right_on = "cuit", how = "right")
-    impo_clae.drop(["cuit", "denominacion"], axis=1, inplace = True)
+    impo_clae = pd.merge(impo_17, cuit_empresas, left_on = "cuit", right_on = "CUIT", how = "right")
+    impo_clae.drop(["CUIT"], axis=1, inplace = True)
        
     return impo_clae
 

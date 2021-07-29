@@ -11,8 +11,8 @@ Created on Tue Jun 29 11:04:54 2021
 import os 
 
 #Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/letra")
-#os.getcwd()
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.getcwd()
 
 #igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/letra")
@@ -40,13 +40,16 @@ from pre_visualizacion_letra import *
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
+
+#impo 12 d
+impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
 impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
+
 clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
 
 #cuit_clae = pd.read_csv( "../data/cuit 2017 impo_con_actividad.csv")
 cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
-
 
 bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
 bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
@@ -58,29 +61,24 @@ bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error
 isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
 dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 
+#STP
+dic_stp = pd.read_excel("C:/Archivos/repos/impo_sectorial/scripts/data/bsk-prod-clasificacion.xlsx")
+
+
 #############################################
 #           preparación bases               #
 #############################################
 
-#predo_impo_17(impo_17)
+# predo_impo_17(impo_17)
+impo_d12  = predo_impo_12d(impo_d12)
+
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae)
 bec_bk = predo_bec_bk(bec, bec_to_clae)
+dic_stp = predo_stp(dic_stp )
 
 
-#impo 12 d
-impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
-impo_d12.rename(columns = {'ANYO':"anio", 'POSIC_SIM':"HS6_d12", 
-                           'CIF':"valor"}, inplace=True)
-impo_d12 = impo_d12[[ "CUIT_IMPOR", "NOMBRE", "HS6_d12", "valor"]]
-impo_d12["HS6"]= impo_d12["HS6_d12"].str.slice(0,6).astype(int)
-
-#STP
-dic_stp = pd.read_excel("C:/Archivos/repos/impo_sectorial/scripts/data/bsk-prod-clasificacion.xlsx")
-dic_stp.columns = ["NCM", "desc", "ciiu", "desc_gral", "utilizacion", "demanda"]
-dic_stp.dropna(thresh = 3, inplace= True)
-agro_stp = dic_stp[dic_stp["demanda"].str.contains("agrí", case = False)]
 
 #############################################
 #                joins                      #
@@ -90,10 +88,16 @@ agro_stp = dic_stp[dic_stp["demanda"].str.contains("agrí", case = False)]
 # join_impo_clae = def_join_impo_clae(impo_17, cuit_empresas)
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
 
-
-
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
+
+
+# =============================================================================
+# Pruebas
+# =============================================================================
+impo_cant = join_impo_clae_bec_bk.groupby("HS6_d12").agg({"cantidad":"sum", "cuit":"count"})
+impo_cant ["prod_empresa"] = impo_cant["cantidad"]/impo_cant["cuit"]
+impo_cant.sort_values("prod_empresa",ascending = False)
 
 
 
@@ -110,7 +114,7 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio, hs_6d=Fals
 
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
 
-join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
+join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia) # NO FUNCIONA
 #join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d.csv", index=False)
 #join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones.csv")
 join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d.csv")
