@@ -26,11 +26,11 @@ import plotinpy as pnp
 import prince
 from prince import ca
 
-
-from Bases_letra import *
-from procesamiento_letra import *
-from matriz_letra import *
-from pre_visualizacion_letra import *
+from definiciones_letra import *
+# from Bases_letra import *
+# from procesamiento_letra import *
+# from matriz_letra import *
+# from pre_visualizacion_letra import *
 
 
 #############################################
@@ -169,7 +169,8 @@ plt.savefig('../resultados/comercio_y_propio_letra.png')
 
 ##### insumos tabla 1
 # Top 5 de importaciones de cada sector
-top_5_impo = top_5(matriz_sisd_final, letras, bec, impo_tot_sec)
+top_5_impo = top_n(matriz_sisd_final, letras, bec, impo_tot_sec, 5)
+top_10_impo = top_n(matriz_sisd_final, letras, bec, impo_tot_sec, 10)
 
 #CUITS QUE IMPORTAN TOP HS6 Industria
 # top_industria = top_5_impo[top_5_impo["letra"]=="C"]["hs6"].iloc[[0,3]]
@@ -178,6 +179,7 @@ top_5_impo = top_5(matriz_sisd_final, letras, bec, impo_tot_sec)
 
 # top_5_impo.to_csv("../data/resultados/top5_impo.csv")
 top_5_impo.to_excel("../resultados/top5_impo.xlsx")
+top_10_impo.to_excel("../resultados/top10_impo.xlsx")
 
 
 ##### grafico 3
