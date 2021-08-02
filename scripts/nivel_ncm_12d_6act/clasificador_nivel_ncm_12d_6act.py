@@ -11,8 +11,8 @@ Created on Tue Jun 29 11:04:54 2021
 import os 
 
 #Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.getcwd()
+# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.getcwd()
 
 #igal
 os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
@@ -79,7 +79,7 @@ impo_d12  = predo_impo_12d(impo_d12, ncm12_desc)
 letras = predo_sectores_nombres(clae)
 
 comercio = predo_comercio(comercio, clae)
-cuit_empresas= predo_cuit_clae(cuit_clae, clae) #arreglar cuit con problemas!
+cuit_empresas= predo_cuit_clae(cuit_clae, clae)
 
 bec_bk = predo_bec_bk(bec, bec_to_clae)
 #dic_stp = predo_stp(dic_stp )
@@ -129,11 +129,13 @@ join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act.csv
 #matriz_sisd.to_csv("../data/resultados/matriz_pesada_12d_6act.csv", index= False)
 matriz_sisd = pd.read_csv("../data/resultados/matriz_pesada_12d_6act.csv")
 
+
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
 
 #matriz rotada
 z =to_matriz(matriz_sisd_final)
+
 
 
 # =============================================================================

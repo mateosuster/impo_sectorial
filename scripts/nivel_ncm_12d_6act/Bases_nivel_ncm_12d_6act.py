@@ -84,7 +84,8 @@ def predo_comercio(comercio, clae):
 def predo_cuit_clae(cuit_clae , clae):
     
     cuit_clae = cuit_clae[cuit_clae["Numero_actividad_cuit"]<=6].drop(["Clae6_desc","Fecha_actividad", "Cantidad_actividades_cuit"], axis =1)
-
+    cuit_clae = cuit_clae.drop_duplicates()
+    
     #procesamiento de los 6 digitos
     cuit_clae6 = cuit_clae.set_index(["CUIT", "Numero_actividad_cuit"], append=True)
     cuit_clae6 = cuit_clae6.unstack().droplevel(0, axis=1)
@@ -150,8 +151,6 @@ def predo_cuit_clae(cuit_clae , clae):
     cuit_clae6 = cuit_clae6.merge(letra4, left_on="CUIT", right_on="CUIT")
     cuit_clae6 = cuit_clae6.merge(letra5, left_on="CUIT", right_on="CUIT")
     cuit_clae6 = cuit_clae6.merge(letra6, left_on="CUIT", right_on="CUIT")
-    
-    cuit_clae6 = cuit_clae6.dropna()
     
     return cuit_clae6 
     
