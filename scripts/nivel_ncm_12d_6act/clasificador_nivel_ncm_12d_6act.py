@@ -111,9 +111,8 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
 
 #join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
-
 #join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act.csv", index=False)
-join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act.csv")
+#join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act.csv")
 
 # filtro = ["HS6", "CUIT_IMPOR", "valor", "letra1", "letra2", "letra3", 
 # "vta_bk", "vta_sec", "vta_bk2", "vta_sec2", "vta_bk3", "vta_sec3", 
@@ -135,6 +134,8 @@ matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
 
 #matriz rotada
 z =to_matriz(matriz_sisd_final)
+
+z_si_sd = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
 
 
 
