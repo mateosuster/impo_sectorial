@@ -11,11 +11,11 @@ Created on Tue Jun 29 11:04:54 2021
 import os 
 
 #Mateo
-# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
-# os.getcwd()
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+
 
 #igal
-os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
 os.getcwd()
 
 
@@ -86,15 +86,27 @@ bec_bk = predo_bec_bk(bec, bec_to_clae)
 
 
 
+
 #############################################
 #                joins                      #
 #############################################
 
 
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
-
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
+
+
+# =============================================================================
+# Implementacion STP para agro y transporte
+# =============================================================================
+
+dic_stp[dic_stp["desc"].str.contains("cami", case =False)]
+dic_stp[dic_stp["desc"].str.contains("cose", case =False)]
+dic_stp[dic_stp["NCM"]==870120]
+
+stp_transporte = dic_stp[dic_stp["demanda"].str.contains("trans", case =False)]
+stp_agro = dic_stp[dic_stp["demanda"].str.contains("agríc", case =False)]
 
 
 #############################################
@@ -120,6 +132,117 @@ join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(jo
 # join_final = join_final.sort_values("HS6")[filtro]
 
 
+# =============================================================================
+# Pruebas
+# =============================================================================
+ncm_sector = pd.read_csv("../nivel_clae_letra/resultados/asignacion_ncm.csv")
+
+
+# =============================================================================
+# construccion de  features
+# =============================================================================
+
+#cantidad de empresas que importan la partida y cantidad y valor importada total x partida
+indicadores_raw= join_impo_clae_bec_bk.groupby(["cuit", "unidad_medida", "HS6_d12"], as_index = False).agg({ "cantidad":"sum", "valor": "sum"})
+indicadores_raw["precio_empresa" ] = indicadores_raw.apply( lambda x: x.valor / x.cantidad, axis = 1 )
+
+precio_emp_avg = indicadores_raw.groupby( ["unidad_medida", "HS6_d12"], as_index= False)["precio_empresa"].mean().rename(columns = {"precio_empresa": "precio_emp_avg"})
+
+indicadores = indicadores_raw.reset_index().groupby([ "unidad_medida", "HS6_d12"], as_index = False).agg({"cuit": "count", "cantidad":"sum", "valor": "sum"})
+indicadores .rename(columns= {"cuit": "n_emp_importadoras", 
+                            "cantidad": "cant_importada",
+                            "valor": "valor_total"}, inplace = True)
+# Productos por empresa
+indicadores["cant_x_empresa"] = indicadores["cant_importada"]/indicadores["n_emp_importadoras"]
+
+#precio
+indicadores["precio_sin_ponderar"] = indicadores["valor_total"]/indicadores["cant_importada"]
+
+indicadores = pd.merge(indicadores, precio_emp_avg.drop("unidad_medida", axis =1) , how = "left", left_on = "HS6_d12",right_on = "HS6_d12")
+
+indicadores["control_precio"] = indicadores["precio_sin_ponderar"]/indicadores["precio_emp_avg"] -1 
+
+#PRECIOS
+# Precio unitario (todos los productos)
+join_impo_clae_bec_bk["precio"] =join_impo_clae_bec_bk["valor"]/join_impo_clae_bec_bk["cantidad"]  
+
+## sesgos de los precios
+sesgos = join_impo_clae_bec_bk.groupby("HS6_d12", as_index=False)["precio"].skew(axis=0, skipna=False).rename(columns = {"precio": "asimietria_precio"})
+sesgos["asimietria_precio"].hist(bins = 100) 
+plt.title("Histogramas de las asimetrias de los precios unitarios")
+
+sesgos_neg  = sesgos[sesgos<0]
+x =ncm12_desc[ncm12_desc["Posición"].isin(sesgos_neg.index)]
+# x.to_csv("partidas_con_sesgo_precio_negativo.csv", sep=";")
+
+len(sesgos[sesgos<0])/len(sesgos)
+len(sesgos[sesgos>0])
+
+## precios maximo, minimo y mediano
+
+precios = join_impo_clae_bec_bk.groupby(["HS6_d12"], as_index = False).agg({"precio": ["median", "mean", lambda x: x.std()/x.mean(),
+                                                                                       "max", "min", lambda x: x.max()- x.min()]}) 
+precios.columns.levels[1]
+
+precios.columns.set_levels([ "precio_simple_med" ,"precio_simple_avg", "precio_simple_cv", "precio_simple_max", "precio_simple_min", "precio_simple_rang","HS6_d12" ] , level= 1, inplace  = True)
+precios.columns = precios.columns.droplevel(level=0)
+
+indicadores_all = pd.merge(indicadores, precios, how = "inner", left_on ="HS6_d12", right_on = "HS6_d12")
+
+#medidas de homogeneidad al interior de los bienes (sd, cv, etc)
+# diferencia entre precio unitario mas alto y el mas bajo (rango) y cantidad por empresa
+
+#cluster 
+import sklearn
+
+
+## productos que solo los trae una empresa
+indicadores.sort_values("cuit")
+productos_una_empresa = indicadores[indicadores["cuit"]==1]
+x = join_impo_clae_bec_bk[join_impo_clae_bec_bk["HS6_d12"].isin(productos_una_empresa.index) ]
+
+indicadores.sort_values("cant_x_empresa",ascending = False)
+
+#electric generating set
+impo_x = join_impo_clae_bec_bk[join_impo_clae_bec_bk["HS6"] == 850213]
+impo_x["precio"].describe()
+impo_x["precio"].hist(bins = 100) 
+impo_x["cantidad"].hist(bins = 100) 
+
+#Pumps; for liquids, fitted or designed to be fitted with a measuring device, other than pumps for dispensing fuel or lubricants
+impo_x = join_impo_clae_bec_bk[join_impo_clae_bec_bk["HS6"] == 841319]
+impo_x["precio"].describe()
+impo_x["precio"].hist(bins = 100) 
+impo_x["cantidad"].hist(bins = 100) 
+
+#camiones
+impo_camiones = impo_d12[impo_d12["HS6"] == 870421]
+impo_camiones= impo_camiones.groupby(["cuit", "NOMBRE"])[["cantidad", "valor"]].sum().sort_values("cantidad", ascending= False)
+impo_camiones["cantidad"].describe()
+impo_camiones["cantidad"].hist(bins = 100) 
+
+impo_ford = join_impo_clae_bec_bk[join_impo_clae_bec_bk["cuit"] == "30678519681"].sort_values("valor", ascending = False)
+
+#cosechadoras
+impo_x = impo_d12[impo_d12["HS6"] == 843351]
+impo_x= impo_x.groupby(["cuit", "NOMBRE"])[["cantidad", "valor"]].sum().sort_values("cantidad", ascending= False)
+impo_x["cantidad"].describe()
+impo_x["cantidad"].hist(bins = 100) 
+sns.displot(impo_x["cantidad"])
+
+#tractores
+impo_x = impo_d12[impo_d12["HS6"] == 870120]
+impo_x= impo_x.groupby(["cuit", "NOMBRE"])[["cantidad", "valor"]].sum().sort_values("cantidad", ascending= False)
+impo_x["cantidad"].describe()
+impo_x["cantidad"].hist(bins = 100) 
+
+#camion con pala 
+impo_x = impo_d12[impo_d12["HS6"] == 842951]
+impo_x= impo_x.groupby(["cuit", "NOMBRE"])[["cantidad", "valor"]].sum().sort_values("cantidad", ascending= False)
+impo_x["cantidad"].describe()
+impo_x["cantidad"].hist(bins = 100) 
+
+
 #############################################
 #         ASIGNACIÓN y MATRIZ               #
 #############################################
@@ -137,14 +260,6 @@ z =to_matriz(matriz_sisd_final)
 
 z_si_sd = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
 
-
-
-# =============================================================================
-# Pruebas
-# =============================================================================
-impo_cant = join_impo_clae_bec_bk.groupby("HS6_d12").agg({"cantidad":"sum", "cuit":"count"})
-impo_cant ["prod_empresa"] = impo_cant["cantidad"]/impo_cant["cuit"]
-impo_cant.sort_values("prod_empresa",ascending = False)
 
 
 
