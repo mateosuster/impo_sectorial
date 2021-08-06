@@ -9,15 +9,12 @@ Created on Tue Jun 29 11:04:54 2021
 # Directorio de trabajo y librerias
 # =============================================================================
 import os 
-
 #Mateo
 os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
-
 
 #igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
 os.getcwd()
-
 
 import pandas as pd
 import numpy as np
@@ -25,11 +22,8 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 import seaborn as sns
 import plotinpy as pnp
-
-
 # import prince
 # from prince import ca
-
 
 from Bases_nivel_ncm_12d_6act import *
 from procesamiento_nivel_ncm_12d_6act import *
@@ -162,38 +156,152 @@ indicadores = pd.merge(indicadores, precio_emp_avg.drop("unidad_medida", axis =1
 
 indicadores["control_precio"] = indicadores["precio_sin_ponderar"]/indicadores["precio_emp_avg"] -1 
 
+#productos q los trae una sola empresa
+n_emp_1 = indicadores[(indicadores["n_emp_importadoras"]==1 ) & (indicadores["precio_emp_avg"] >indicadores["precio_emp_avg"].median()  ) ]
+corr = n_emp_1.drop(["unidad_medida", "HS6_d12", "n_emp_importadoras", "control_precio"], axis = 1).corr()
+
+# correlaciones
+corr  = indicadores.loc[ indicadores["n_emp_importadoras"]==1, [ 'cant_importada', 'n_emp_importadoras',
+                     'valor_total','cant_x_empresa', 'precio_emp_avg',]].drop("n_emp_importadoras", axis = 1).corr()
+
+corr  = indicadores.loc[:, [ 'cant_importada', 'n_emp_importadoras',
+                     'valor_total','cant_x_empresa', 'precio_emp_avg']].corr()
+
+# Generate a mask for the upper triangle
+mask = np.triu(np.ones_like(corr, dtype=bool))
+
+# Generate a custom diverging colormap
+cmap = sns.diverging_palette(230, 20, as_cmap=True)
+
+# Set up the matplotlib figure
+f, ax = plt.subplots(figsize=(11, 9))
+sns.heatmap(corr, cmap=cmap, vmax=1, vmin=-1, center=0, annot=True,#  mask=mask,
+            square=True, linewidths=.5, cbar_kws={"shrink": .5})
+
+# tabla con n_empresa == 1 , agregarle las 6 actividades
+#kmeans entre cantidad_x_emp y precio unitario
+#cluster 
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans, MiniBatchKMeans
+from sklearn.metrics import pairwise_distances_argmin_min
+from mpl_toolkits.mplot3d import Axes3D
+
+
+scaler = StandardScaler()
+data = indicadores[[ 'n_emp_importadoras', "cant_x_empresa", 'precio_emp_avg']]
+data_scale = pd.DataFrame (scaler.fit_transform(data), columns = data.columns )
+
+sns.pairplot(data_scale ,kind='scatter')
+data_scale.hist()
+
+# kmeans = KMeans( n_clusters=2).fit(data_scale)
+kmeans = MiniBatchKMeans( n_clusters=2).fit(data_scale)
+centroids = kmeans.cluster_centers_
+
+
+# Predicting the clusters
+labels = kmeans.predict(data_scale)
+# Getting the cluster centers
+C = kmeans.cluster_centers_
+colores=['red','green']
+asignar=[]
+for row in labels:
+    asignar.append(colores[row])
+
+fig = plt.figure()
+ax = Axes3D(fig)
+ax.scatter(data_scale.iloc[:, 0], data_scale.iloc[:, 1], data_scale.iloc[:, 2], c=asignar,s=60)
+ax.scatter(C[:, 0], C[:, 1], C[:, 2], marker='*', c=colores, s=1000)
+ax.set_xlabel('Cantidad de empresas importadoras', rotation=150)
+ax.set_ylabel('Productos por empresa')
+ax.set_zlabel('Precio promedio ponderado',  rotation=60)
+
+f2 = data_scale['precio_emp_avg'].values
+# f2 = data_scale['cant_x_empresa'].values
+f1 = data_scale['n_emp_importadoras'].values
+ 
+plt.scatter(f1, f2, c=asignar, s=70)
+plt.scatter(C[:, 2], C[:, 1], marker='*', c=["red", "green"], s=1000)
+plt.show()
+
+pd.value_counts(labels)
+
+data_scale["cluster"] =labels
+
+
+# Predicting the clusters
+labels = kmeans.predict(X)
+# Getting the cluster centers
+C = kmeans.cluster_centers_
+colores=['red','green','blue','cyan','yellow']
+asignar=[]
+for row in labels:
+    asignar.append(colores[row])
+ 
+fig = plt.figure()
+ax = Axes3D(fig)
+ax.scatter(X[:, 0], X[:, 1], X[:, 2], c=asignar,s=60)
+ax.scatter(C[:, 0], C[:, 1], C[:, 2], marker='*', c=colores, s=1000)
+
 #PRECIOS
 # Precio unitario (todos los productos)
 join_impo_clae_bec_bk["precio"] =join_impo_clae_bec_bk["valor"]/join_impo_clae_bec_bk["cantidad"]  
 
-## sesgos de los precios
-sesgos = join_impo_clae_bec_bk.groupby("HS6_d12", as_index=False)["precio"].skew(axis=0, skipna=False).rename(columns = {"precio": "asimietria_precio"})
-sesgos["asimietria_precio"].hist(bins = 100) 
+precios["precio__skew"].hist(bins = 100) 
 plt.title("Histogramas de las asimetrias de los precios unitarios")
 
-sesgos_neg  = sesgos[sesgos<0]
-x =ncm12_desc[ncm12_desc["Posición"].isin(sesgos_neg.index)]
-# x.to_csv("partidas_con_sesgo_precio_negativo.csv", sep=";")
-
-len(sesgos[sesgos<0])/len(sesgos)
-len(sesgos[sesgos>0])
-
 ## precios maximo, minimo y mediano
-
 precios = join_impo_clae_bec_bk.groupby(["HS6_d12"], as_index = False).agg({"precio": ["median", "mean", lambda x: x.std()/x.mean(),
-                                                                                       "max", "min", lambda x: x.max()- x.min()]}) 
+                                                                                       "max", "min", lambda x: x.max()- x.min(),
+                                                                                       lambda x: x.skew(axis=0, skipna=False) ]}) 
+
+
 precios.columns.levels[1]
 
-precios.columns.set_levels([ "precio_simple_med" ,"precio_simple_avg", "precio_simple_cv", "precio_simple_max", "precio_simple_min", "precio_simple_rang","HS6_d12" ] , level= 1, inplace  = True)
+precios.columns.set_levels([ "precio_simple_med" ,"precio_simple_avg", "precio_simple_cv", "precio_simple_max", "precio_simple_min", "precio_simple_rang", "precio_simple_skew", "HS6_d12" ] , level= 1, inplace  = True)
 precios.columns = precios.columns.droplevel(level=0)
+
+
+
+precios_empresa = indicadores_raw.groupby(["HS6_d12"], as_index = False).agg({"precio_empresa": ["median", "mean", lambda x: x.std()/x.mean(),
+                                                                                       "max", "min", 
+                                                                                       lambda x: x.quantile(q= .25),
+                                                                                       lambda x: x.quantile(q= .75),
+                                                                                       lambda x: (x.max()- x.min())/x.mean(),
+                                                                                       lambda x: x.skew(axis=0, skipna=False) ]}) 
+
+precios_empresa.columns.levels[1]
+precios_empresa.columns.set_levels([ "precio_emp_med" ,"precio_emp_avg", "precio_emp_cv", "precio_emp_max", "precio_emp_min", "precio_emp_25", "precio_emp_75", "precio_emp_rang", "precio_emp_skew", "HS6_d12" ] , level= 1, inplace  = True)
+precios_empresa.columns = precios_empresa.columns.droplevel(level=0)
+
+corr = precios_empresa.drop("HS6_d12", axis =1).corr()
+
+# Generate a mask for the upper triangle
+mask = np.triu(np.ones_like(corr, dtype=bool))
+
+# Generate a custom diverging colormap
+cmap = sns.diverging_palette(230, 20, as_cmap=True)
+
+# Set up the matplotlib figure
+f, ax = plt.subplots(figsize=(11, 9))
+sns.heatmap(corr, cmap=cmap, vmax=1, vmin=-1, center=0, annot=True, mask=mask,
+            square=True, linewidths=.5, cbar_kws={"shrink": .5})
+
+x = pd.merge(join_impo_clae_bec_bk [['NOMBRE', 'HS6_d12', 'valor', 'unidad_medida', 
+                                             'cantidad', 'HS6', 'Descripción Completa', "precio"]], precios_empresa, how = "left", left_on="HS6_d12",  right_on="HS6_d12")
+separacion = pd.merge(x, indicadores[['HS6_d12', 'n_emp_importadoras',  'cant_x_empresa']], 
+                      how = "left", left_on = "HS6_d12", right_on = "HS6_d12")
+
+
+sep_partes = separacion[separacion["precio"] < separacion["precio_emp_25"] ]
+sep_bk = separacion[separacion["precio"] > separacion["precio_emp_25"] ]
+
 
 indicadores_all = pd.merge(indicadores, precios, how = "inner", left_on ="HS6_d12", right_on = "HS6_d12")
 
 #medidas de homogeneidad al interior de los bienes (sd, cv, etc)
 # diferencia entre precio unitario mas alto y el mas bajo (rango) y cantidad por empresa
 
-#cluster 
-import sklearn
 
 
 ## productos que solo los trae una empresa
