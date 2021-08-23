@@ -45,6 +45,9 @@ from pre_visualizacion_nivel_ncm_12d_6act import *
 #impo 12 d
 # impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
 impo_d12  = pd.read_csv("../data/IMPO_17_feature.csv")
+# impo_d12  = pd.read_excel("../data/IMPO_17_feature.xlsx")
+# impo_d12.to_csv("../data/IMPO_17_feature.csv")
+
 #impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
 clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
@@ -54,8 +57,8 @@ bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
 bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
 
 #diccionario ncm12d
-ncm12_desc = pd.read_csv("../data/NCM 12d.csv", sep=";")
-ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['descripcion'].str.split('//', expand=True))], axis=1)
+ncm12_desc = pd.read_csv("../data/NCM 12d.csv", sep=";")#.rename(columns = {"Descripción Completa": "descripcion"})
+ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Descripción Completa'].str.split('//', expand=True))], axis=1)
 
 # parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
 # transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
@@ -66,17 +69,15 @@ ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['des
 
 #STP
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
-dic_stp.to_csv("../data/bsk-prod-clasificacion.csv", index=False)
+# dic_stp.to_csv("../data/bsk-prod-clasificacion.csv", index=False)
 
 #############################################
 #           preparación bases               #
 #############################################
 
 # predo_impo_17(impo_17)
-impo_d12  = predo_impo_12d(impo_d12, ncm12_desc, kilos = True)
-
+impo_d12  = predo_impo_12d(impo_d12, ncm12_desc)# , kilos = True)
 letras = predo_sectores_nombres(clae)
-
 comercio = predo_comercio(comercio, clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae)
 
@@ -140,10 +141,14 @@ ncm_sector_perc = ncm_sector_perc.div(ncm_sector_perc.sum(axis=1), axis = 0).mul
 # destino de los bienes de la stp 
 stp_asig = pd.merge(dic_stp[["NCM", "desc", "demanda"]], ncm_sector_perc, how= "left", left_on = "NCM", right_on = "hs6" )
 stp_agro_asig = pd.merge(stp_agro[["NCM", "desc", "demanda"]], ncm_sector_perc, how= "left", left_on = "NCM", right_on = "hs6" ).drop("hs6", axis=1)
-stp_trans_asig = pd.merge(stp_transporte[["NCM", "desc", "demanda"]], ncm_sector_perc, how= "left", left_on = "NCM", right_on = "hs6" ).drop("hs6", axis=1)
+stp_trans_asig = pd.merge(stp_trans[["NCM", "desc", "demanda"]], ncm_sector_perc, how= "left", left_on = "NCM", right_on = "hs6" ).drop("hs6", axis=1)
 
 # filtrado 1
 filtro1 = join_impo_clae_bec_bk[~join_impo_clae_bec_bk["HS6"].isin( pd.concat([stp_agro["NCM"] , stp_trans["NCM"]]))]
+
+(len(filtro1)/len(join_impo_clae_bec_bk)-1)*100
+len(filtro1)
+len(join_impo_clae_bec_bk)
 
 # =============================================================================
 # 2do filtro: STP entre específicos y generales
@@ -158,11 +163,12 @@ stp_especifico = dic_stp[dic_stp["utilizacion"]=="Específico"] # =~ BK
 # filtrado 2
 filtro2 = filtro1[~filtro1["HS6"].isin(stp_especifico["NCM"] )]
 # filtro2b = filtro1[filtro1["HS6"].isin(stp_general["NCM"] )]
+(len(filtro2)/len(filtro1)-1)*100
+len(filtro2)
 
 #magnitud del problema
 filtro2.valor.sum()/impo_d12.valor.sum()
 filtro2.valor.sum()/join_impo_clae_bec_bk.valor.sum()
-
 
 # partes y piezas
 partes_stp = stp_asig[stp_asig["desc"].str.contains("parte", case = False) ]
@@ -179,6 +185,8 @@ partidas_dest = partidas_dest [~partidas_dest ["destinacion"].str.contains("S/TR
 partidas_dest .destinacion.value_counts(normalize= True)
 
 filtro3 = filtro2[filtro2["HS6"].isin(partidas_dest["HS6"]) ]
+(len(filtro3)/len(filtro2)-1)*100
+len(filtro3)
 
 x = filtro3 .groupby(["HS6_d12", "descripcion",  "destinacion"], as_index= False).agg("size")
 
@@ -207,14 +215,14 @@ y = x[x["destinacion"].str.contains("temporaria|RAF", case=False)]
 # =============================================1================================
 # 4to filtro: Metricas 
 # =============================================================================
-
 # probar con cantidad importada (en sus respectivas unidades declaradas y en kilos, y en peso unitario)
+filtro3.groupby(["HS6_d12", "destinacion", "uni_decl"], as_index= False)["cant_decl"]
+
 
 
 # combinacion de unidades 
-x = impo_d12.groupby(["unidad_est", "unidad_decl"]).size().reset_index().rename(columns={0:'count'}).sort_values("count", ascending = False)
+x = impo_d12.groupby(["uni_est", "uni_decl"]).size().reset_index().rename(columns={0:'count'}).sort_values("count", ascending = False)
 x["frec_relativa"] = x["count"]/(x["count"].sum() )
-
 
 x = impo_d12[impo_d12["HS6_d12"].isin(n_emp_1["HS6_d12"])].groupby(["unidad_est", "unidad_decl"]).size().reset_index().rename(columns={0:'count'}).sort_values("count", ascending = False)
 x["frec_relativa"] = x["count"]/(x["count"].sum() )
@@ -224,6 +232,12 @@ y = impo_d12[(impo_d12["HS6_d12"].isin(n_emp_1["HS6_d12"])) & (impo_d12["unidad_
 # y = impo_d12[(impo_d12["HS6_d12"].isin(n_emp_1["HS6_d12"])) ]
 y.valor.sum() / impo_d12.valor.sum()
 
+
+# =============================================================================
+# Resultado filtro
+# =============================================================================
+observaciones_filtros = pd.DataFrame([len(join_impo_clae_bec_bk), len(filtro1), len(filtro2), len(filtro3)], columns= ["n"])
+observaciones_filtros["rel_al_tot"] =  observaciones_filtros["n"]/len(join_impo_clae_bec_bk)
 
 
 # =============================================================================

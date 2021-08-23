@@ -39,12 +39,14 @@ def predo_impo_12d(impo_d12, ncm_desc):
 
     impo_d12.rename(columns = {'ANYO':"anio", 'POSIC_SIM':"HS6_d12", 
                                'CIF':"valor", "CUIT_IMPOR":"cuit",
-                               "UMED_ESTAD": "unidad_medida", "CANT_UNEST": "cantidad"}, inplace=True)
-    impo_d12 = impo_d12[[ "cuit", "NOMBRE", "HS6_d12", "valor", "unidad_medida", "cantidad"]]
+                               "KILOS": "kilos", "DESTINAC": "destinacion",
+                               "UMED_ESTAD": "uni_est", "CANT_UNEST": "cant_est",
+                               "UMED_DECL": "uni_decl", "CANT_DECL": "cant_decl"}, inplace=True)
+    impo_d12 = impo_d12[[ "cuit", "NOMBRE", "HS6_d12", "destinacion", "valor", "kilos", "uni_est", "cant_est", "uni_decl", "cant_decl"]]
     impo_d12["HS6"]= impo_d12["HS6_d12"].str.slice(0,6).astype(int)
     impo_d12["cuit"] =impo_d12["cuit"].astype(str)
     
-    impo_d12 = pd.merge(impo_d12, ncm_desc[["Descripción Completa", "Posición"]], left_on="HS6_d12", right_on="Posición", how="left").drop(["Posición"], axis=1)
+    impo_d12 = pd.merge(impo_d12, ncm_desc[["Descripción Completa", "Posición"]], left_on="HS6_d12", right_on="Posición", how="left").drop(["Posición"], axis=1).rename(columns = {"Descripción Completa": "descripcion"})
     
     return impo_d12
 
