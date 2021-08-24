@@ -88,20 +88,20 @@ dic_stp = predo_stp(dic_stp )
 #############################################
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
-join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
+# join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
 
 
 #############################################
 #           Tabla de contingencia           #
 #              producto-sector              #
-#############################################
-tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
+############################################
+# tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 
 #############################################
 #      ponderación por ncm y letra          #
 #############################################
 
-join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
+# join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
 
 #join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
 #join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act.csv", index=False)
@@ -168,8 +168,8 @@ filtro2.valor.sum()/impo_d12.valor.sum()
 filtro2.valor.sum()/join_impo_clae_bec_bk.valor.sum()
 
 # partes y piezas
-partes_stp = stp_asig[stp_asig["desc"].str.contains("parte", case = False) ]
-accesorios_stp = stp_asig[stp_asig["desc"].str.contains("accesorio", case = False) ]
+# partes_stp = stp_asig[stp_asig["desc"].str.contains("parte", case = False) ]
+# accesorios_stp = stp_asig[stp_asig["desc"].str.contains("accesorio", case = False) ]
 
 # =============================================================================
 # 3er filtro: Variable Destinacion
@@ -189,25 +189,25 @@ x = filtro3 .groupby(["HS6_d12", "descripcion",  "destinacion"], as_index= False
 
 
 ###################### pruebas
-impo_d12.destinacion.value_counts(normalize= True)
-join_impo_clae_bec_bk.destinacion.value_counts(normalize= True)
+# impo_d12.destinacion.value_counts(normalize= True)
+# join_impo_clae_bec_bk.destinacion.value_counts(normalize= True)
 
-impo_d12[impo_d12["destinacion"].str.contains("bienes de capital", case=False)]["valor"].sum()/filtro_stp ["valor"].sum()
-impo_d12[impo_d12["destinacion"].str.contains("temporaria", case=False)]["valor"].sum()/impo_d12["valor"].sum()
-filtro_stp[filtro_stp["destinacion"].str.contains("temporaria", case=False)]["valor"].sum()/filtro_stp ["valor"].sum()
+# impo_d12[impo_d12["destinacion"].str.contains("bienes de capital", case=False)]["valor"].sum()/filtro_stp ["valor"].sum()
+# impo_d12[impo_d12["destinacion"].str.contains("temporaria", case=False)]["valor"].sum()/impo_d12["valor"].sum()
+# filtro_stp[filtro_stp["destinacion"].str.contains("temporaria", case=False)]["valor"].sum()/filtro_stp ["valor"].sum()
 
-# prueba_dest = filtro_stp.groupby(["HS6_d12", "descripcion",  "destinacion"])["valor"].agg(  "sum")
-prueba_dest = join_impo_clae_bec_bk.groupby(["HS6_d12", "descripcion",  "destinacion"])["valor"].agg(  "sum")
-prueba_relativ =prueba_dest.groupby(level=0).apply(lambda x : x / float(x.sum()))
+# # prueba_dest = filtro_stp.groupby(["HS6_d12", "descripcion",  "destinacion"])["valor"].agg(  "sum")
+# prueba_dest = join_impo_clae_bec_bk.groupby(["HS6_d12", "descripcion",  "destinacion"])["valor"].agg(  "sum")
+# prueba_relativ =prueba_dest.groupby(level=0).apply(lambda x : x / float(x.sum()))
 
 
-x = join_impo_clae_bec_bk.groupby(["HS6_d12", "descripcion",  "destinacion"], as_index= False).agg("size")
-x[x["size"]] = 1
+# x = join_impo_clae_bec_bk.groupby(["HS6_d12", "descripcion",  "destinacion"], as_index= False).agg("size")
+# x[x["size"]] = 1
 
-y = x[x["destinacion"].str.contains("C/TR", case=False)]
+# y = x[x["destinacion"].str.contains("C/TR", case=False)]
 
-x = join_impo_clae_bec_bk.groupby(["HS6_d12", "descripcion"], as_index= False)["destinacion"].agg("count")
-y = x[x["destinacion"].str.contains("temporaria|RAF", case=False)]
+# x = join_impo_clae_bec_bk.groupby(["HS6_d12", "descripcion"], as_index= False)["destinacion"].agg("count")
+# y = x[x["destinacion"].str.contains("temporaria|RAF", case=False)]
 
 # =============================================1================================
 # 4to filtro: Metricas 
@@ -221,39 +221,43 @@ from mpl_toolkits.mplot3d import Axes3D
 
 ######### 
 # loop 
-cols = ["HS6_d12", "destinacion", "uni_decl", "cant_decl"]
+cols = ["HS6_d12", "descripcion", "destinacion", "uni_decl", "cant_decl"]
 data = filtro3[cols]
 data["groupID"]= data.groupby(["HS6_d12", "destinacion", "uni_decl"]).ngroup()
+data["ID"]= range(len(data))
 
-data[["HS6_d12", "destinacion", "uni_decl"]].value_counts(ascending=False)
+data[["HS6_d12","descripcion",  "destinacion", "uni_decl"]].value_counts(ascending=False)
 
-filtro = data.groupby(["HS6_d12", "destinacion", "uni_decl","groupID"],as_index=False).size()
-filtro = filtro[filtro["size"]>1]
-filtro = pd.unique(filtro["groupID"])
-
-
-clusters = pd.DataFrame(columns= ["id_group", "cant_decl", "cluster"])
+filtro_raw = data.groupby(["HS6_d12","descripcion",  "destinacion", "uni_decl","groupID"],as_index=False).size()
+filtro_mayor1 = filtro_raw[filtro_raw["size"]>1]
+filtro_menor1= filtro_raw[filtro_raw["size"]==1]
+filtro = pd.unique(filtro_mayor1["groupID"])
 len(filtro )
 
+from tqdm import tqdm
 
-for i in filtro:
+clusters = pd.DataFrame(columns= ["groupID", "cant_decl_clu", "cluster", "ID"])
+for i in tqdm(filtro):
     # print(i)
     kmeans = MiniBatchKMeans(n_clusters=2, random_state=1)
     # x = data[data["groupID"]== filtro[0] ]["cant_decl"].to_numpy() 
     x = np.array( data[data["groupID"]== i ]["cant_decl"] ).reshape(-1,1)
     cluster = kmeans.fit(x)
     label = cluster.labels_
-    to_append = pd.DataFrame({ "id_group":i,  "cant_decl": x.reshape(len(label)), "cluster": label})
+    to_append = pd.DataFrame({ "groupID":i,  "cant_decl_clu": x.reshape(len(label)), "cluster": label})
     clusters = pd.concat([clusters, to_append], axis = 0)
 
+clusters.sort_values(by = ["groupID", "cant_decl_clu"], inplace = True)
+clusters["ID"]= range(len(clusters))    
 
+data_clusterizada = data[data["groupID"].isin(filtro)].sort_values(by = ["groupID", "cant_decl"] )
+data_clusterizada["ID"]= range(len(data_clusterizada))
+data_cluster = pd.merge(data_clusterizada, clusters, left_on = ["groupID", "ID"],  right_on = ["groupID", "ID"], how = "inner")
+np.mean(data_cluster["cant_decl"]/data_cluster["cant_decl_clu"])
 
+# LISTO CLUSTER !
 
-
-
-
-
-
+#######################################################################################
 
 #############
 x = filtro3.groupby(["HS6_d12", "destinacion", "uni_decl"], as_index= False)["cant_decl"]
