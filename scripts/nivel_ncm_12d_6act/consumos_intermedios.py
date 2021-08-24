@@ -66,7 +66,6 @@ ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Des
 # bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
 # isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
 # dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
-
 #STP
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
 # dic_stp.to_csv("../data/bsk-prod-clasificacion.csv", index=False)
@@ -80,7 +79,6 @@ impo_d12  = predo_impo_12d(impo_d12, ncm12_desc)# , kilos = True)
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae)
-
 bec_bk = predo_bec_bk(bec, bec_to_clae)
 dic_stp = predo_stp(dic_stp )
 
@@ -97,7 +95,6 @@ join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_cl
 #           Tabla de contingencia           #
 #              producto-sector              #
 #############################################
-
 tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 
 #############################################
@@ -216,7 +213,124 @@ y = x[x["destinacion"].str.contains("temporaria|RAF", case=False)]
 # 4to filtro: Metricas 
 # =============================================================================
 # probar con cantidad importada (en sus respectivas unidades declaradas y en kilos, y en peso unitario)
-filtro3.groupby(["HS6_d12", "destinacion", "uni_decl"], as_index= False)["cant_decl"]
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans, MiniBatchKMeans
+from sklearn.metrics import pairwise_distances_argmin_min
+from mpl_toolkits.mplot3d import Axes3D
+
+######### 
+# loop 
+cols = ["HS6_d12", "destinacion", "uni_decl", "cant_decl"]
+data = filtro3[cols]
+data["groupID"]= data.groupby(["HS6_d12", "destinacion", "uni_decl"]).ngroup()
+
+data[["HS6_d12", "destinacion", "uni_decl"]].value_counts(ascending=False)
+
+filtro = data.groupby(["HS6_d12", "destinacion", "uni_decl","groupID"],as_index=False).size()
+filtro = filtro[filtro["size"]>1]
+filtro = pd.unique(filtro["groupID"])
+
+
+clusters = pd.DataFrame(columns= ["id_group", "cant_decl", "cluster"])
+len(filtro )
+
+
+for i in filtro:
+    # print(i)
+    kmeans = MiniBatchKMeans(n_clusters=2, random_state=1)
+    # x = data[data["groupID"]== filtro[0] ]["cant_decl"].to_numpy() 
+    x = np.array( data[data["groupID"]== i ]["cant_decl"] ).reshape(-1,1)
+    cluster = kmeans.fit(x)
+    label = cluster.labels_
+    to_append = pd.DataFrame({ "id_group":i,  "cant_decl": x.reshape(len(label)), "cluster": label})
+    clusters = pd.concat([clusters, to_append], axis = 0)
+
+
+
+
+
+
+
+
+
+
+#############
+x = filtro3.groupby(["HS6_d12", "destinacion", "uni_decl"], as_index= False)["cant_decl"]
+
+
+def apply_kmeans_on_each_category(df):
+    not_na_mask = df.notna()
+    
+    embedding = df.loc[not_na_mask]
+    n_clusters = 2
+    # n_clusters = int(not_na_mask.sum()/2)
+
+    op = pd.Series([np.nan] * len(df), index=df.index)
+    if n_clusters > 1:
+        df['cluster'] = np.nan
+        kmeans = MiniBatchKMeans(n_clusters=n_clusters, random_state=0).fit(embedding.tolist())
+        # kmeans = KMeans(n_clusters=n_clusters, random_state=0).fit(embedding.tolist())
+        op.loc[not_na_mask] = kmeans.labels_.tolist()
+    return op
+# df_test['clusters'] = df_test.groupby('A')['D'].transform(apply_kmeans_on_each_category)
+filtro3["cluster"] = filtro3.groupby(["HS6_d12", "destinacion", "uni_decl"], as_index= False)["cant_decl"].transform(apply_kmeans_on_each_category)
+data["cluster"] = data.groupby(["HS6_d12", "destinacion", "uni_decl"], as_index= False)["cant_decl"].apply(apply_kmeans_on_each_category)
+
+scaler = StandardScaler()
+cant_scale = pd.DataFrame(scaler.fit_transform(filtro3[["cant_decl"]])).rename(columns = {0: "cant_decl"})
+cant_scale["id"] = range(len(cant_scale)) 
+
+data_sel = filtro3[["HS6_d12", "destinacion", "uni_decl"]]
+data_sel["id"] = range(len(data_sel))
+
+data = pd.merge(data_sel, cant_scale, left_on = "id", right_on ="id", how ="inner" ).drop("id", axis =1)
+
+X = np.array(data).reshape(-1,1)  
+kmeans = KMeans(n_clusters=2, random_state=0).fit(X)
+
+kmeans = MiniBatchKMeans( n_clusters=2).fit(data.groupby(["HS6_d12", "destinacion", "uni_decl"])) 
+kmeans = KMeans( n_clusters=2).fit(data.groupby(["HS6_d12", "destinacion", "uni_decl"])) 
+
+#####
+
+def cluster(X):
+    k_means = KMeans(n_clusters=2).fit(X)
+    # k_means = MiniBatchKMeans(n_clusters=2).fit(X)
+    return X.groupby(k_means.labels_)\
+            .transform('mean').sum(1)\
+            .rank(method='dense').sub(1)\
+            .astype(int).to_frame()
+    # return k_means
+
+cluster(np.array(data["cant_decl"]).reshape(1,-1) )
+
+data['Cluster_id'] = data.groupby(["HS6_d12", "destinacion", "uni_decl"])["cant_decl"].apply(cluster)
+data['Cluster_id'] = data.groupby(["HS6_d12", "destinacion", "uni_decl"])["cant_decl"].transform(cluster)
+
+
+data.sort_values("groupID")
+
+data['Cluster_id'] = data.groupby(["HS6_d12", "destinacion", "uni_decl"]).apply(lambda x : cluster(X))
+
+
+df['Cluster_cat'] = df['Cluster_id'].map(mapping)
+
+####
+filtro3["cluster"] = filtro3.groupby(["HS6_d12", "destinacion", "uni_decl"], as_index= False)["cant_decl"].transform()
+
+
+
+np.array([x, label])
+
+type(label)
+type(x)
+len(label)
+type(x)
+label.shape
+x.reshape(len(label))
+
+x = kmeans.fit(data[data["groupID"]== filtro[0]]["cant_decl"])
 
 
 
@@ -236,7 +350,7 @@ y.valor.sum() / impo_d12.valor.sum()
 # =============================================================================
 # Resultado filtro
 # =============================================================================
-observaciones_filtros = pd.DataFrame([len(join_impo_clae_bec_bk), len(filtro1), len(filtro2), len(filtro3)], columns= ["n"])
+observaciones_filtros = pd.DataFrame([len(join_impo_clae), len(join_impo_clae_bec_bk), len(filtro1), len(filtro2), len(filtro3)], columns= ["n"])
 observaciones_filtros["rel_al_tot"] =  observaciones_filtros["n"]/len(join_impo_clae_bec_bk)
 
 
@@ -248,14 +362,14 @@ x = indicadores[indicadores["HS6_d12"]== "84241000910C" ]
 n_emp_1 [n_emp_1 ["HS6_d12"]== "84241000910C" ]
 
 #cantidad de empresas que importan la partida y cantidad y valor importada total x partida
-indicadores_raw= join_impo_clae_bec_bk.groupby(["cuit", "unidad_est", "unidad_decl",  "HS6_d12"], as_index = False).agg({ "cant_est":"sum", "valor": "sum"
+indicadores_raw= join_impo_clae_bec_bk.groupby(["cuit", "uni_est", "uni_decl",  "HS6_d12"], as_index = False).agg({ "cant_est":"sum", "valor": "sum"
                                                                                                          , "kilos": "sum"})
 
 indicadores_raw["precio_empresa" ] = indicadores_raw.apply( lambda x: x.valor / x.cant_est, axis = 1 )
 
-precio_emp_avg = indicadores_raw.groupby( ["unidad_est", "HS6_d12"], as_index= False)["precio_empresa"].mean().rename(columns = {"precio_empresa": "precio_emp_avg"})
+precio_emp_avg = indicadores_raw.groupby( ["uni_est", "HS6_d12"], as_index= False)["precio_empresa"].mean().rename(columns = {"precio_empresa": "precio_emp_avg"})
 
-indicadores = indicadores_raw.reset_index().groupby([ "unidad_est", "HS6_d12"], as_index = False).agg({"cuit": "count", "cant_est":"sum", "valor": "sum"
+indicadores = indicadores_raw.reset_index().groupby([ "uni_est", "HS6_d12"], as_index = False).agg({"cuit": "count", "cant_est":"sum", "valor": "sum"
                                                                                                        , "kilos": "mean"
                                                                                                        })
 indicadores .rename(columns= {"cuit": "n_emp_importadoras", 
@@ -270,7 +384,7 @@ indicadores["cant_x_empresa"] = indicadores["cant_importada"]/indicadores["n_emp
 #precio
 indicadores["precio_sin_ponderar"] = indicadores["valor_total"]/indicadores["cant_importada"]
 
-indicadores = pd.merge(indicadores, precio_emp_avg.drop("unidad_est", axis =1) , how = "left", left_on = "HS6_d12",right_on = "HS6_d12")
+indicadores = pd.merge(indicadores, precio_emp_avg.drop("uni_est", axis =1) , how = "left", left_on = "HS6_d12",right_on = "HS6_d12")
 
 indicadores["control_precio"] = indicadores["precio_sin_ponderar"]/indicadores["precio_emp_avg"] -1 
 indicadores["control_precio"].hist()
@@ -344,7 +458,6 @@ from sklearn.cluster import KMeans, MiniBatchKMeans
 from sklearn.metrics import pairwise_distances_argmin_min
 from mpl_toolkits.mplot3d import Axes3D
 
-
 scaler = StandardScaler()
 data = indicadores[[ 'n_emp_importadoras', "cant_x_empresa", 'precio_emp_avg']]
 data_scale = pd.DataFrame (scaler.fit_transform(data), columns = data.columns )
@@ -355,7 +468,7 @@ data_scale.hist()
 # kmeans = KMeans( n_clusters=2).fit(data_scale)
 kmeans = MiniBatchKMeans( n_clusters=2).fit(data_scale)
 centroids = kmeans.cluster_centers_
-
+kmeans.labels_
 
 # Predicting the clusters
 labels = kmeans.predict(data_scale)
