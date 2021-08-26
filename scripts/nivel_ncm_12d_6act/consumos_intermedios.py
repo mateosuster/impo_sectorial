@@ -23,6 +23,7 @@ os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
 os.getcwd()
 
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -31,6 +32,14 @@ import seaborn as sns
 import plotinpy as pnp
 # import prince
 # from prince import ca
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans, MiniBatchKMeans
+from sklearn.metrics import pairwise_distances_argmin_min
+from mpl_toolkits.mplot3d import Axes3D
+
+from tqdm import tqdm
+
 
 from Bases_nivel_ncm_12d_6act import *
 from procesamiento_nivel_ncm_12d_6act import *
@@ -130,6 +139,7 @@ stp_trans= dic_stp[dic_stp["utilizacion"] == "Transporte"]
 # filtros agro (son iguales)
 stp_agro = dic_stp[dic_stp["demanda"].str.contains("agríc", case =False)]
 stp_agro = dic_stp[dic_stp["desc_gral"].str.contains("Maquinaria agropecuaria y forestal")]
+# cosechadoras y sembradoras 
 
 # porcentaje relativo de las asignaciones
 ncm_sector_perc = ncm_sector.set_index("hs6")
@@ -141,7 +151,10 @@ stp_agro_asig = pd.merge(stp_agro[["NCM", "desc", "demanda"]], ncm_sector_perc, 
 stp_trans_asig = pd.merge(stp_trans[["NCM", "desc", "demanda"]], ncm_sector_perc, how= "left", left_on = "NCM", right_on = "hs6" ).drop("hs6", axis=1)
 
 # filtrado 1
-filtro1 = join_impo_clae_bec_bk[~join_impo_clae_bec_bk["HS6"].isin( pd.concat([stp_agro["NCM"] , stp_trans["NCM"]]))]
+# pasar a agro donde % de C o G es mayor que el % asignado a A
+# %A + %G < %C 
+stp_agro_filtro =stp_agro_asig[stp_agro_asig["A"]+stp_agro_asig["G"] < stp_agro_asig["C"] ]
+filtro1 = join_impo_clae_bec_bk[~join_impo_clae_bec_bk["HS6"].isin( pd.concat([stp_agro_filtro["NCM"] , stp_trans["NCM"]]))]
 
 (len(filtro1)/len(join_impo_clae_bec_bk)-1)*100
 len(filtro1)
@@ -174,12 +187,88 @@ filtro2.valor.sum()/join_impo_clae_bec_bk.valor.sum()
 # =============================================================================
 # 3er filtro: Variable Destinacion
 # =============================================================================
+# notas 
+# A) IT S/TR = BK (n dest = 1)
+# B) IT C/TR = CI (n dest = 1)
+# C) IT S/TR +  IC  => sobre IC aplicar k-means
+# D) IT C/TR +  IC  => sobre IC aplicar k-means (o mejor diferencia de media de la distribución vs observacion) (o alejamiento 3 desvios) (o MAD !)
+# E) IT C/TR + IT S/TR +  IC  => Clasf supervisada 
+# F) IC  (n dest = 1) => Clasf supervisada 
+
 pd.unique(impo_d12["destinacion"])
 
 partidas_dest = join_impo_clae_bec_bk[join_impo_clae_bec_bk["destinacion"].str.contains("temp|RAF|C/TR", case=False)]
-partidas_dest = partidas_dest [~partidas_dest ["destinacion"].str.contains("S/TRA|SIN TRA", case=False)]
+# partidas_dest = partidas_dest [~partidas_dest ["destinacion"].str.contains("S/TRA|SIN TRA", case=False)]
 
 partidas_dest .destinacion.value_counts(normalize= True)
+partidas_dest .destinacion.value_counts()
+
+partidas_n1_dest = join_impo_clae_bec_bk.groupby(["HS6_d12", "destinacion"],as_index = False).size().loc[lambda x: x["size"]==1]
+#A
+dest_a = partidas_n1_dest[partidas_n1_dest["destinacion"].str.contains("S/TRAN")]
+
+#B
+dest_b = partidas_n1_dest[partidas_n1_dest["destinacion"].str.contains("C/TRAN")]
+
+#F
+dest_f = partidas_n1_dest[partidas_n1_dest["destinacion"].str.contains("CONS")]
+
+f_partidas = join_impo_clae_bec_bk.groupby(["HS6_d12", "destinacion"], as_index = False).size()
+f_partidas_ =f_partidas[~(f_partidas["size"]==1)] 
+f_partidas_st =  f_partidas_[f_partidas_["destinacion"].str.contains("S/TRA")] 
+f_partidas_ct =  f_partidas_[f_partidas_["destinacion"].str.contains("C/TRA")] 
+f_partidas_co =  f_partidas_[f_partidas_["destinacion"].str.contains("CONSUMO")] 
+
+(  len(f_partidas_st) +len(f_partidas_ct) + len(f_partidas_co)) / len(f_partidas) 
+ 
+
+# ARREGLAR TEMA DE DUPLICADOSS !!!
+#C
+f_partidas_c = join_impo_clae_bec_bk[(join_impo_clae_bec_bk["HS6_d12"].isin(pd.concat([f_partidas_st["HS6_d12"], f_partidas_co["HS6_d12"] ])
+                                                                           )
+                                      ) &
+                                     ~(join_impo_clae_bec_bk["HS6_d12"].isin(f_partidas_ct["HS6_d12"])
+                                                                           
+                                      )
+                                     ]
+
+#D
+f_partidas_d = join_impo_clae_bec_bk[(join_impo_clae_bec_bk["HS6_d12"].isin(pd.concat([f_partidas_ct["HS6_d12"], f_partidas_co["HS6_d12"] ])
+                                                                           )
+                                      ) &
+                                     ~(join_impo_clae_bec_bk["HS6_d12"].isin(f_partidas_st["HS6_d12"])
+                                                                           
+                                      )
+                                     ]
+
+#E
+f_partidas_E = join_impo_clae_bec_bk[(join_impo_clae_bec_bk["HS6_d12"].isin(pd.concat([f_partidas_ct["HS6_d12"], f_partidas_st["HS6_d12"], f_partidas_co["HS6_d12"] ])
+                                                                           )
+                                      ) ]
+
+
+# PRUEBAS
+f1_partidas_c = join_impo_clae_bec_bk[join_impo_clae_bec_bk["destinacion"].str.contains("S/TRA")]  
+f1_partidas_c  = pd.unique(f1_partidas_c["HS6_d12"] )
+f2_partidas_c = join_impo_clae_bec_bk[join_impo_clae_bec_bk["destinacion"].str.contains("CONSUMO")]  
+f2_partidas_c  = pd.unique(f2_partidas_c["HS6_d12"] )
+
+#prueba
+# partidas_n2_dest = join_impo_clae_bec_bk.groupby(["HS6_d12", "destinacion"],as_index = False).size()#.loc[lambda x: x["size"]==2]
+partidas_n2_dest  = join_impo_clae_bec_bk[join_impo_clae_bec_bk["destinacion"].str.contains("S/TRA|CONSUMO")]  
+# partidas_n2_dest.groupby(["HS6_d12", "destinacion"], as_index = False).size().loc[lambda x: ] 
+
+
+
+finner_partidas_c = pd.concat([f1_partidas_c["HS6_d12"], f2_partidas_c["HS6_d12"] ])
+type(finner_partidas_c)
+finner_partidas_c.duplicated(keep=False)
+
+join_impo_clae_bec_bk[join_impo_clae_bec_bk["HS6_d12"].isin(pd.concat([f1_partidas_c["HS6_d12"], f2_partidas_c["HS6_d12"] ]) )]
+
+
+z = partidas_n2_dest.set_index("HS6_d12")
+
 
 filtro3 = filtro2[filtro2["HS6"].isin(partidas_dest["HS6"]) ]
 (len(filtro3)/len(filtro2)-1)*100
@@ -214,10 +303,6 @@ x = filtro3 .groupby(["HS6_d12", "descripcion",  "destinacion"], as_index= False
 # =============================================================================
 # probar con cantidad importada (en sus respectivas unidades declaradas y en kilos, y en peso unitario)
 
-from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans, MiniBatchKMeans
-from sklearn.metrics import pairwise_distances_argmin_min
-from mpl_toolkits.mplot3d import Axes3D
 
 ######### 
 # loop 
@@ -233,8 +318,6 @@ filtro_mayor1 = filtro_raw[filtro_raw["size"]>1]
 filtro_menor1= filtro_raw[filtro_raw["size"]==1]
 filtro = pd.unique(filtro_mayor1["groupID"])
 len(filtro )
-
-from tqdm import tqdm
 
 clusters = pd.DataFrame(columns= ["groupID", "cant_decl_clu", "cluster", "ID"])
 for i in tqdm(filtro):
@@ -258,6 +341,7 @@ np.mean(data_cluster["cant_decl"]/data_cluster["cant_decl_clu"])
 # LISTO CLUSTER !
 
 #######################################################################################
+
 
 #############
 x = filtro3.groupby(["HS6_d12", "destinacion", "uni_decl"], as_index= False)["cant_decl"]
