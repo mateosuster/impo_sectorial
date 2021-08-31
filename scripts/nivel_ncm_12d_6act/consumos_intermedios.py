@@ -282,49 +282,16 @@ dest_c [dest_c ["HS6_d12"]=="82021000190U"]
 # =============================================================================
 # #C
 # =============================================================================
-dest_c = f_partidas_[(f_partidas_["HS6_d12"].isin( f_partidas_st["HS6_d12"] 
-                                                                           )
-                                      ) & (
-                                     (f_partidas_["HS6_d12"].isin( f_partidas_co["HS6_d12"] 
-                                                                           )
-                                      ) &
-                                     ~(f_partidas_["HS6_d12"].isin(f_partidas_ct["HS6_d12"]
-                                                                             )
-                                      ) )
-                                     ]
-                                   
 dest_c = f_partidas_[f_partidas_["HS6_d12"].isin( filtro_c  )]
 
 # =============================================================================
 # #D
 # =============================================================================
-dest_d = f_partidas_[(f_partidas_["HS6_d12"].isin( f_partidas_ct["HS6_d12"] 
-                                                                           )
-                                      ) & (
-                                     (f_partidas_["HS6_d12"].isin( f_partidas_co["HS6_d12"] 
-                                                                           )
-                                      ) &
-                                     ~(f_partidas_["HS6_d12"].isin(f_partidas_st["HS6_d12"]
-                                                                             )
-                                      ) )
-                                     ]
-
 dest_d = f_partidas_[f_partidas_["HS6_d12"].isin( filtro_d  )]
-
                                           
 # =============================================================================
 # #E
 # =============================================================================
-dest_e = f_partidas_[(f_partidas_["HS6_d12"].isin( f_partidas_ct["HS6_d12"] 
-                                                                           )
-                                      ) & (
-                                     (f_partidas_["HS6_d12"].isin( f_partidas_co["HS6_d12"] 
-                                                                           )
-                                      ) &
-                                     (f_partidas_["HS6_d12"].isin(f_partidas_st["HS6_d12"]
-                                                                             )
-                                      ) )
-                                     ]
 dest_e = f_partidas_[f_partidas_["HS6_d12"].isin( filtro_e  )]
 
 # =============================================================================
