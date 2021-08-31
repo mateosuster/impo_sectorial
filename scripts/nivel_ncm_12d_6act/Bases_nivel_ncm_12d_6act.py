@@ -182,6 +182,9 @@ def predo_stp(dic_stp ):
 
     return dic_stp
 
+def predo_ncm(ncm_sector):
+    ncm_sector["hs6"] = ncm_sector["hs6"].astype(int)
+    return ncm_sector
 
 def def_join_impo_clae(impo_anyo_12d, cuit_empresas):
     impo_clae = pd.merge(impo_anyo_12d, cuit_empresas, left_on = "cuit", right_on = "CUIT", how = "right")
