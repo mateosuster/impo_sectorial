@@ -194,7 +194,8 @@ def def_join_impo_clae_bec(join_impo_clae, bec_bk):
 
     # filtramos las impos que no mergearon (no arrancan con CAP)
     impo_anyo_12d_bec_bk = impo_anyo_12d_bec_bk[impo_anyo_12d_bec_bk["HS4"].notnull()]
-
+    
+    impo_anyo_12d_bec_bk["ue_dest"] = ""
     return impo_anyo_12d_bec_bk
 
     
