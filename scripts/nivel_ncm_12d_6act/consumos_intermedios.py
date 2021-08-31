@@ -252,6 +252,9 @@ f_partidas_st =  f_partidas_[f_partidas_["destinacion"].str.contains("S/TRA")]
 f_partidas_ct =  f_partidas_[f_partidas_["destinacion"].str.contains("PARA TRANSF|C/TRANS|P/TRANS|RAF")] 
 f_partidas_co =  f_partidas_[f_partidas_["destinacion"].str.contains("CONSUMO")] 
 
+# CONSULTAR CON IGAL !
+# f_partidas_ = f_partidas_co.copy()
+
 # solo_consumo = f_partidas_co.groupby(["HS6_d12", "destinacion"],as_index = False).size()#.drop_duplicates(subset = "HS6_d12" , keep = False )
 # x = solo_consumo.size.sum()
 # len(f_partidas_co ) -( (len(dest_c)+len(dest_d)+len(dest_e)) + x) 
@@ -265,8 +268,8 @@ filtro_c = set_st & set_co - (set_ct & set_st)
 filtro_d = set_ct & set_co - (set_ct & set_st)
 filtro_e = (set_ct & set_st)
 
-filtro_f = set_co - filtro_c - filtro_d - filtro_e 
-
+filtro_f = set_co - set_st - set_ct 
+len(filtro_f )
 
 # pruebas
 ncm_ct = pd.unique(f_partidas_ct["HS6_d12"])
@@ -277,28 +280,31 @@ dest_st_ct = f_partidas_co[f_partidas_co["HS6_d12"].isin( filtro_e)]
 x = pd.merge(f_partidas_st[["HS6_d12", "destinacion"]] , f_partidas_co[["destinacion", "HS6_d12"]], how= "left" , left_on= "HS6_d12", right_on= "HS6_d12" )
 f_partidas_co[f_partidas_co["HS6_d12"]=="82021000190U"]
 dest_c [dest_c ["HS6_d12"]=="82021000190U"]
-#
+
 
 # =============================================================================
 # #C
 # =============================================================================
 dest_c = f_partidas_[f_partidas_["HS6_d12"].isin( filtro_c  )]
+dest_c["filtro"] = "C" 
 
 # =============================================================================
 # #D
 # =============================================================================
 dest_d = f_partidas_[f_partidas_["HS6_d12"].isin( filtro_d  )]
-                                          
+dest_d["filtro"] = "D"                                          
 # =============================================================================
 # #E
 # =============================================================================
 dest_e = f_partidas_[f_partidas_["HS6_d12"].isin( filtro_e  )]
+dest_e["filtro"] = "E"
 
 # =============================================================================
-# $F
+# #F
 # =============================================================================
 dest_f = f_partidas_[f_partidas_["HS6_d12"].isin( filtro_f )]
-         
+dest_f["filtro"] = "F"         
+
 # =============================================================================
 # Consistencia C, D y E
 # =============================================================================
@@ -307,12 +313,29 @@ dif = len(f_partidas_)  - ( len(f_partidas_st) +len(f_partidas_ct) + len(f_parti
 
 #importaciones detectadas con S/T, C/T y Consumo
 len(f_partidas_st) +len(f_partidas_ct) + len(f_partidas_co) 
-len(dest_c) +len(dest_d) + len(dest_e) + len(dest_f)
+
+len(dest_c) +len(dest_d) + len(dest_e) + len(dest_f) #+dif
+
+# Reviso que no tenga duplicados
+x = pd.concat( [dest_c, dest_d,  dest_e,  dest_f], axis = 0)
+x[x.duplicated()]
 
 
+# =============================================================================
+# # Asigno UE_dest en C, D, E 
+# =============================================================================
+dest_c["ue_dest"] = np.where(dest_c["destinacion"].str.contains("S/TRA"), 
+                             "filtro C", "")
 
+dest_c["ue_dest"].value_counts()
+
+dest_c["destinacion"].value_counts()
+dest_d["destinacion"].value_counts()
                    
-## Clasficando C
+
+
+
+## Aplicando métrica
 def metrica(x):
     return (x["valor"] * x["kilos"])/x["cant_decl"]
 
