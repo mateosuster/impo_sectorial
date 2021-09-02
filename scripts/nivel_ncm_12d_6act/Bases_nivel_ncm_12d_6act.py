@@ -39,10 +39,10 @@ def predo_impo_12d(impo_d12, ncm_desc):
 
     impo_d12.rename(columns = {'ANYO':"anio", 'POSIC_SIM':"HS6_d12", 
                                'CIF':"valor", "CUIT_IMPOR":"cuit",
-                               "KILOS": "kilos", "DESTINAC": "destinacion",
+                               "KILOS": "kilos", "DESTINAC": "destinacion",  "DEST": "dest_cod",
                                "UMED_ESTAD": "uni_est", "CANT_UNEST": "cant_est",
                                "UMED_DECL": "uni_decl", "CANT_DECL": "cant_decl"}, inplace=True)
-    impo_d12 = impo_d12[[ "cuit", "NOMBRE", "HS6_d12", "destinacion", "valor", "kilos", "uni_est", "cant_est", "uni_decl", "cant_decl"]]
+    impo_d12 = impo_d12[[ "cuit", "NOMBRE", "HS6_d12", "destinacion", "dest_cod", "valor", "kilos", "uni_est", "cant_est", "uni_decl", "cant_decl"]]
     impo_d12["HS6"]= impo_d12["HS6_d12"].str.slice(0,6).astype(int)
     impo_d12["cuit"] =impo_d12["cuit"].astype(str)
     

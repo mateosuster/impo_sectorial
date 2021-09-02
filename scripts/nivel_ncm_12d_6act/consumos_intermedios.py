@@ -1,16 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Aug 23 15:38:55 2021
-
-@author: mateo
-"""
-
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 29 11:04:54 2021
-
-@author: igalk
-"""
 
 # =============================================================================
 # Directorio de trabajo y librerias
@@ -89,6 +77,7 @@ cuit_empresas= predo_cuit_clae(cuit_clae, clae)
 bec_bk = predo_bec_bk(bec, bec_to_clae)
 dic_stp = predo_stp(dic_stp )
 ncm_sector= predo_ncm(ncm_sector)
+
 #############################################
 #                joins                      #
 #############################################
@@ -146,6 +135,28 @@ stp_agro_filtro =stp_agro_asig[stp_agro_asig["A"]+stp_agro_asig["G"] < stp_agro_
 # join_impo_clae_bec_bk["ue_dest"] = np.where(join_impo_clae_bec_bk[join_impo_clae_bec_bk["HS6"].isin( pd.concat([stp_agro_filtro["NCM"] , stp_trans["NCM"]]))])
 
 # =============================================================================
+# Antes de empezar... feature destinación limpio
+# =============================================================================
+import re
+
+def destinacion_limpio(x):
+    if re.search("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", x)!=None:
+        return "C/TR"
+    elif re.search("S/TRAN|SIN TRANSF|INGR.ZF BIENES", x)!=None:
+        return "S/TR"
+    elif re.search("CONS|ING.ZF MERC", x)!=None:
+        # return "CONS"
+        return "CONS&Otros"
+    else: 
+        # return "Otro"
+        return "CONS&Otros"
+ 
+
+join_impo_clae_bec_bk["dest_clean"] = join_impo_clae_bec_bk["destinacion"].apply(lambda x: destinacion_limpio(x))
+join_impo_clae_bec_bk["dest_clean"].value_counts()
+
+
+# =============================================================================
 # 1er filtro: STP entre específicos y generales
 # =============================================================================
 #frecuencia 
@@ -156,7 +167,8 @@ dic_stp["utilizacion"].value_counts()
 stp_especifico = dic_stp[dic_stp["utilizacion"]=="Específico"] # =~ BK
 
 join_impo_clae_bec_bk["ue_dest"] = np.where(join_impo_clae_bec_bk["HS6"].isin(stp_especifico ["NCM"]), 
-                                            np.where( ~join_impo_clae_bec_bk["destinacion"].str.contains("PARA TRANSF|C/TRANS|P/TRANS|RAF", 
+                                            np.where( ~join_impo_clae_bec_bk["destinacion"].str.contains("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", 
+                                            # np.where( join_impo_clae_bec_bk["destinacion"].str.contains("S/TRAN|SIN TRANSF|INGR.ZF BIENES", 
                                                                                                          case=False), 
                                                      "BK", ""
                                                      ), ""
@@ -167,9 +179,6 @@ join_impo_clae_bec_bk["ue_dest"].value_counts()
 # filtrado 1
 filtro1 = join_impo_clae_bec_bk[join_impo_clae_bec_bk["ue_dest"]==""]
 
-(len(filtro1)/len(join_impo_clae_bec_bk)-1)*100
-len(filtro1)
-len(join_impo_clae_bec_bk)
 
 # detección partes y piezas vía text mining
 # partes_stp = stp_asig[stp_asig["desc"].str.contains("parte", case = False) ]
@@ -181,24 +190,141 @@ len(join_impo_clae_bec_bk)
 # notas 
 # A) IT S/TR = BK (n dest = 1)
 # B) IT C/TR = CI (n dest = 1)
-# C) IT S/TR +  IC  => sobre IC aplicar 
-# D) IT C/TR +  IC  => sobre IC aplicar diferencia de media de la distribución vs observacion) (o alejamiento 3 desvios) (o MAD !)
-# E) IT C/TR + IT S/TR +  IC  => Clasf supervisada 
-# F) IC  ("a secas") => Clasf supervisada 
+# C) IT CONS (n dest = 1) ///  IC  ("a secas") => Clasf supervisada 
 
-# partidas_dest = join_impo_clae_bec_bk[join_impo_clae_bec_bk["destinacion"].str.contains("temp|RAF|C/TR", case=False)]
-# partidas_dest = partidas_dest [~partidas_dest ["destinacion"].str.contains("S/TRA|SIN TRA", case=False)]
-# partidas_dest .destinacion.value_counts(normalize= True)
+# D) IT S/TR &  ICons  => sobre IC aplicar 
+# E) IT C/TR &  IConc  => sobre IC aplicar diferencia de media de la distribución vs observacion) (o alejamiento 3 desvios) (o MAD !)
+# F) C/TR & S/TR 
+# G) IT C/TR & IT S/TR &  ICons  => Clasf supervisada 
 
 ##### Filtros en partidas con una unica destinacion
-partidas_dest = join_impo_clae_bec_bk.groupby(["HS6_d12", "destinacion"],as_index = False).size()#.drop_duplicates(subset = "HS6_d12" , keep = False )
-n1_dest = partidas_dest["HS6_d12"].value_counts().rename_axis("HS6_d12").reset_index(name = "counts").loc[lambda x: x["counts"]==1]
+filtro1["destinacion"].value_counts()#.sum()
+filtro1["dest_clean"].value_counts()#.sum()
+
+# NUEVA PROPUESTA
+# partidas_n_dest = join_impo_clae_bec_bk.groupby(["HS6_d12", "destinacion"],as_index = False).size().loc[lambda x: ~x["HS6_d12"].isin(partidas_dest["HS6_d12"])]
+ya_filtrado = join_impo_clae_bec_bk[join_impo_clae_bec_bk["ue_dest"]!=""]
+
+(len(filtro1) + len(ya_filtrado)) == len(join_impo_clae_bec_bk)
+
+filtro1st =  filtro1[filtro1["dest_clean"] == "S/TR"] 
+filtro1ct =  filtro1[filtro1["dest_clean"] == "C/TR"] 
+filtro1co =  filtro1[filtro1["dest_clean"] == "CONS&Otros"] 
+
+len(filtro1)  == ( len(filtro1st) +len(filtro1ct) + len(filtro1co) ) 
+
+# Filtros de conjuntos
+set_st = set(filtro1st["HS6_d12"])
+set_ct = set(filtro1ct["HS6_d12"])
+set_co = set(filtro1co["HS6_d12"])
+
+filtro_a = set_st - set_co - set_ct 
+filtro_b = set_ct - set_st - set_co 
+filtro_c = set_co - set_ct -set_st 
+
+filtro_d = (set_st & set_co) - (set_ct )
+filtro_e = (set_ct & set_co) - ( set_st)
+filtro_f = (set_ct & set_st) - set_co 
+filtro_g = set_ct & set_st & set_co 
+
+dest_a = filtro1[filtro1["HS6_d12"].isin( filtro_a  )]
+dest_b = filtro1[filtro1["HS6_d12"].isin( filtro_b  )]
+dest_c = filtro1[filtro1["HS6_d12"].isin( filtro_c  )]
+dest_d = filtro1[filtro1["HS6_d12"].isin( filtro_d  )]
+dest_e = filtro1[filtro1["HS6_d12"].isin( filtro_e  )]
+dest_f = filtro1[filtro1["HS6_d12"].isin( filtro_f  )]
+dest_g = filtro1[filtro1["HS6_d12"].isin( filtro_g )]
+
+dest_a["filtro"] = "A" 
+dest_b["filtro"] = "B" 
+dest_c["filtro"] = "C" 
+dest_d["filtro"] = "D" 
+dest_e["filtro"] = "E"                                          
+dest_f["filtro"] = "F"
+dest_g["filtro"] = "G"         
 
 # =============================================================================
-# #A
+# Consistencia filtro 2
 # =============================================================================
-dest_a = join_impo_clae_bec_bk[(join_impo_clae_bec_bk["destinacion"].str.contains("S/TRAN")) & 
-                               (join_impo_clae_bec_bk["HS6_d12"].isin(n1_dest["HS6_d12"] )) ]
+
+#importaciones detectadas con S/T, C/T y Consumo
+len(filtro1st) +len(filtro1ct) + len(filtro1co) 
+
+(len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) +len(dest_b)+ len(dest_c)) ==len(filtro1)
+
+# Concateno el filtro 2
+filtro1 = pd.concat( [dest_a, dest_b, dest_c, dest_d,  dest_e,  dest_f, dest_g], axis = 0)
+
+filtro1["ue_dest"].value_counts()
+filtro1["ue_dest"] = np.where((filtro1["filtro"] == "A") & 
+                                (filtro1["dest_clean"] == "S/TR"), 
+                                    "BK",  
+                                    np.where( (filtro1["filtro"] == "B") & 
+                                            (filtro1["dest_clean"] == "C/TR"),
+                                            "CI", ""
+                                            ) 
+                                ) 
+
+filtro2 = filtro1[filtro1["ue_dest"] == "" ]
+
+
+# =============================================================================
+# ## Aplicando métrica
+# =============================================================================
+from scipy.stats import median_abs_deviation, zscore
+
+def metrica(x):
+    return (x["valor"] * x["kilos"])/x["cant_decl"]
+
+def mod_z(col: pd.Series, thresh: float=3.5):
+    med_col = col.median()
+    med_abs_dev = (np.abs(col - med_col)).median()
+    mod_z = 0.7413 * ((col - med_col) / med_abs_dev)
+    # mod_z = mod_z[np.abs(mod_z) < thresh]
+    return np.abs(mod_z)
+
+# Aplico métrica 1
+# dest_c["metric"] = dest_c.apply(lambda x : (x["valor"] * x["kilos"])/x["cant_decl"] , axis = 1)
+filtro2["metric"] = filtro2.apply(lambda x : metrica(x), axis = 1)
+x = filtro2[filtro2["HS6_d12"] == "01012100500T"]    
+
+# calculo mediana de la metrica y z score modificado
+filtro2_centro = filtro2.groupby(["HS6_d12", "destinacion", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)
+filtro2_zscore = filtro2.groupby(["HS6_d12", "destinacion", "uni_decl", "filtro"], as_index= True)["metric"].apply(lambda x : mod_z(x)).reset_index().rename(columns = {"metric": "zscore_mod"})
+
+filtro2_centro["mad"].hist()
+filtro2_centro["mad"].describe()
+x = filtro2_centro[filtro2_centro["mad"]==0]
+filtro2["metric"].median()
+
+# join impos con centro de la metrica
+filtro2_b = pd.merge(filtro2, filtro2_centro, how = "left", left_on = ["HS6_d12", "destinacion", "uni_decl", "filtro"], right_on = ["HS6_d12", "destinacion", "uni_decl", "filtro"])
+filtro2_b["brecha"] = filtro2_b["metric"]/filtro2_b["mad"]
+
+filtro2_zscore[filtro2_zscore["zscore_mod"] >1] 
+
+y = x[x["brecha"] > 3.5]
+
+x["dist"].hist()
+x["dist"].describe()
+x["dist"].median()
+
+
+
+## CAMINO ALTERNATIVO PARA LA ASIGANCION DE A Y B (Viejo???))
+# partidas_dest = join_impo_clae_bec_bk.groupby(["HS6_d12", "destinacion"],as_index = False).size()#.drop_duplicates(subset = "HS6_d12" , keep = False )
+partidas_dest = filtro1.groupby(["HS6_d12", "dest_clean"],as_index = False).size()#.drop_duplicates(subset = "HS6_d12" , keep = False )
+n1_dest = filtro1["HS6_d12"].value_counts().rename_axis("HS6_d12").reset_index(name = "counts").loc[lambda x: x["counts"]==1]
+# n1_dest[n1_dest["HS6_d12"]=="59119000900T"] # (este es un caso con n == 4)
+
+# =============================================================================
+# #A (ASIGNADOS)
+# =============================================================================
+dest_a = filtro1[(filtro1["destinacion"].str.contains("S/TRAN|SIN TRANSF|INGR.ZF BIENES")) & 
+                               (filtro1["HS6_d12"].isin(n1_dest["HS6_d12"] )) ]
+
+# dest_a = join_impo_clae_bec_bk[(join_impo_clae_bec_bk["destinacion"].str.contains("S/TRAN|SIN TRANSF|INGR.ZF BIENES")) & 
+#                                (join_impo_clae_bec_bk["HS6_d12"].isin(n1_dest["HS6_d12"] )) ]
 
 # dest_a = dest_a.groupby(["HS6_d12", "destinacion"],as_index = False).size().drop_duplicates(subset = "HS6_d12" , keep = False )
 # dest_a = partidas_dest[partidas_dest["destinacion"].str.contains("S/TRAN")]
@@ -218,10 +344,13 @@ join_impo_clae_bec_bk["ue_dest"] = np.where(join_impo_clae_bec_bk["ue_dest"]==""
 
 
 # =============================================================================
-# #B
+# #B (ASIGNADOS)
 # =============================================================================
-dest_b = join_impo_clae_bec_bk[(join_impo_clae_bec_bk["destinacion"].str.contains("PARA TRANSF|C/TRANS|P/TRANS|RAF")) &
-                               (join_impo_clae_bec_bk["HS6_d12"].isin(n1_dest["HS6_d12"] ))]
+# dest_b = join_impo_clae_bec_bk[(join_impo_clae_bec_bk["destinacion"].str.contains("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS")) &
+#                                (join_impo_clae_bec_bk["HS6_d12"].isin(n1_dest["HS6_d12"] ))]
+
+dest_b = filtro1[(filtro1["destinacion"].str.contains("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS")) &
+                               (filtro1["HS6_d12"].isin(n1_dest["HS6_d12"] ))]
 
 # dest_b = join_impo_clae_bec_bk[join_impo_clae_bec_bk["destinacion"].str.contains("PARA TRANSF|C/TRANS|P/TRANS|RAF")].groupby(["HS6_d12", "destinacion"],as_index = False).size().drop_duplicates(subset = "HS6_d12" , keep = False )
 # dest_b = partidas_dest[partidas_dest["destinacion"].str.contains("C/TRAN")]
@@ -235,153 +364,18 @@ join_impo_clae_bec_bk["ue_dest"] = np.where(join_impo_clae_bec_bk["ue_dest"]==""
                                             )
 join_impo_clae_bec_bk["ue_dest"].value_counts()
 # =============================================================================
-# #F
+# #C
 # =============================================================================
-dest_f = join_impo_clae_bec_bk[join_impo_clae_bec_bk["destinacion"].str.contains("CONS")]
+dest_c = join_impo_clae_bec_bk[(join_impo_clae_bec_bk["destinacion"].str.contains("CONS")) & 
+                               (join_impo_clae_bec_bk["HS6_d12"].isin(n1_dest["HS6_d12"] )) ]
+
+dest_c = filtro1[(filtro1["dest_clean"] == "CONS&Otros") & 
+                               (filtro1["HS6_d12"].isin(n1_dest["HS6_d12"] )) ]
+
 pd.unique(dest_f["destinacion"])
 
 
-## Con varias destinaciones
-# partidas_n_dest = join_impo_clae_bec_bk.groupby(["HS6_d12", "destinacion"],as_index = False).size().loc[lambda x: ~x["HS6_d12"].isin(partidas_dest["HS6_d12"])]
-f_partidas_ = join_impo_clae_bec_bk[join_impo_clae_bec_bk["ue_dest"]==""]
-not_f_partidas_ = join_impo_clae_bec_bk[join_impo_clae_bec_bk["ue_dest"]!=""]
 
-(len(f_partidas_) + len(not_f_partidas_)) == len(join_impo_clae_bec_bk)
-
-f_partidas_st =  f_partidas_[f_partidas_["destinacion"].str.contains("S/TRA")] 
-f_partidas_ct =  f_partidas_[f_partidas_["destinacion"].str.contains("PARA TRANSF|C/TRANS|P/TRANS|RAF")] 
-f_partidas_co =  f_partidas_[f_partidas_["destinacion"].str.contains("CONSUMO")] 
-
-# CONSULTAR CON IGAL !
-# f_partidas_ = f_partidas_co.copy()
-
-# solo_consumo = f_partidas_co.groupby(["HS6_d12", "destinacion"],as_index = False).size()#.drop_duplicates(subset = "HS6_d12" , keep = False )
-# x = solo_consumo.size.sum()
-# len(f_partidas_co ) -( (len(dest_c)+len(dest_d)+len(dest_e)) + x) 
-
-# Filtros de conjuntos
-set_st = set(f_partidas_st["HS6_d12"])
-set_ct = set(f_partidas_ct["HS6_d12"])
-set_co = set(f_partidas_co["HS6_d12"])
-
-filtro_c = set_st & set_co - (set_ct & set_st)
-filtro_d = set_ct & set_co - (set_ct & set_st)
-filtro_e = (set_ct & set_st)
-
-filtro_f = set_co - set_st - set_ct 
-len(filtro_f )
-
-# pruebas
-ncm_ct = pd.unique(f_partidas_ct["HS6_d12"])
-dest_co = f_partidas_co[f_partidas_co["HS6_d12"].isin( set_ct)]
-dest_co_1 = dest_co[~dest_co["HS6_d12"].isin( filtro_e)]
-dest_c[dest_c["HS6_d12"].isin()]
-dest_st_ct = f_partidas_co[f_partidas_co["HS6_d12"].isin( filtro_e)]
-x = pd.merge(f_partidas_st[["HS6_d12", "destinacion"]] , f_partidas_co[["destinacion", "HS6_d12"]], how= "left" , left_on= "HS6_d12", right_on= "HS6_d12" )
-f_partidas_co[f_partidas_co["HS6_d12"]=="82021000190U"]
-dest_c [dest_c ["HS6_d12"]=="82021000190U"]
-
-
-# =============================================================================
-# #C
-# =============================================================================
-dest_c = f_partidas_[f_partidas_["HS6_d12"].isin( filtro_c  )]
-dest_c["filtro"] = "C" 
-
-# =============================================================================
-# #D
-# =============================================================================
-dest_d = f_partidas_[f_partidas_["HS6_d12"].isin( filtro_d  )]
-dest_d["filtro"] = "D"                                          
-# =============================================================================
-# #E
-# =============================================================================
-dest_e = f_partidas_[f_partidas_["HS6_d12"].isin( filtro_e  )]
-dest_e["filtro"] = "E"
-
-# =============================================================================
-# #F
-# =============================================================================
-dest_f = f_partidas_[f_partidas_["HS6_d12"].isin( filtro_f )]
-dest_f["filtro"] = "F"         
-
-# =============================================================================
-# Consistencia C, D y E
-# =============================================================================
-# con cuantas importaciones estamos trabajando
-dif = len(f_partidas_)  - ( len(f_partidas_st) +len(f_partidas_ct) + len(f_partidas_co) ) 
-
-#importaciones detectadas con S/T, C/T y Consumo
-len(f_partidas_st) +len(f_partidas_ct) + len(f_partidas_co) 
-
-len(dest_c) +len(dest_d) + len(dest_e) + len(dest_f) #+dif
-
-# Reviso que no tenga duplicados
-x = pd.concat( [dest_c, dest_d,  dest_e,  dest_f], axis = 0)
-x[x.duplicated()]
-
-
-# =============================================================================
-# # Asigno UE_dest en C, D, E 
-# =============================================================================
-dest_c["ue_dest"] = np.where(dest_c["destinacion"].str.contains("S/TRA"), 
-                             "filtro C", "")
-
-dest_c["ue_dest"].value_counts()
-
-dest_c["destinacion"].value_counts()
-dest_d["destinacion"].value_counts()
-                   
-
-
-
-## Aplicando métrica
-def metrica(x):
-    return (x["valor"] * x["kilos"])/x["cant_decl"]
-
-# dest_c["metric"] = dest_c.apply(lambda x : (x["valor"] * x["kilos"])/x["cant_decl"] , axis = 1)
-dest_c["metric"] = dest_c.apply(lambda x : metrica(x), axis = 1)
-    
-dest_c_centro = dest_c.groupby(["HS6_d12", "destinacion", "uni_decl"], as_index= False)["metric"].mean()
-dest_c["dista"] = dest_c["metric"]
-
-
-#magnitud del problema
-(len(filtro2)/len(filtro1)-1)*100
-len(filtro2)
-
-filtro2.valor.sum()/impo_d12.valor.sum()
-filtro2.valor.sum()/join_impo_clae_bec_bk.valor.sum()
-
-
-
-# PRUEBAS
-f1_partidas_c = join_impo_clae_bec_bk[join_impo_clae_bec_bk["destinacion"].str.contains("S/TRA")]  
-f1_partidas_c  = pd.unique(f1_partidas_c["HS6_d12"] )
-f2_partidas_c = join_impo_clae_bec_bk[join_impo_clae_bec_bk["destinacion"].str.contains("CONSUMO")]  
-f2_partidas_c  = pd.unique(f2_partidas_c["HS6_d12"] )
-
-#prueba
-# partidas_n2_dest = join_impo_clae_bec_bk.groupby(["HS6_d12", "destinacion"],as_index = False).size()#.loc[lambda x: x["size"]==2]
-partidas_n2_dest  = join_impo_clae_bec_bk[join_impo_clae_bec_bk["destinacion"].str.contains("S/TRA|CONSUMO")]  
-# partidas_n2_dest.groupby(["HS6_d12", "destinacion"], as_index = False).size().loc[lambda x: ] 
-
-
-finner_partidas_c = pd.concat([f1_partidas_c["HS6_d12"], f2_partidas_c["HS6_d12"] ])
-type(finner_partidas_c)
-finner_partidas_c.duplicated(keep=False)
-
-join_impo_clae_bec_bk[join_impo_clae_bec_bk["HS6_d12"].isin(pd.concat([f1_partidas_c["HS6_d12"], f2_partidas_c["HS6_d12"] ]) )]
-
-
-z = partidas_n2_dest.set_index("HS6_d12")
-
-
-filtro3 = filtro2[filtro2["HS6"].isin(partidas_dest["HS6"]) ]
-(len(filtro3)/len(filtro2)-1)*100
-len(filtro3)
-
-x = filtro3 .groupby(["HS6_d12", "descripcion",  "destinacion"], as_index= False).agg("size")
 
 
 ###################### pruebas
