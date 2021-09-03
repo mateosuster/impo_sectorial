@@ -266,6 +266,10 @@ filtro1["ue_dest"] = np.where((filtro1["filtro"] == "A") &
                                 ) 
 
 filtro2 = filtro1[filtro1["ue_dest"] == "" ]
+len(filtro2)/len(filtro1)-1
+filtro2["filtro"].value_counts()
+filtro2[["dest_clean", "filtro"]].value_counts()
+filtro2[["dest_clean","filtro", "uni_decl" ]].value_counts()
 
 
 # =============================================================================
@@ -279,18 +283,24 @@ def metrica(x):
 def mod_z(col: pd.Series, thresh: float=3.5):
     med_col = col.median()
     med_abs_dev = (np.abs(col - med_col)).median()
-    mod_z = 0.7413 * ((col - med_col) / med_abs_dev)
+    mod_z = 0.645* ((col - med_col) / med_abs_dev)
     # mod_z = mod_z[np.abs(mod_z) < thresh]
     return np.abs(mod_z)
 
 # Aplico métrica 1
 # dest_c["metric"] = dest_c.apply(lambda x : (x["valor"] * x["kilos"])/x["cant_decl"] , axis = 1)
 filtro2["metric"] = filtro2.apply(lambda x : metrica(x), axis = 1)
-x = filtro2[filtro2["HS6_d12"] == "01012100500T"]    
 
-# calculo mediana de la metrica y z score modificado
-filtro2_centro = filtro2.groupby(["HS6_d12", "destinacion", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)
-filtro2_zscore = filtro2.groupby(["HS6_d12", "destinacion", "uni_decl", "filtro"], as_index= True)["metric"].apply(lambda x : mod_z(x)).reset_index().rename(columns = {"metric": "zscore_mod"})
+# CASO D
+filtro2_centerD = filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)
+filtro2_D = pd.merge(filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="CONS&Otros") ] , filtro2_centerD.drop("dest_clean", axis =1), how = "left", left_on = ["HS6_d12", "uni_decl", "filtro"], right_on = ["HS6_d12", "uni_decl", "filtro"])
+filtro2_D["mad"].isnull().sum()
+filtro2_D["brecha"] = filtro2_D["metric"]/filtro2_D["mad"]
+filtro2_D["brecha"].describe()
+
+#centro general
+filtro2_centro = filtro2.groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)
+filtro2_zscore = filtro2.groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : mod_z(x))#.reset_index().rename(columns = {"metric": "zscore_mod"})
 
 filtro2_centro["mad"].hist()
 filtro2_centro["mad"].describe()
@@ -298,16 +308,17 @@ x = filtro2_centro[filtro2_centro["mad"]==0]
 filtro2["metric"].median()
 
 # join impos con centro de la metrica
-filtro2_b = pd.merge(filtro2, filtro2_centro, how = "left", left_on = ["HS6_d12", "destinacion", "uni_decl", "filtro"], right_on = ["HS6_d12", "destinacion", "uni_decl", "filtro"])
-filtro2_b["brecha"] = filtro2_b["metric"]/filtro2_b["mad"]
 
+filtro2_b = pd.merge(filtro2, filtro2_centro, how = "left", left_on = ["HS6_d12", "dest_clean", "uni_decl", "filtro"], right_on = ["HS6_d12", "dest_clean", "uni_decl", "filtro"])
+filtro2_b["brecha"] = filtro2_b["metric"]/filtro2_b["mad"]
+filtro2_b["brecha"].describe()
+
+filtro2_b[["dest_clean","filtro", "uni_decl" ]].value_counts()
+
+
+#zscore modif
 filtro2_zscore[filtro2_zscore["zscore_mod"] >1] 
 
-y = x[x["brecha"] > 3.5]
-
-x["dist"].hist()
-x["dist"].describe()
-x["dist"].median()
 
 
 
