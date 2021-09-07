@@ -191,11 +191,18 @@ filtro1 = join_impo_clae_bec_bk[join_impo_clae_bec_bk["ue_dest"]==""]
 # A) IT S/TR = BK (n dest = 1)
 # B) IT C/TR = CI (n dest = 1)
 # C) IT CONS (n dest = 1) ///  IC  ("a secas") => Clasf supervisada 
-
 # D) IT S/TR &  ICons  => sobre IC aplicar 
 # E) IT C/TR &  IConc  => sobre IC aplicar diferencia de media de la distribución vs observacion) (o alejamiento 3 desvios) (o MAD !)
 # F) C/TR & S/TR 
 # G) IT C/TR & IT S/TR &  ICons  => Clasf supervisada 
+
+# A= BK
+# B = CI
+# D --> Zscore mod. si mayor a 3.5veces = BK
+# F --> D -->  Zscore mod. si menor a 3.5veces = CI
+# G --> clasificación supervisada (si se puede 🙏)
+# C --> Con todas las etiquetas previas puestas. Clasificación supervisada (si se puede 🙏)
+
 
 ##### Filtros en partidas con una unica destinacion
 filtro1["destinacion"].value_counts()#.sum()
@@ -208,7 +215,7 @@ ya_filtrado = join_impo_clae_bec_bk[join_impo_clae_bec_bk["ue_dest"]!=""]
 (len(filtro1) + len(ya_filtrado)) == len(join_impo_clae_bec_bk)
 
 filtro1st =  filtro1[filtro1["dest_clean"] == "S/TR"] 
-filtro1ct =  filtro1[filtro1["dest_clean"] == "C/TR"] 
+filtro1ct =  filtro1[filtro1["dest_clean"] == "    /TR"] 
 filtro1co =  filtro1[filtro1["dest_clean"] == "CONS&Otros"] 
 
 len(filtro1)  == ( len(filtro1st) +len(filtro1ct) + len(filtro1co) ) 
@@ -267,14 +274,22 @@ filtro1["ue_dest"] = np.where((filtro1["filtro"] == "A") &
 
 filtro2 = filtro1[filtro1["ue_dest"] == "" ]
 len(filtro2)/len(filtro1)-1
+
 filtro2["filtro"].value_counts()
 filtro2[["dest_clean", "filtro"]].value_counts()
 filtro2[["dest_clean","filtro", "uni_decl" ]].value_counts()
+filtro2[["dest_clean","filtro", "uni_est" ]].value_counts()
+
 
 
 # =============================================================================
 # ## Aplicando métrica
 # =============================================================================
+# a. el bien 1234567 fue comprado con dos destinaciones: s/tr y cons. y con diferentes unidades de medida:
+# b. dentro de cada unidad de medida a s/tr le llamamos BK. calculamos su mediana, y hacemos zscore sobre los "cons". 
+# c. si calculamos zscore sobre cantidades, aquellos que se alejan 3.5 del zscrore por arriba los llamamos CI. (es menos probable que algo que se compra mucho se un bK)
+# si calculamos zscore sobre precios o kg, aquellos que se alejan 3.5 del zscrore por abajo los llamamos CI. (es menos probable que algo liviano o barato sea bk)
+
 from scipy.stats import median_abs_deviation, zscore
 
 def metrica(x):
@@ -292,20 +307,69 @@ def mod_z(col: pd.Series, thresh: float=3.5):
 filtro2["metric"] = filtro2.apply(lambda x : metrica(x), axis = 1)
 
 # CASO D
-filtro2_centerD = filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)
-filtro2_D = pd.merge(filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="CONS&Otros") ] , filtro2_centerD.drop("dest_clean", axis =1), how = "left", left_on = ["HS6_d12", "uni_decl", "filtro"], right_on = ["HS6_d12", "uni_decl", "filtro"])
-filtro2_D["mad"].isnull().sum()
-filtro2_D["brecha"] = filtro2_D["metric"]/filtro2_D["mad"]
-filtro2_D["brecha"].describe()
+#con uni decl
+# filtro2_centerD = filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)
+# filtro2_D = pd.merge(filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="CONS&Otros") ] , filtro2_centerD.drop("dest_clean", axis =1), how = "left", left_on = ["HS6_d12", "uni_decl", "filtro"], right_on = ["HS6_d12", "uni_decl", "filtro"])
 
-#centro general
-filtro2_centro = filtro2.groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)
-filtro2_zscore = filtro2.groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : mod_z(x))#.reset_index().rename(columns = {"metric": "zscore_mod"})
+#con uni est
+filtro2_D_mad= filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12", "dest_clean", "uni_est", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)
+filtro2_D_median = filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12", "dest_clean", "uni_est", "filtro"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median"}).reset_index(drop = True)
+filtro2_D = pd.merge(filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="CONS&Otros") ] , filtro2_D_mad.drop("dest_clean", axis =1), how = "left", left_on = ["HS6_d12", "uni_est", "filtro"], right_on = ["HS6_d12", "uni_est", "filtro"])
+filtro2_D = pd.merge(filtro2_D, filtro2_D_median.drop("dest_clean", axis =1), how = "left" ,left_on = ["HS6_d12", "uni_est", "filtro"], right_on = ["HS6_d12", "uni_est", "filtro"])
 
-filtro2_centro["mad"].hist()
-filtro2_centro["mad"].describe()
-x = filtro2_centro[filtro2_centro["mad"]==0]
-filtro2["metric"].median()
+filtro2_D["mad"] = np.where(filtro2_D["mad"]==0, 0.001, filtro2_D["mad"]  )
+filtro2_D["brecha"] = (filtro2_D["metric"]/filtro2_D["median"])-1
+filtro2_D["z_score"] = filtro2_D.apply(lambda x: 0.6745*((x["metric"]-x["median"]))/(x["mad"]), axis =1 )
+
+filtro2_D["z_score"].describe()
+filtro2_D["z_score"].hist()
+
+filtro2_D_bk = filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="S/TR") ]
+filtro2_D_zbk=  filtro2_D[filtro2_D["z_score"] > 3.5]
+filtro2_D_zci = filtro2_D[filtro2_D["z_score"] <= 3.5]
+
+filtro2_D_bk["ue_dest"] = "BK"
+filtro2_D_zbk["ue_dest"] = "BK"
+filtro2_D_zci["ue_dest"] = "CI"
+
+len(filtro2_D_bk) + len(filtro2_D_zbk) + len(filtro2_D_zci) == len(dest_d)
+
+clasif_D = pd.concat([filtro2_D_bk,filtro2_D_zci.drop(["median", "mad", "brecha", "z_score"], axis = 1),    filtro2_D_zbk.drop(["median", "mad", "brecha", "z_score"], axis = 1)] )
+clasif_D["ue_dest"].value_counts()
+
+# CASO E
+#con uni est
+filtro2_E_mad= filtro2[(filtro2["filtro"]=="E") & (filtro2["dest_clean"]=="C/TR") ].groupby(["HS6_d12", "dest_clean", "uni_est", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)
+filtro2_E_median = filtro2[(filtro2["filtro"]=="E") & (filtro2["dest_clean"]=="C/TR") ].groupby(["HS6_d12", "dest_clean", "uni_est", "filtro"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median"}).reset_index(drop = True)
+filtro2_E = pd.merge(filtro2[(filtro2["filtro"]=="E") & (filtro2["dest_clean"]=="CONS&Otros") ] , filtro2_E_mad.drop("dest_clean", axis =1), how = "left", left_on = ["HS6_d12", "uni_est", "filtro"], right_on = ["HS6_d12", "uni_est", "filtro"])
+filtro2_E = pd.merge(filtro2_E, filtro2_E_median.drop("dest_clean", axis =1), how = "left" ,left_on = ["HS6_d12", "uni_est", "filtro"], right_on = ["HS6_d12", "uni_est", "filtro"])
+
+filtro2_E["mad"] = np.where(filtro2_E["mad"]==0, 0.001, filtro2_E["mad"]  )
+filtro2_E["brecha"] = (filtro2_E["metric"]/filtro2_E["median"])-1
+filtro2_E["z_score"] = filtro2_E.apply(lambda x: 0.6745*((x["metric"]-x["median"]))/(x["mad"]), axis =1 )
+
+filtro2_E["brecha"].describe()
+
+filtro2_E_ci = filtro2[(filtro2["filtro"]=="E") & (filtro2["dest_clean"]=="C/TR") ]
+filtro2_E_zci=  filtro2_E[filtro2_E["z_score"] < 3.5]
+filtro2_E_zbk = filtro2_E[filtro2_E["z_score"] >= 3.5]
+
+filtro2_E_ci["ue_dest"] = "CI"
+filtro2_E_zbk["ue_dest"] = "BK"
+filtro2_E_zci["ue_dest"] = "CI"
+
+len(filtro2_E_ci) + len(filtro2_E_zbk) + len(filtro2_E_zci) == len(dest_e)
+
+clasif_E = pd.concat([filtro2_E_ci,filtro2_E_zci.drop(["median", "mad", "brecha", "z_score"], axis = 1),    filtro2_E_zbk.drop(["median", "mad", "brecha", "z_score"], axis = 1)] )
+clasif_E = pd.concat([filtro2_E_ci,filtro2_E_zci,    filtro2_E_zbk ])
+clasif_E["ue_dest"].value_counts()
+
+
+
+
+
+
+
 
 # join impos con centro de la metrica
 
@@ -451,8 +515,6 @@ data_cluster = pd.merge(data_clusterizada, clusters, left_on = ["groupID", "ID"]
 np.mean(data_cluster["cant_decl"]/data_cluster["cant_decl_clu"])
 
 # LISTO CLUSTER !
-
-#######################################################################################
 
 
 #############
