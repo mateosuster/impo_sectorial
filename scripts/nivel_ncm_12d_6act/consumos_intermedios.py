@@ -352,15 +352,15 @@ clasif_E["ue_dest"].value_counts()
 
 # CASO G
 # filtro2[filtro2["filtro"]=="G"].value_counts("dest_clean")
-filtro2_G_mad_bk = filtro2[(filtro2["filtro"]=="G") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad_bk"}).reset_index(drop = True)
-filtro2_G_median_bk = filtro2[(filtro2["filtro"]=="G") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median_bk"}).reset_index(drop = True)
-filtro2_G_mad_ci = filtro2[(filtro2["filtro"]=="G") & (filtro2["dest_clean"]=="C/TR") ].groupby(["HS6_d12"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad_ci"}).reset_index(drop = True)
-filtro2_G_median_ci = filtro2[(filtro2["filtro"]=="G") & (filtro2["dest_clean"]=="C/TR") ].groupby(["HS6_d12"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median_ci"}).reset_index(drop = True)
+filtro2_G_mad_bk = filtro2[(filtro2["filtro"]=="G") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12" , "dest_clean", "uni_est", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad_bk"}).reset_index(drop = True)
+filtro2_G_median_bk = filtro2[(filtro2["filtro"]=="G") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12", "dest_clean", "uni_est", "filtro"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median_bk"}).reset_index(drop = True)
+filtro2_G_mad_ci = filtro2[(filtro2["filtro"]=="G") & (filtro2["dest_clean"]=="C/TR") ].groupby(["HS6_d12", "dest_clean", "uni_est", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad_ci"}).reset_index(drop = True)
+filtro2_G_median_ci = filtro2[(filtro2["filtro"]=="G") & (filtro2["dest_clean"]=="C/TR") ].groupby(["HS6_d12", "dest_clean", "uni_est", "filtro"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median_ci"}).reset_index(drop = True)
 
-filtro2_G = pd.merge(filtro2[(filtro2["filtro"]=="G")  & (filtro2["dest_clean"]=="CONS&Otros")] , filtro2_G_mad_bk , how = "left", left_on = ["HS6_d12"], right_on = ["HS6_d12"])
-filtro2_G = pd.merge(filtro2_G , filtro2_G_median_bk , how = "left" ,left_on = ["HS6_d12"], right_on = ["HS6_d12"])
-filtro2_G = pd.merge(filtro2_G , filtro2_G_mad_ci , how = "left" ,left_on = ["HS6_d12"], right_on = ["HS6_d12"])
-filtro2_G = pd.merge(filtro2_G , filtro2_G_median_ci , how = "left" ,left_on = ["HS6_d12"], right_on = ["HS6_d12"])
+filtro2_G = pd.merge(filtro2[(filtro2["filtro"]=="G")  & (filtro2["dest_clean"]=="CONS&Otros")] , filtro2_G_mad_bk.drop(["dest_clean", "filtro"], axis =1) , how = "left", left_on = ["HS6_d12", "uni_est"], right_on = ["HS6_d12", "uni_est"])
+filtro2_G = pd.merge(filtro2_G , filtro2_G_median_bk.drop(["dest_clean", "filtro"], axis =1) , how = "left" ,left_on = ["HS6_d12", "uni_est"], right_on = ["HS6_d12", "uni_est"])
+filtro2_G = pd.merge(filtro2_G , filtro2_G_mad_ci.drop(["dest_clean", "filtro"], axis =1) , how = "left" ,left_on = ["HS6_d12", "uni_est"], right_on = ["HS6_d12", "uni_est"])
+filtro2_G = pd.merge(filtro2_G , filtro2_G_median_ci.drop(["dest_clean", "filtro"], axis =1) , how = "left" ,left_on = ["HS6_d12", "uni_est"], right_on = ["HS6_d12", "uni_est"])
 
 filtro2_G ["mad_bk"] = np.where(filtro2_G ["mad_bk"]==0, 0.001, filtro2_G ["mad_bk"]  )
 filtro2_G ["mad_ci"] = np.where(filtro2_G ["mad_ci"]==0, 0.001, filtro2_G ["mad_ci"]  )
@@ -372,7 +372,6 @@ filtro2_G["ue_dest"] = np.where(np.abs(filtro2_G["z_score_ci"]) > np.abs(filtro2
 filtro2_G["ue_dest"].value_counts() 
 
 filtro2_G_clas = filtro2[(filtro2["filtro"]=="G")  & (filtro2["dest_clean"]!="CONS&Otros")]
-filtro2_G_clas["dest_clean"].value_counts()
 filtro2_G_clas ["ue_dest"] = np.where(filtro2_G_clas["dest_clean"]== "S/TR","BK", "CI" ) 
 filtro2_G_clas["ue_dest"].value_counts()
 
@@ -380,7 +379,7 @@ clasif_G = pd.concat([filtro2_G_clas, filtro2_G.drop(["median_bk", "median_ci", 
 clasif_G ["ue_dest"].value_counts()
 
 
-## Datos ya clasificados
+## EDA de Datos ya clasificados
 clasif_AB = filtro1[filtro1["ue_dest"] != "" ]
 clasif_AB["metric"] = clasif_AB.apply(lambda x: metrica(x), axis = 1)
 
@@ -388,81 +387,93 @@ data_clasif = pd.concat([clasif_AB, clasif_D ,clasif_E,clasif_G  ], axis= 0)
 data_clasif["ue_dest"].value_counts()
 
 data_clasif["metric_zscore"] = (data_clasif["metric"] -data_clasif["metric"].mean())/ data_clasif["metric"].std(ddof=1)  
-ax = sns.boxplot(x= "ue_dest", y = "metric_zscore", hue="ue_dest" , data = data_clasif)
 
+################
+# algunos boxplots
+ax = sns.boxplot(x= "ue_dest", y = "metric_zscore", hue="ue_dest" , data = data_clasif)
 ax = sns.boxplot(x= "ue_dest", y = "metric", hue="ue_dest" , data = data_clasif)
 ax.set(ylabel = "métrica en escala logarítmica")
 ax.set_yscale("log")
 
+ax = sns.boxplot(x= "ue_dest", y = "metric", hue="ue_dest" , data = data_clasif, showfliers = False)
+ax = sns.boxplot(x= "ue_dest", y = "kilos", hue="ue_dest" , data = data_clasif, showfliers = False)
 
-data_clasif = data_clasif[["HS6_d12", "dest_clean", 'valor',  'kilos', "uni_est",  'cant_est', "filtro", "metric" , "ue_dest"]]
-data_clasif .columns[data_clasif .isna().any()].tolist()
+data_clasif["precio_kilo"]= data_clasif["valor"]/data_clasif["kilos"]
+ax = sns.boxplot(x= "ue_dest", y = "precio_kilo", hue="ue_dest" , data = data_clasif, showfliers = False)
+###############
 
-no_clasificados = pd.concat( [ dest_c], axis = 0)
+# Data no clasificada
+data_not_clasif= pd.concat( [ dest_c], axis = 0)
+data_not_clasif["ue_dest"] = pd.np.NaN #np.NAN
 
+data_not_clasif.isna().sum()
+data_not_clasif["metric"] = data_not_clasif.apply(lambda x: metrica(x), axis = 1)
 
-# data_clasif["ue_dest"] = data_clasif["ue_dest"].astype("category")
-# data_clasif[["HS6_d12", "dest_clean", "ue_dest"]].value_counts().reset_index(name = "counts")
-# len(pd.unique(data_clasif["HS6_d12"]))
+## ALL DATA
 
+all_data = pd.concat([data_clasif, data_not_clasif], axis = 0)
+all_data["precio_kilo"]=all_data["valor"]/all_data["kilos"]
+all_data["HS6"] = all_data["HS6_d12"].str.slice(0,6).astype("category")
+all_data["HS6_d12"] = all_data["HS6_d12"].astype("category")
+all_data["ue_dest"] = all_data["ue_dest"].astype("category")
 
-# ""centros"" de BK y CI
-# mad= data_clasif.groupby(["HS6_d12", "ue_dest"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)    
-# median= data_clasif.groupby(["HS6_d12", "ue_dest"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median"}).reset_index(drop = True) 
+all_data = all_data [["HS6_d12", "HS6", "ue_dest", 'valor',  'kilos', "precio_kilo" ,'cant_est', "metric" ]]
+all_data .info()
+all_data.isna().sum()
 
-mad_bk = data_clasif[data_clasif["ue_dest"]=="BK"].groupby(["HS6_d12", "ue_dest"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad_bk"}).reset_index(drop = True)    
-median_bk = data_clasif[data_clasif["ue_dest"]=="BK"].groupby(["HS6_d12", "ue_dest"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median_bk"}).reset_index(drop = True) 
+df_na = all_data[all_data["ue_dest"].isna()]
+df_com = all_data[~all_data["ue_dest"].isna()]
 
-mad_ci= data_clasif[data_clasif["ue_dest"]=="CI"].groupby(["HS6_d12", "ue_dest"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad_ci"}).reset_index(drop = True)    
-median_ci = data_clasif[data_clasif["ue_dest"]=="CI"].groupby(["HS6_d12", "ue_dest"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median_ci"}).reset_index(drop = True) 
+### imputacion con depp leearning
 
+import datawig
 
+df_train, df_test = datawig.utils.random_split(train)
 
-filtro2_G  = filtro2[filtro2["filtro"]=="G"]
-filtro2_G  = filtro2[filtro2["HS6_d12"].isin(filtro_g)]
+#Initialize a SimpleImputer model
+imputer = datawig.SimpleImputer(
+    input_columns=["HS6_d12", "HS6", 'valor',  'kilos', "precio_kilo" ,'cant_est', "metric" ], # column(s) containing information about the column we want to impute
+    output_column= "ue_dest", # the column we'd like to impute values for
+    output_path = 'imputer_model' # stores model data and metrics
+    )
 
-filtro2_G[filtro2_G["HS6_d12"].isin(filtro_a)]
-filtro2_G[filtro2_G["HS6_d12"].isin(filtro_b)]
-filtro2_G[filtro2_G["HS6_d12"].isin(filtro_d)]
-filtro2_G[filtro2_G["HS6_d12"].isin(filtro_e)]
+#Fit an imputer model on the train data
+imputer.fit(train_df=df_train, num_epochs=50)
 
-
-filtro2_C  = filtro2[(filtro2["filtro"]=="C")]
-filtro2_C[filtro2_C["HS6_d12"].isin(filtro_a)]
-filtro2_C[filtro2_C["HS6_d12"].isin(filtro_b)]
-filtro2_C[filtro2_C["HS6_d12"].isin(filtro_d)]
-filtro2_C[filtro2_C["HS6_d12"].isin(filtro_e)]
-
-
-x= pd.merge(filtro2_G , mad_bk.drop("ue_dest", axis = 1), how = "left", left_on = ["HS6_d12" ], right_on = ["HS6_d12"])
-x= pd.merge(filtro2_C , mad_bk.drop("ue_dest", axis = 1), how = "left", left_on = ["HS6_d12" ], right_on = ["HS6_d12"])
-x[x[mad_bk.isna()]]
-
-filtro2_G[filtro2_G["HS6_d12"].isin(mad_bk["HS6_d12"])]
-filtro2_G[filtro2_G["HS6_d12"].isin(["84212990900D"])]
-
-filtro2_G[filtro2_G["HS6_d12"].isin(filtro_a)]
-filtro2_G[filtro2_G["HS6_d12"].isin(filtro_a)]
+#Impute missing values and return original dataframe with predictions
+imputed = imputer.predict(df_test)
 
 
 
+############################# KNN
+from sklearn.impute import KNNImputer
+from sklearn.preprocessing import MinMaxScaler
 
-filtro2_G  = pd.merge(filtro2_G , median_bk.drop("ue_dest", axis = 1), how = "left", left_on = ["HS6_d12"], right_on = ["HS6_d12"])
-filtro2_G = pd.merge(filtro2_G , mad_ci.drop("ue_dest", axis = 1), how = "left", left_on = ["HS6_d12"], right_on = ["HS6_d12"])
-filtro2_G  = pd.merge(filtro2_G , median_ci.drop("ue_dest", axis = 1), how = "left", left_on = ["HS6_d12"], right_on = ["HS6_d12"])
+cat_variables = all_data[["HS6_d12", "HS6"]]
+cat_dummies = pd.get_dummies(cat_variables, drop_first=True)
 
-data_clasif = pd.merge(data_clasif, mad_ci, how = "left", left_on = ["HS6_d12", "ue_dest"], right_on = ["HS6_d12", "ue_dest"])
-data_clasif = pd.merge(data_clasif, median_ci, how = "left", left_on = ["HS6_d12", "ue_dest"], right_on = ["HS6_d12", "ue_dest"])
+df = all_data.drop(["HS6_d12", "HS6"], axis=1)
+df= pd.concat([df, cat_dummies], axis=1)
 
+scaler = MinMaxScaler()
+df = df.drop("ue_dest", axis =1)
+df = pd.DataFrame(scaler.fit_transform(df ), columns = df .columns)
 
+df.append(all_data["ue_dest"], ignore_index=True)
 
-data_clasif[data_clasif["ue_dest"]=="CI"]    
+data = pd.concat([df.reset_index(drop=True), pd.DataFrame(all_data["ue_dest"]).reset_index(drop=True) ], axis=1)
 
+imputer = KNNImputer(n_neighbors=5)
+df_complete = pd.DataFrame(imputer.fit_transform(data),columns = data.columns)
 
+###################
+from sklearn.impute import SimpleImputer
+imp = SimpleImputer(strategy="most_frequent")
+imp.fit(all_data)
+data_complete = imp.transform(all_data)
+data_complete  = pd.DataFrame(data_complete )
 
-
-
-
+data_complete.columns()
 
 # =============================================1================================
 # 4to filtro: Metricas 
