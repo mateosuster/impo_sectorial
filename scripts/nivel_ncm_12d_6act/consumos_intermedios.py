@@ -418,12 +418,45 @@ all_data["HS6_d12"] = all_data["HS6_d12"].astype("category")
 all_data["ue_dest"] = all_data["ue_dest"].astype("category")
 
 all_data = all_data [["HS6_d12", "HS6", "ue_dest", 'valor',  'kilos', "precio_kilo" ,'cant_est', "metric" ]]
-all_data .info()
+# all_data .info()
 all_data.isna().sum()
 
-df_na = all_data[all_data["ue_dest"].isna()]
-df_com = all_data[~all_data["ue_dest"].isna()]
+# df_na = all_data[all_data["ue_dest"].isna()]
+# df_com = all_data[~all_data["ue_dest"].isna()]
 
+
+############################# KNN
+from sklearn.impute import KNNImputer
+from sklearn.preprocessing import MinMaxScaler
+
+cat_variables = all_data[["HS6_d12", "HS6"]]
+cat_dummies = pd.get_dummies(cat_variables, drop_first=True)
+
+all_data["bk_dummy"] = all_data["ue_dest"].map({"BK": 1, "CI": 0})
+all_data["bk_dummy"].isna().sum()
+
+data_2fill = all_data.drop(["HS6_d12", "HS6", "ue_dest"], axis=1)
+data_2fill= pd.concat([data_2fill, cat_dummies], axis=1)
+
+imputer = KNNImputer(n_neighbors=2)
+df_fill = pd.DataFrame(imputer.fit_transform(data_2fill),columns = data_2fill.columns)
+
+
+
+# =============================================================================
+# HASTA ACA ESTA LIMPIOOOOOOOO
+# =============================================================================
+#####
+scaler = MinMaxScaler()
+df = df.drop("ue_dest", axis =1)
+df = pd.DataFrame(scaler.fit_transform(df ), columns = df .columns)
+
+df.append(all_data["ue_dest"], ignore_index=True)
+
+data = pd.concat([df.reset_index(drop=True), pd.DataFrame(all_data["ue_dest"]).reset_index(drop=True) ], axis=1)
+
+
+################## 
 ### imputacion con depp leearning
 
 import datawig
@@ -444,27 +477,6 @@ imputer.fit(train_df=df_train, num_epochs=50)
 imputed = imputer.predict(df_test)
 
 
-
-############################# KNN
-from sklearn.impute import KNNImputer
-from sklearn.preprocessing import MinMaxScaler
-
-cat_variables = all_data[["HS6_d12", "HS6"]]
-cat_dummies = pd.get_dummies(cat_variables, drop_first=True)
-
-df = all_data.drop(["HS6_d12", "HS6"], axis=1)
-df= pd.concat([df, cat_dummies], axis=1)
-
-scaler = MinMaxScaler()
-df = df.drop("ue_dest", axis =1)
-df = pd.DataFrame(scaler.fit_transform(df ), columns = df .columns)
-
-df.append(all_data["ue_dest"], ignore_index=True)
-
-data = pd.concat([df.reset_index(drop=True), pd.DataFrame(all_data["ue_dest"]).reset_index(drop=True) ], axis=1)
-
-imputer = KNNImputer(n_neighbors=5)
-df_complete = pd.DataFrame(imputer.fit_transform(data),columns = data.columns)
 
 ###################
 from sklearn.impute import SimpleImputer
