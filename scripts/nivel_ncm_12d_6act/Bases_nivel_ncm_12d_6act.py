@@ -161,11 +161,10 @@ def predo_bec_bk(bec, bec_to_clae):
     bec_cap = bec[bec["BEC5EndUse"].str.startswith("CAP", na = False)]
     #partes y accesorios dentro de start with cap
     partes_accesorios  = bec_cap[bec_cap["HS6Desc"].str.contains("part|acces")]   
-    partes_accesorios["BEC5EndUse"].value_counts()
+    # partes_accesorios["BEC5EndUse"].value_counts()
 
     # filtro bienes de capital
     bec_bk = bec_cap.loc[~bec_cap["HS6"].isin( partes_accesorios["HS6"])]
-    
     
     filtro = [ "HS4", "HS4Desc", "HS6", "HS6Desc", "BEC5Category", "BEC5EndUse"]
     

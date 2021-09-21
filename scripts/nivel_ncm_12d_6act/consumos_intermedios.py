@@ -5,7 +5,7 @@
 # =============================================================================
 import os 
 #Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("D:/archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 #igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
@@ -408,6 +408,12 @@ data_not_clasif["ue_dest"] = pd.np.NaN #np.NAN
 
 data_not_clasif.isna().sum()
 data_not_clasif["metric"] = data_not_clasif.apply(lambda x: metrica(x), axis = 1)
+
+
+data_clasif.to_csv("data_clasif.csv")
+data_not_clasif.to_csv("data_not_clasif.csv")
+set(data_clasif.columns).symmetric_difference(set(data_not_clasif.columns))
+
 
 ## ALL DATA
 

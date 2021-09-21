@@ -16,12 +16,16 @@ os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
 os.getcwd()
 
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 import seaborn as sns
 import plotinpy as pnp
+
+import re
+
 # import prince
 # from prince import ca
 
@@ -36,7 +40,8 @@ from pre_visualizacion_nivel_ncm_12d_6act import *
 #############################################
 
 #impo 12 d
-impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
+impo_d12 = pd.read_csv("../data/IMPO_17_feature.csv")
+# impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
 #impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
 
 clae = pd.read_csv( "../data/clae_nombre.csv")
@@ -79,16 +84,81 @@ bec_bk = predo_bec_bk(bec, bec_to_clae)
 #dic_stp = predo_stp(dic_stp )
 
 
-
-
 #############################################
 #                joins                      #
 #############################################
 
-
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
+
+
+# =============================================================================
+# EDA BEC5
+# =============================================================================
+def destinacion_limpio(x):
+    if re.search("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", x)!=None:
+        return "C/TR"
+    elif re.search("S/TRAN|SIN TRANSF|INGR.ZF BIENES", x)!=None:
+        return "S/TR"
+    elif re.search("CONS|ING.ZF MERC", x)!=None:
+        # return "CONS"
+        return "CONS&Otros"
+    else: 
+        # return "Otro"
+        return "CONS&Otros"
+
+
+impo_d12["dest_clean"] = impo_d12["destinacion"].apply(lambda x: destinacion_limpio(x))
+impo_d12["dest_clean"].value_counts()
+
+impo_bec = pd.merge(impo_d12, bec[["HS6", "BEC5EndUse" ]], how= "left" , left_on = "HS6", right_on= "HS6" )
+
+impo_bec_ci = impo_bec[impo_bec["BEC5EndUse"].str.startswith("INT", na = False)] 
+impo_bec_cons = impo_bec[impo_bec["BEC5EndUse"].str.startswith("CONS", na = False)] 
+
+
+bec["BEC5EndUse"].value_counts().sum()
+bec[bec["BEC5EndUse"].str.startswith("CAP", na = False)]["BEC5EndUse"].value_counts()#.sum()
+bec[bec["BEC5EndUse"].str.startswith("INT", na = False)]["BEC5EndUse"].value_counts()#.sum()
+bec[bec["BEC5EndUse"].str.startswith("CONS", na = False)]["BEC5EndUse"].value_counts()#.sum()
+
+
+# =============================================================================
+# VENN BK
+# =============================================================================
+impo_bec_bk = impo_bec[impo_bec["BEC5EndUse"].str.startswith("CAP", na = False)] 
+impo_bec_bk ["dest_clean"].value_counts()#.sum()
+
+filtro1st =  impo_bec_bk [impo_bec_bk ["dest_clean"] == "S/TR"] 
+filtro1ct =  impo_bec_bk [impo_bec_bk ["dest_clean"] == "C/TR"] 
+filtro1co =  impo_bec_bk [impo_bec_bk ["dest_clean"] == "CONS&Otros"] 
+
+len(impo_bec_bk )  == ( len(filtro1st) +len(filtro1ct) + len(filtro1co) ) 
+
+# Filtros de conjuntos
+set_st = set(filtro1st["HS6_d12"])
+set_ct = set(filtro1ct["HS6_d12"])
+set_co = set(filtro1co["HS6_d12"])
+
+filtro_a = set_st - set_co - set_ct 
+filtro_b = set_ct - set_st - set_co 
+filtro_c = set_co - set_ct -set_st 
+
+filtro_d = (set_st & set_co) - (set_ct )
+filtro_e = (set_ct & set_co) - ( set_st)
+filtro_f = (set_ct & set_st) - set_co 
+filtro_g = set_ct & set_st & set_co 
+
+dest_a = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_a  )]
+dest_b = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_b  )]
+dest_c = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_c  )]
+dest_d = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_d  )]
+dest_e = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_e  )]
+dest_f = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_f  )]
+dest_g = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_g )]
+
+
 
 
 # =============================================================================
