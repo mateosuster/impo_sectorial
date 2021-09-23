@@ -10,6 +10,7 @@ os.getcwd()
 
 import pandas as pd
 import numpy as np
+import re
 
 
 # def carga_de_bases(x):
@@ -255,3 +256,25 @@ def def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio):
     return  impo17_bec_complete   
 
     
+def destinacion_limpio(x):
+    if re.search("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", x)!=None:
+        return "C/TR"
+    elif re.search("S/TRAN|SIN TRANSF|INGR.ZF BIENES", x)!=None:
+        return "S/TR"
+    elif re.search("CONS|ING.ZF MERC", x)!=None:
+        # return "CONS"
+        return "CONS&Otros"
+    else: 
+        # return "Otro"
+        return "CONS&Otros"
+    
+def metrica(x):
+    return (x["valor"] * x["kilos"])/x["cant_decl"]
+
+def mod_z(col: pd.Series, thresh: float=3.5):
+    med_col = col.median()
+    med_abs_dev = (np.abs(col - med_col)).median()
+    mod_z = 0.645* ((col - med_col) / med_abs_dev)
+    # mod_z = mod_z[np.abs(mod_z) < thresh]
+    return np.abs(mod_z)
+
