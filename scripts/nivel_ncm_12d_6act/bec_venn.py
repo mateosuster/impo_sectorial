@@ -115,6 +115,7 @@ bec[bec["BEC5EndUse"].str.startswith("CONS", na = False)]["BEC5EndUse"].value_co
 # =============================================================================
 impo_bec_bk = impo_bec[impo_bec["BEC5EndUse"].str.startswith("CAP", na = False)] 
 impo_bec_bk ["dest_clean"].value_counts()#.sum()
+len(impo_bec_bk )
 
 filtro1st =  impo_bec_bk [impo_bec_bk ["dest_clean"] == "S/TR"] 
 filtro1ct =  impo_bec_bk [impo_bec_bk ["dest_clean"] == "C/TR"] 
