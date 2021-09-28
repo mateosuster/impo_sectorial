@@ -160,6 +160,7 @@ def predo_cuit_clae(cuit_clae , clae):
      
 def predo_bec_bk(bec, bec_to_clae):
     bec_cap = bec[bec["BEC5EndUse"].str.startswith("CAP", na = False)]
+    
     #partes y accesorios dentro de start with cap
     partes_accesorios  = bec_cap[bec_cap["HS6Desc"].str.contains("part|acces")]   
     # partes_accesorios["BEC5EndUse"].value_counts()

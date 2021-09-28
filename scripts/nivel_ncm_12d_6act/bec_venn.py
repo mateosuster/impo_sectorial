@@ -368,6 +368,27 @@ cons_fin_clasif =pd.concat([cons_fin_D, cons_fin_G_clasif, cons_fin[cons_fin["fi
 # =============================================================================
 # Consistencia de diagramas
 # =============================================================================
-len(impo_bec_ci) + len(impo_bec_bk) + len(impo_bec_cons)
+len(impo_bec_ci) + len(impo_bec_bk) + len(impo_bec_cons) == len(impo_d12) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )
 
-impo_ue_dest = pd.concat([pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha", 'metric', 'ue_dest', 'mad', 'median', 'z_score'], axis = 1), bk], axis =0)
+
+# impo_ue_dest = pd.concat([pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha", 'metric', 'ue_dest', 'mad', 'median', 'z_score'], axis = 1), bk], axis =0)
+cicf_ue_dest = pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha",  'mad', 'median', 'z_score'], axis = 1) #, bk], axis =0)
+
+bk_ue_dest = pd.read_csv("../data/resultados/bk_con_ue_dest.csv")
+bk_sin_ue_dest = pd.read_csv("../data/resultados/bk_sin_ue_dest.csv")
+
+len(bk_sin_ue_dest) + len(bk_ue_dest)
+
+len(impo_d12) - (len(cicf_ue_dest)+ len(bk_ue_dest) )
+len(stp_ue_dest)
+
+cicf_ue_dest.columns
+bk_ue_dest.columns
+
+[set(bk_ue_dest.columns) - set(cicf_ue_dest.columns) ]
+
+cicf_ue_dest[cols]
+bk_ue_dest[cols]
+
+
+

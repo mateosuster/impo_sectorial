@@ -5,7 +5,7 @@
 # =============================================================================
 import os 
 #Mateo
-os.chdir("D:/archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 #igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
@@ -85,6 +85,15 @@ join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
 # join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
 
+bec_cap = bec[bec["BEC5EndUse"].str.startswith("CAP", na = False)]
+partes_accesorios  = bec[ bec["BEC5EndUse"].str.startswith("CAP", na = False) ]
+partes_accesorios   =  partes_accesorios[partes_accesorios["HS6Desc"].str.contains("part|acces")]  
+
+join_impo_clae_bec_parts = pd.merge(join_impo_clae, partes_accesorios  , how= "left" , left_on = "HS6", right_on= "HS6" )
+# filtramos las impos que no mergearon (no arrancan con CAP)
+join_impo_clae_bec_parts= join_impo_clae_bec_parts[join_impo_clae_bec_parts["HS4"].notnull()]
+len(join_impo_clae_bec_parts) + len(join_impo_clae_bec_bk) 
+
 #############################################
 #           Tabla de contingencia           #
 #              producto-sector              #
@@ -136,24 +145,11 @@ stp_agro_filtro =stp_agro_asig[stp_agro_asig["A"]+stp_agro_asig["G"] < stp_agro_
 
 # =============================================================================
 # Antes de empezar... feature destinación limpio
-# =============================================================================
-import re
-
-def destinacion_limpio(x):
-    if re.search("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", x)!=None:
-        return "C/TR"
-    elif re.search("S/TRAN|SIN TRANSF|INGR.ZF BIENES", x)!=None:
-        return "S/TR"
-    elif re.search("CONS|ING.ZF MERC", x)!=None:
-        # return "CONS"
-        return "CONS&Otros"
-    else: 
-        # return "Otro"
-        return "CONS&Otros"
- 
+# ============================================================================= 
 
 join_impo_clae_bec_bk["dest_clean"] = join_impo_clae_bec_bk["destinacion"].apply(lambda x: destinacion_limpio(x))
 join_impo_clae_bec_bk["dest_clean"].value_counts()
+114256 - join_impo_clae_bec_bk["dest_clean"].value_counts().sum()
 
 
 # =============================================================================
@@ -386,7 +382,44 @@ clasif_AB["metric"] = clasif_AB.apply(lambda x: metrica(x), axis = 1)
 data_clasif = pd.concat([clasif_AB, clasif_D ,clasif_E,clasif_G  ], axis= 0)
 data_clasif["ue_dest"].value_counts()
 
-data_clasif["metric_zscore"] = (data_clasif["metric"] -data_clasif["metric"].mean())/ data_clasif["metric"].std(ddof=1)  
+# data_clasif["metric_zscore"] = (data_clasif["metric"] -data_clasif["metric"].mean())/ data_clasif["metric"].std(ddof=1)  
+
+
+# =============================================================================
+#  Exportacion de datos clasificados con UE dest
+# =============================================================================
+## DATOS CLASIFICADOS
+stp_ue_dest = join_impo_clae_bec_bk[join_impo_clae_bec_bk["ue_dest"]=="BK" ]
+stp_ue_dest ["ue_dest"].value_counts()
+stp_ue_dest ["metric"] = stp_ue_dest .apply(lambda x: metrica(x), axis = 1)
+stp_ue_dest["filtro"] = "STP"
+
+data_clasif_ue_dest = pd.concat([data_clasif, stp_ue_dest], axis = 0)
+data_clasif_ue_dest ["ue_dest"].value_counts()
+
+data_clasif_ue_dest["precio_kilo"]= data_clasif_ue_dest["valor"]/data_clasif_ue_dest["kilos"]
+data_clasif_ue_dest.to_csv("../data/resultados/bk_con_ue_dest.csv")
+
+
+## DATOS NO CLASIFICADOS
+data_not_clasif = pd.concat( [ dest_c], axis = 0)
+data_not_clasif["ue_dest"] = pd.np.NaN #np.NAN
+
+# data_not_clasif.isna().sum()
+data_not_clasif["metric"] = data_not_clasif.apply(lambda x: metrica(x), axis = 1)
+data_not_clasif["precio_kilo"]= data_not_clasif["valor"]/data_not_clasif["kilos"]
+
+data_not_clasif.to_csv("../data/resultados/bk_sin_ue_dest.csv")
+
+
+# data_clasif.to_csv("data_clasif.csv")
+# data_not_clasif.to_csv("data_not_clasif.csv")
+# set(data_clasif.columns).symmetric_difference(set(data_not_clasif.columns))
+
+
+
+
+
 
 ################
 # algunos boxplots
@@ -398,21 +431,9 @@ ax.set_yscale("log")
 ax = sns.boxplot(x= "ue_dest", y = "metric", hue="ue_dest" , data = data_clasif, showfliers = False)
 ax = sns.boxplot(x= "ue_dest", y = "kilos", hue="ue_dest" , data = data_clasif, showfliers = False)
 
-data_clasif["precio_kilo"]= data_clasif["valor"]/data_clasif["kilos"]
 ax = sns.boxplot(x= "ue_dest", y = "precio_kilo", hue="ue_dest" , data = data_clasif, showfliers = False)
 ###############
 
-# Data no clasificada
-data_not_clasif= pd.concat( [ dest_c], axis = 0)
-data_not_clasif["ue_dest"] = pd.np.NaN #np.NAN
-
-data_not_clasif.isna().sum()
-data_not_clasif["metric"] = data_not_clasif.apply(lambda x: metrica(x), axis = 1)
-
-
-data_clasif.to_csv("data_clasif.csv")
-data_not_clasif.to_csv("data_not_clasif.csv")
-set(data_clasif.columns).symmetric_difference(set(data_not_clasif.columns))
 
 
 ## ALL DATA
@@ -602,30 +623,30 @@ filtro3["cluster"] = filtro3.groupby(["HS6_d12", "destinacion", "uni_decl"], as_
 
 
 
-np.array([x, label])
+# np.array([x, label])
 
-type(label)
-type(x)
-len(label)
-type(x)
-label.shape
-x.reshape(len(label))
+# type(label)
+# type(x)
+# len(label)
+# type(x)
+# label.shape
+# x.reshape(len(label))
 
-x = kmeans.fit(data[data["groupID"]== filtro[0]]["cant_decl"])
+# x = kmeans.fit(data[data["groupID"]== filtro[0]]["cant_decl"])
 
 
 
 # combinacion de unidades 
-x = impo_d12.groupby(["uni_est", "uni_decl"]).size().reset_index().rename(columns={0:'count'}).sort_values("count", ascending = False)
-x["frec_relativa"] = x["count"]/(x["count"].sum() )
+# x = impo_d12.groupby(["uni_est", "uni_decl"]).size().reset_index().rename(columns={0:'count'}).sort_values("count", ascending = False)
+# x["frec_relativa"] = x["count"]/(x["count"].sum() )
 
-x = impo_d12[impo_d12["HS6_d12"].isin(n_emp_1["HS6_d12"])].groupby(["unidad_est", "unidad_decl"]).size().reset_index().rename(columns={0:'count'}).sort_values("count", ascending = False)
-x["frec_relativa"] = x["count"]/(x["count"].sum() )
+# x = impo_d12[impo_d12["HS6_d12"].isin(n_emp_1["HS6_d12"])].groupby(["unidad_est", "unidad_decl"]).size().reset_index().rename(columns={0:'count'}).sort_values("count", ascending = False)
+# x["frec_relativa"] = x["count"]/(x["count"].sum() )
 
 
-y = impo_d12[(impo_d12["HS6_d12"].isin(n_emp_1["HS6_d12"])) & (impo_d12["unidad_est"]=="Unidad") & (impo_d12["unidad_decl"]=="Unidad") ]
-# y = impo_d12[(impo_d12["HS6_d12"].isin(n_emp_1["HS6_d12"])) ]
-y.valor.sum() / impo_d12.valor.sum()
+# y = impo_d12[(impo_d12["HS6_d12"].isin(n_emp_1["HS6_d12"])) & (impo_d12["unidad_est"]=="Unidad") & (impo_d12["unidad_decl"]=="Unidad") ]
+# # y = impo_d12[(impo_d12["HS6_d12"].isin(n_emp_1["HS6_d12"])) ]
+# y.valor.sum() / impo_d12.valor.sum()
 
 
 # =============================================================================
