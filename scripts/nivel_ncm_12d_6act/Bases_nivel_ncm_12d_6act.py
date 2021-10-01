@@ -89,6 +89,7 @@ def predo_cuit_clae(cuit_clae , clae):
     cuit_clae = cuit_clae[cuit_clae["Numero_actividad_cuit"]<=6].drop(["Clae6_desc","Fecha_actividad", "Cantidad_actividades_cuit"], axis =1)
     cuit_clae = cuit_clae.drop_duplicates()
     
+    
     #procesamiento de los 6 digitos
     cuit_clae6 = cuit_clae.set_index(["CUIT", "Numero_actividad_cuit"], append=True)
     cuit_clae6 = cuit_clae6.unstack().droplevel(0, axis=1)
@@ -158,21 +159,18 @@ def predo_cuit_clae(cuit_clae , clae):
     return cuit_clae6 
     
      
-def predo_bec_bk(bec, bec_to_clae):
+def predo_bec_bk(bec):#, bec_to_clae):
     bec_cap = bec[bec["BEC5EndUse"].str.startswith("CAP", na = False)]
-    
-    #partes y accesorios dentro de start with cap
-    partes_accesorios  = bec_cap[bec_cap["HS6Desc"].str.contains("part|acces")]   
-    # partes_accesorios["BEC5EndUse"].value_counts()
-
-    # filtro bienes de capital
-    bec_bk = bec_cap.loc[~bec_cap["HS6"].isin( partes_accesorios["HS6"])]
-    
     filtro = [ "HS4", "HS4Desc", "HS6", "HS6Desc", "BEC5Category", "BEC5EndUse"]
+    #partes y accesorios dentro de start with cap
+    # partes_accesorios  = bec_cap[bec_cap["HS6Desc"].str.contains("part|acces")]   
+    # partes_accesorios["BEC5EndUse"].value_counts()
+    # filtro bienes de capital
+    # bec_bk = bec_cap.loc[~bec_cap["HS6"].isin( partes_accesorios["HS6"])]
+    # bec_bk = bec_bk[filtro]
+    bec_cap = bec_cap[filtro]
     
-    bec_bk = bec_bk[filtro]
-    
-    return bec_bk
+    return bec_cap
 
 
 def predo_stp(dic_stp ):
@@ -257,6 +255,9 @@ def def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio):
     return  impo17_bec_complete   
 
     
+# =============================================================================
+# clasificación via destinación
+# =============================================================================
 def destinacion_limpio(x):
     if re.search("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", x)!=None:
         return "C/TR"
@@ -279,3 +280,14 @@ def mod_z(col: pd.Series, thresh: float=3.5):
     # mod_z = mod_z[np.abs(mod_z) < thresh]
     return np.abs(mod_z)
 
+
+# =============================================================================
+# preprocesamiento data modelo
+# =============================================================================
+def str_a_num(df):
+  for col in df:
+    original = np.sort(df[col].unique())
+    reemplazo = list(range(len(original)))
+    mapa = dict(zip(original, reemplazo))
+    df[col] = df[col].replace(mapa)
+  return(df)

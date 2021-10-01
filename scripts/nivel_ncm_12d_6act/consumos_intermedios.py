@@ -85,6 +85,9 @@ join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
 # join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
 
+
+
+# buscando las partes y accesorios
 bec_cap = bec[bec["BEC5EndUse"].str.startswith("CAP", na = False)]
 partes_accesorios  = bec[ bec["BEC5EndUse"].str.startswith("CAP", na = False) ]
 partes_accesorios   =  partes_accesorios[partes_accesorios["HS6Desc"].str.contains("part|acces")]  
