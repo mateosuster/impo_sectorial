@@ -38,6 +38,9 @@ IMPO_17_feature.xls
 IMPO_17_feature.xlsx
 impo_con_ponderaciones_12d.csv
 
+data_modelo_diaria.csv
+data_train_test.csv
+
 data_modelo.csv
 bk_con_ue_dest.csv
 

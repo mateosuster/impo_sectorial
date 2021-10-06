@@ -203,7 +203,7 @@ len(filtro1st) +len(filtro1ct) + len(filtro1co)
 filtro1 = pd.concat( [dest_a, dest_b, dest_c, dest_d,  dest_e,  dest_f, dest_g], axis = 0)
 
 
-filtro1["ue_dest"].value_counts()
+# filtro1["ue_dest"].value_counts()
 filtro1["ue_dest"] = np.where((filtro1["filtro"] == "A") & 
                                 (filtro1["dest_clean"] == "S/TR"), 
                                     "BK",  
@@ -213,13 +213,16 @@ filtro1["ue_dest"] = np.where((filtro1["filtro"] == "A") &
                                             ) 
                                 ) 
 
-filtro2 = filtro1[filtro1["ue_dest"] == "" ]
-len(filtro2)/len(filtro1)-1
+filtro1[["ue_dest", "filtro"]].value_counts()
 
-filtro2["filtro"].value_counts()
-filtro2[["dest_clean", "filtro"]].value_counts()
-filtro2[["dest_clean","filtro", "uni_decl" ]].value_counts()
-filtro2[["dest_clean","filtro", "uni_est" ]].value_counts()
+
+filtro2 = filtro1[filtro1["ue_dest"] == "" ]
+# len(filtro2)/len(filtro1)-1
+
+# filtro2["filtro"].value_counts()
+# filtro2[["dest_clean", "filtro"]].value_counts()
+# filtro2[["dest_clean","filtro", "uni_decl" ]].value_counts()
+# filtro2[["dest_clean","filtro", "uni_est" ]].value_counts()
 
 
 
@@ -308,6 +311,8 @@ clasif_AB["metric"] = clasif_AB.apply(lambda x: metrica(x), axis = 1)
 
 data_clasif = pd.concat([clasif_AB, clasif_D ,clasif_E,clasif_G  ], axis= 0)
 # data_clasif["metric_zscore"] = (data_clasif["metric"] -data_clasif["metric"].mean())/ data_clasif["metric"].std(ddof=1)  
+
+data_clasif[["filtro", "ue_dest"]].value_counts()
 
 # =============================================================================
 #  Exportacion de datos clasificados con UE dest
@@ -485,6 +490,7 @@ cons_int_G_clasif["ue_dest"].value_counts()#.sum()
 
 cons_int_clasif =pd.concat([cons_int_D, cons_int_G_clasif, cons_int[cons_int["filtro"].str.contains("A|B|C|E")]  ])
 cons_int_clasif ["ue_dest"].value_counts()#.sum()
+cons_int_clasif [["filtro", "ue_dest"]].value_counts()#.sum()
 
 
 
@@ -592,7 +598,7 @@ cons_fin_G_clasif = pd.concat([cons_fin_G_no_cons, cons_fin_G.drop(["median_bk",
 # cons_fin_G_clasif  ["ue_dest"].value_counts()
 
 cons_fin_clasif =pd.concat([cons_fin_D, cons_fin_G_clasif, cons_fin[cons_fin["filtro"].str.contains("A|B|C|E")]  ])
-# cons_fin_clasif ["ue_dest"].value_counts()#.sum()
+cons_fin_clasif [["filtro", "ue_dest"]].value_counts()#.sum()
 
 
 # =============================================================================
@@ -617,15 +623,16 @@ bk_sin_ue_dest = data_not_clasif.drop(['HS4', 'HS4Desc', 'HS6Desc', "BEC5Categor
 
 data_model = pd.concat([bk_sin_ue_dest , bk_ue_dest, cicf_ue_dest ], axis = 0) 
 data_model ['HS6'] = data_model ['HS6'].astype("str")
-data_model.to_csv("../data/resultados/data_modelo.csv", index = False)
+# data_model.to_csv("../data/resultados/data_modelo_diaria.csv", index = False)
 len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()] ))
+
 # len(data_model)  - data_model["ue_dest"].value_counts().sum()
 
 
 # =============================================================================
 # Preprocesamiento de Datos para el modelo
 # =============================================================================
-data= pd.read_csv("../data/resultados/data_modelo.csv")
+data= pd.read_csv("../data/resultados/data_modelo_diaria.csv")
 
 data.info()
 data["ue_dest"].value_counts()
@@ -652,17 +659,19 @@ num_col = list(data.select_dtypes(include=['float', "int64" ]).columns)
 data_pre = pd.concat( [ str_a_num(data[cat_col]) , data[num_col], data["ue_dest"] ], axis = 1  )
 
 # datos etiquetados
-data_clasif = data_pre[data_pre ["ue_dest"] != "?" ]
-data_clasif["bk_dummy"] = data_clasif["ue_dest"].map({"BK": 1, "CI": 0})
-data_clasif.drop("ue_dest", axis = 1, inplace = True)
+data_train = data_pre[data_pre ["ue_dest"] != "?" ]
+data_train["bk_dummy"] = data_train["ue_dest"].map({"BK": 1, "CI": 0})
+data_train.drop("ue_dest", axis = 1, inplace = True)
 
 # datos no etiquetados
-data_not_clasif = data_pre[data_pre["ue_dest"] == "?" ]
-data_not_clasif.drop("ue_dest", axis = 1, inplace = True)
+data_to_clasif = data_pre[data_pre["ue_dest"] == "?" ]
+data_to_clasif.drop("ue_dest", axis = 1, inplace = True)
+
+len(data_pre) == (len(data_train) + len(data_to_clasif))
 
 # exportacion de datos
-data_clasif .to_csv("../data/resultados/data_xgb_train.csv", index=False)
-data_not_clasif .to_csv("../data/resultados/data_xgb_to_pred.csv", index=False)
+data_train.to_csv("../data/resultados/data_train_test.csv", index=False)
+data_to_clasif .to_csv("../data/resultados/data_to_pred.csv", index=False)
 
 
 
