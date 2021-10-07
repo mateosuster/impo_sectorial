@@ -12,7 +12,7 @@ import os
 os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 import pandas as pd
-from numpy import array
+import numpy as np
 
 import matplotlib.pyplot as plt
 
@@ -34,16 +34,32 @@ import xgboost as xgb
 
 data_pre = pd.read_csv( "../data/resultados/data_train_test.csv")#.drop(U)
 data_pre.head()
-data_pre.shape
+
 
 # data_pre.dropna(inplace=True)
 
 # data_pre.dropna(inplace=True)
-data_pre=data_pre.sample( n = 1000, random_state = 42 )
+# data_pre=data_pre.sample( n = 1000, random_state = 42 )
 data_pre.shape
+data_pre.isna().sum()
+np.isinf(data_pre).values.sum()
 
-X_train , X_test, y_train, y_test = train_test_split(data_pre.drop("bk_dummy", axis =1), 
-                                                     data_pre["bk_dummy"], test_size = 0.3, random_state = 3)
+data_pre.replace([np.inf, -np.inf], np.nan, inplace=True)
+
+
+data_pre["bk_dummy"].value_counts(normalize=True)
+
+X_train , X_test, y_train, y_test = train_test_split(data_pre.drop("bk_dummy", axis =1),  data_pre["bk_dummy"], test_size = 0.3, random_state = 3)#, stratify=True)
+
+## Chequeamos el balanceo en los dataset´s
+for split_name, split in zip(['Entrenamiento', 'Prueba'],[y_train,y_test]):
+  print(split_name, "\n", pd.Series(split).value_counts(normalize=True) , "\n" )
+  print(split_name, "\n", pd.Series(split).value_counts(normalize= False),"\n",
+        "muestras {}".format(len(split)), "\n")
+
+print("muestras totales {}".format(len(X_train)+len(X_test)))
+
+
 
 """## Modelo de base"""
 
@@ -163,3 +179,23 @@ plt.hist(x = "bk_dummy", data = clasificacion_df)
 
 for boolean , text in zip([True, False], ["Frecuencias Relativas", "Frecuencias Abosolutas"] ):
   print(text+"\n", clasificacion_df.bk_dummy.value_counts(normalize= boolean), "\n" )
+
+
+# Exportacion de resultados
+# from sklearn.externals import joblib
+import pickle
+
+# Modelos
+pickle.dump(best_xgb, open('xgboost_train_cv.sav', 'wb'))
+model = pickle.load(open('xgboost_train_cv.sav', 'rb'))
+model.score(X_test, y_test)
+y_pred_ = model.predict(X_test)
+roc_auc_score(y_test,y_pred_)
+
+# joblib.dump(xgboos_rscv_all, 'knn_all_data.pkl')
+# joblib.dump(best_xgb, 'knn_clasif_data.pkl')
+
+# Clasficacion de Xgboost entrenado con todos los datos
+clasificacion_df.to_csv("...")
+
+# joblib.load("knn_gscv_all.pkl")
