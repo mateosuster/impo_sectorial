@@ -11,6 +11,7 @@ Original file is located at
 import os
 os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
+from datetime import datetime
 import pandas as pd
 import numpy as np
 
@@ -32,9 +33,9 @@ import xgboost as xgb
 
 """# Datos"""
 
+
 data_pre = pd.read_csv( "../data/resultados/data_train_test.csv")#.drop(U)
 data_pre.head()
-
 
 # data_pre.dropna(inplace=True)
 
@@ -65,7 +66,11 @@ print("muestras totales {}".format(len(X_train)+len(X_test)))
 
 classifier = xgb.sklearn.XGBClassifier(nthread=-1, seed=42)
 
+start_time = datetime.now()
 classifier.fit(X_train, y_train)
+end_time = datetime.now()
+print('Duration: {}'.format(end_time - start_time))
+
 
 print("Number of boosting trees: {}".format(classifier.n_estimators))
 print("Max depth of trees: {}".format(classifier.max_depth))
@@ -157,9 +162,14 @@ xgboos_rscv_all = RandomizedSearchCV(
     scoring = 'roc_auc',
     n_jobs = 10,
     cv = 10,                          
-    verbose=True)
+    verbose=True,
+    n_iter=100
+)
 
+start_time = datetime.now()
 xgboos_rscv_all.fit(data_pre.drop("bk_dummy", 1), data_pre["bk_dummy"]   )
+end_time = datetime.now()
+print('Duration: {}'.format(end_time - start_time))
 
 best_xgb = xgboos_rscv_all.best_estimator_
 best_xgb
