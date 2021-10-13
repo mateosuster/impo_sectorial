@@ -9,15 +9,16 @@ Original file is located at
 # Librerias
 """
 import os
-# os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 
 import pandas as pd
 import numpy as np
-
 import matplotlib.pyplot as plt
 
+import datetime
+import pickle
 
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
@@ -65,9 +66,13 @@ print("muestras totales {}".format(len(X_train)+len(X_test)))
 
 """## Modelo de base"""
 
+
 classifier = xgb.sklearn.XGBClassifier(nthread=-1, seed=42)
 
+start = datetime.datetime.now()
 classifier.fit(X_train, y_train)
+end = datetime.datetime.now()
+print(end-start)
 
 print("Number of boosting trees: {}".format(classifier.n_estimators))
 print("Max depth of trees: {}".format(classifier.max_depth))
@@ -121,6 +126,7 @@ parameters = {'silent': [False],
 #     cv = 10,
 #     verbose=True
 # )
+# grid_search.fit(X_train, y_train)
 
 random_search = RandomizedSearchCV(
     estimator=classifier,
@@ -131,8 +137,10 @@ random_search = RandomizedSearchCV(
     verbose=True
 )
 
-# grid_search.fit(X_train, y_train)
+start = datetime.datetime.now()
 random_search.fit(X_train, y_train)
+end = datetime.datetime.now()
+print(end-start)
 
 best_xgb = random_search.best_estimator_
 best_xgb
@@ -185,7 +193,7 @@ for boolean , text in zip([True, False], ["Frecuencias Relativas", "Frecuencias 
 
 # Exportacion de resultados
 # from sklearn.externals import joblib
-import pickle
+
 
 # Modelos
 pickle.dump(best_xgb, open('xgboost_train_cv.sav', 'wb'))
@@ -198,6 +206,6 @@ roc_auc_score(y_test,y_pred_)
 # joblib.dump(best_xgb, 'knn_clasif_data.pkl')
 
 # Clasficacion de Xgboost entrenado con todos los datos
-clasificacion_df.to_csv("...")
+clasificacion_df.to_csv("../data/resultados/datos_clasificados_modelo_train.csv")
 
 # joblib.load("knn_gscv_all.pkl")
