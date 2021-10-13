@@ -22,7 +22,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 import seaborn as sns
-import plotinpy as pnp
+# import plotinpy as pnp
 
 from scipy.stats import median_abs_deviation , zscore
 
@@ -51,12 +51,17 @@ clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
 #cuit_clae = pd.read_csv( "../data/cuit 2017 impo_con_actividad.csv")
 cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
-bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
-bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
+bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
+# bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
 
 #diccionario ncm12d
-ncm12_desc = pd.read_csv("../data/NCM 12d.csv", sep=";")
+# ncm12_desc = pd.read_csv("../data/NCM 12d.csv", sep=";")
+# ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Descripción Completa'].str.split('//', expand=True))], axis=1)
+
+ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
+ncm12_desc = ncm12_desc[["POSICION", "DESCRIPCIO"]]
+ncm12_desc.rename(columns = {"POSICION": "Posición", "DESCRIPCIO":"Descripción Completa"}, inplace = True)
 ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Descripción Completa'].str.split('//', expand=True))], axis=1)
 
 # parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
@@ -97,6 +102,7 @@ join_impo_clae["dest_clean"].value_counts()
 
 impo_bec = pd.merge(join_impo_clae, bec[["HS6", "BEC5EndUse" ]], how= "left" , left_on = "HS6", right_on= "HS6" )
 impo_bec[impo_bec["BEC5EndUse"].isnull()]
+impo_d12[impo_d12["descripcion"].isnull()]
 
 
 bec["BEC5EndUse"].value_counts().sum()
@@ -632,13 +638,13 @@ len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].is
 # =============================================================================
 # Preprocesamiento de Datos para el modelo
 # =============================================================================
-data= pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+# data_model= pd.read_csv("../data/resultados/data_modelo_diaria.csv")
 
-data.info()
-data["ue_dest"].value_counts()
+data_model.info()
+data_model["ue_dest"].value_counts()
 
-data["actividades"] = data["letra1"]+data["letra2"]+data["letra3"]+data["letra4"]+data["letra5"]+data["letra6"]
-data["act_ordenadas"] = data["actividades"].apply(lambda x: "".join(sorted(x ))) #"".join(sorted(data["actividades"]))
+data_model["actividades"] = data_model["letra1"]+data_model["letra2"]+data_model["letra3"]+data_model["letra4"]+data_model["letra5"]+data_model["letra6"]
+data_model["act_ordenadas"] = data_model["actividades"].apply(lambda x: "".join(sorted(x ))) #"".join(sorted(data_model["actividades"]))
 
 #preprocesamiento etiquetados
 cols =  [ "HS6",  
@@ -649,14 +655,14 @@ cols =  [ "HS6",
          "metric" ,
          "ue_dest"]
 
-data = data[cols]
+data_model = data_model[cols]
 
 #Filtros de columnas
-cat_col = list(data.select_dtypes(include=['object']).columns)
+cat_col = list(data_model.select_dtypes(include=['object']).columns)
 cat_col.pop(-1)
-num_col = list(data.select_dtypes(include=['float', "int64" ]).columns)
+num_col = list(data_model.select_dtypes(include=['float', "int64" ]).columns)
 
-data_pre = pd.concat( [ str_a_num(data[cat_col]) , data[num_col], data["ue_dest"] ], axis = 1  )
+data_pre = pd.concat( [ str_a_num(data_model[cat_col]) , data_model[num_col], data_model["ue_dest"] ], axis = 1  )
 
 # datos etiquetados
 data_train = data_pre[data_pre ["ue_dest"] != "?" ]

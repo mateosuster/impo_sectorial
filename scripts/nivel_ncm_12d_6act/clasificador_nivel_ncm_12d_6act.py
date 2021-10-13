@@ -22,7 +22,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 import seaborn as sns
-import plotinpy as pnp
+# import plotinpy as pnp
 
 import re
 
