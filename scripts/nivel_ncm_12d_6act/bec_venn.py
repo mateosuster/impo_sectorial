@@ -90,6 +90,8 @@ dic_stp = predo_stp(dic_stp )
 #############################################
 
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
+len(impo_d12) - len(join_impo_clae)
+
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
 
@@ -120,17 +122,16 @@ dic_stp["utilizacion"].value_counts()
 
 # vectores filtros
 # stp_general = dic_stp[dic_stp["utilizacion"]=="General"] # =~ CI
-stp_especifico = dic_stp[dic_stp["utilizacion"]=="Específico"] # =~ BK
-
+stp_especifico = dic_stp[dic_stp["utilizacion"].str.contains("Específico|Transporte", case = False)] # =~ BK
 
 join_impo_clae_bec_bk["dest_clean"] = join_impo_clae_bec_bk["destinacion"].apply(lambda x: destinacion_limpio(x))
 
 # opción 1
-join_impo_clae_bec_bk["ue_dest"] = np.where(join_impo_clae_bec_bk["HS6"].isin(stp_especifico ["NCM"]), 
-                                            np.where( ~join_impo_clae_bec_bk["destinacion"].str.contains("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", 
+join_impo_clae_bec_bk["ue_dest"] = np.where(join_impo_clae_bec_bk["HS6"].isin(stp_especifico ["NCM"]), "BK", "")
+                                            # np.where( ~join_impo_clae_bec_bk["destinacion"].str.contains("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", 
                                             # np.where( join_impo_clae_bec_bk["destinacion"].str.contains("S/TRAN|SIN TRANSF|INGR.ZF BIENES", 
-                                                                                                         case=False), 
-                                                     "BK", ""), "" )
+                                                                                                         # case=False), 
+                                                     # "BK", "") , "" )
                                             
 join_impo_clae_bec_bk["ue_dest"].value_counts()
 
