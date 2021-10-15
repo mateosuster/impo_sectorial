@@ -97,7 +97,7 @@ xgb.plot_tree(classifier, ax=plt.gca())
 
 
 """
-
+cm
 classifier = xgb.sklearn.XGBClassifier(nthread=-1, objective= 'binary:logistic', seed=42)
 
 # parameters = {
@@ -106,18 +106,19 @@ classifier = xgb.sklearn.XGBClassifier(nthread=-1, objective= 'binary:logistic',
 #     'learning_rate': [0.1, 0.01, 0.05]
 # }
 
-parameters = {'silent': [False],
-        'max_depth':  range (2, 10, 1),
-        'learning_rate': [0.1, 0.01, 0.05],
-        'subsample': [0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-        'colsample_bytree': [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-        'colsample_bylevel': [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-        'min_child_weight': [0.5, 1.0, 3.0, 5.0, 7.0, 10.0],
-        'gamma': [0, 0.25, 0.5, 1.0],
-        'reg_lambda': [0.1, 1.0, 5.0, 10.0, 50.0, 100.0],
-        'n_estimators': range(60, 220, 40),
-        }
 
+parameters = {'silent': [False],
+        'max_depth':  range(1, 20, 2),
+        'learning_rate': list(np.linspace(0.01, 1, num=1000)),
+        'subsample': list(np.linspace(0, 0.99, num=1000)) ,
+        'colsample_bytree': list(np.linspace(0.01, 1, num=1000)),
+        'colsample_bylevel': list(np.linspace(0.01, 1, num=1000)),
+       # 'min_child_weight': list(np.linspace(0.5, 10, num=1000)),
+        'gamma': list(np.linspace(0, 2, num=100)) ,
+        'reg_lambda': list(np.linspace(0,100, num=1000)),
+        'reg_alpha': list(np.linspace(0,200, num=1000)),
+        'n_estimators': range(10, 100, 1)
+        }
 # grid_search = GridSearchCV(
 #     estimator=classifier,
 #     param_grid=parameters,
