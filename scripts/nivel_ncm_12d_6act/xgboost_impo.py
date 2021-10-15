@@ -9,8 +9,8 @@ Original file is located at
 # Librerias
 """
 import os
-os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
-# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 
 import pandas as pd
@@ -33,9 +33,13 @@ from urllib.request import urlretrieve
 import xgboost as xgb
 # from xgboost import XGBClassifier
 
+import scipy.stats.distributions as dists
+
+
+
 """# Datos"""
 
-data_pre = pd.read_csv( "../data/resultados/data_train_test.csv")#.drop(U)
+data_pre = pd.read_csv( "../data/resultados/data_train_test.csv")
 data_pre.head()
 
 
@@ -97,7 +101,7 @@ xgb.plot_tree(classifier, ax=plt.gca())
 
 
 """
-cm
+
 classifier = xgb.sklearn.XGBClassifier(nthread=-1, objective= 'binary:logistic', seed=42)
 
 # parameters = {
@@ -106,19 +110,20 @@ classifier = xgb.sklearn.XGBClassifier(nthread=-1, objective= 'binary:logistic',
 #     'learning_rate': [0.1, 0.01, 0.05]
 # }
 
-
 parameters = {'silent': [False],
         'max_depth':  range(1, 20, 2),
-        'learning_rate': list(np.linspace(0.01, 1, num=1000)),
-        'subsample': list(np.linspace(0, 0.99, num=1000)) ,
-        'colsample_bytree': list(np.linspace(0.01, 1, num=1000)),
-        'colsample_bylevel': list(np.linspace(0.01, 1, num=1000)),
-       # 'min_child_weight': list(np.linspace(0.5, 10, num=1000)),
-        'gamma': list(np.linspace(0, 2, num=100)) ,
-        'reg_lambda': list(np.linspace(0,100, num=1000)),
-        'reg_alpha': list(np.linspace(0,200, num=1000)),
+        'learning_rate': dists.uniform(0.01, 1), # continuous distribution
+        # param2=dists.randint(16, 512 + 1), # discrete distribution
+        # param3=['foo', 'bar'],             # specifying possible values directly
+        'subsample': dists.uniform(0.001, 0.999) ,
+        'colsample_bytree': dists.uniform(0.001, 0.999),
+        'colsample_bylevel': dists.uniform(0.001, 0.999),
+        'reg_lambda':dists.uniform(1, 100),
+        'reg_alpha': dists.uniform(1, 200),
         'n_estimators': range(10, 100, 1)
         }
+
+
 # grid_search = GridSearchCV(
 #     estimator=classifier,
 #     param_grid=parameters,
