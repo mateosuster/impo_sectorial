@@ -9,8 +9,8 @@ Original file is located at
 # Librerias
 """
 import os
-# os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 
 import pandas as pd
@@ -69,8 +69,6 @@ print("muestras totales {}".format(len(X_train)+len(X_test)))
 
 
 """## Modelo de base"""
-
-
 classifier = xgb.sklearn.XGBClassifier(nthread=-1, seed=42)
 
 start = datetime.datetime.now()
@@ -167,18 +165,37 @@ xgb.plot_importance(best_xgb, ax=plt.gca())
 
 """## Entrenamiento con todos los datos"""
 
-xgboos_rscv_all = RandomizedSearchCV(
-    estimator=classifier,
-    param_distributions=parameters,
-    scoring = 'roc_auc',
-    n_jobs = 10,
-    cv = 10,                          
-    verbose=True)
+xgb_all = xgb.sklearn.XGBClassifier(nthread=-1, seed=42,
+                                       booster='gbtree',
+                                       colsample_bylevel=0.715357652206197, colsample_bynode=1,
+                                       colsample_bytree=0.6428780825402176, gamma=0, gpu_id=-1,
+                                       importance_type='gain', interaction_constraints='',
+                                       learning_rate=0.9680720791166998, max_delta_step=0, max_depth=17,
+                                       min_child_weight=1,monotone_constraints='()',
+                                       n_estimators=18, n_jobs=16, num_parallel_tree=1,
+                                       random_state=42, reg_alpha=136.81588079621642,
+                                       reg_lambda=8.064004198999763, scale_pos_weight=1,
+                                       silent=False, subsample=0.6954134753537051, tree_method='exact',
+                                       validate_parameters=1, verbosity=None
+                                       )
 
-xgboos_rscv_all.fit(data_pre.drop("bk_dummy", 1), data_pre["bk_dummy"]   )
+start = datetime.datetime.now()
+xgb_all.fit(X_train, y_train)
+end = datetime.datetime.now()
+print(end-start)
 
-best_xgb = xgboos_rscv_all.best_estimator_
-best_xgb
+
+
+# xgboos_rscv_all = RandomizedSearchCV(
+#     estimator=classifier,
+#     param_distributions=parameters,
+#     scoring = 'roc_auc',
+#     n_jobs = 10,
+#     cv = 10,
+#     verbose=True)
+# xgboos_rscv_all.fit(data_pre.drop("bk_dummy", 1), data_pre["bk_dummy"]   )
+# best_xgb = xgboos_rscv_all.best_estimator_
+# best_xgb
 
 """### Predicción de nuevas observaciones"""
 
@@ -187,7 +204,7 @@ data_2pred.head()
 
 data_2pred.info()
 
-clasificacion = best_xgb.predict(data_2pred)
+clasificacion = xgb_all.predict(data_2pred)
 clasificacion_df = pd.DataFrame(clasificacion, columns= ["bk_dummy"])
 clasificacion_df.value_counts()
 
@@ -204,6 +221,10 @@ for boolean , text in zip([True, False], ["Frecuencias Relativas", "Frecuencias 
 # Modelos
 pickle.dump(best_xgb, open('xgboost_train_cv.sav', 'wb'))
 model = pickle.load(open('xgboost_train_cv.sav', 'rb'))
+
+pickle.dump(xgb_all, open('xgboost_all_data.sav', 'wb'))
+model = pickle.load(open('xgboost_all_data.sav', 'rb'))
+
 model.score(X_test, y_test)
 y_pred_ = model.predict(X_test)
 roc_auc_score(y_test,y_pred_)
@@ -213,5 +234,6 @@ roc_auc_score(y_test,y_pred_)
 
 # Clasficacion de Xgboost entrenado con todos los datos
 clasificacion_df.to_csv("../data/resultados/datos_clasificados_modelo_train.csv")
+clasificacion_df.to_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
 
 # joblib.load("knn_gscv_all.pkl")
