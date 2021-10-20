@@ -1,0 +1,222 @@
+﻿;letra;clae6;clae6_desc;vta_vehiculos;vta_ci;vta_sec
+0;G;451110;Venta de autos, camionetas y utilitarios nuevos (Incluye taxis, jeeps, 4x4 y vehÃ­culos similares);1;;
+1;G;451190;Venta de vehÃ­culos automotores nuevos n.c.p. (Incluye casas rodantes, trailers, camiones, remolques, ambulancias, Ã³mnibus, microbuses y similares, cabezas tractoras, etc.);1;;
+2;G;451210;Venta de autos, camionetas y utilitarios, usados (Incluye taxis, jeeps, 4x4 y vehÃ­culos similares);1;;
+3;G;451290;Venta de vehÃ­culos automotores usados n.c.p. (Incluye, casas rodantes, trailers, camiones, remolques, ambulancias, Ã³mnibus, microbuses y similares, cabezas tractoras, etc.);1;;
+4;G;452101;Lavado automÃ¡tico y manual de vehÃ­culos automotores;0;0;
+5;G;452210;ReparaciÃ³n de cÃ¡maras y cubiertas (Incluye reparaciÃ³n de llantas) ;0;1;1
+6;G;452220;ReparaciÃ³n de amortiguadores,  alineaciÃ³n de direcciÃ³n y balanceo de ruedas ;0;1;1
+7;G;452300;InstalaciÃ³n y reparaciÃ³n de parabrisas, lunetas y ventanillas, cerraduras no elÃ©ctricas y grabado de cristales (Incluye instalaciÃ³n y reparaciÃ³n de aletas, burletes y colisas);0;1;1
+8;G;452401;Reparaciones elÃ©ctricas del tablero e instrumental, reparaciÃ³n y recarga de baterÃ­as, instalaciÃ³n de alarmas, radios, sistemas de climatizaciÃ³n;0;1;1
+9;G;452500;Tapizado y retapizado de automotores;0;1;1
+10;G;452600;ReparaciÃ³n y pintura de carrocerÃ­as, colocaciÃ³n y reparaciÃ³n de guardabarros y protecciones exteriores;0;1;1
+11;G;452700;InstalaciÃ³n y reparaciÃ³n de caÃ±os de escape y radiadores;0;1;1
+12;G;452800;Mantenimiento y reparaciÃ³n de frenos y embragues;0;1;1
+13;G;452910;InstalaciÃ³n y reparaciÃ³n de equipos de GNC;0;1;1
+14;G;452990;Mantenimiento y reparaciÃ³n del motor n.c.p., mecÃ¡nica integral (Incluye auxilio y servicios de grÃºa para automotores) ;0;1;1
+15;G;453100;Venta al por mayor de partes, piezas y accesorios de vehÃ­culos automotores;0;1;1
+16;G;453210;Venta al por menor de cÃ¡maras y cubiertas;0;1;1
+17;G;453220;Venta al por menor de baterÃ­as;0;1;1
+18;G;453291;Venta al por menor de partes, piezas y accesorios nuevos n.c.p.;0;1;1
+19;G;453292;Venta al por menor de partes, piezas y accesorios usados n.c.p.;0;1;1
+20;G;454010;Venta de motocicletas y de sus partes, piezas y accesorios;1;;
+21;G;454020;Mantenimiento y reparaciÃ³n de motocicletas;0;1;1
+22;G;461011;Venta al por mayor en comisiÃ³n o consignaciÃ³n de cereales (incluye arroz), oleaginosas y forrajeras excepto semillas;0;1;1
+23;G;461012;Venta al por mayor en comisiÃ³n o consignaciÃ³n de semillas;0;1;1
+24;G;461013;Venta al por mayor en comisiÃ³n o consignaciÃ³n de frutas (Incluye acopiadores y receptoras);0;1;1
+25;G;461014;Acopio y acondicionamiento en comisiÃ³n o consignaciÃ³n de cereales (incluye arroz), oleaginosas y forrajeras excepto semillas;0;1;1
+26;G;461019;Venta al por mayor en comisiÃ³n o consignaciÃ³n de productos agrÃ­colas n.c.p.;0;1;1
+27;G;461021;Venta al por mayor en comisiÃ³n o consignaciÃ³n de ganado bovino en pie (Incluye consignatarios de hacienda y ferieros);0;1;1
+28;G;461022;Venta al por mayor en comisiÃ³n o consignaciÃ³n de ganado en pie excepto bovino;0;1;1
+29;G;461029;Venta al por mayor en comisiÃ³n o consignaciÃ³n de productos pecuarios n.c.p.;0;1;1
+30;G;461031;Operaciones de intermediaciÃ³n de carne - consignatario directo -;0;1;1
+31;G;461032;Operaciones de intermediaciÃ³n de carne excepto consignatario directo (Incluye matarifes abastecedores de carne, etc.);0;1;1
+32;G;461039;Venta al por mayor en comisiÃ³n o consignaciÃ³n de alimentos, bebidas y tabaco n.c.p.;0;1;1
+33;G;461040;Venta al por mayor en comisiÃ³n o consignaciÃ³n de combustibles (No incluye electricidad) ;0;1;1
+34;G;461091;Venta al por mayor en comisiÃ³n o consignaciÃ³n de productos textiles, prendas de vestir, calzado excepto el ortopÃ©dico,  artÃ­culos de marroquinerÃ­a, paraguas y similares y productos de cuero n.c.p.;0;1;1
+35;G;461092;Venta al por mayor en comisiÃ³n o consignaciÃ³n de  madera y materiales para la construcciÃ³n;0;1;1
+36;G;461093;Venta al por mayor en comisiÃ³n o consignaciÃ³n de minerales, metales y productos quÃ­micos industriales;0;1;1
+37;G;461094;Venta al por mayor en comisiÃ³n o consignaciÃ³n de  maquinaria, equipo profesional industrial y comercial, embarcaciones y aeronaves;0;0;
+38;G;461095;Venta al por mayor en comisiÃ³n o consignaciÃ³n de papel, cartÃ³n, libros, revistas, diarios, materiales de embalaje y artÃ­culos de librerÃ­a;0;1;1
+39;G;461099;Venta al por mayor en comisiÃ³n o consignaciÃ³n de  mercaderÃ­as n.c.p.;0;1;1
+40;G;462120;Venta al por mayor de semillas y granos para forrajes;0;1;1
+41;G;462131;Venta al por mayor de cereales (incluye arroz), oleaginosas y forrajeras excepto semillas;0;1;1
+42;G;462132;Acopio y acondicionamiento de cereales y semillas, excepto de algodÃ³n y semillas y granos para forrajes;0;1;1
+43;G;462190;Venta al por mayor de materias primas agrÃ­colas y de la silvicultura n.c.p. (Incluye el acopio y venta al por mayor de materiles, desperdicios, subproductos agrÃ­cola usados como alimentos para animales);0;1;1
+44;G;462201;Venta al por mayor de lanas, cueros en bruto y productos afines;0;1;1
+45;G;462209;Venta al por mayor de materias primas pecuarias n.c.p. incluso animales vivos (Incluye pieles y cueros en bruto);0;1;1
+46;G;463111;Venta al por mayor de productos lÃ¡cteos;0;1;1
+47;G;463112;Venta al por mayor de fiambres y quesos;0;1;1
+48;G;463121;Venta al por mayor de carnes rojas y derivados (Incluye abastecedores y distribuidores de carne);0;1;1
+49;G;463129;Venta al por mayor de aves, huevos y productos de granja y de la caza n.c.p. (Incluye la venta al por mayor  de carne de ave fresca, congelada o refrigerada);0;1;1
+50;G;463130;Venta al por mayor de pescado;0;1;1
+51;G;463140;Venta al por mayor y empaque de frutas, de legumbres y hortalizas frescas;0;1;1
+52;G;463151;Venta al por mayor de pan, productos de confiterÃ­a y pastas frescas;0;1;1
+53;G;463152;Venta al por mayor de azÃºcar;0;1;1
+54;G;463153;Venta al por mayor de aceites y grasas;0;1;1
+55;G;463154;Venta al por mayor de cafÃ©, tÃ©, yerba mate y otras infusiones y especias y condimentos (Incluye la venta de sal);0;1;1
+56;G;463159;Venta al por mayor de productos y subproductos de molinerÃ­a n.c.p.;0;1;1
+57;G;463160;Venta al por mayor de chocolates, golosinas y productos para kioscos y polirrubros n.c.p., excepto cigarrillos;0;1;1
+58;G;463170;Venta al por mayor de alimentos balanceados para animales;0;1;1
+59;G;463180;Venta al por mayor en supermercados mayoristas de alimentos;0;1;1
+60;G;463191;Venta al por mayor de frutas, legumbres y cereales secos y en conserva;0;1;1
+61;G;463199;Venta al por mayor de productos alimenticios n.c.p. (Incluye la venta de miel y derivados, productos congelados,  etc.);0;1;1
+62;G;463211;Venta al por mayor de vino;0;1;1
+63;G;463212;Venta al por mayor de bebidas espiritosas;0;1;1
+64;G;463219;Venta al por mayor de bebidas alcohÃ³licas n.c.p. (Incluye la venta de aperitivos con alcohol, cerveza, sidra, etc.);0;1;1
+65;G;463220;Venta al por mayor de bebidas no alcohÃ³licas (Incluye la venta de aguas, sodas, bebidas refrescantes, jarabes, extractos, concentrados, gaseosas, jugos, etc.);0;1;1
+66;G;463300;Venta al por mayor de cigarrillos y productos de tabaco;0;1;1
+67;G;464111;Venta al por mayor de tejidos (telas);0;1;1
+68;G;464112;Venta al por mayor de artÃ­culos de mercerÃ­a (Incluye la venta de puntillas, galones, hombreras, agujas, botones, etc.);0;1;1
+69;G;464113;Venta al por mayor de mantelerÃ­a, ropa de cama y artÃ­culos textiles para el hogar;0;0;
+70;G;464114;Venta al por mayor de tapices y alfombras de materiales textiles;0;1;1
+71;G;464119;Venta al por mayor de productos textiles n.c.p.;0;1;1
+72;G;464121;Venta al por mayor de prendas de vestir de cuero;0;1;1
+73;G;464122;Venta al por mayor de medias y prendas de punto;0;1;1
+74;G;464129;Venta al por mayor de prendas y accesorios de vestir n.c.p., excepto uniformes y ropa de trabajo;0;0;
+75;G;464130;Venta al por mayor de calzado excepto el ortopÃ©dico (Incluye venta de calzado de cuero, tela, plÃ¡stico, goma, etc.);0;0;
+76;G;464141;Venta al por mayor de pieles y cueros curtidos y salados;0;1;1
+77;G;464142;Venta al por mayor de suelas y afines (Incluye talabarterÃ­as, artÃ­culos regionales de cuero, almacenes de suelas, etc.);0;1;1
+78;G;464149;Venta al por mayor de artÃ­culos de marroquinerÃ­a,  paraguas y productos similares n.c.p.;0;1;1
+79;G;464150;Venta al por mayor de uniformes y ropa de trabajo;0;0;
+80;G;464211;Venta al por mayor de libros y publicaciones;0;0;
+81;G;464212;Venta al por mayor de diarios y revistas;0;0;
+82;G;464221;Venta al por mayor de papel y productos de papel y cartÃ³n excepto envases;0;1;1
+83;G;464222;Venta al por mayor de envases de papel y cartÃ³n;0;1;1
+84;G;464223;Venta al por mayor de artÃ­culos de librerÃ­a y papelerÃ­a;0;1;1
+85;G;464310;Venta al por mayor de productos farmacÃ©uticos (Incluye venta de medicamentos y kits de diagnÃ³stico como test de embarazo, hemoglucotest, vacunas, etc.);0;1;1
+86;G;464320;Venta al por mayor de productos cosmÃ©ticos, de tocador y de perfumerÃ­a (Incluye venta de artÃ­culos para peluquerÃ­a excepto equipamiento);0;1;1
+87;G;464330;Venta al por mayor de instrumental mÃ©dico y odontolÃ³gico y artÃ­culos ortopÃ©dicos (Incluye venta de vaporizadores, nebulizadores, masajeadores, termÃ³metros, prÃ³tesis, muletas, plantillas, calzado ortopÃ©dico y otros artÃ­culos similares de uso personal o domÃ©stico);0;1;1
+88;G;464340;Venta al por mayor de productos veterinarios;0;1;1
+89;G;464410;Venta al por mayor de artÃ­culos de Ã³ptica y de fotografÃ­a (Incluye venta de lentes de contacto, lÃ­quidos oftalmolÃ³gicos, armazones, cristales Ã³pticos, pelÃ­culas fotogrÃ¡ficas, cÃ¡maras y accesorios para fotografÃ­a, etc.);0;1;1
+90;G;464420;Venta al por mayor de artÃ­culos de relojerÃ­a, joyerÃ­a y fantasÃ­as;0;1;1
+91;G;464501;Venta al por mayor de electrodomÃ©sticos y artefactos para el hogar excepto equipos de audio y video;0;0;
+92;G;464502;Venta al por mayor de equipos de audio, video y televisiÃ³n;0;0;
+93;G;464610;Venta al por mayor de muebles excepto de oficina, artÃ­culos de mimbre y corcho, colchones y somieres;0;0;
+94;G;464620;Venta al por mayor de artÃ­culos de iluminaciÃ³n ;0;0;
+95;G;464631;Venta al por mayor de artÃ­culos de vidrio;0;0;
+96;G;464632;Venta al por mayor de artÃ­culos de bazar y menaje excepto de vidrio;0;0;
+97;G;464910;Venta al por mayor de CD's y DVD's de audio y video grabados.;0;0;
+98;G;464920;Venta al por mayor de materiales y productos de limpieza;0;1;1
+99;G;464930;Venta al por mayor de juguetes (Incluye artÃ­culos de cotillÃ³n);0;0;
+100;G;464940;Venta al por mayor de bicicletas y rodados similares (Incluye cochecitos y sillas de paseo para bebÃ©s, andadores, triciclos, etc.);0;0;
+101;G;464950;Venta al por mayor de artÃ­culos de esparcimiento y deportes (Incluye embarcaciones deportivas, armas y municiones, equipos de pesca, piletas de nataciÃ³n de lona o plÃ¡stico, etc.);0;0;
+102;G;464991;Venta al por mayor de flores y plantas naturales y artificiales;0;0;
+103;G;464999;Venta al por mayor de artÃ­culos de uso domÃ©stico o personal n.c.p (Incluye artÃ­culos de platerÃ­a excepto los incluidos en talabarterÃ­a, cuadros y marcos que no sean obra de arte o de colecciÃ³n, sahumerios y artÃ­culos de santerÃ­a, parrillas y hogares, etc.);0;0;
+104;G;465100;Venta al por mayor de equipos, perifÃ©ricos, accesorios y programas informÃ¡ticos;0;0;
+105;G;465210;Venta al por mayor de equipos de telefonÃ­a y comunicaciones;0;0;
+106;G;465220;Venta al por mayor de componentes electrÃ³nicos;0;0;
+107;G;465310;Venta al por mayor de mÃ¡quinas, equipos e implementos de uso en los sectores agropecuario, jardinerÃ­a, silvicultura, pesca y caza (Incluye venta de tractores, cosechadoras, enfardadoras, remolques de carga y descarga automÃ¡tica, motosierras, cortadoras de cÃ©sped autopropulsadas, etc.);0;0;
+108;G;465320;Venta al por mayor de mÃ¡quinas, equipos e implementos de uso en la elaboraciÃ³n de alimentos, bebidas y tabaco (Incluye mÃ¡quinas para moler, picar y cocer alimentos, fabricadora de pastas, bateas, enfriadoras y envasadoras de bebidas, etc.);0;0;
+109;G;465330;Venta al por mayor de mÃ¡quinas, equipos e implementos de uso en la fabricaciÃ³n de textiles, prendas y accesorios de vestir, calzado, artÃ­culos de cuero y marroquinerÃ­a (Incluye venta de mÃ¡quinas de coser, de cortar tejidos, de tejer, extender telas, robots de corte y otros equipos para la industria textil y confeccionista, etc.);0;0;
+110;G;465340;Venta al por mayor de mÃ¡quinas, equipos e implementos de uso en imprentas, artes grÃ¡ficas y actividades conexas (Incluye venta de mÃ¡quinas fotocopiadoras - excepto las de uso personal-, copiadoras de planos, mÃ¡quinas para imprimir, guillotinar, troquelar, encuadernar, etc.);0;0;
+111;G;465350;Venta al por mayor de mÃ¡quinas, equipos e implementos de uso mÃ©dico y paramÃ©dico (Incluye venta de equipos de diagnÃ³stico y tratamiento, camillas, cajas de cirugÃ­a, jeringas y otros implementos de material descartable, etc.);0;0;
+112;G;465360;Venta al por mayor de mÃ¡quinas, equipos e implementos de uso en la industria del plÃ¡stico y del caucho (Incluye sopladora de envases, laminadora de plÃ¡sticos, mÃ¡quinas extrusoras y moldeadoras, etc.);0;0;
+113;G;465390;Venta al por mayor de mÃ¡quinas, equipos e implementos de uso especial n.c.p.  (Incluye motoniveladoras, excavadoras, palas mecÃ¡nicas, perforadoras-percutoras, etc.);0;0;
+114;G;465400;Venta al por mayor de mÃ¡quinas - herramienta de uso general;0;0;
+115;G;465500;Venta  al  por  mayor  de  vehÃ­culos,  equipos  y  mÃ¡quinas  para  el transporte ferroviario, aÃ©reo y de navegaciÃ³n;0;0;
+116;G;465610;Venta al por mayor de muebles e instalaciones para oficinas;0;0;
+117;G;465690;Venta al por mayor de muebles e instalaciones para la industria, el comercio y los servicios n.c.p.;0;0;
+118;G;465910;Venta al por mayor de mÃ¡quinas y equipo de control y seguridad;0;0;
+119;G;465920;Venta al por mayor de maquinaria y equipo de oficina, excepto equipo informÃ¡tico;0;0;
+120;G;465930;Venta al por mayor de equipo profesional y cientÃ­fico e instrumentos de medida y de control n.c.p.;0;0;
+121;G;465990;Venta al por mayor de mÃ¡quinas, equipo y materiales conexos n.c.p.;0;0;
+122;G;466110;Venta al por mayor de combustibles y lubricantes para automotores;0;1;1
+123;G;466121;Fraccionamiento y distribuciÃ³n de gas licuado;0;1;1
+124;G;466129;Venta al por mayor de combustibles, lubricantes, leÃ±a y carbÃ³n, excepto gas licuado y combustibles y lubricantes para automotores;0;1;1
+125;G;466200;Venta al por mayor de metales y minerales metalÃ­feros;0;1;1
+126;G;466310;Venta al por mayor de aberturas (Incluye puertas, ventanas, cortinas de enrollar, madera, aluminio, puertas corredizas, frentes de placard, etc.);0;0;
+127;G;466320;Venta al por mayor de productos de madera excepto muebles (Incluye placas, varillas, parquÃ©, machimbre, etc.);0;1;1
+128;G;466330;Venta al por mayor de artÃ­culos de ferreterÃ­a y materiales elÃ©ctricos (Incluye la venta  de clavos, cerraduras, cable coaxil. etc);0;1;1
+129;G;466340;Venta al por mayor de pinturas y productos conexos;0;1;1
+130;G;466350;Venta al por mayor de cristales y espejos;0;0;
+131;G;466360;Venta al por mayor de artÃ­culos para plomerÃ­a, instalaciÃ³n de gas y calefacciÃ³n;0;1;1
+132;G;466370;Venta al por mayor de papeles para pared, revestimiento para pisos de goma, plÃ¡stico y textiles,  y artÃ­culos similares para la decoraciÃ³n;0;1;1
+133;G;466391;Venta al por mayor de artÃ­culos de loza, cerÃ¡mica y porcelana de uso en construcciÃ³n;0;1;1
+134;G;466399;Venta al por mayor de artÃ­culos para la construcciÃ³n n.c.p. (No incluye artÃ­culos y materiales de demoliciÃ³n: 466990 );0;1;1
+135;G;466910;Venta al por mayor de productos intermedios n.c.p., desperdicios y desechos textiles;0;1;1
+136;G;466920;Venta al por mayor de productos intermedios n.c.p., desperdicios y desechos de papel y cartÃ³n;0;1;1
+137;G;466931;Venta al por mayor de artÃ­culos de plÃ¡stico ;0;1;1
+138;G;466932;Venta al por mayor de abonos, fertilizantes y plaguicidas;0;1;1
+139;G;466939;Venta al por mayor de productos intermedios, desperdicios y desechos de vidrio, caucho, goma y quÃ­micos n.c.p.;0;1;1
+140;G;466940;Venta al por mayor de productos intermedios n.c.p., desperdicios y desechos metÃ¡licos (Incluye chatarra, viruta de metales diversos, etc.);0;1;1
+141;G;466990;Venta al por mayor de productos intermedios, desperdicios y desechos n.c.p.;0;1;1
+142;G;469010;Venta al por mayor de insumos agropecuarios diversos;0;1;1
+143;G;469090;Venta al por mayor de mercancÃ­as n.c.p.;0;1;1
+144;G;471110;Venta al por menor en hipermercados ;0;1;0
+145;G;471120;Venta al por menor en supermercados;0;1;0
+146;G;471130;Venta al por menor en minimercados (Incluye mercaditos, autoservicios y establecimientos similares que vendan carnes, verduras y demÃ¡s productos alimenticios en forma conjunta);0;1;0
+147;G;471190;Venta al por menor en kioscos, polirrubros y comercios no especializados n.c.p.;0;1;0
+148;G;471900;Venta al por menor en comercios no especializados, sin predominio de productos alimenticios y bebidas;0;1;0
+149;G;472111;Venta al por menor de productos lÃ¡cteos;0;1;0
+150;G;472112;Venta al por menor de fiambres y embutidos;0;1;0
+151;G;472120;Venta al por menor de productos de almacÃ©n y dietÃ©tica;0;1;0
+152;G;472130;Venta al por menor de carnes rojas, menudencias y chacinados frescos;0;1;0
+153;G;472140;Venta al por menor de huevos, carne de aves y  productos de granja y de la caza;0;1;0
+154;G;472150;Venta al por menor de pescados y  productos de la pesca;0;1;0
+155;G;472160;Venta al por menor de frutas, legumbres y hortalizas frescas;0;1;0
+156;G;472171;Venta al por menor de pan y productos de panaderÃ­a   ;0;1;0
+157;G;472172;Venta al por menor de bombones, golosinas y demÃ¡s productos de confiterÃ­a;0;1;0
+158;G;472190;Venta al por menor de productos alimenticios n.c.p., en comercios especializados;0;1;0
+159;G;472200;Venta al por menor de bebidas en comercios especializados;0;1;0
+160;G;472300;Venta al por menor de tabaco en comercios especializados;0;1;0
+161;G;473000;Venta al por menor de combustible para vehÃ­culos automotores y motocicletas (Incluye la venta al por menor de productos lubricantes y refrigerantes);0;1;0
+162;G;474010;Venta al por menor de equipos, perifÃ©ricos,  accesorios y programas informÃ¡ticos;0;1;0
+163;G;474020;Venta al por menor de aparatos de telefonÃ­a y comunicaciÃ³n (Incluye telÃ©fonos, celulares, fax, etc);0;0;
+164;G;475110;Venta al por menor de hilados, tejidos y artÃ­culos de mercerÃ­a (Incluye mercerÃ­as, sederÃ­as, comercios de venta de lanas y otros hilados, etc.) ;0;1;0
+165;G;475120;Venta al por menor de confecciones para el hogar (Incluye la venta al por menor de sÃ¡banas, toallas, mantelerÃ­a, cortinas confeccionadas, colchas, cubrecamas, etc.);0;1;0
+166;G;475190;Venta al por menor de artÃ­culos textiles n.c.p. excepto prendas de vestir (Incluye la venta al por menor de tapices, alfombras,  etc.);0;1;0
+167;G;475210;Venta al por menor de aberturas (Incluye puertas, ventanas, cortinas de enrollar de PVC, madera, aluminio, puertas corredizas, frentes de placards, etc.);0;0;
+168;G;475220;Venta al por menor de maderas y artÃ­culos de madera  y corcho, excepto muebles;0;1;0
+169;G;475230;Venta al por menor de artÃ­culos de ferreterÃ­a y materiales elÃ©ctricos;0;1;0
+170;G;475240;Venta al por menor de pinturas y productos conexos;0;1;0
+171;G;475250;Venta al por menor de artÃ­culos para plomerÃ­a e instalaciÃ³n de gas;0;1;0
+172;G;475260;Venta al por menor de cristales, espejos, mamparas y cerramientos;0;0;
+173;G;475270;Venta al por menor de papeles para pared, revestimientos para pisos y artÃ­culos similares para la decoraciÃ³n;0;1;0
+174;G;475290;Venta al por menor de materiales de construcciÃ³n n.c.p.;0;1;0
+175;G;475300;Venta al por menor  de electrodomÃ©sticos, artefactos para el hogar y equipos de audio y video;0;0;
+176;G;475410;Venta al por menor de muebles para el hogar, artÃ­culos de mimbre y corcho;0;1;0
+177;G;475420;Venta al por menor de colchones y somieres;0;0;
+178;G;475430;Venta al por menor de artÃ­culos de iluminaciÃ³n ;0;0;
+179;G;475440;Venta al por menor de artÃ­culos de bazar y menaje (Incluye venta al por menor de vajilla, cubiertos, etc.);0;0;
+180;G;475490;Venta al por menor de artÃ­culos para el hogar n.c.p. (Incluye perchas, marcos, cuadros, etc.);0;1;0
+181;G;476110;Venta al por menor de libros;0;0;
+182;G;476120;Venta al por menor de diarios y revistas;0;0;
+183;G;476130;Venta al por menor de papel, cartÃ³n, materiales de embalaje y artÃ­culos de librerÃ­a ;0;0;
+184;G;476200;Venta al por menor de CD's y DVD's de audio y video grabados (Incluye CD's y DVD's vÃ­rgenes);0;1;0
+185;G;476310;Venta al por menor de equipos  y artÃ­culos deportivos (Incluye la venta y reparaciÃ³n  de bicicletas, la venta  de aparatos de gimnasia y de equipos de camping, etc.)  ;0;1;0
+186;G;476320;Venta al por menor de armas, artÃ­culos para la caza y pesca;0;1;0
+187;G;476400;Venta al por menor de juguetes, artÃ­culos de cotillÃ³n y juegos de mesa;0;1;0
+188;G;477110;Venta al por menor de ropa interior, medias, prendas para dormir y para la playa (Incluye corseterÃ­a, lencerÃ­a, camisetas, medias excepto ortopÃ©dicas, pijamas, camisones y saltos de cama, salidas de baÃ±o, trajes de baÃ±o, etc.);0;0;
+189;G;477120;Venta al por menor de uniformes escolares y guardapolvos;0;0;
+190;G;477130;Venta al por menor de indumentaria para bebÃ©s y niÃ±os;0;0;
+191;G;477140;Venta al por menor de indumentaria deportiva;0;0;
+192;G;477150;Venta al por menor de prendas de cuero ;0;0;
+193;G;477190;Venta al por menor de prendas y accesorios de vestir n.c.p. ;0;0;
+194;G;477210;Venta al por menor de artÃ­culos de talabarterÃ­a y artÃ­culos regionales (Incluye venta de artÃ­culos regionales de cuero, plata, alpaca y similares);0;0;
+195;G;477220;Venta al por menor de calzado, excepto el ortopÃ©dico y el deportivo (No incluye almacenes de suelas 464142);0;0;
+196;G;477230;Venta al por menor de calzado deportivo;0;0;
+197;G;477290;Venta al por menor de artÃ­culos de marroquinerÃ­a, paraguas y similares n.c.p.;0;0;
+198;G;477310;Venta al por menor de productos farmacÃ©uticos y de herboristerÃ­a;0;1;0
+199;G;477320;Venta al por menor de productos cosmÃ©ticos, de tocador y de perfumerÃ­a;0;1;0
+200;G;477330;Venta al por menor de instrumental mÃ©dico y odontolÃ³gico y artÃ­culos ortopÃ©dicos (Incluye venta de vaporizadores, nebulizadores, masajeadores, termÃ³metros, prÃ³tesis, muletas, plantillas, calzado ortopÃ©dico y otros artÃ­culos similares de uso personal o domÃ©stico);0;1;0
+201;G;477410;Venta al por menor de artÃ­culos de Ã³ptica y fotografÃ­a;0;1;0
+202;G;477420;Venta al por menor de artÃ­culos de relojerÃ­a y joyerÃ­a;0;0;
+203;G;477430;Venta al por menor de bijouterie y fantasÃ­a;0;1;0
+204;G;477440;Venta al por menor de flores, plantas, semillas, abonos, fertilizantes y otros productos de vivero ;0;1;0
+205;G;477450;Venta al por menor de materiales y productos de limpieza;0;1;0
+206;G;477460;Venta al por menor de fuel oil, gas en garrafas, carbÃ³n y leÃ±a (No incluye las estaciones de servicios que se clasifican en 473000);0;1;0
+207;G;477470;Venta al por menor de productos veterinarios, animales domÃ©sticos y alimento balanceado para mascotas;0;1;0
+208;G;477480;Venta al por menor de obras de arte;0;0;
+209;G;477490;Venta al por menor de artÃ­culos nuevos n.c.p. (Incluye la venta realizada en casas de regalos, de artesanÃ­as, pelucas,  de artÃ­culos religiosos -santerÃ­as-, recarga de matafuegos,  etc.) ;0;0;
+210;G;477810;Venta al por menor de muebles usados;0;0;
+211;G;477820;Venta al por menor de libros, revistas y similares usados;0;0;
+212;G;477830;Venta al por menor de antigÃ¼edades (Incluye venta de antigÃ¼edades en remates);0;0;
+213;G;477840;Venta al por menor de oro, monedas, sellos y similares (Incluye la  venta de monedas de colecciÃ³n, estampillas, etc.) ;0;0;
+214;G;477890;Venta al por menor de artÃ­culos usados n.c.p. excepto+E1155 automotores y motocicletas ;0;0;
+215;G;478010;Venta al por menor de alimentos, bebidas y tabaco en puestos mÃ³viles y mercados;0;1;0
+216;G;478090;Venta al por menor de productos n.c.p. en puestos mÃ³viles y mercados;0;1;0
+217;G;479101;Venta al por menor por internet ;0;1;0
+218;G;479109;Venta al por menor por correo, televisiÃ³n y otros medios de comunicaciÃ³n n.c.p.;0;1;0
+219;G;479900;Venta al por menor no realizada en establecimientos  n.c.p. (Incluye venta mediante mÃ¡quinas expendedoras, vendedores ambulantes y vendedores a domicilio);0;1;0
+220;G;462110;Acopio de algodÃ³n;0;1;1

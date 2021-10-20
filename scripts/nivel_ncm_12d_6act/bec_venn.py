@@ -44,9 +44,6 @@ from pre_visualizacion_nivel_ncm_12d_6act import *
 # impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
 #impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
 impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv")      # impo DIARIA
-impo_d12["ANYO"] = impo_d12["FECH_OFIC"].str.slice(0,4) 
-
-
 clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
 #cuit_clae = pd.read_csv( "../data/cuit 2017 impo_con_actividad.csv")
@@ -54,15 +51,11 @@ cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
 bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
 # bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
-
 #diccionario ncm12d
 # ncm12_desc = pd.read_csv("../data/NCM 12d.csv", sep=";")
 # ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Descripción Completa'].str.split('//', expand=True))], axis=1)
-
 ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
-ncm12_desc = ncm12_desc[["POSICION", "DESCRIPCIO"]]
-ncm12_desc.rename(columns = {"POSICION": "Posición", "DESCRIPCIO":"Descripción Completa"}, inplace = True)
-ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Descripción Completa'].str.split('//', expand=True))], axis=1)
+
 
 # parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
 # transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
@@ -72,12 +65,11 @@ ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Des
 # dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 
 
-
 #############################################
 #           preparación bases               #
 #############################################
-
 # predo_impo_17(impo_17)
+ncm12_desc = predo_ncm12_desc(ncm12_desc )["ncm_desc"]    
 impo_d12  = predo_impo_12d(impo_d12, ncm12_desc)
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
@@ -90,11 +82,10 @@ dic_stp = predo_stp(dic_stp )
 #############################################
 
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
-len(impo_d12) - len(join_impo_clae)
-
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
 
+x = pd.read_csv("../data/vector_de_comercio_clae_ci.csv")
 
 # =============================================================================
 # EDA BEC5
@@ -134,15 +125,6 @@ join_impo_clae_bec_bk["ue_dest"] = np.where(join_impo_clae_bec_bk["HS6"].isin(st
                                                      # "BK", "") , "" )
                                             
 join_impo_clae_bec_bk["ue_dest"].value_counts()
-
-# opción 2
-# join_impo_clae["ue_dest"] = np.where(join_impo_clae["HS6"].isin(stp_especifico ["NCM"]), 
-#                                             np.where( ~join_impo_clae["destinacion"].str.contains("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", 
-#                                             # np.where( join_impo_clae["destinacion"].str.contains("S/TRAN|SIN TRANSF|INGR.ZF BIENES", 
-#                                                                                                          case=False), 
-#                                                      "BK", ""), "")
-                                            
-# join_impo_clae["ue_dest"].value_counts()
 
 
 # filtrado 1
@@ -614,7 +596,6 @@ cons_fin_clasif [["filtro", "ue_dest"]].value_counts()#.sum()
 # len(impo_bec_ci) + len(impo_bec_bk) + len(impo_bec_cons) == len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )
 len(impo_bec_ci) + len(data_not_clasif) + len(data_clasif_ue_dest) + len(impo_bec_cons) == len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )
 
-
 # impo_ue_dest = pd.concat([pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha", 'metric', 'ue_dest', 'mad', 'median', 'z_score'], axis = 1), bk], axis =0)
 cicf_ue_dest = pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha",  'mad', 'median', 'z_score'], axis = 1) #, bk], axis =0)
 cicf_ue_dest["precio_kilo"] =  cicf_ue_dest["valor"]/cicf_ue_dest["kilos"]
@@ -625,12 +606,13 @@ bk_ue_dest = data_clasif_ue_dest.copy().drop(['HS4', 'HS4Desc', 'HS6Desc', "BEC5
 # bk_sin_ue_dest = pd.read_csv("../data/resultados/bk_sin_ue_dest.csv")
 bk_sin_ue_dest = data_not_clasif.drop(['HS4', 'HS4Desc', 'HS6Desc', "BEC5Category"], 1)
 
-
 (len(join_impo_clae)-  len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )) - ( len(bk_sin_ue_dest ) + len(bk_ue_dest)+ len(cicf_ue_dest) )
 
 data_model = pd.concat([bk_sin_ue_dest , bk_ue_dest, cicf_ue_dest ], axis = 0) 
 data_model ['HS6'] = data_model ['HS6'].astype("str")
-# data_model.to_csv("../data/resultados/data_modelo_diaria.csv", index = False)
+data_model ['HS8'] = data_model ['HS6_d12'].str.slice(0,8)
+data_model ['HS10'] = data_model ['HS6_d12'].str.slice(0,10)
+ 
 len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()] ))
 
 # len(data_model)  - data_model["ue_dest"].value_counts().sum()
@@ -639,8 +621,6 @@ len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].is
 # =============================================================================
 # Preprocesamiento de Datos para el modelo
 # =============================================================================
-# data_model= pd.read_csv("../data/resultados/data_modelo_diaria.csv")
-
 data_model.info()
 data_model["ue_dest"].value_counts()
 
@@ -648,7 +628,7 @@ data_model["actividades"] = data_model["letra1"]+data_model["letra2"]+data_model
 data_model["act_ordenadas"] = data_model["actividades"].apply(lambda x: "".join(sorted(x ))) #"".join(sorted(data_model["actividades"]))
 
 #preprocesamiento etiquetados
-cols =  [ "HS6",  
+cols =  [ "HS6", "HS8", "HS10",   
          'valor',  'kilos', "precio_kilo" , 
          "letra1",	"letra2",	"letra3", 	"letra4", 	"letra5",	"letra6"	,
          "act_ordenadas",
@@ -662,6 +642,9 @@ data_model = data_model[cols]
 cat_col = list(data_model.select_dtypes(include=['object']).columns)
 cat_col.pop(-1)
 num_col = list(data_model.select_dtypes(include=['float', "int64" ]).columns)
+
+data_modelo_pre_procesamiento = pd.concat( [ data_model[cat_col] , data_model[num_col], data_model["ue_dest"] ], axis = 1  )
+data_modelo_pre_procesamiento.to_csv("../data/resultados/data_modelo_diaria.csv", index = False)
 
 data_pre = pd.concat( [ str_a_num(data_model[cat_col]) , data_model[num_col], data_model["ue_dest"] ], axis = 1  )
 

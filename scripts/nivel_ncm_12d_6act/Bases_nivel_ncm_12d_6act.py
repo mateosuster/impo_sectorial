@@ -37,7 +37,7 @@ def predo_impo_17(impo_17):
 
 
 def predo_impo_12d(impo_d12, ncm_desc):
-
+    impo_d12["ANYO"] = impo_d12["FECH_OFIC"].str.slice(0,4) 
     impo_d12.rename(columns = {'ANYO':"anio", 'POSIC_SIM':"HS6_d12", 
                                'CIF':"valor", "CUIT_IMPOR":"cuit",
                                "KILOS": "kilos", "DESTINAC": "destinacion",  "DEST": "dest_cod",
@@ -51,6 +51,12 @@ def predo_impo_12d(impo_d12, ncm_desc):
     
     return impo_d12
 
+def predo_ncm12_desc(ncm12_desc ):
+    ncm12_desc = ncm12_desc[["POSICION", "DESCRIPCIO"]]
+    ncm12_desc.rename(columns = {"POSICION": "Posición", "DESCRIPCIO":"Descripción Completa"}, inplace = True)
+    ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Descripción Completa'].str.split('//', expand=True))], axis=1)
+    dic = {"ncm_desc": ncm12_desc, "ncm_split": ncm12_desc_split }
+    return dic
 
 def predo_sectores_nombres(clae):
     letras_np = pd.unique(clae['letra'])
