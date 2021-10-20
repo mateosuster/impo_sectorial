@@ -295,5 +295,5 @@ def str_a_num(df):
     original = np.sort(df[col].unique())
     reemplazo = list(range(len(original)))
     mapa = dict(zip(original, reemplazo))
-    df[col] = df[col].replace(mapa)
+    df.loc[:,col] = df.loc[:,col].replace(mapa)
   return(df)

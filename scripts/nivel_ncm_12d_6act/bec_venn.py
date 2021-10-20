@@ -10,7 +10,8 @@ Created on Tue Jun 29 11:04:54 2021
 # =============================================================================
 import os 
 #Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 #igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
@@ -645,6 +646,7 @@ num_col = list(data_model.select_dtypes(include=['float', "int64" ]).columns)
 
 data_modelo_pre_procesamiento = pd.concat( [ data_model[cat_col] , data_model[num_col], data_model["ue_dest"] ], axis = 1  )
 data_modelo_pre_procesamiento.to_csv("../data/resultados/data_modelo_diaria.csv", index = False)
+data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
 
 data_pre = pd.concat( [ str_a_num(data_model[cat_col]) , data_model[num_col], data_model["ue_dest"] ], axis = 1  )
 
