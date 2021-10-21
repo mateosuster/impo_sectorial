@@ -9,30 +9,25 @@ Original file is located at
 # Librerias
 """
 import os
-os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
-# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
 import datetime
 import pickle
-
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, plot_confusion_matrix
 from sklearn.metrics import accuracy_score#, scorer
 from sklearn.metrics import classification_report
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import mean_absolute_error
-
 from urllib.request import urlretrieve
-
 import xgboost as xgb
 # from xgboost import XGBClassifier
-
 import scipy.stats.distributions as dists
 
 
@@ -40,7 +35,7 @@ import scipy.stats.distributions as dists
 """# Datos"""
 
 data_pre = pd.read_csv( "../data/resultados/data_train_test.csv")
-data_pre.head()
+data_pre.info()
 
 
 # data_pre.dropna(inplace=True)
@@ -161,8 +156,7 @@ confusion_matrix(y_test, y_pred, normalize= "pred")#, labels= [1, 0 ])
 
 print(classification_report(y_test, y_pred) )
 
-plt.figure(figsize=(20,15))
-xgb.plot_importance(best_xgb, ax=plt.gca())
+
 
 """## Entrenamiento con todos los datos"""
 
@@ -198,6 +192,16 @@ print(end-start)
 
 """### Predicción de nuevas observaciones"""
 
+# Modelos
+# pickle.dump(best_xgb, open('xgboost_train_cv.sav', 'wb'))
+best_xgb = pickle.load(open('xgboost_train_cv.sav', 'rb'))
+
+# pickle.dump(xgb_all, open('xgboost_all_data.sav', 'wb'))
+xgb_all = pickle.load(open('xgboost_all_data.sav', 'rb'))
+
+plt.figure(figsize=(20,15))
+xgb.plot_importance(xgb_all, ax=plt.gca())
+
 data_2pred = pd.read_csv("../data/resultados/data_to_pred.csv")
 data_2pred.head()
 
@@ -207,31 +211,45 @@ clasificacion = xgb_all.predict(data_2pred)
 clasificacion_df = pd.DataFrame(clasificacion, columns= ["bk_dummy"])
 clasificacion_df.value_counts()
 
+clasificacion_prob = xgb_all.predict_proba(data_2pred)
+clasificacion_prob_df = pd.DataFrame(clasificacion_prob)#, columns= ["bk_dummy_0", "bk_dummy_1"])
+clasificacion_df.value_counts()
+
+
+
 data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
 datos_predichos = data_model[data_model ["ue_dest"] == "?" ]
 datos_predichos["bk_dummy"] = clasificacion
-datos_predichos.to_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
+datos_predichos.to_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", index= False, sep = ";")
+datos_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
 
-plt.hist(x = "bk_dummy", data = clasificacion_df)
+plt.hist(x = "bk_dummy", data = datos_predichos )
 
 for boolean , text in zip([True, False], ["Frecuencias Relativas", "Frecuencias Abosolutas"] ):
-  print(text+"\n", clasificacion_df.bk_dummy.value_counts(normalize= boolean), "\n" )
+  print(text+"\n", datos_predichos.bk_dummy.value_counts(normalize= boolean), "\n" )
 
 
 # Exportacion de resultados
 # from sklearn.externals import joblib
 
-
-# Modelos
-pickle.dump(best_xgb, open('xgboost_train_cv.sav', 'wb'))
-model = pickle.load(open('xgboost_train_cv.sav', 'rb'))
-
-pickle.dump(xgb_all, open('xgboost_all_data.sav', 'wb'))
-model = pickle.load(open('xgboost_all_data.sav', 'rb'))
-
-model.score(X_test, y_test)
-y_pred_ = model.predict(X_test)
+best_xgb.score(X_test, y_test)
+y_pred_ = best_xgb.predict(X_test)
 roc_auc_score(y_test,y_pred_)
+confusion_matrix(y_test, y_pred_, normalize= "pred")#, labels= [1, 0 ])
+cm = confusion_matrix(y_test, y_pred_)
+tn, fp, fn, tp = confusion_matrix(y_test, y_pred_).ravel()
+(tn, fp, fn, tp )
+plot_confusion_matrix(best_xgb, X_test, y_test)                                  
+
+import seaborn as sns
+ax= plt.subplot()
+sns.heatmap(cm, annot=True, fmt='g', ax=ax)  #annot=True to annotate cells, ftm='g' to disable scientific notation
+# labels, title and ticks
+ax.set_xlabel('Etiqueta predicha');ax.set_ylabel('Etiqueta verdadera'); 
+ax.set_title('Matriz de confusión con datos de test'); 
+ax.xaxis.set_ticklabels(['CI', 'BK']); ax.yaxis.set_ticklabels(['CI', 'BK']);
+
+print(classification_report(y_test, y_pred_) )
 
 # joblib.dump(xgboos_rscv_all, 'knn_all_data.pkl')
 # joblib.dump(best_xgb, 'knn_clasif_data.pkl')
@@ -241,3 +259,5 @@ roc_auc_score(y_test,y_pred_)
 # clasificacion_df.to_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
 
 # joblib.load("knn_gscv_all.pkl")
+
+

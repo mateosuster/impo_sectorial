@@ -10,8 +10,8 @@ Created on Tue Jun 29 11:04:54 2021
 # =============================================================================
 import os 
 #Mateo
-# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 #igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
@@ -85,8 +85,6 @@ dic_stp = predo_stp(dic_stp )
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
-
-x = pd.read_csv("../data/vector_de_comercio_clae_ci.csv")
 
 # =============================================================================
 # EDA BEC5
@@ -628,6 +626,8 @@ data_model["ue_dest"].value_counts()
 data_model["actividades"] = data_model["letra1"]+data_model["letra2"]+data_model["letra3"]+data_model["letra4"]+data_model["letra5"]+data_model["letra6"]
 data_model["act_ordenadas"] = data_model["actividades"].apply(lambda x: "".join(sorted(x ))) #"".join(sorted(data_model["actividades"]))
 
+data_model.to_csv("../data/resultados/data_modelo_diaria.csv", index = False)
+
 #preprocesamiento etiquetados
 cols =  [ "HS6", "HS8", "HS10",   
          'valor',  'kilos', "precio_kilo" , 
@@ -644,9 +644,8 @@ cat_col = list(data_model.select_dtypes(include=['object']).columns)
 cat_col.pop(-1)
 num_col = list(data_model.select_dtypes(include=['float', "int64" ]).columns)
 
-data_modelo_pre_procesamiento = pd.concat( [ data_model[cat_col] , data_model[num_col], data_model["ue_dest"] ], axis = 1  )
-data_modelo_pre_procesamiento.to_csv("../data/resultados/data_modelo_diaria.csv", index = False)
-data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+
+# data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
 
 data_pre = pd.concat( [ str_a_num(data_model[cat_col]) , data_model[num_col], data_model["ue_dest"] ], axis = 1  )
 

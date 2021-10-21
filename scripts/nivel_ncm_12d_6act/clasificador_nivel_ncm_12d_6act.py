@@ -11,24 +11,18 @@ Created on Tue Jun 29 11:04:54 2021
 import os 
 #Mateo
 os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
-
 #igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.getcwd()
-
-
+# os.getcwd()
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 import seaborn as sns
 # import plotinpy as pnp
-
 import re
-
 # import prince
 # from prince import ca
-
 from Bases_nivel_ncm_12d_6act import *
 from procesamiento_nivel_ncm_12d_6act import *
 from matriz_nivel_ncm_12d_6act import *
@@ -38,9 +32,9 @@ from pre_visualizacion_nivel_ncm_12d_6act import *
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
-
 #impo 12 d
-impo_d12 = pd.read_csv("../data/IMPO_17_feature.csv")
+impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv")
+# impo_d12 = pd.read_csv("../data/IMPO_17_feature.csv")
 # impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
 #impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
 
@@ -49,13 +43,13 @@ comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
 
 #cuit_clae = pd.read_csv( "../data/cuit 2017 impo_con_actividad.csv")
 cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
-
-bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
-bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
-
+# bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
+bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
+# bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
 #diccionario ncm12d
-ncm12_desc = pd.read_csv("../data/NCM 12d.csv", sep=";")
-ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Descripción Completa'].str.split('//', expand=True))], axis=1)
+ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
+# ncm12_desc = pd.read_csv("../data/NCM 12d.csv", sep=";")
+# ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Descripción Completa'].str.split('//', expand=True))], axis=1)
 
 # parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
 # transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
@@ -67,47 +61,74 @@ ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Des
 #STP
 # dic_stp = pd.read_excel("C:/Archivos/repos/impo_sectorial/scripts/data/bsk-prod-clasificacion.xlsx")
 
+# output del modelo
+data_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", sep = ";").drop("Unnamed: 0", 1)
+data_predichos["ue_dest"] =np.where(data_predichos["bk_dummy"]== 1, "BK" , "CI")
+data_predichos.drop("bk_dummy", 1, inplace=True)
+datos_clasificados = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+datos_clasificados = datos_clasificados [datos_clasificados ["ue_dest"] != "?" ]
+datos = pd.concat([data_predichos, datos_clasificados], 0)
+
 
 #############################################
 #           preparación bases               #
 #############################################
 
 # predo_impo_17(impo_17)
+ncm12_desc = predo_ncm12_desc(ncm12_desc )["ncm_desc"]    
 impo_d12  = predo_impo_12d(impo_d12, ncm12_desc)
-
 letras = predo_sectores_nombres(clae)
-
 comercio = predo_comercio(comercio, clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae)
-
-bec_bk = predo_bec_bk(bec, bec_to_clae)
+bec_bk = predo_bec_bk(bec)#, bec_to_clae)
 #dic_stp = predo_stp(dic_stp )
-
 
 #############################################
 #                joins                      #
 #############################################
-
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
+
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
-join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
+# join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
+
+impo_bec = pd.merge(join_impo_clae, bec[["HS6", "BEC5EndUse" ]], how= "left" , left_on = "HS6", right_on= "HS6" )
+
+(len(datos ) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()]) ) == len(join_impo_clae)
+
+
+datos_bk = datos[datos["ue_dest"]== "BK"]
+join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(datos_bk , comercio)
+
+
+#############################################
+#           Tabla de contingencia           #
+#              producto-sector              #
+#############################################
+tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
+
+#############################################
+#      ponderación por ncm y letra          #
+#############################################
+
+join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
+
+join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
+#join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act.csv", index=False)
+#join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act.csv")
+
+# filtro = ["HS6", "CUIT_IMPOR", "valor", "letra1", "letra2", "letra3", 
+# "vta_bk", "vta_sec", "vta_bk2", "vta_sec2", "vta_bk3", "vta_sec3", 
+# "letra1_pond", "letra2_pond", "letra3_pond"]
+# join_final = join_final.sort_values("HS6")[filtro]
+
+
+
+
 
 
 # =============================================================================
 # EDA BEC5
 # =============================================================================
-def destinacion_limpio(x):
-    if re.search("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", x)!=None:
-        return "C/TR"
-    elif re.search("S/TRAN|SIN TRANSF|INGR.ZF BIENES", x)!=None:
-        return "S/TR"
-    elif re.search("CONS|ING.ZF MERC", x)!=None:
-        # return "CONS"
-        return "CONS&Otros"
-    else: 
-        # return "Otro"
-        return "CONS&Otros"
-
 
 impo_d12["dest_clean"] = impo_d12["destinacion"].apply(lambda x: destinacion_limpio(x))
 impo_d12["dest_clean"].value_counts()
@@ -172,28 +193,6 @@ dic_stp[dic_stp["NCM"]==870120]
 stp_transporte = dic_stp[dic_stp["demanda"].str.contains("trans", case =False)]
 stp_agro = dic_stp[dic_stp["demanda"].str.contains("agríc", case =False)]
 
-
-#############################################
-#           Tabla de contingencia           #
-#              producto-sector              #
-#############################################
-
-tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
-
-#############################################
-#      ponderación por ncm y letra          #
-#############################################
-
-join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
-
-#join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
-#join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act.csv", index=False)
-#join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act.csv")
-
-# filtro = ["HS6", "CUIT_IMPOR", "valor", "letra1", "letra2", "letra3", 
-# "vta_bk", "vta_sec", "vta_bk2", "vta_sec2", "vta_bk3", "vta_sec3", 
-# "letra1_pond", "letra2_pond", "letra3_pond"]
-# join_final = join_final.sort_values("HS6")[filtro]
 
 
 # =============================================================================

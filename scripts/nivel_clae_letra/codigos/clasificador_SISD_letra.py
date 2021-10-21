@@ -74,20 +74,14 @@ agro_stp = dic_stp[dic_stp["demanda"].str.contains("agrí", case = False)]
 #############################################
 #                joins                      #
 #############################################
-
-
 join_impo_clae = def_join_impo_clae(impo_17, cuit_empresas)
-
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
-
-
 
 #############################################
 #           Tabla de contingencia           #
 #              producto-sector              #
 #############################################
-
 tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 
 #############################################

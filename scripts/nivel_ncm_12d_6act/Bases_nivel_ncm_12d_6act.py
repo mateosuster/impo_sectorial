@@ -87,7 +87,7 @@ def predo_comercio(comercio, clae):
     comercio_reclasificado =  pd.merge( left =clae[clae["letra"] =="G"][["letra", "clae6", "clae6_desc"]], 
                                        right = comercio.drop(["clae6_desc", "clae3"], axis = 1), left_on="clae6", right_on = "clae6", how="left" ) 
     
-    comercio_reclasificado["clae6"] = comercio_reclasificado["clae6"].astype(str)
+    comercio_reclasificado["clae6"] = comercio_reclasificado["clae6"].astype(int)
     return comercio_reclasificado
 
 def predo_cuit_clae(cuit_clae , clae):
@@ -206,27 +206,19 @@ def def_join_impo_clae_bec(join_impo_clae, bec_bk):
     impo_anyo_12d_bec_bk["ue_dest"] = ""
     return impo_anyo_12d_bec_bk
 
-    
 
 def def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio):
-    
-    comercio = comercio.drop(["vta_vehiculos"], axis=1)
-    
+    comercio = comercio.drop(["vta_vehiculos"], axis=1)    
     comercio2 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk2", "vta_sec": "vta_sec2"})
-
     comercio3 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk3", "vta_sec": "vta_sec3"})    
-
     comercio4 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk4", "vta_sec": "vta_sec4"})
-
     comercio5 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk5", "vta_sec": "vta_sec5"})
-
     comercio6 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk6", "vta_sec": "vta_sec6"})
 
     # join de la matriz con el sector comercio
     ## Comercio 1
     impo17_bec_complete = pd.merge(join_impo_clae_bec_bk, comercio.drop(["letra", "clae6_desc"], axis = 1), 
                              how = "left", left_on = "actividad1", right_on = "clae6")
-    
     impo17_bec_complete.drop("clae6", axis=1, inplace = True) 
 
     ## Comercio 2
@@ -237,13 +229,11 @@ def def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio):
     ## Comercio 3
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio3 , 
                           how = "left", left_on = "actividad3", right_on = "clae6")
-    
     impo17_bec_complete.drop("clae6", axis=1, inplace = True) 
 
     ## Comercio 4
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio4 , 
                           how = "left", left_on = "actividad3", right_on = "clae6")
-    
     impo17_bec_complete.drop("clae6", axis=1, inplace = True) 
     
     ## Comercio 5
