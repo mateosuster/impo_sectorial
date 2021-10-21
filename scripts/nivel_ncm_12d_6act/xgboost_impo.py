@@ -167,16 +167,16 @@ xgb.plot_importance(best_xgb, ax=plt.gca())
 """## Entrenamiento con todos los datos"""
 
 xgb_all = xgb.sklearn.XGBClassifier(base_score=0.5, booster='gbtree',
-              colsample_bylevel=0.8503047842259737, colsample_bynode=1,
-              colsample_bytree=0.4503608937420998, gamma=0, gpu_id=-1,
+              colsample_bylevel=0.9176911274292641, colsample_bynode=1,
+              colsample_bytree=0.2362802135886268, gamma=0, gpu_id=-1,
               importance_type='gain', interaction_constraints='',
-              learning_rate=0.9619399737977476, max_delta_step=0, max_depth=13,
-              min_child_weight=1, monotone_constraints='()',
-              n_estimators=35, n_jobs=16, nthread=-1, num_parallel_tree=1,
-              random_state=42, reg_alpha=62.48882975462377,
-              reg_lambda=57.71200766745209, scale_pos_weight=1, seed=42,
-              silent=False, subsample=0.33899399224774746, tree_method='exact',
-              validate_parameters=1, verbosity=None  )
+              learning_rate=0.4089751175210069, max_delta_step=0, max_depth=17,
+              min_child_weight=1,  monotone_constraints='()',
+              n_estimators=54, n_jobs=16, nthread=-1, num_parallel_tree=1,
+              random_state=42, reg_alpha=34.93982083457318,
+              reg_lambda=28.683948734756893, scale_pos_weight=1, seed=42,
+              silent=False, subsample=0.7536819429003822, tree_method='exact',
+              validate_parameters=1, verbosity=None )
 
 start = datetime.datetime.now()
 xgb_all.fit(X_train, y_train)
