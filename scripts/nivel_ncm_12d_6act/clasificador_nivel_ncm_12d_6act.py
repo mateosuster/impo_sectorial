@@ -12,7 +12,8 @@ import os
 #Mateo
 os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 #igal
-# os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo/impo_sectorial/scripts/nivel_ncm_12d_6act")
+
 # os.getcwd()
 import pandas as pd
 import numpy as np
@@ -23,10 +24,10 @@ import seaborn as sns
 import re
 # import prince
 # from prince import ca
-from Bases_nivel_ncm_12d_6act import *
-from procesamiento_nivel_ncm_12d_6act import *
-from matriz_nivel_ncm_12d_6act import *
-from pre_visualizacion_nivel_ncm_12d_6act import *
+from nivel_ncm_12d_6act.Bases_nivel_ncm_12d_6act import *
+from nivel_ncm_12d_6act.procesamiento_nivel_ncm_12d_6act import *
+from nivel_ncm_12d_6act.matriz_nivel_ncm_12d_6act import *
+from nivel_ncm_12d_6act.pre_visualizacion_nivel_ncm_12d_6act import *
 
 
 #############################################
@@ -110,11 +111,10 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 #      ponderación por ncm y letra          #
 #############################################
 
-join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
+#join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
 
-join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
-#join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act.csv", index=False)
-#join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act.csv")
+#join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
+join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv")
 
 # filtro = ["HS6", "CUIT_IMPOR", "valor", "letra1", "letra2", "letra3", 
 # "vta_bk", "vta_sec", "vta_bk2", "vta_sec2", "vta_bk3", "vta_sec3", 

@@ -13,12 +13,12 @@ def def_insumo_matriz(raw_data):
     
     #creamos df para guardar los insumos de la matriz
     for_fill = pd.DataFrame()
-    for_fill ["cuit"]=""
-    for_fill ["hs6_d12"]=""
-    for_fill ["valor_pond"]=""    
-    for_fill ["si"]=""    
-    for_fill ["sd"]=""
-    for_fill ["ue_dest"]=""
+    for_fill["cuit"]=""
+    for_fill["hs6_d12"]=""
+    for_fill["valor_pond"]=""
+    for_fill["si"]=""
+    for_fill["sd"]=""
+    for_fill["ue_dest"]=""
 
     for a in tqdm(range(len(raw_data))):
     # for a in tqdm(range(1,100)):
