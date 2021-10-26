@@ -12,7 +12,7 @@ import os
 #Mateo
 os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 #igal
-os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 # os.getcwd()
 import pandas as pd
@@ -60,7 +60,7 @@ ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 # dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 
 #STP
-dic_stp = pd.read_excel("C:/Archivos/repos/impo_sectorial/scripts/data/bsk-prod-clasificacion.xlsx")
+dic_stp = pd.read_excel("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial//scripts/data/bsk-prod-clasificacion.xlsx")
 
 # output del modelo
 data_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", sep = ";").drop("Unnamed: 0", 1)
