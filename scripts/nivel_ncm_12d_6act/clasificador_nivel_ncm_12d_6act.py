@@ -144,8 +144,9 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 #      ponderación por ncm y letra          #
 #############################################
 
-#join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
+join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
 
+#join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
 #join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
 join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv")
 
