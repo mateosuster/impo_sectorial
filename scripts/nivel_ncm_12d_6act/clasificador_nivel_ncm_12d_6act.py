@@ -22,6 +22,10 @@ import matplotlib.ticker as mtick
 import seaborn as sns
 # import plotinpy as pnp
 import re
+
+import datatable as dt
+
+
 # import prince
 # from prince import ca
 from nivel_ncm_12d_6act.Bases_nivel_ncm_12d_6act import *
