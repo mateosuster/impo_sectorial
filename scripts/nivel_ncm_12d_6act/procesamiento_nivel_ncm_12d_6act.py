@@ -36,38 +36,44 @@ def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):
     
 def def_calc_pond(impo,cont):
     join_final = impo.copy()
-    for a in tqdm(range(len(join_final))):
-        # cuit= join_final.iloc[a]["CUIT_IMPOR"]
-        letra_1= join_final.iloc[a]["letra1"]
-        letra_2= join_final.iloc[a]["letra2"]
-        letra_3= join_final.iloc[a]["letra3"]
-        letra_4= join_final.iloc[a]["letra4"]
-        letra_5= join_final.iloc[a]["letra5"]
-        letra_6= join_final.iloc[a]["letra6"]
-        
-        # print(cuit, letra_1, letra_2, letra_3)
-        
-        x=[]
-        for b in [letra_1, letra_2, letra_3, letra_4, letra_5, letra_6]:
-            ncm = join_final.iloc[a]["HS6_d12"]
-            ncm_val = cont.loc[ncm][b]
-            x.append(ncm_val)
-        
-        total=x[0]+x[1]+x[2]+x[3]+x[4]+x[5]
-        act1_pond=x[0]/total
-        act2_pond=x[1]/total
-        act3_pond=x[2]/total
-        act4_pond=x[3]/total
-        act5_pond=x[4]/total
-        act6_pond=x[5]/total
-        
-        join_final.at[a, "letra1_pond"] = act1_pond
-        join_final.at[a, "letra2_pond"] = act2_pond
-        join_final.at[a, "letra3_pond"] = act3_pond
-        join_final.at[a, "letra4_pond"] = act4_pond
-        join_final.at[a, "letra5_pond"] = act5_pond
-        join_final.at[a, "letra6_pond"] = act6_pond
-        
-        # print(ncm, x, total, act1_pond, act2_pond, act3_pond)
+
+    impo = join_impo_clae_bec_bk_comercio_pond
+    join_final =join_impo_clae_bec_bk_comercio_pond
+    cont = tabla_contingencia
+
+    letra1 = join_final.columns.get_loc("letra1") + 1
+    letra2 = join_final.columns.get_loc("letra2") + 1
+    letra3 = join_final.columns.get_loc("letra3") + 1
+    letra4 = join_final.columns.get_loc("letra4") + 1
+    letra5 = join_final.columns.get_loc("letra5") + 1
+    letra6 = join_final.columns.get_loc("letra6") + 1
+    HSd12 = join_final.columns.get_loc("HS6_d12") + 1
+
+    dictionary_list = []
+
+    for a in tqdm(join_final.itertuples()):
+
+        letra_1 = a[letra1]
+        letra_2 = a[letra2]
+        letra_3 = a[letra3]
+        letra_4 = a[letra4]
+        letra_5 = a[letra5]
+        letra_6 = a[letra6]
+
+        ncm_val = cont.loc[a[HSd12]]
+
+        total = ncm_val[letra_1] + ncm_val[letra_2] + ncm_val[letra_3] + ncm_val[letra_4] + ncm_val[letra_5] + ncm_val[letra_6]
+        act1_pond = ncm_val[letra_1] / total
+        act2_pond = ncm_val[letra_2] / total
+        act3_pond = ncm_val[letra_3] / total
+        act4_pond = ncm_val[letra_4] / total
+        act5_pond = ncm_val[letra_5] / total
+        act6_pond = ncm_val[letra_6] / total
+
+        values = [*a[1:49], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para sacar los elementos de la lista (tupla) a
+        dictionary_list.append(values)
+
+    join_final = pd.DataFrame.from_dict(dictionary_list)
+    join_final.columns = impo.columns
     return join_final
 
