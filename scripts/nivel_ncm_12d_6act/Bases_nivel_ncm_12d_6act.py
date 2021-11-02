@@ -278,7 +278,7 @@ def mod_z(col: pd.Series, thresh: float=3.5):
 
 
 # =============================================================================
-# preprocesamiento data modelo
+# preprocesamiento data modelo xgboost
 # =============================================================================
 def str_a_num(df):
   for col in df:
@@ -287,3 +287,44 @@ def str_a_num(df):
     mapa = dict(zip(original, reemplazo))
     df.loc[:,col] = df.loc[:,col].replace(mapa)
   return(df)
+
+# =============================================================================
+# ordenamiento de los datos de modelo
+# =============================================================================
+def predo_datamodel(data_predichos):
+
+    data_predichos["ue_dest"] =np.where(data_predichos["bk_dummy"]== 1, "BK" , "CI")
+    data_predichos.drop("bk_dummy", 1, inplace=True)
+    datos_clasificados = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+    datos_clasificados = datos_clasificados [datos_clasificados ["ue_dest"] != "?" ]
+    datos = pd.concat([data_predichos, datos_clasificados], 0)
+    return datos
+
+
+def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
+    datos_bk = datos[datos["ue_dest"]== "BK"]
+    
+    ncm_trans = [870421, 870431, 870422, 870423, 870210, 870490, 870432]
+    data_trans = datos_bk[datos_bk["HS6"].isin(ncm_trans)].reset_index()
+    
+    ncm_agro = dic_stp[dic_stp["demanda"].str.contains("agríc", case =False)]["NCM"]
+    data_agro = datos_bk[datos_bk["HS6"].isin(ncm_agro)].reset_index()
+    
+    datos_bk_filtro = datos_bk[~(datos_bk["HS6"].isin(ncm_trans)) & ~(datos_bk["HS6"].isin(ncm_agro))]
+    
+    
+    letras = ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]
+    
+    
+    for letra in letras:
+        data_trans[letra] = data_trans[letra].replace("C", "H")
+        data_trans[letra] = data_trans[letra].replace("G", "H")
+    
+    for letra in letras:
+        data_agro[letra] = data_agro[letra].replace("C", "A")
+        data_agro[letra] = data_agro[letra].replace("G", "A")
+    
+    datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro], axis=0)
+
+    return datos_bk
+

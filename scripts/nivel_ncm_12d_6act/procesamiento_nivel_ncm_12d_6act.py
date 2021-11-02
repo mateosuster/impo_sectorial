@@ -37,9 +37,13 @@ def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):
 def def_calc_pond(impo,cont):
     join_final = impo.copy()
 
-    impo = join_impo_clae_bec_bk_comercio_pond
-    join_final =join_impo_clae_bec_bk_comercio_pond
-    cont = tabla_contingencia
+    # impo = join_impo_clae_bec_bk_comercio_pond
+    # join_final =join_impo_clae_bec_bk_comercio_pond
+    # cont = tabla_contingencia
+    
+    # impo = impo
+    join_final = impo
+    # cont = cont
 
     letra1 = join_final.columns.get_loc("letra1") + 1
     letra2 = join_final.columns.get_loc("letra2") + 1
