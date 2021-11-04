@@ -12,7 +12,7 @@ import os
 #Mateo
 os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 #igal
-os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 # os.getcwd()
 import pandas as pd
@@ -22,6 +22,7 @@ import matplotlib.ticker as mtick
 import seaborn as sns
 # import plotinpy as pnp
 import re
+import tqdm
 
 import datatable as dt
 
@@ -63,11 +64,14 @@ data_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_d
 # transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
 
 # bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
-# isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
-# dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 
 #STP
 # dic_stp = pd.read_excel("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial//scripts/data/bsk-prod-clasificacion.xlsx")
+
+# ISIC y CLAE
+hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
+dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
+clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
 
 
 #############################################
@@ -84,21 +88,92 @@ bec_bk = predo_bec_bk(bec)#, bec_to_clae)
 dic_stp = predo_stp(dic_stp)
 datos = predo_datamodel(data_predichos)
 
+
+
 #############################################
 #                joins:                     ESTA PARTE ES INNCESARIA #
 #############################################
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas) #join CUIT
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk) # filtro BK
 
-#revisión de nullos de BEC5EndUSE
-impo_bec = pd.merge(join_impo_clae, bec[["HS6", "BEC5EndUse" ]], how= "left" , left_on = "HS6", right_on= "HS6" )
-(len(datos ) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()]) ) == len(join_impo_clae)
-
 ############################################################
 #  Asignación por STP / modificación de actividades x ncm  #
 ############################################################
+
+#revisión de nulos de BEC5EndUSE
+impo_bec = pd.merge(join_impo_clae, bec[["HS6", "BEC5EndUse" ]], how= "left" , left_on = "HS6", right_on= "HS6" )
+(len(datos ) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()]) ) == len(join_impo_clae)
+
 datos_bk = asignacion_stp_BK(datos, dic_stp)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(datos_bk , comercio)
+
+
+datos_bk.info()
+
+clae_to_ciiu.info()
+clae_to_ciiu[clae_to_ciiu["ciiu3_4c"].isnull() ]
+clae_to_ciiu.dropna(inplace = True)
+clae_to_ciiu["ciiu3_4c"] = clae_to_ciiu["ciiu3_4c"].astype(int)
+clae_to_ciiu[clae_to_ciiu.duplicated()] 
+
+datos_bk_a_ciiu= datos_bk[["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]].copy()
+
+for clae, ciiu_name in zip(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"],
+                           ["ciiu_act1", "ciiu_act2", "ciiu_act3", "ciiu_act4", "ciiu_act5", "ciiu_act6"]):
+    # print(clae, ciiu_name)
+    ciiu_data = clae_to_ciiu.copy()
+    ciiu_data = clae_to_ciiu[["clae6", "ciiu3_4c"]]
+    ciiu_data.rename(columns = {"ciiu3_4c": ciiu_name }, inplace=True)
+    datos_bk_a_ciiu= pd.merge(datos_mergeados , ciiu_data, how = "left" ,left_on = clae, right_on= "clae6" ).drop("clae6", 1)
+
+datos_mergeados = pd.merge(datos_bk , clae_to_ciiu, how = "left" ,left_on = "actividad1", right_on= "clae6" )    
+datos_mergeados.head()
+
+clae1 = pd.DataFrame(datos_bk["actividad1"].unique(), columns = ["act1"])
+ciiu1 =clae_to_ciiu.copy()#[["clae6", "ciiu3_4c"]]
+datos_mergeados = pd.merge(clae1 , ciiu1, how = "left" ,left_on = "act1", right_on= "clae6" )    
+x = datos_mergeados[datos_mergeados.duplicated("act1")]
+ciiu1[ciiu1.duplicated("clae")]
+
+####################
+# obtencion de LETRA_nn
+dic = []
+dic_list = []
+
+letra1 = datos_bk.columns.get_loc("letra1") + 1
+letra2 = datos_bk.columns.get_loc("letra2") + 1
+letra3 = datos_bk.columns.get_loc("letra3") + 1
+letra4 = datos_bk.columns.get_loc("letra4") + 1
+letra5 = datos_bk.columns.get_loc("letra5") + 1
+letra6 = datos_bk.columns.get_loc("letra6") + 1
+
+actividad1 = datos_bk.columns.get_loc("actividad1") + 1
+actividad2 = datos_bk.columns.get_loc("actividad2") + 1
+actividad3 = datos_bk.columns.get_loc("actividad3") + 1
+actividad4 = datos_bk.columns.get_loc("actividad4") + 1
+actividad5 = datos_bk.columns.get_loc("actividad5") + 1
+actividad6 = datos_bk.columns.get_loc("actividad6") + 1
+
+
+for x in datos_bk.itertuples():
+    dic = []
+    for letra, act, letra_name in zip([letra1, letra2, letra3,letra4, letra5, letra6],
+                                 [actividad1, actividad2, actividad3,actividad4, actividad5, actividad6],
+                                 ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]):
+        
+        if x[letra] in ["D", "H", "I"]:
+            new_letra= x[letra] + str(x[act])[0:2]
+        else:
+            new_letra= x[letra] 
+            
+        # dic[letra_name] = new_letra
+        dic.append(new_letra)
+        
+    dic_list.append(dic)    
+    
+x= pd.DataFrame.from_dict(dic_list)    
+    
+datos_bk["actividad1"].astype(str).str.slice(0,2)
 
 #############################################
 #           Tabla de contingencia           #
@@ -109,12 +184,11 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 #############################################
 #      ponderación por ncm y letra          #
 #############################################
-
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
-join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
 
-#join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
-# join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv")
+join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
+# join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
+join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv")
 
 # selecciono columnas del join final
 # filtro = ["HS6", "CUIT_IMPOR", "valor", "letra1", "letra2", "letra3", 
@@ -126,9 +200,9 @@ join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingenci
 #         ASIGNACIÓN y MATRIZ               #
 #############################################
 
-matriz_sisd = def_insumo_matriz(join_final)
-#matriz_sisd.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
-# matriz_sisd = pd.read_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv")
+# matriz_sisd = def_insumo_matriz(join_final)
+# matriz_sisd.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
+matriz_sisd = pd.read_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv")
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
@@ -145,6 +219,18 @@ z_si_sd = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['hs6_d12
 sectores_desc = sectores()
 impo_tot_sec = impo_total(z, sectores_desc)
 comercio_y_propio = impo_comercio_y_propio(z, sectores_desc)
+
+
+# =============================================================================
+# CIIU
+# =============================================================================
+impo_ciiu_letra = impo_ciiu_letra(isic, dic_ciiu,datos_bk )
+
+
+
+
+
+
 
 
 # =============================================================================

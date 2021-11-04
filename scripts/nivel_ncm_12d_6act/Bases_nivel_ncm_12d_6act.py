@@ -305,10 +305,10 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     datos_bk = datos[datos["ue_dest"]== "BK"]
     
     ncm_trans = [870421, 870431, 870422, 870423, 870210, 870490, 870432]
-    data_trans = datos_bk[datos_bk["HS6"].isin(ncm_trans)].reset_index()
+    data_trans = datos_bk[datos_bk["HS6"].isin(ncm_trans)].reset_index(drop = True)
     
     ncm_agro = dic_stp[dic_stp["demanda"].str.contains("agríc", case =False)]["NCM"]
-    data_agro = datos_bk[datos_bk["HS6"].isin(ncm_agro)].reset_index()
+    data_agro = datos_bk[datos_bk["HS6"].isin(ncm_agro)].reset_index(drop = True)
     
     datos_bk_filtro = datos_bk[~(datos_bk["HS6"].isin(ncm_trans)) & ~(datos_bk["HS6"].isin(ncm_agro))]
     
