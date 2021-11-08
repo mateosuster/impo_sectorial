@@ -46,7 +46,12 @@ bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
 ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
 data_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", sep = ";").drop("Unnamed: 0", 1)# output del modelo
-
+datos_clasificados = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+    
+# ISIC y CLAE
+hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
+dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
+clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
 
 #impo 12 d
 # impo_d12 = pd.read_csv("../data/IMPO_17_feature.csv")
@@ -65,19 +70,11 @@ data_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_d
 
 # bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
 
-#STP
-# dic_stp = pd.read_excel("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial//scripts/data/bsk-prod-clasificacion.xlsx")
-
-# ISIC y CLAE
-hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
-dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
-clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
 
 
 #############################################
 #           preparación bases               #
 #############################################
-
 # predo_impo_17(impo_17)
 ncm12_desc = predo_ncm12_desc(ncm12_desc )["ncm_desc"]    
 impo_d12  = predo_impo_12d(impo_d12, ncm12_desc)
@@ -86,8 +83,17 @@ comercio = predo_comercio(comercio, clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae)
 bec_bk = predo_bec_bk(bec)#, bec_to_clae)
 dic_stp = predo_stp(dic_stp)
-datos = predo_datamodel(data_predichos)
+datos = predo_datamodel(data_predichos, datos_clasificados )
 
+# preprocesamiento CIIU (meter en funcion)
+clae_to_ciiu.info()
+clae_to_ciiu[clae_to_ciiu["ciiu3_4c"].isnull() ]
+clae_to_ciiu.dropna(inplace = True)
+clae_to_ciiu["ciiu3_4c"] = np.where(clae_to_ciiu["clae6"] ==332000, 
+                                    "29_30_31_32_33", 
+                                    clae_to_ciiu["ciiu3_4c"]  )
+clae_to_ciiu.drop_duplicates(subset= "ciiu3_4c", inplace = True) 
+# clae_to_ciiu["ciiu3_4c"] = clae_to_ciiu["ciiu3_4c"].astype("category")
 
 
 #############################################
@@ -108,26 +114,46 @@ datos_bk = asignacion_stp_BK(datos, dic_stp)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(datos_bk , comercio)
 
 
-datos_bk.info()
+#############################################################
 
-clae_to_ciiu.info()
-clae_to_ciiu[clae_to_ciiu["ciiu3_4c"].isnull() ]
-clae_to_ciiu.dropna(inplace = True)
-clae_to_ciiu["ciiu3_4c"] = clae_to_ciiu["ciiu3_4c"].astype(int)
-clae_to_ciiu[clae_to_ciiu.duplicated()] 
+# conversion CLAE a CIIU (codigo para funcion)
+datos_bk_a_ciiu= datos_bk[[ "actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]].copy()
+ciiu_data = clae_to_ciiu[["clae6", "ciiu3_4c"]]
+ciiu_letra =  dic_ciiu[["ciiu3_4c", "ciiu3_letra"]]
+  #, ["letra1","letra2","letra3","letra4", "letra5", "letra6"]
 
-datos_bk_a_ciiu= datos_bk[["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]].copy()
+for clae, ciiu_name, letra in zip(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"],
+                           ["ciiu_act1", "ciiu_act2", "ciiu_act3", "ciiu_act4", "ciiu_act5", "ciiu_act6"],
+                           ["letra1","letra2","letra3","letra4", "letra5", "letra6"]):
+    
+    # ciiu_data.rename(columns = {"ciiu3_4c": ciiu_name })
+    datos_bk_a_ciiu= pd.merge(datos_bk_a_ciiu , ciiu_data, how = "left" ,left_on = clae, right_on= "clae6" ).drop("clae6", 1)
+    datos_bk_a_ciiu.rename(columns = {"ciiu3_4c": ciiu_name }, inplace = True)
+    
+    datos_bk_a_ciiu= pd.merge(datos_bk_a_ciiu , ciiu_letra, how = "left" ,left_on = ciiu_name, right_on= "ciiu3_4c" )#.drop("ciiu3_4c", 1)   
+    datos_bk_a_ciiu.rename(columns = {"ciiu3_letra": letra}, inplace = True)
 
-for clae, ciiu_name in zip(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"],
-                           ["ciiu_act1", "ciiu_act2", "ciiu_act3", "ciiu_act4", "ciiu_act5", "ciiu_act6"]):
-    # print(clae, ciiu_name)
-    ciiu_data = clae_to_ciiu.copy()
-    ciiu_data = clae_to_ciiu[["clae6", "ciiu3_4c"]]
-    ciiu_data.rename(columns = {"ciiu3_4c": ciiu_name }, inplace=True)
-    datos_bk_a_ciiu= pd.merge(datos_mergeados , ciiu_data, how = "left" ,left_on = clae, right_on= "clae6" ).drop("clae6", 1)
+ciiu_data[ciiu_data["clae6"] == 702091]
+ 
+datos_bk_a_ciiu.info()
+ciiu_data .info()
+ciiu_letra.info()
+dic_ciiu.info()    
+
+datos_bk_a_ciiu.to_csv("../data/resultados/datos_bk_a_ciiu.csv")
+
+
+datos_bk_a_ciiu.info()
+datos_bk_a_ciuu["valor"] = np.where()
+
+#########################
 
 datos_mergeados = pd.merge(datos_bk , clae_to_ciiu, how = "left" ,left_on = "actividad1", right_on= "clae6" )    
-datos_mergeados.head()
+
+x = datos_mergeados[datos_mergeados["actividad1"]==332000]
+
+datos_mergeados.info()
+datos_bk.info()
 
 clae1 = pd.DataFrame(datos_bk["actividad1"].unique(), columns = ["act1"])
 ciiu1 =clae_to_ciiu.copy()#[["clae6", "ciiu3_4c"]]
@@ -135,45 +161,67 @@ datos_mergeados = pd.merge(clae1 , ciiu1, how = "left" ,left_on = "act1", right_
 x = datos_mergeados[datos_mergeados.duplicated("act1")]
 ciiu1[ciiu1.duplicated("clae")]
 
+
+# reviso que solo sean esas las actividades duplicadas
+dic = {}
+for act in ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]:    
+    clae1 = pd.DataFrame(datos_bk[act].unique(), columns = [act])
+    ciiu1 =clae_to_ciiu.copy()#[["clae6", "ciiu3_4c"]]
+    datos_mergeados = pd.merge(clae1 , ciiu1, how = "left" ,left_on = act, right_on= "clae6" )    
+    sin_dup = datos_mergeados[datos_mergeados.duplicated(act)]
+    dic[act] = sin_dup
+
+
 ####################
 # obtencion de LETRA_nn
-dic = []
-dic_list = []
 
-letra1 = datos_bk.columns.get_loc("letra1") + 1
-letra2 = datos_bk.columns.get_loc("letra2") + 1
-letra3 = datos_bk.columns.get_loc("letra3") + 1
-letra4 = datos_bk.columns.get_loc("letra4") + 1
-letra5 = datos_bk.columns.get_loc("letra5") + 1
-letra6 = datos_bk.columns.get_loc("letra6") + 1
-
-actividad1 = datos_bk.columns.get_loc("actividad1") + 1
-actividad2 = datos_bk.columns.get_loc("actividad2") + 1
-actividad3 = datos_bk.columns.get_loc("actividad3") + 1
-actividad4 = datos_bk.columns.get_loc("actividad4") + 1
-actividad5 = datos_bk.columns.get_loc("actividad5") + 1
-actividad6 = datos_bk.columns.get_loc("actividad6") + 1
-
-
-for x in datos_bk.itertuples():
+def letra_nn(datos_bk):
     dic = []
-    for letra, act, letra_name in zip([letra1, letra2, letra3,letra4, letra5, letra6],
-                                 [actividad1, actividad2, actividad3,actividad4, actividad5, actividad6],
-                                 ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]):
-        
-        if x[letra] in ["D", "H", "I"]:
-            new_letra= x[letra] + str(x[act])[0:2]
-        else:
-            new_letra= x[letra] 
+    dic_list = []
+    
+    letra1 = datos_bk.columns.get_loc("letra1") + 1
+    letra2 = datos_bk.columns.get_loc("letra2") + 1
+    letra3 = datos_bk.columns.get_loc("letra3") + 1
+    letra4 = datos_bk.columns.get_loc("letra4") + 1
+    letra5 = datos_bk.columns.get_loc("letra5") + 1
+    letra6 = datos_bk.columns.get_loc("letra6") + 1
+    
+    actividad1 = datos_bk.columns.get_loc("actividad1") + 1
+    actividad2 = datos_bk.columns.get_loc("actividad2") + 1
+    actividad3 = datos_bk.columns.get_loc("actividad3") + 1
+    actividad4 = datos_bk.columns.get_loc("actividad4") + 1
+    actividad5 = datos_bk.columns.get_loc("actividad5") + 1
+    actividad6 = datos_bk.columns.get_loc("actividad6") + 1
+    
+    
+    for x in datos_bk.itertuples():
+        dic = []
+        for letra, act, letra_name in zip([letra1, letra2, letra3,letra4, letra5, letra6],
+                                     [actividad1, actividad2, actividad3,actividad4, actividad5, actividad6],
+                                     ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]):
             
-        # dic[letra_name] = new_letra
-        dic.append(new_letra)
+            if x[letra] in ["D", "H", "I"]:
+                new_letra= x[letra] +"_"+ str(x[act])[0:2] 
+            elif x[letra] in ["I"]:
+                if str(x[act]) == "64":
+                    new_letra= x[letra] +"_"+ str(x[act])[0:2]
+                else: 
+                    new_letra = "I_60_61_62_63"
+            else:
+                new_letra= x[letra] 
+                
+            # dic[letra_name] = new_letra
+            dic.append(new_letra)
+            
+        dic_list.append(dic)    
         
-    dic_list.append(dic)    
-    
-x= pd.DataFrame.from_dict(dic_list)    
-    
-datos_bk["actividad1"].astype(str).str.slice(0,2)
+    letras_trans = pd.DataFrame.from_dict(dic_list)   
+    return letras_trans
+ 
+x = letra_nn(datos_bk)
+
+
+
 
 #############################################
 #           Tabla de contingencia           #

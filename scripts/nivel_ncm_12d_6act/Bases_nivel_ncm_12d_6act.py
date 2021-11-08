@@ -291,12 +291,12 @@ def str_a_num(df):
 # =============================================================================
 # ordenamiento de los datos de modelo
 # =============================================================================
-def predo_datamodel(data_predichos):
-
+def predo_datamodel(data_predichos,datos_clasificados):
     data_predichos["ue_dest"] =np.where(data_predichos["bk_dummy"]== 1, "BK" , "CI")
     data_predichos.drop("bk_dummy", 1, inplace=True)
-    datos_clasificados = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+    
     datos_clasificados = datos_clasificados [datos_clasificados ["ue_dest"] != "?" ]
+    
     datos = pd.concat([data_predichos, datos_clasificados], 0)
     return datos
 
