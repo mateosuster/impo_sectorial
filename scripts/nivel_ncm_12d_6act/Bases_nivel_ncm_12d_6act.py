@@ -90,6 +90,7 @@ def predo_comercio(comercio, clae):
     comercio_reclasificado["clae6"] = comercio_reclasificado["clae6"].astype(int)
     return comercio_reclasificado
 
+
 def predo_cuit_clae(cuit_clae , clae):
     
     cuit_clae = cuit_clae[cuit_clae["Numero_actividad_cuit"]<=6].drop(["Clae6_desc","Fecha_actividad", "Cantidad_actividades_cuit"], axis =1)
@@ -328,3 +329,91 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
 
     return datos_bk
 
+def letra_nn(datos_bk):
+    dic = []
+    dic_list = []
+    
+    letra1 = datos_bk.columns.get_loc("letra1") + 1
+    letra2 = datos_bk.columns.get_loc("letra2") + 1
+    letra3 = datos_bk.columns.get_loc("letra3") + 1
+    letra4 = datos_bk.columns.get_loc("letra4") + 1
+    letra5 = datos_bk.columns.get_loc("letra5") + 1
+    letra6 = datos_bk.columns.get_loc("letra6") + 1
+    
+    actividad1 = datos_bk.columns.get_loc("actividad1") + 1
+    actividad2 = datos_bk.columns.get_loc("actividad2") + 1
+    actividad3 = datos_bk.columns.get_loc("actividad3") + 1
+    actividad4 = datos_bk.columns.get_loc("actividad4") + 1
+    actividad5 = datos_bk.columns.get_loc("actividad5") + 1
+    actividad6 = datos_bk.columns.get_loc("actividad6") + 1
+    
+    
+    for x in datos_bk.itertuples():
+        dic = []
+        for letra, act, letra_name in zip([letra1, letra2, letra3,letra4, letra5, letra6],
+                                     [actividad1, actividad2, actividad3,actividad4, actividad5, actividad6],
+                                     ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]):
+            
+            if x[letra] in ["D", "H", "I"]:
+                new_letra= x[letra] +"_"+ str(x[act])[0:2] 
+            elif x[letra] in ["I"]:
+                if str(x[act]) == "64":
+                    new_letra= x[letra] +"_"+ str(x[act])[0:2]
+                else: 
+                    new_letra = "I_60_61_62_63"
+            else:
+                new_letra= x[letra] 
+                
+            # dic[letra_name] = new_letra
+            dic.append(new_letra)
+            
+        dic_list.append(dic)    
+        
+    letras_trans = pd.DataFrame.from_dict(dic_list) 
+    letras_trans.columns = ["letra1","letra2","letra3","letra4", "letra5", "letra6"]
+    return letras_trans
+ 
+ # CIIU 
+def predo_dic_ciiu(dic_ciiu):
+    dic_ciiu["ciiu3_4c"] = dic_ciiu["ciiu3_4c"].astype(str)
+    return dic_ciiu
+
+
+def predo_ciiu_letra(dic_ciiu, comercio):
+
+    ciiu3_4c_comercio = dic_ciiu[dic_ciiu["ciiu3_letra"]=="G"]["ciiu3_4c"]
+    
+    ciiu_letra =  dic_ciiu[["ciiu3_4c", "ciiu3_letra"]]
+    ciiu_letra = ciiu_letra [~ciiu_letra ["ciiu3_4c"].isin(ciiu3_4c_comercio)]
+    ciiu_letra  = pd.concat([ciiu_letra  , comercio[["clae6", "letra"]].rename(columns = {"clae6":"ciiu3_4c", "letra":"ciiu3_letra"})], axis = 0)
+    ciiu_letra["ciiu3_4c"] = ciiu_letra["ciiu3_4c"].astype(str)
+    return ciiu_letra
+   
+def dic_clae_and_ciiu(clae_to_ciiu,clae, dic_ciiu):
+    ciiu3_4c_comercio = dic_ciiu[dic_ciiu["ciiu3_letra"]=="G"]["ciiu3_4c"] # vector de filtro
+    claes_faltantes = pd.DataFrame({'clae6': [204000, 523032, 462110], 'clae6_desc': ["Servicios industriales para la fabricación de sustancias y productos quí­micos", 
+                                                                         "Servicios de operadores logísticos seguros (OLS) en el Ámbito aduanero",
+                                                                         "Acopio de algodón"
+                                                       ] , 'ciiu3_4c': [2429, 6350, 5121]})
+    
+    clae_to_ciiu = pd.concat([clae_to_ciiu, claes_faltantes ], axis = 0)
+    clae_to_ciiu[clae_to_ciiu["ciiu3_4c"].isnull() ] = 4539
+    # clae_to_ciiu.dropna(inplace = True)
+    clae_to_ciiu["ciiu3_4c"] = clae_to_ciiu["ciiu3_4c"].astype(int).astype(str)
+    clae_to_ciiu["ciiu3_4c"] = np.where(clae_to_ciiu["clae6"] ==332000, 
+                                        "29_30_31_32_33", 
+                                        clae_to_ciiu["ciiu3_4c"]  )
+    clae_to_ciiu.drop_duplicates(subset= "clae6", inplace = True) 
+    
+    clae_to_ciiu_sin_g = clae_to_ciiu[~clae_to_ciiu["ciiu3_4c"].isin(ciiu3_4c_comercio )]
+    clae_to_ciiu_sin_g.sort_values(by = "clae6", ascending = True, inplace = True)
+    
+    
+    #3 
+    clae["ciiu3_4c"] = clae["clae6"]
+    clae["clae6"] = clae["clae6"].astype(int)
+    clae_comercio = clae[clae["letra"] =="G"][["clae6","clae6_desc", "ciiu3_4c"]]
+    
+    clae_to_ciiu_mod = pd.concat([clae_to_ciiu_sin_g ,clae_comercio], 0)
+    
+    return clae_to_ciiu_mod
