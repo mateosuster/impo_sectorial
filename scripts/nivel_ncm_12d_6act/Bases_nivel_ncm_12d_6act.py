@@ -354,8 +354,13 @@ def letra_nn(datos_bk):
                                      [actividad1, actividad2, actividad3,actividad4, actividad5, actividad6],
                                      ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]):
             
-            if x[letra] in ["D", "H", "I"]:
+            if x[letra] in [ "H", "I"]:
                 new_letra= x[letra] +"_"+ str(x[act])[0:2] 
+            elif x[letra] == "D": 
+                if str(x[act]) == "29_30_31_32_33":
+                    new_letra =  "D_29_30_31_32_33"
+                else:
+                    new_letra= x[letra] +"_"+ str(x[act])[0:2]
             elif x[letra] in ["I"]:
                 if str(x[act]) == "64":
                     new_letra= x[letra] +"_"+ str(x[act])[0:2]
@@ -373,10 +378,84 @@ def letra_nn(datos_bk):
     letras_trans.columns = ["letra1","letra2","letra3","letra4", "letra5", "letra6"]
     return letras_trans
  
+   
+ 
  # CIIU 
 def predo_dic_ciiu(dic_ciiu):
     dic_ciiu["ciiu3_4c"] = dic_ciiu["ciiu3_4c"].astype(str)
     return dic_ciiu
+
+
+
+def predo_ciiu(clae_to_ciiu, dic_ciiu):
+    # Join ciiu digitos con letra (posee clae para hacer el join)
+    clae_to_ciiu.loc[clae_to_ciiu["ciiu3_4c"].isnull(),"ciiu3_4c"  ] = 4539
+    ciiu_dig_let = pd.merge(dic_ciiu[["ciiu3_4c", "ciiu3_letra"]], clae_to_ciiu.drop("clae6_desc", 1), left_on = "ciiu3_4c", right_on = "ciiu3_4c" , how = "inner") #"ciiu3_4c_desc"
+    
+    #convierto a string los digitos del ciiu
+    ciiu_dig_let["ciiu3_4c"] = ciiu_dig_let["ciiu3_4c"].astype(int).astype(str)
+    
+    #filtro el caso problematico del clae    
+    ciiu_dig_let = ciiu_dig_let[ciiu_dig_let["clae6"] !=332000] 
+    
+    #agrego los clae faltantes
+    claes_faltantes = pd.DataFrame({'clae6': [204000, 523032, 462110, 332000], 'ciiu3_letra': ["D", "I", "G", "D"  ] , 
+                                    # "ciiu3_4c_desc" : ["", "", "", ""],
+                                    'ciiu3_4c': ["2429", "6350", "5121", "29_30_31_32_33"]})    
+    ciiu_dig_let = pd.concat([ciiu_dig_let, claes_faltantes ], axis = 0)
+    return ciiu_dig_let
+
+
+def diccionario_especial(datos_bk,ciiu_dig_let):
+    # conversion CLAE a CIIU (codigo para funcion)
+    datos_bk_a_ciiu= datos_bk[[ "actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6" ,
+                               "letra1","letra2","letra3","letra4", "letra5", "letra6"]].copy()
+    
+    # ESTE ES EL POSTA
+    for clae_i, ciiu_name, letra_name in zip(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"],
+                               ["ciiu_act1", "ciiu_act2", "ciiu_act3", "ciiu_act4", "ciiu_act5", "ciiu_act6"],
+                               ["ciiu_letra1","ciiu_letra2","ciiu_letra3","ciiu_letra4", "ciiu_letra5", "ciiu_letra6"]):
+        
+        # ciiu_data.rename(columns = {"ciiu3_4c": ciiu_name })
+        datos_bk_a_ciiu= pd.merge(datos_bk_a_ciiu , ciiu_dig_let, how = "left" ,left_on = clae_i, right_on= "clae6" ).drop("clae6", 1)
+        datos_bk_a_ciiu.rename(columns = {"ciiu3_4c": ciiu_name, "ciiu3_letra": letra_name  }, inplace = True)
+    
+    # datos_bk_a_ciiu.isnull().values.any()
+    # datos_bk_a_ciiu.isnull().sum()
+    
+
+    for clae_i, clae_letra_i, ciiu_i, ciiu_letra_i, dic_i, dic_letra_i in zip(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"],
+                                                          ["letra1","letra2","letra3","letra4", "letra5", "letra6"],                     
+                                                       ["ciiu_act1", "ciiu_act2", "ciiu_act3", "ciiu_act4", "ciiu_act5", "ciiu_act6"],
+                                                       ["ciiu_letra1","ciiu_letra2","ciiu_letra3","ciiu_letra4", "ciiu_letra5", "ciiu_letra6"] ,
+                                                       ["dic_act1", "dic_act2", "dic_act3", "dic_act4", "dic_act5", "dic_act6"],
+                                                       ["dic_letra1","dic_letra2","dic_letra3","dic_letra4", "dic_letra5", "dic_letra6"]):
+    
+        datos_bk_a_ciiu[dic_i] = np.where(datos_bk_a_ciiu[clae_letra_i]=="G", datos_bk_a_ciiu[clae_i] , datos_bk_a_ciiu[ciiu_i])
+        datos_bk_a_ciiu[dic_letra_i] = np.where(datos_bk_a_ciiu[clae_letra_i]=="G", datos_bk_a_ciiu[clae_letra_i] , datos_bk_a_ciiu[ciiu_letra_i])
+    
+    # datos_bk_a_ciiu.isnull().values.any()
+    # datos_bk_a_ciiu.to_csv("../data/resultados/datos_bk_a_ciiu.csv")
+
+
+    # tiro las columnas que vamos a unir
+    datos_bk.drop( ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6",
+             "letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1, inplace = True)     
+    datos_bk_a_ciiu.drop(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6",
+                          "letra1","letra2","letra3","letra4", "letra5", "letra6" ],axis = 1, inplace = True)
+
+    # renombro columnas
+    datos_bk_a_ciiu.rename(columns = {"dic_act1": "actividad1", "dic_act2" :"actividad2","dic_act3" :"actividad3", 
+                                      "dic_act4" : "actividad4","dic_act5": "actividad5","dic_act6": "actividad6",
+                                      "dic_letra1": "letra1","dic_letra2":"letra2","dic_letra3":"letra3",
+                                      "dic_letra4":"letra4", "dic_letra5":"letra5", "dic_letra6":"letra6"
+                                      }, inplace = True)
+    #selecciono
+    datos_bk_a_ciiu = datos_bk_a_ciiu[["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6",
+             "letra1","letra2","letra3","letra4", "letra5", "letra6"]]
+    #concateno
+    datos_bk = pd.concat([datos_bk.reset_index(drop = True), datos_bk_a_ciiu.reset_index(drop = True)], axis = 1)
+    return datos_bk
 
 
 def predo_ciiu_letra(dic_ciiu, comercio):
@@ -391,23 +470,24 @@ def predo_ciiu_letra(dic_ciiu, comercio):
    
 def dic_clae_and_ciiu(clae_to_ciiu,clae, dic_ciiu):
     ciiu3_4c_comercio = dic_ciiu[dic_ciiu["ciiu3_letra"]=="G"]["ciiu3_4c"] # vector de filtro
-    claes_faltantes = pd.DataFrame({'clae6': [204000, 523032, 462110], 'clae6_desc': ["Servicios industriales para la fabricación de sustancias y productos quí­micos", 
-                                                                         "Servicios de operadores logísticos seguros (OLS) en el Ámbito aduanero",
-                                                                         "Acopio de algodón"
-                                                       ] , 'ciiu3_4c': [2429, 6350, 5121]})
-    
-    clae_to_ciiu = pd.concat([clae_to_ciiu, claes_faltantes ], axis = 0)
-    clae_to_ciiu[clae_to_ciiu["ciiu3_4c"].isnull() ] = 4539
+
     # clae_to_ciiu.dropna(inplace = True)
     clae_to_ciiu["ciiu3_4c"] = clae_to_ciiu["ciiu3_4c"].astype(int).astype(str)
-    clae_to_ciiu["ciiu3_4c"] = np.where(clae_to_ciiu["clae6"] ==332000, 
-                                        "29_30_31_32_33", 
-                                        clae_to_ciiu["ciiu3_4c"]  )
-    clae_to_ciiu.drop_duplicates(subset= "clae6", inplace = True) 
     
+    clae_to_ciiu = clae_to_ciiu[clae_to_ciiu["clae6"] !=332000] 
+    # clae_to_ciiu["ciiu3_4c"] = np.where(clae_to_ciiu["clae6"] ==332000, 
+    #                                     "29_30_31_32_33", 
+    #                                     clae_to_ciiu["ciiu3_4c"]  )
+    # clae_to_ciiu.drop_duplicates(subset= "clae6", inplace = True) 
+
+    claes_faltantes = pd.DataFrame({'clae6': [204000, 523032, 462110, 332000], 'clae6_desc': ["Servicios industriales para la fabricación de sustancias y productos quí­micos", 
+                                                                         "Servicios de operadores logísticos seguros (OLS) en el Ámbito aduanero",
+                                                                         "Acopio de algodón", "Instalación de maquinaria y equipos industriales" 
+                                                       ] , 'ciiu3_4c': ["2429", "6350", "5121", "29_30_31_32_33"]})    
+    clae_to_ciiu = pd.concat([clae_to_ciiu, claes_faltantes ], axis = 0)
+
     clae_to_ciiu_sin_g = clae_to_ciiu[~clae_to_ciiu["ciiu3_4c"].isin(ciiu3_4c_comercio )]
     clae_to_ciiu_sin_g.sort_values(by = "clae6", ascending = True, inplace = True)
-    
     
     #3 
     clae["ciiu3_4c"] = clae["clae6"]

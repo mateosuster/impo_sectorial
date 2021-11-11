@@ -53,7 +53,6 @@ hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding =
 dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
 
-
 #impo 12 d
 # impo_d12 = pd.read_csv("../data/IMPO_17_feature.csv")
 # impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
@@ -72,7 +71,6 @@ clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
 # bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
 
 
-
 #############################################
 #           preparación bases               #
 #############################################
@@ -85,14 +83,13 @@ cuit_empresas= predo_cuit_clae(cuit_clae, clae)
 bec_bk = predo_bec_bk(bec)#, bec_to_clae)
 dic_stp = predo_stp(dic_stp)
 datos = predo_datamodel(data_predichos, datos_clasificados )
+ciiu_dig_let = predo_ciiu(clae_to_ciiu, dic_ciiu)
 
-# preprocesamiento CIIU (meter en funciones)
-dic_ciiu = predo_dic_ciiu(dic_ciiu)
-ciiu_letra = predo_ciiu_letra(dic_ciiu, comercio)
-clae_to_ciiu_mod = dic_clae_and_ciiu(clae_to_ciiu,clae, dic_ciiu)
+# preprocesamiento CIIU
+# dic_ciiu = predo_dic_ciiu(dic_ciiu)
+# ciiu_letra = predo_ciiu_letra(dic_ciiu, comercio)
 
-clae_to_ciiu_mod [clae_to_ciiu_mod ["clae6"]== "439990"] # chequeo
-clae[clae["clae6"]== 439990] # chequeo
+
 
 
 #############################################
@@ -109,91 +106,18 @@ clae[clae["clae6"]== 439990] # chequeo
 # (len(datos ) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()]) ) == len(join_impo_clae)
 
 datos_bk = asignacion_stp_BK(datos, dic_stp)
+datos_bk = diccionario_especial(datos_bk,ciiu_dig_let)
 
-#############################################################
-
-# conversion CLAE a CIIU (codigo para funcion)
-datos_bk_a_ciiu= datos_bk[[ "actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]].copy()
-ciiu_data = clae_to_ciiu_mod[["clae6", "ciiu3_4c"]]
-
-for clae, ciiu_name, letra in zip(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"],
-                           ["ciiu_act1", "ciiu_act2", "ciiu_act3", "ciiu_act4", "ciiu_act5", "ciiu_act6"],
-                           ["letra1","letra2","letra3","letra4", "letra5", "letra6"]):
-    
-    # ciiu_data.rename(columns = {"ciiu3_4c": ciiu_name })
-    datos_bk_a_ciiu= pd.merge(datos_bk_a_ciiu , ciiu_data, how = "left" ,left_on = clae, right_on= "clae6" ).drop("clae6", 1)
-    datos_bk_a_ciiu.rename(columns = {"ciiu3_4c": ciiu_name }, inplace = True)
-    
-    datos_bk_a_ciiu= pd.merge(datos_bk_a_ciiu , ciiu_letra, how = "left" ,left_on = ciiu_name, right_on= "ciiu3_4c" ).drop("ciiu3_4c", 1)   
-    datos_bk_a_ciiu.rename(columns = {"ciiu3_letra": letra}, inplace = True)
-
-ciiu_data[ciiu_data["clae6"] == 702091]
-
-datos_bk_a_ciiu.isnull().values.any()
-datos_bk_a_ciiu.isnull().sum()
-
-x = datos_bk_a_ciiu[datos_bk_a_ciiu["ciiu_act3"].isnull()]
- 
-datos_bk_a_ciiu.to_csv("../data/resultados/datos_bk_a_ciiu.csv")
-
-datos_bk_a_ciiu.info()
-datos_bk.info()
-ciiu_data .info()
-ciiu_letra.info()
-dic_ciiu.info()    
-
-datos_bk.drop( ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6",
-         "letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1, inplace = True) 
-
-datos_bk_a_ciiu.drop(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"],axis = 1, inplace = True)
-datos_bk_a_ciiu.rename(columns = {"ciiu_act1": "actividad1", "ciiu_act2" :"actividad2","ciiu_act3" :"actividad3", 
-                                  "ciiu_act4" : "actividad4","ciiu_act5": "actividad5","ciiu_act6": "actividad6" }, inplace = True)
-
-datos_bk = pd.concat([datos_bk.reset_index(drop = True), datos_bk_a_ciiu.reset_index(drop = True)], axis = 1)
-
-
-####################
-# obtencion de LETRA_nn
-
-
-letras_mod = letra_nn(datos_bk)
-
+letras_mod = letra_nn(datos_bk) # obtencion de LETRA_nn
+# letras_mod [letras_mod ["letra1"]== "D_29_30_31_32_33"]
 datos_bk = pd.concat([datos_bk.drop( ["letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1),  letras_mod ], axis = 1)
-
-
-
-#########################
-# corroboracion de actividades faltantes (Viejo)
-datos_mergeados = pd.merge(datos_bk , clae_to_ciiu, how = "left" ,left_on = "actividad1", right_on= "clae6" )    
-
-x = datos_mergeados[datos_mergeados["actividad1"]==332000]
-
-datos_mergeados.info()
-datos_bk.info()
-
-clae1 = pd.DataFrame(datos_bk["actividad1"].unique(), columns = ["act1"])
-ciiu1 =clae_to_ciiu.copy()#[["clae6", "ciiu3_4c"]]
-datos_mergeados = pd.merge(clae1 , ciiu1, how = "left" ,left_on = "act1", right_on= "clae6" )    
-x = datos_mergeados[datos_mergeados.duplicated("act1")]
-ciiu1[ciiu1.duplicated("clae")]
-
-
-# reviso que solo sean esas las actividades duplicadas
-dic = {}
-for act in ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]:    
-    clae1 = pd.DataFrame(datos_bk[act].unique(), columns = [act])
-    ciiu1 =clae_to_ciiu.copy()#[["clae6", "ciiu3_4c"]]
-    datos_mergeados = pd.merge(clae1 , ciiu1, how = "left" ,left_on = act, right_on= "clae6" )    
-    sin_dup = datos_mergeados[datos_mergeados.duplicated(act)]
-    dic[act] = sin_dup
-
 
 
 #############################################
 #           Tabla de contingencia           #
 #              producto-sector              #
 #############################################
-join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(datos_bk , comercio) # ESTA ROTA
+join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(datos_bk , comercio) 
 
 tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 
