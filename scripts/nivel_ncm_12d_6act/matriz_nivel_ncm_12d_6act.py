@@ -65,7 +65,7 @@ def def_insumo_matriz(raw_data):
             values = {'cuit': a[1],
                       "hs6_d12": a[3],
                       "valor_pond": a[6] * a[e],
-                      "si": a[20],
+                      "si": a[letra1],
                       "sd": letra_sd,
                       "ue_dest": "nan"}
 

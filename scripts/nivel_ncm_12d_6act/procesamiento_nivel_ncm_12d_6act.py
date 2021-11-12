@@ -35,6 +35,10 @@ def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):
     return x
     
 def def_calc_pond(impo,cont):
+
+    # impo = join_impo_clae_bec_bk_comercio_pond
+    # cont = tabla_contingencia
+
     join_final = impo.copy()
 
     letra1 = join_final.columns.get_loc("letra1") + 1
@@ -46,6 +50,7 @@ def def_calc_pond(impo,cont):
     HSd12 = join_final.columns.get_loc("HS6_d12") + 1
 
     dictionary_list = []
+
 
     for a in tqdm(join_final.itertuples()):
 
@@ -66,7 +71,7 @@ def def_calc_pond(impo,cont):
         act5_pond = ncm_val[letra_5] / total
         act6_pond = ncm_val[letra_6] / total
 
-        values = [*a[1:49], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para sacar los elementos de la lista (tupla) a
+        values = [*a[1:48], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para sacar los elementos de la lista (tupla) a
         dictionary_list.append(values)
 
     join_final = pd.DataFrame.from_dict(dictionary_list)

@@ -33,6 +33,10 @@ from nivel_ncm_12d_6act.procesamiento_nivel_ncm_12d_6act import *
 from nivel_ncm_12d_6act.matriz_nivel_ncm_12d_6act import *
 from nivel_ncm_12d_6act.pre_visualizacion_nivel_ncm_12d_6act import *
 
+# from Bases_nivel_ncm_12d_6act import *
+# from procesamiento_nivel_ncm_12d_6act import *
+# from matriz_nivel_ncm_12d_6act import *
+# from pre_visualizacion_nivel_ncm_12d_6act import *
 
 #############################################
 # Cargar bases con las que vamos a trabajar #
@@ -127,8 +131,8 @@ tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
 
 join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
-# join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
-join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv")
+#join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
+#join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv")
 
 # selecciono columnas del join final
 # filtro = ["HS6", "CUIT_IMPOR", "valor", "letra1", "letra2", "letra3", 
@@ -140,9 +144,9 @@ join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act_pos
 #         ASIGNACIÓN y MATRIZ               #
 #############################################
 
-# matriz_sisd = def_insumo_matriz(join_final)
+matriz_sisd = def_insumo_matriz(join_final)
 # matriz_sisd.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
-matriz_sisd = pd.read_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv")
+#matriz_sisd = pd.read_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv")
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 matriz_sisd_final = def_matriz_c_prob(matriz_sisd)
