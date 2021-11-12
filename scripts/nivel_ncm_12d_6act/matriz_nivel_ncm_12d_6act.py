@@ -40,7 +40,9 @@ def def_insumo_matriz(raw_data):
     letra4_pond = raw_data.columns.get_loc("letra4_pond") + 1
     letra5_pond = raw_data.columns.get_loc("letra5_pond") + 1
     letra6_pond = raw_data.columns.get_loc("letra6_pond") + 1
-
+    
+    ue_dest_loc =  raw_data.columns.get_loc("ue_dest") + 1
+    
     dictionary_list = []
 
     for a in tqdm(raw_data.itertuples()):
@@ -67,7 +69,7 @@ def def_insumo_matriz(raw_data):
                       "valor_pond": a[6] * a[e],
                       "si": a[letra1],
                       "sd": letra_sd,
-                      "ue_dest": "nan"}
+                      "ue_dest": a[ue_dest_loc]}
 
             dictionary_list.append(values)
 

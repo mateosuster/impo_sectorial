@@ -19,8 +19,8 @@ def sectores():
     return sectores_desc
 
 
-def impo_total(z, sectores_desc):
-
+def impo_total(z, sectores_desc =False):
+    indice = z.index
     # transformacion a array de np
     z_visual = z.to_numpy()
     
@@ -28,16 +28,20 @@ def impo_total(z, sectores_desc):
     col_sum  = np.nansum(z_visual , axis=0)
     
     # sectores
-    sectores_desc.pop("U")
-    sectores = pd.DataFrame( { "desc":sectores_desc.values(), "letra": sectores_desc.keys() })
+    # sectores_desc.pop("U")
+    # sectores = pd.DataFrame( { "desc":sectores_desc.values(), "letra": sectores_desc.keys() })
 
     #importaciones totales (ordenadas)
-    impo_tot_sec = pd.DataFrame({"impo_tot": col_sum, "letra":sectores_desc.keys() }, index=sectores_desc.values())  
-    impo_tot_sec.sort_values(by = "impo_tot", ascending= False, inplace = True)
+    # impo_tot_sec = pd.DataFrame({"impo_tot": col_sum, "letra":sectores_desc.keys() }, index=sectores_desc.values())  
+    impo_tot_sec = pd.DataFrame({"impo_tot": col_sum, "letra":indice.values}, index=indice)  
+    # impo_tot_sec = pd.DataFrame({"impo_tot": col_sum } )  
+    # impo_tot_sec.sort_values(by = "impo_tot", ascending= False, inplace = True)
     
     return impo_tot_sec
 
-def impo_comercio_y_propio(z, sectores_desc):
+def impo_comercio_y_propio(z, sectores_desc = False):
+    indice = z.index
+    
     # transformacion a array de np
     z_visual = z.to_numpy()
     
@@ -47,22 +51,23 @@ def impo_comercio_y_propio(z, sectores_desc):
     
     #diagonal sobre total col y comercio sobre total
     diag_total_col = diagonal/col_sum
-    g_total_col = z_visual[6][:]/col_sum
-    comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = sectores_desc.values())
+    g_total_col = z_visual[29][:]/col_sum
+    comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = indice )
     return comercio_y_propio.sort_values(by = 'Propio', ascending = False) 
     
 
-def top_5(matriz_sisd_final, letras, bec, impo_tot_sec):
+def top_5(asign_pre_matriz, letras_ciiu , ncm12_desc, impo_tot_sec):
 
-    x = matriz_sisd_final.groupby(["hs6_d12", "sd"], as_index=False)['valor_pond'].sum("valor_pond")
+    x = asign_pre_matriz.groupby(["hs6_d12", "sd"], as_index=False)['valor_pond'].sum("valor_pond")
     top_5_impo = x.reset_index(drop = True).sort_values(by = ["sd", "valor_pond"],ascending = False)
     top_5_impo["HS6"] = top_5_impo["hs6_d12"].str.slice(0,6).astype(int)
     top_5_impo  = top_5_impo.groupby(["sd"], as_index = True).head(5)
-    top_5_impo  = pd.merge(left=top_5_impo, right=letras, left_on="sd", right_on="letra", how="left").drop(["sd"], axis=1)
-    top_5_impo  = pd.merge(left=top_5_impo, right=bec[["HS6","HS6Desc"]], left_on="HS6", right_on="HS6", how="left").drop("HS6", axis=1)
-    top_5_impo  = pd.merge(top_5_impo  , impo_tot_sec, left_on="letra", right_on="letra", how = "left")
+    # top_5_impo  = pd.merge(left=top_5_impo, right=letras_ciiu, left_on="sd", right_on="letra", how="left").drop(["sd"], axis=1) # ACA OBTENIA LA DESCLASIFICACION
+    # top_5_impo  = pd.merge(left=top_5_impo, right=bec[["HS6","HS6Desc"]], left_on="HS6", right_on="HS6", how="left").drop("HS6", axis=1)
+    top_5_impo  = pd.merge(left=top_5_impo, right=ncm12_desc, left_on="hs6_d12", right_on="HS_12d", how="left").drop("HS_12d", axis=1)
+    top_5_impo  = pd.merge(top_5_impo  , impo_tot_sec, left_on="sd", right_on="letra", how = "left")
     top_5_impo["impo_relativa"] = top_5_impo["valor_pond"]/top_5_impo["impo_tot"] 
-    top_5_impo["short_name"] = top_5_impo["HS6Desc"].str.slice(0,15)
+    top_5_impo["short_name"] = top_5_impo["hs6_d12_desc"].str.slice(0,15)
 
     return top_5_impo
 

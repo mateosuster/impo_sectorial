@@ -53,8 +53,8 @@ def predo_impo_12d(impo_d12, ncm_desc):
 
 def predo_ncm12_desc(ncm12_desc ):
     ncm12_desc = ncm12_desc[["POSICION", "DESCRIPCIO"]]
-    ncm12_desc.rename(columns = {"POSICION": "Posición", "DESCRIPCIO":"Descripción Completa"}, inplace = True)
-    ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Descripción Completa'].str.split('//', expand=True))], axis=1)
+    ncm12_desc.rename(columns = {"POSICION": "HS_12d", "DESCRIPCIO":"hs6_d12_desc"}, inplace = True) 
+    ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['hs6_d12_desc'].str.split('//', expand=True))], axis=1)
     dic = {"ncm_desc": ncm12_desc, "ncm_split": ncm12_desc_split }
     return dic
 
