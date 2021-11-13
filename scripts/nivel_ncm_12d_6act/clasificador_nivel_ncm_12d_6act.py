@@ -26,6 +26,13 @@ from nivel_ncm_12d_6act.procesamiento_nivel_ncm_12d_6act import *
 from nivel_ncm_12d_6act.matriz_nivel_ncm_12d_6act import *
 from nivel_ncm_12d_6act.pre_visualizacion_nivel_ncm_12d_6act import *
 
+# from Bases_nivel_ncm_12d_6act import *
+# from procesamiento_nivel_ncm_12d_6act import *
+# from matriz_nivel_ncm_12d_6act import *
+# from pre_visualizacion_nivel_ncm_12d_6act import *
+#
+
+
 
 #############################################
 # Cargar bases con las que vamos a trabajar #
@@ -96,13 +103,18 @@ ciiu_dig_let = predo_ciiu(clae_to_ciiu, dic_ciiu)
 # impo_bec = pd.merge(join_impo_clae, bec[["HS6", "BEC5EndUse" ]], how= "left" , left_on = "HS6", right_on= "HS6" )
 # (len(datos ) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()]) ) == len(join_impo_clae)
 
-datos_bk = asignacion_stp_BK(datos, dic_stp)
-datos_bk = diccionario_especial(datos_bk,ciiu_dig_let)
 
+###aca igal metio un cambio de orden!!
+
+#datos_bk = diccionario_especial(datos_bk,ciiu_dig_let) ###### viernes a la noche. cambié el orden de estas lineas
+
+datos_bk = diccionario_especial(datos,ciiu_dig_let) #cambio igal
 letras_mod = letra_nn(datos_bk) # obtencion de LETRA_nn
-
 datos_bk = pd.concat([datos_bk.drop( ["letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1),  letras_mod ], axis = 1)
 # datos_bk.to_csv("../data/resultados/importaciones_bk_pre_intro_matriz.csv")
+datos_bk = asignacion_stp_BK(datos_bk, dic_stp)
+
+# hasta aca!!
 
 #############################################
 #           Tabla de contingencia           #
@@ -137,7 +149,7 @@ matriz_sisd_insumo = def_insumo_matriz(join_final)
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 asign_pre_matriz= def_matriz_c_prob(matriz_sisd_insumo)
-asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
+#asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
 
 #matriz SISD
 matriz_sisd =to_matriz(asign_pre_matriz)

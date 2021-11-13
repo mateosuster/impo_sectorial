@@ -46,7 +46,10 @@ def predo_impo_12d(impo_d12, ncm_desc):
     impo_d12 = impo_d12[[ "cuit", "NOMBRE", "HS6_d12", "destinacion", "dest_cod", "valor", "kilos", "uni_est", "cant_est", "uni_decl", "cant_decl"]]
     impo_d12["HS6"]= impo_d12["HS6_d12"].str.slice(0,6).astype(int)
     impo_d12["cuit"] =impo_d12["cuit"].astype(str)
-    
+
+    ncm_desc.rename(columns={'HS_12d': "Posición",
+                             'hs6_d12_desc': "Descripción Completa"}, inplace= True)
+
     impo_d12 = pd.merge(impo_d12, ncm_desc[["Descripción Completa", "Posición"]], left_on="HS6_d12", right_on="Posición", how="left").drop(["Posición"], axis=1).rename(columns = {"Descripción Completa": "descripcion"})
     
     return impo_d12
@@ -316,13 +319,12 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     
     letras = ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]
     
+    for letra in letras:
+        data_trans[letra] = data_trans[letra].replace(r'(^D.*$)', "I_60") #con regex, buscar que empiece con D_ y poner I_60
+        data_trans[letra] = data_trans[letra].replace("G", "I_60")
     
     for letra in letras:
-        data_trans[letra] = data_trans[letra].replace("C", "H")
-        data_trans[letra] = data_trans[letra].replace("G", "H")
-    
-    for letra in letras:
-        data_agro[letra] = data_agro[letra].replace("C", "A")
+        data_agro[letra] = data_agro[letra].replace(r'(^D.*$)',  "A") #con regex, buscar que empiece con D_ y poner A
         data_agro[letra] = data_agro[letra].replace("G", "A")
     
     datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro], axis=0)
