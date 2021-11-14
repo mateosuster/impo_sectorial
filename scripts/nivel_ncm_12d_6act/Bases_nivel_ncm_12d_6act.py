@@ -308,7 +308,10 @@ def predo_datamodel(data_predichos,datos_clasificados):
 def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     datos_bk = datos[datos["ue_dest"]== "BK"]
     
-    ncm_trans = [870421, 870431, 870422, 870423, 870210, 870490, 870432]
+    ncm_trans = [870421, 870431, 870422, 870423, 870210, 870490, 870432, 870210,
+                 870290, 870310, 870321, 870322, 870323, 870324, 870331, 870332,
+                 870333, 870390]
+
     data_trans = datos_bk[datos_bk["HS6"].isin(ncm_trans)].reset_index(drop = True)
     
     ncm_agro = dic_stp[dic_stp["demanda"].str.contains("agríc", case =False)]["NCM"]
@@ -318,13 +321,12 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     
     
     letras = ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]
-    
     for letra in letras:
-        data_trans[letra] = data_trans[letra].replace(r'(^D.*$)', "I_60") #con regex, buscar que empiece con D_ y poner I_60
+        data_trans[letra] = data_trans[letra].replace(regex=[r'^D.*$'],value="I_60") #con regex, buscar que empiece con D_ y poner I_60
         data_trans[letra] = data_trans[letra].replace("G", "I_60")
     
     for letra in letras:
-        data_agro[letra] = data_agro[letra].replace(r'(^D.*$)',  "A") #con regex, buscar que empiece con D_ y poner A
+        data_agro[letra] = data_agro[letra].replace(regex=[r'^D.*$'],value="A") #con regex, buscar que empiece con D_ y poner A
         data_agro[letra] = data_agro[letra].replace("G", "A")
     
     datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro], axis=0)

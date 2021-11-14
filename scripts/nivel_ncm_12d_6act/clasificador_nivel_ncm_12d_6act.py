@@ -26,11 +26,6 @@ from nivel_ncm_12d_6act.procesamiento_nivel_ncm_12d_6act import *
 from nivel_ncm_12d_6act.matriz_nivel_ncm_12d_6act import *
 from nivel_ncm_12d_6act.pre_visualizacion_nivel_ncm_12d_6act import *
 
-# from Bases_nivel_ncm_12d_6act import *
-# from procesamiento_nivel_ncm_12d_6act import *
-# from matriz_nivel_ncm_12d_6act import *
-# from pre_visualizacion_nivel_ncm_12d_6act import *
-#
 
 
 
@@ -113,7 +108,6 @@ letras_mod = letra_nn(datos_bk) # obtencion de LETRA_nn
 datos_bk = pd.concat([datos_bk.drop( ["letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1),  letras_mod ], axis = 1)
 # datos_bk.to_csv("../data/resultados/importaciones_bk_pre_intro_matriz.csv")
 datos_bk = asignacion_stp_BK(datos_bk, dic_stp)
-
 # hasta aca!!
 
 #############################################
