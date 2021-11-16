@@ -19,11 +19,41 @@ def sectores():
                      "U": "Serv. organizaciones" , "CONS": "Consumo" }
     return sectores_desc
 
+def dic_graf(matriz_sisd, dic_ciiu):
+    letras_ciiu = pd.DataFrame(matriz_sisd.index)
+    # armo nuevo diccionario
+    letras_ciiu_pd =  dic_ciiu[["ciiu3_letra", "ciiu3_letra_desc"]].drop_duplicates(subset = "ciiu3_letra")[~dic_ciiu["ciiu3_letra"].isin(["D", "I"]) ].dropna().rename(columns = {"ciiu3_letra" : "letra", "ciiu3_letra_desc":"desc" } )
+    
+    digitos = tuple(list(map(str, range(15, 38))) + list(map(str, range(60, 65))) )
+    ciiu_desc_2= dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith(digitos )][[ "ciiu3_letra", "ciiu3_2c", "ciiu3_2c_desc" ]].drop_duplicates()
+    ciiu_desc_2["ciiu3_2c"] =  ciiu_desc_2["ciiu3_letra"] + "_"+ ciiu_desc_2["ciiu3_2c"].astype(str).str.slice(0,2) 
+    ciiu_desc_2 = ciiu_desc_2.rename(columns = {"ciiu3_2c" : "letra", "ciiu3_2c_desc":"desc" } )[["letra", "desc"]]
+    
+    ciiu_desc_3= dic_ciiu[dic_ciiu["ciiu3_3c"].astype(str).str.startswith( ("551", "552"), na = False)][[ "ciiu3_letra", "ciiu3_3c", "ciiu3_3c_desc"  ]].drop_duplicates()
+    ciiu_desc_3["ciiu3_3c"] =  ciiu_desc_3["ciiu3_letra"] + "_"+ ciiu_desc_3["ciiu3_3c"].astype(str).str.slice(0,3) 
+    ciiu_desc_3 = ciiu_desc_3.rename(columns = {"ciiu3_3c" : "letra", "ciiu3_3c_desc":"desc" } )[["letra", "desc"]]
+    
+    sector_a_definir = pd.DataFrame({"letra": ["D_29_30_31_32_33"], "desc":[ "D_29_30_31_32_33"]})
+    
+    letras_ciiu = pd.concat([letras_ciiu_pd, ciiu_desc_2, ciiu_desc_3, sector_a_definir ], axis = 0).sort_values("letra")
+    letras_ciiu = pd.concat([letras_ciiu ,pd.DataFrame({"letra": ["CONS"], "desc":[ "Consumo"]})], axis = 0 )
+    
+    return letras_ciiu
 
-def impo_total(z, sectores_desc =False):
-    indice = z.index
+def impo_total(matriz_sisd, letras_ciiu, sectores_desc =False):
+    # if sectores_desc == True:
+    #     indice = z.index
+    #     letra =  indice.values
+    # else:
+    #     indice = letras_ciiu.desc.values
+    #     letra = letras_ciiu.letra.values
+    
+    indice = letras_ciiu.desc.values
+    letra = letras_ciiu.letra.values
+
+    
     # transformacion a array de np
-    z_visual = z.to_numpy()
+    z_visual = matriz_sisd.to_numpy()
     
     #diagonal y totales col y row
     col_sum  = np.nansum(z_visual , axis=0)
@@ -34,14 +64,16 @@ def impo_total(z, sectores_desc =False):
 
     #importaciones totales (ordenadas)
     # impo_tot_sec = pd.DataFrame({"impo_tot": col_sum, "letra":sectores_desc.keys() }, index=sectores_desc.values())  
-    impo_tot_sec = pd.DataFrame({"impo_tot": col_sum, "letra":indice.values}, index=indice)  
+    impo_tot_sec = pd.DataFrame({"impo_tot": col_sum, "letra":letra}, index=indice)  
     # impo_tot_sec = pd.DataFrame({"impo_tot": col_sum } )  
     # impo_tot_sec.sort_values(by = "impo_tot", ascending= False, inplace = True)
     
     return impo_tot_sec
 
-def impo_comercio_y_propio(z, sectores_desc = False):
-    indice = z.index
+def impo_comercio_y_propio(z,letras_ciiu, sectores_desc = False):
+    # indice = z.index
+    indice = letras_ciiu.desc.values
+    # letra = letras_ciiu.letra.values
     
     # transformacion a array de np
     z_visual = z.to_numpy()
@@ -56,13 +88,13 @@ def impo_comercio_y_propio(z, sectores_desc = False):
     comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = indice )
     return comercio_y_propio.sort_values(by = 'Propio', ascending = False) 
     
-def graficos(matriz_sisd, impo_tot_sec, comercio_y_propio):
+def graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu):
     #parametro para graficos
     params = {'legend.fontsize': 20,
               'figure.figsize': (20, 10),
              'axes.labelsize': 15,
              'axes.titlesize': 30,
-              'xtick.labelsize':20,
+              'xtick.labelsize':15,
               'ytick.labelsize':20
              }
     plt.rcParams.update(params)
@@ -70,11 +102,12 @@ def graficos(matriz_sisd, impo_tot_sec, comercio_y_propio):
     
     ##### grafico 1
     #posiciones para graf
+    y_pos = np.arange(len(letras_ciiu["desc"])) 
     # y_pos = np.arange(len(sectores_desc.values())) 
-    y_pos = np.arange(len(matriz_sisd.index.values)) 
+    # y_pos = np.arange(len(matriz_sisd.index.values)) 
     
     plt.bar(y_pos , impo_tot_sec.iloc[:,0]/(10**6) )
-    plt.xticks(y_pos , impo_tot_sec.index, rotation = 45)
+    plt.xticks(y_pos , impo_tot_sec.index, rotation = 75)
     plt.title("Importaciones de bienes de capital destinadas a cada sector")#, fontsize = 30)
     plt.ylabel("Millones de USD")
     plt.xlabel("Sector \n \n Fuente: CEPXXI en base a Aduana, AFIP y UN Comtrade")
