@@ -68,7 +68,6 @@ hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding =
 
 # bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
 
-
 #############################################
 #           preparación bases               #
 #############################################
@@ -145,6 +144,8 @@ asign_pre_matriz= def_matriz_c_prob(matriz_sisd_insumo)
 
 #matriz SISD
 matriz_sisd = to_matriz(asign_pre_matriz)
+# matriz_sisd= pd.read_csv("../data/resultados/matriz_sisd.csv")
+
 matriz_hssd  = pd.pivot_table(asign_pre_matriz, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
 # matriz_sisd.to_csv("../data/resultados/matriz_sisd.csv")
 
@@ -162,28 +163,18 @@ impo_tot_sec = impo_total(z = matriz_sisd, sectores_desc= False)
 comercio_y_propio = impo_comercio_y_propio(matriz_sisd, sectores_desc = False) 
 
 # armo nuevo diccionario
-# letras_ciiu_pd =  dic_ciiu[["ciiu3_letra", "ciiu3_letra_desc"]].drop_duplicates(subset = "ciiu3_letra")
-# letras_ciiu_pd [letras_ciiu_pd["ciiu3_letra"].str.contains("D", "I", "K" , na = False) ]
-# letras_ciiu_pd [letras_ciiu_pd["ciiu3_letra"].str.contains("D") ]
-
-# letras_ciiu_pd.info()
-# dic_ciiu.info()
-# x = dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith("34")]
-
-
-dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith("34")]
+letras_ciiu_pd =  dic_ciiu[["ciiu3_letra", "ciiu3_letra_desc"]].drop_duplicates(subset = "ciiu3_letra")[~dic_ciiu["ciiu3_letra"].isin(["D", "I", "K"]) ].dropna()#.rename(columns = {"ciiu3_letra" : "letra", "ciiu3_letra_desc":"desc" } )
 
 digitos = tuple(list(map(str, range(15, 38))) + list(map(str, range(60, 65))) )
 ciiu_desc_2= dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith(digitos )][[ "ciiu3_letra", "ciiu3_2c", "ciiu3_2c_desc" ]].drop_duplicates()
 ciiu_desc_2["ciiu3_2c"] =  ciiu_desc_2["ciiu3_letra"] + "_"+ ciiu_desc_2["ciiu3_2c"].astype(str).str.slice(0,2) 
+ciiu_desc_2 = ciiu_desc_2.rename(columns = {"ciiu3_2c" : "letra", "ciiu3_2c_desc":"desc" } )[["letra", "desc"]]
 
 ciiu_desc_3= dic_ciiu[dic_ciiu["ciiu3_3c"].astype(str).str.startswith( ("551", "552"), na = False)][[ "ciiu3_letra", "ciiu3_3c", "ciiu3_3c_desc"  ]].drop_duplicates()
 ciiu_desc_3["ciiu3_3c"] =  ciiu_desc_3["ciiu3_letra"] + "_"+ ciiu_desc_3["ciiu3_3c"].astype(str).str.slice(0,3) 
+ciiu_desc_3 = ciiu_desc_3.rename(columns = {"ciiu3_3c" : "letra", "ciiu3_3c_desc":"desc" } )[["letra", "desc"]]
 
-
-ciiu_desc.info()
-
-dic_ciiu.info()
+letras_ciiu = pd.concat([letras_ciiu_pd, ciiu_desc_2, ciiu_desc_3], axis = 1)
 
 # graficos
 graficos(matriz_sisd, impo_tot_sec, comercio_y_propio)
