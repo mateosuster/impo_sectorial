@@ -75,6 +75,12 @@ def def_insumo_matriz(raw_data):
 
     for_fill = pd.DataFrame.from_dict(dictionary_list)
 
+    for_fill["sd"] = np.where(for_fill["hs6_d12"].str.startswith("8703"), 
+                              "CONS", for_fill["sd"] )
+    
+    for_fill["si"] = np.where(for_fill["hs6_d12"].str.startswith(("8702", "8703", "8704")), 
+                              "G", for_fill["si"] )
+
     return for_fill
     
 def def_matriz_c_prob(prob):

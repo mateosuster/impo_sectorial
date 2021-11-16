@@ -7,7 +7,8 @@ Created on Wed Jul 14 11:34:56 2021
 
 import numpy as np
 import pandas as pd
-
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
 
 def sectores():
     sectores_desc = {"A":	"Agricultura",  "B":	"Minas y canteras", "C":	"Industria", "D": "Energía",
@@ -55,6 +56,46 @@ def impo_comercio_y_propio(z, sectores_desc = False):
     comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = indice )
     return comercio_y_propio.sort_values(by = 'Propio', ascending = False) 
     
+def graficos(matriz_sisd, impo_tot_sec, comercio_y_propio):
+    #parametro para graficos
+    params = {'legend.fontsize': 20,
+              'figure.figsize': (20, 10),
+             'axes.labelsize': 15,
+             'axes.titlesize': 30,
+              'xtick.labelsize':20,
+              'ytick.labelsize':20
+             }
+    plt.rcParams.update(params)
+     
+    
+    ##### grafico 1
+    #posiciones para graf
+    # y_pos = np.arange(len(sectores_desc.values())) 
+    y_pos = np.arange(len(matriz_sisd.index.values)) 
+    
+    plt.bar(y_pos , impo_tot_sec.iloc[:,0]/(10**6) )
+    plt.xticks(y_pos , impo_tot_sec.index, rotation = 45)
+    plt.title("Importaciones de bienes de capital destinadas a cada sector")#, fontsize = 30)
+    plt.ylabel("Millones de USD")
+    plt.xlabel("Sector \n \n Fuente: CEPXXI en base a Aduana, AFIP y UN Comtrade")
+    # plt.subplots_adjust(bottom=0.7,top=0.83)
+    plt.tight_layout()
+    plt.show()
+    plt.savefig('../data/resultados/impo_totales_letra.png')
+    
+
+    ##### grafico 2
+    #graf division comercio y propio
+    ax = comercio_y_propio.plot(kind = "bar", rot = 75,
+                                stacked = True, ylabel = "", 
+                                xlabel = "Sector \n \n Fuente: CEPXXII en base a Aduana, AFIP y UN Comtrade")
+    ax.yaxis.set_major_formatter(mtick.PercentFormatter())
+    ax.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
+    plt.tight_layout(pad=3)
+    plt.title( "Sector abastecedor de importaciones de bienes de capital (en porcentaje)")#,  fontsize = 30)
+    
+    plt.savefig('../data/resultados/comercio_y_propio_letra.png')
+
 
 def top_5(asign_pre_matriz, letras_ciiu , ncm12_desc, impo_tot_sec):
 

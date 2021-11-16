@@ -32,7 +32,7 @@ matriz_sisd = pd.read_csv("../data/resultados/matriz_sisd.csv").set_index("si")
 hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
 dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 datos_bk =pd.read_csv("../data/resultados/importaciones_bk_pre_intro_matriz.csv")
-asign_pre_matriz= read_csv("../data/resultados/asign_pre_matriz.csv")
+asign_pre_matriz= pd.read_csv("../data/resultados/asign_pre_matriz.csv")
 ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 
 
@@ -55,59 +55,7 @@ x = dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith("34")]
 impo_ciiu_letra = impo_ciiu_letra(hs_to_isic , dic_ciiu, datos_bk )
 
 
-# =============================================================================
-#                       Visualizacion
-# =============================================================================
-#parametro para graficos
-params = {'legend.fontsize': 20,
-          'figure.figsize': (20, 10),
-         'axes.labelsize': 15,
-         'axes.titlesize': 30,
-          'xtick.labelsize':20,
-          'ytick.labelsize':20
-         }
-plt.rcParams.update(params)
- 
 
-##### grafico 1
-#posiciones para graf
-# y_pos = np.arange(len(sectores_desc.values())) 
-y_pos = np.arange(len(matriz_sisd.index.values)) 
-
-plt.bar(y_pos , impo_tot_sec.iloc[:,0]/(10**6) )
-plt.xticks(y_pos , impo_tot_sec.index, rotation = 45)
-plt.title("Importaciones de bienes de capital destinadas a cada sector")#, fontsize = 30)
-plt.ylabel("Millones de USD")
-plt.xlabel("Sector \n \n Fuente: CEPXXI en base a Aduana, AFIP y UN Comtrade")
-# plt.subplots_adjust(bottom=0.7,top=0.83)
-plt.tight_layout()
-# plt.savefig('data/resultados/impo_totales_letra.png')
-
-
-##### grafico 2
-#graf division comercio y propio
-ax = comercio_y_propio.plot(kind = "bar", rot = 75,
-                            stacked = True, ylabel = "%", 
-                            xlabel = "Sector \n \n Fuente: CEPXXII en base a Aduana, AFIP y UN Comtrade")
-ax.yaxis.set_major_formatter(mtick.PercentFormatter())
-ax.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
-plt.tight_layout(pad=3)
-plt.title( "Sector abastecedor de importaciones de bienes de capital (en porcentaje)")#,  fontsize = 30)
-
-plt.savefig('data/resultados/comercio_y_propio_letra.png')
-
-
-##### insumos tabla 1
-# Top 5 de importaciones de cada sector
-top_5_impo = top_5(asign_pre_matriz, letras_ciiu , ncm12_desc, impo_tot_sec)
-
-#CUITS QUE IMPORTAN TOP HS6 Industria
-# top_industria = top_5_impo[top_5_impo["letra"]=="C"]["hs6"].iloc[[0,3]]
-# cuit_top_c = join_impo_clae[join_impo_clae["HS6"].isin(top_industria )].sort_values("valor",ascending=False)#["CUIT_IMPOR"].unique()
-# cuit_empresas[cuit_empresas["cuit"].isin(cuit_top_c)]
-
-# top_5_impo.to_csv("../data/resultados/top5_impo.csv")
-top_5_impo.to_excel("../data/resultados/top5_impo.xlsx")
 
 
 

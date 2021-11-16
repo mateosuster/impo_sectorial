@@ -47,10 +47,11 @@ def predo_impo_12d(impo_d12, ncm_desc):
     impo_d12["HS6"]= impo_d12["HS6_d12"].str.slice(0,6).astype(int)
     impo_d12["cuit"] =impo_d12["cuit"].astype(str)
 
-    ncm_desc.rename(columns={'HS_12d': "Posición",
-                             'hs6_d12_desc': "Descripción Completa"}, inplace= True)
+    # ncm_desc_copy = ncm_desc.rename(columns={'HS_12d': "Posición",
+    #                          'hs6_d12_desc': "Descripción Completa"}, inplace= False).copy()
 
-    impo_d12 = pd.merge(impo_d12, ncm_desc[["Descripción Completa", "Posición"]], left_on="HS6_d12", right_on="Posición", how="left").drop(["Posición"], axis=1).rename(columns = {"Descripción Completa": "descripcion"})
+    # impo_d12 = pd.merge(impo_d12, ncm_desc_copy[["Descripción Completa", "Posición"]], left_on="HS6_d12", right_on="Posición", how="left").drop(["Posición"], axis=1).rename(columns = {"Descripción Completa": "descripcion"})
+    impo_d12 = pd.merge(impo_d12, ncm_desc, left_on="HS6_d12", right_on="HS_12d", how="left").drop(["HS_12d"], axis=1).rename(columns = {"hs6_d12_desc": "descripcion"})
     
     return impo_d12
 
@@ -308,9 +309,13 @@ def predo_datamodel(data_predichos,datos_clasificados):
 def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     datos_bk = datos[datos["ue_dest"]== "BK"]
     
-    ncm_trans = [870421, 870431, 870422, 870423, 870210, 870490, 870432, 870210,
-                 870290, 870310, 870321, 870322, 870323, 870324, 870331, 870332,
-                 870333, 870390]
+    ncm_trans = [
+                870421, 870431, #pick-ups confirmado por Maito
+                 870422, 870423, 870490, 870432, 
+                 870210, 870210,870290 
+                 # 870310, 870321, 870322, 870323, 870324, 870331, 870332,
+                 # 870333, 870390 # mandar a consumo
+                 ]
 
     data_trans = datos_bk[datos_bk["HS6"].isin(ncm_trans)].reset_index(drop = True)
     
@@ -323,11 +328,11 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     letras = ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]
     for letra in letras:
         data_trans[letra] = data_trans[letra].replace(regex=[r'^D.*$'],value="I_60") #con regex, buscar que empiece con D_ y poner I_60
-        data_trans[letra] = data_trans[letra].replace("G", "I_60")
+        data_trans[letra] = data_trans[letra].replace(["G","K", "J"] , "I_60")
     
     for letra in letras:
         data_agro[letra] = data_agro[letra].replace(regex=[r'^D.*$'],value="A") #con regex, buscar que empiece con D_ y poner A
-        data_agro[letra] = data_agro[letra].replace("G", "A")
+        data_agro[letra] = data_agro[letra].replace(["G","K", "J"] , "A")
     
     datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro], axis=0)
 
@@ -358,18 +363,19 @@ def letra_nn(datos_bk):
                                      [actividad1, actividad2, actividad3,actividad4, actividad5, actividad6],
                                      ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]):
             
-            if x[letra] in [ "H", "I"]:
-                new_letra= x[letra] +"_"+ str(x[act])[0:2] 
+            if x[letra] in [ "H"]:
+                new_letra= x[letra] +"_"+ str(x[act])[0:3] 
             elif x[letra] == "D": 
                 if str(x[act]) == "29_30_31_32_33":
                     new_letra =  "D_29_30_31_32_33"
                 else:
                     new_letra= x[letra] +"_"+ str(x[act])[0:2]
             elif x[letra] in ["I"]:
-                if str(x[act]) == "64":
-                    new_letra= x[letra] +"_"+ str(x[act])[0:2]
-                else: 
-                    new_letra = "I_60_61_62_63"
+                new_letra= x[letra] +"_"+ str(x[act])[0:2] 
+            #     if str(x[act]) == "64":
+            #         new_letra= x[letra] +"_"+ str(x[act])[0:2]
+            #     else: 
+            #         new_letra = "I_60_61_62_63"
             else:
                 new_letra= x[letra] 
                 

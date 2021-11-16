@@ -21,6 +21,9 @@ import re
 import tqdm
 import datatable as dt
 
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
+
 from nivel_ncm_12d_6act.Bases_nivel_ncm_12d_6act import *
 from nivel_ncm_12d_6act.procesamiento_nivel_ncm_12d_6act import *
 from nivel_ncm_12d_6act.matriz_nivel_ncm_12d_6act import *
@@ -45,6 +48,8 @@ datos_clasificados = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
 # CIIU
 dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
+hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
+
 
 #impo 12 d
 # impo_d12 = pd.read_csv("../data/IMPO_17_feature.csv")
@@ -68,8 +73,8 @@ clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
 #           preparación bases               #
 #############################################
 # predo_impo_17(impo_17)
-ncm12_desc = predo_ncm12_desc(ncm12_desc )["ncm_desc"]    
-impo_d12  = predo_impo_12d(impo_d12, ncm12_desc)
+ncm12_desc_mod = predo_ncm12_desc(ncm12_desc )["ncm_desc"]    
+impo_d12  = predo_impo_12d(impo_d12, ncm12_desc_mod )
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae)
@@ -127,32 +132,71 @@ join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingenci
 #join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
 #join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv")
 
-# selecciono columnas del join final
-# filtro = ["HS6", "CUIT_IMPOR", "valor", "letra1", "letra2", "letra3", 
-# "vta_bk", "vta_sec", "vta_bk2", "vta_sec2", "vta_bk3", "vta_sec3", 
-# "letra1_pond", "letra2_pond", "letra3_pond"]
-# join_final = join_final.sort_values("HS6")[filtro]
-
 #############################################
 #         ASIGNACIÓN y MATRIZ               #
 #############################################
-
 matriz_sisd_insumo = def_insumo_matriz(join_final)
-# matriz_sisd.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
-#matriz_sisd = pd.read_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv")
+# matriz_sisd_insumo.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
+#matriz_sisd_insumo= pd.read_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv")
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 asign_pre_matriz= def_matriz_c_prob(matriz_sisd_insumo)
-#asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
+# asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
 
 #matriz SISD
-matriz_sisd =to_matriz(asign_pre_matriz)
+matriz_sisd = to_matriz(asign_pre_matriz)
 matriz_hssd  = pd.pivot_table(asign_pre_matriz, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
+# matriz_sisd.to_csv("../data/resultados/matriz_sisd.csv")
 
-matriz_sisd.to_csv("../data/resultados/matriz_sisd.csv")
+#filtro para destinación de productos
+# x = matriz_hssd[matriz_hssd.index.str.startswith(("870421", "870431"))]
+# x.sum(axis = 0)
+# matriz_sisd.sum().sum()
+# =============================================================================
+#                       Visualizacion
+# =============================================================================
+#preprocesamiento
+sectores_desc = sectores() #Sectores CLAE
+letras_ciiu = pd.DataFrame(matriz_sisd.index)
+impo_tot_sec = impo_total(z = matriz_sisd, sectores_desc= False) 
+comercio_y_propio = impo_comercio_y_propio(matriz_sisd, sectores_desc = False) 
+
+# armo nuevo diccionario
+# letras_ciiu_pd =  dic_ciiu[["ciiu3_letra", "ciiu3_letra_desc"]].drop_duplicates(subset = "ciiu3_letra")
+# letras_ciiu_pd [letras_ciiu_pd["ciiu3_letra"].str.contains("D", "I", "K" , na = False) ]
+# letras_ciiu_pd [letras_ciiu_pd["ciiu3_letra"].str.contains("D") ]
+
+# letras_ciiu_pd.info()
+# dic_ciiu.info()
+# x = dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith("34")]
 
 
+dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith("34")]
 
+digitos = tuple(list(map(str, range(15, 38))) + list(map(str, range(60, 65))) )
+ciiu_desc_2= dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith(digitos )][[ "ciiu3_letra", "ciiu3_2c", "ciiu3_2c_desc" ]].drop_duplicates()
+ciiu_desc_2["ciiu3_2c"] =  ciiu_desc_2["ciiu3_letra"] + "_"+ ciiu_desc_2["ciiu3_2c"].astype(str).str.slice(0,2) 
+
+ciiu_desc_3= dic_ciiu[dic_ciiu["ciiu3_3c"].astype(str).str.startswith( ("551", "552"), na = False)][[ "ciiu3_letra", "ciiu3_3c", "ciiu3_3c_desc"  ]].drop_duplicates()
+ciiu_desc_3["ciiu3_3c"] =  ciiu_desc_3["ciiu3_letra"] + "_"+ ciiu_desc_3["ciiu3_3c"].astype(str).str.slice(0,3) 
+
+
+ciiu_desc.info()
+
+dic_ciiu.info()
+
+# graficos
+graficos(matriz_sisd, impo_tot_sec, comercio_y_propio)
+
+##### tabla top 5
+# Top 5 de importaciones de cada sector
+top_5_impo = top_5(asign_pre_matriz, letras_ciiu , ncm12_desc_mod, impo_tot_sec) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
+top_5_impo.to_excel("../data/resultados/top5_impo.xlsx")
+
+#CUITS QUE IMPORTAN TOP HS6 Industria
+# top_industria = top_5_impo[top_5_impo["letra"]=="C"]["hs6"].iloc[[0,3]]
+# cuit_top_c = join_impo_clae[join_impo_clae["HS6"].isin(top_industria )].sort_values("valor",ascending=False)#["CUIT_IMPOR"].unique()
+# cuit_empresas[cuit_empresas["cuit"].isin(cuit_top_c)]
 
 
 
