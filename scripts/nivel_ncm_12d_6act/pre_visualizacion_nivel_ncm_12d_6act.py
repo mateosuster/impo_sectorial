@@ -20,9 +20,10 @@ def sectores():
     return sectores_desc
 
 def dic_graf(matriz_sisd, dic_ciiu):
-    letras_ciiu = pd.DataFrame(matriz_sisd.index)
+    # letras_ciiu = pd.DataFrame(matriz_sisd.index)
+    
     # armo nuevo diccionario
-    letras_ciiu_pd =  dic_ciiu[["ciiu3_letra", "ciiu3_letra_desc"]].drop_duplicates(subset = "ciiu3_letra")[~dic_ciiu["ciiu3_letra"].isin(["D", "I"]) ].dropna().rename(columns = {"ciiu3_letra" : "letra", "ciiu3_letra_desc":"desc" } )
+    letras_ciiu_pd =  dic_ciiu[["ciiu3_letra", "ciiu3_letra_desc"]].drop_duplicates(subset = "ciiu3_letra")[~dic_ciiu["ciiu3_letra"].isin(["D", "I", "H"]) ].dropna().rename(columns = {"ciiu3_letra" : "letra", "ciiu3_letra_desc":"desc" } )
     
     digitos = tuple(list(map(str, range(15, 38))) + list(map(str, range(60, 65))) )
     ciiu_desc_2= dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith(digitos )][[ "ciiu3_letra", "ciiu3_2c", "ciiu3_2c_desc" ]].drop_duplicates()
@@ -33,11 +34,12 @@ def dic_graf(matriz_sisd, dic_ciiu):
     ciiu_desc_3["ciiu3_3c"] =  ciiu_desc_3["ciiu3_letra"] + "_"+ ciiu_desc_3["ciiu3_3c"].astype(str).str.slice(0,3) 
     ciiu_desc_3 = ciiu_desc_3.rename(columns = {"ciiu3_3c" : "letra", "ciiu3_3c_desc":"desc" } )[["letra", "desc"]]
     
-    sector_a_definir = pd.DataFrame({"letra": ["D_29_30_31_32_33"], "desc":[ "D_29_30_31_32_33"]})
+    sector_a_definir = pd.DataFrame({"letra": ["D_29_30_31_32_33", "T"], "desc":[ "D_29_30_31_32_33", "KE PASO CON T"]})
     
     letras_ciiu = pd.concat([letras_ciiu_pd, ciiu_desc_2, ciiu_desc_3, sector_a_definir ], axis = 0).sort_values("letra")
     letras_ciiu = pd.concat([letras_ciiu ,pd.DataFrame({"letra": ["CONS"], "desc":[ "Consumo"]})], axis = 0 )
     
+    letras_ciiu = letras_ciiu[~letras_ciiu["letra"].isin(["P", "Q"])]
     return letras_ciiu
 
 def impo_total(matriz_sisd, letras_ciiu, sectores_desc =False):

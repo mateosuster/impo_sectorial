@@ -163,7 +163,7 @@ letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,15)
 impo_tot_sec = impo_total(matriz_sisd, sectores_desc= False, letras_ciiu = letras_ciiu) 
 comercio_y_propio = impo_comercio_y_propio(matriz_sisd,letras_ciiu, sectores_desc = False) 
 
-x = pd.merge(impo_tot_sec.reset_index(),letras_ciiu, how = "outer", left_on= "letra",  right_on="letra")
+x = pd.merge(matriz_sisd.reset_index(),letras_ciiu, how = "outer", left_on= "si",  right_on="letra")
 
 # graficos
 graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu)
