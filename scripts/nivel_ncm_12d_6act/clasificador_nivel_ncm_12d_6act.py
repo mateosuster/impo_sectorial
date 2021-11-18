@@ -110,8 +110,6 @@ datos = pd.concat([datos.drop( ["letra1","letra2","letra3","letra4", "letra5", "
 
 datos_bk = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
-datos_ci["letra4"].isnull().sum() # 29 Missings
-datos_ci.dropna(inplace = True) #BORRO NA's !!!!!!!!!!!!!!!!
 
 #############################################
 #           Tabla de contingencia           #
@@ -167,14 +165,20 @@ matriz_hssd_ci  = pd.pivot_table(asign_pre_matriz_ci, values='valor_pond', index
 #preprocesamiento
 sectores_desc = sectores() #Sectores CLAE
 letras_ciiu = dic_graf(matriz_sisd, dic_ciiu)
+letras_ciiu = dic_graf(matriz_sisd_ci, dic_ciiu)
 letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,15)
 impo_tot_sec = impo_total(matriz_sisd, sectores_desc= False, letras_ciiu = letras_ciiu) 
-comercio_y_propio = impo_comercio_y_propio(matriz_sisd,letras_ciiu, sectores_desc = False) 
+impo_tot_sec_ci = impo_total(matriz_sisd_ci, sectores_desc= False, letras_ciiu = letras_ciiu)
+comercio_y_propio = impo_comercio_y_propio(matriz_sisd,letras_ciiu, sectores_desc = False)
+comercio_y_propio_ci = impo_comercio_y_propio(matriz_sisd_ci,letras_ciiu, sectores_desc = False)
 
 x = pd.merge(matriz_sisd.reset_index(),letras_ciiu, how = "outer", left_on= "si",  right_on="letra")
 
 # graficos
-graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu)
+
+graficos(matriz_sisd_ci, impo_tot_sec, comercio_y_propio, letras_ciiu)
+
+graficos(matriz_sisd_ci, impo_tot_sec_ci, comercio_y_propio_ci, letras_ciiu)
 
 ##### tabla top 5
 # Top 5 de importaciones de cada sector

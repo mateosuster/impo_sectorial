@@ -55,8 +55,6 @@ def def_calc_pond(impo,cont):
 
     for a in tqdm(join_final.itertuples()):
         
-        # print(a)
-
         letra_1 = a[letra1]
         letra_2 = a[letra2]
         letra_3 = a[letra3]
