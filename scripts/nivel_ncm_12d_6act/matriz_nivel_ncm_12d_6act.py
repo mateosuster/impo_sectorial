@@ -11,7 +11,7 @@ import numpy as np
 import datatable as dt
 
 
-def def_insumo_matriz(raw_data):
+def def_insumo_matriz(raw_data, ci = False):
 
     letra1 = raw_data.columns.get_loc("letra1") + 1
     letra2 = raw_data.columns.get_loc("letra2") + 1
@@ -19,13 +19,21 @@ def def_insumo_matriz(raw_data):
     letra4 = raw_data.columns.get_loc("letra4") + 1
     letra5 = raw_data.columns.get_loc("letra5") + 1
     letra6 = raw_data.columns.get_loc("letra6") + 1
-
-    vta_bk = raw_data.columns.get_loc("vta_bk") + 1
-    vta_bk2 = raw_data.columns.get_loc("vta_bk2") + 1
-    vta_bk3 = raw_data.columns.get_loc("vta_bk3") + 1
-    vta_bk4 = raw_data.columns.get_loc("vta_bk4") + 1
-    vta_bk5 = raw_data.columns.get_loc("vta_bk5") + 1
-    vta_bk6 = raw_data.columns.get_loc("vta_bk6") + 1
+    
+    if ci == False:
+        vta_bk = raw_data.columns.get_loc("vta_bk") + 1
+        vta_bk2 = raw_data.columns.get_loc("vta_bk2") + 1
+        vta_bk3 = raw_data.columns.get_loc("vta_bk3") + 1
+        vta_bk4 = raw_data.columns.get_loc("vta_bk4") + 1
+        vta_bk5 = raw_data.columns.get_loc("vta_bk5") + 1
+        vta_bk6 = raw_data.columns.get_loc("vta_bk6") + 1
+    else:
+        vta_bk = np.nan
+        vta_bk2 = np.nan
+        vta_bk3 = np.nan
+        vta_bk4 = np.nan
+        vta_bk5 = np.nan
+        vta_bk6 = np.nan
 
     vta_sec = raw_data.columns.get_loc("vta_sec") + 1
     vta_sec2 = raw_data.columns.get_loc("vta_sec2") + 1
@@ -52,9 +60,9 @@ def def_insumo_matriz(raw_data):
                               [letra1_pond, letra2_pond, letra3_pond, letra4_pond, letra5_pond, letra6_pond]):
 
             if a[b] == "G":
-                if a[c] == 0:
-                    letra_sd = a[b]
-
+                if ci == False:
+                    if a[c] == 0:
+                        letra_sd = a[b]
                 elif a[d] ==0:
                     letra_sd = "CONS"
 

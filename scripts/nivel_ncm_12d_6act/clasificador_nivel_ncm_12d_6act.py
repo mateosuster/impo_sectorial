@@ -39,6 +39,7 @@ from nivel_ncm_12d_6act.pre_visualizacion_nivel_ncm_12d_6act import *
 impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv")
 clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
+comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";",encoding="utf-8")
 cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
 bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
 ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
@@ -87,8 +88,6 @@ ciiu_dig_let = predo_ciiu(clae_to_ciiu, dic_ciiu)
 # ciiu_letra = predo_ciiu_letra(dic_ciiu, comercio)
 
 
-
-
 #############################################
 #                joins:                     ESTA PARTE ES INNCESARIA #
 #############################################
@@ -103,31 +102,35 @@ ciiu_dig_let = predo_ciiu(clae_to_ciiu, dic_ciiu)
 # (len(datos ) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()]) ) == len(join_impo_clae)
 
 
-###aca igal metio un cambio de orden!!
-
 #datos_bk = diccionario_especial(datos_bk,ciiu_dig_let) ###### viernes a la noche. cambié el orden de estas lineas
+datos = diccionario_especial(datos,ciiu_dig_let) #cambio igal
+letras_mod = letra_nn(datos) # obtencion de LETRA_nn
+datos = pd.concat([datos.drop( ["letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1),  letras_mod ], axis = 1)
+# datos.to_csv("../data/resultados/importaciones_bk_pre_intro_matriz.csv")
 
-datos_bk = diccionario_especial(datos,ciiu_dig_let) #cambio igal
-letras_mod = letra_nn(datos_bk) # obtencion de LETRA_nn
-datos_bk = pd.concat([datos_bk.drop( ["letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1),  letras_mod ], axis = 1)
-# datos_bk.to_csv("../data/resultados/importaciones_bk_pre_intro_matriz.csv")
-datos_bk = asignacion_stp_BK(datos_bk, dic_stp)
-# hasta aca!!
+datos_bk = asignacion_stp_BK(datos, dic_stp)
+datos_ci = filtro_ci(datos)
+datos_ci["letra4"].isnull().sum() # 29 Missings
+datos_ci.dropna(inplace = True) #BORRO NA's !!!!!!!!!!!!!!!!
 
 #############################################
 #           Tabla de contingencia           #
 #              producto-sector              #
 #############################################
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(datos_bk , comercio) 
+join_impo_clae_bec_ci_comercio = def_join_impo_clae_bec_bk_comercio(datos_ci , comercio_ci, ci = True) 
 
 tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
+tabla_contingencia_ci = def_contingencia(join_impo_clae_bec_ci_comercio)
 
 #############################################
 #      ponderación por ncm y letra          #
 #############################################
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
+join_impo_clae_bec_ci_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_ci_comercio, tabla_contingencia_ci)
 
 join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
+join_final_ci = def_calc_pond(join_impo_clae_bec_ci_comercio_pond, tabla_contingencia_ci)
 #join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
 #join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv")
 
@@ -135,24 +138,29 @@ join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingenci
 #         ASIGNACIÓN y MATRIZ               #
 #############################################
 matriz_sisd_insumo = def_insumo_matriz(join_final)
+matriz_sisd_insumo_ci = def_insumo_matriz(join_final_ci, ci = True)
 # matriz_sisd_insumo.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
 #matriz_sisd_insumo= pd.read_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv")
 
 #asignación por probabilidad de G-bk (insumo para la matriz)
 asign_pre_matriz= def_matriz_c_prob(matriz_sisd_insumo)
+asign_pre_matriz_ci= def_matriz_c_prob(matriz_sisd_insumo_ci)
 # asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
 
 #matriz SISD
 matriz_sisd = to_matriz(asign_pre_matriz)
+matriz_sisd_ci = to_matriz(asign_pre_matriz_ci)
 # matriz_sisd= pd.read_csv("../data/resultados/matriz_sisd.csv")
 
 matriz_hssd  = pd.pivot_table(asign_pre_matriz, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
+matriz_hssd_ci  = pd.pivot_table(asign_pre_matriz_ci, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
 # matriz_sisd.to_csv("../data/resultados/matriz_sisd.csv")
 
 #filtro para destinación de productos
 # x = matriz_hssd[matriz_hssd.index.str.startswith(("870421", "870431"))]
 # x.sum(axis = 0)
 # matriz_sisd.sum().sum()
+
 # =============================================================================
 #                       Visualizacion
 # =============================================================================

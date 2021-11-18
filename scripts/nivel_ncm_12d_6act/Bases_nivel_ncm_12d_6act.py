@@ -212,14 +212,23 @@ def def_join_impo_clae_bec(join_impo_clae, bec_bk):
     return impo_anyo_12d_bec_bk
 
 
-def def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio):
-    comercio = comercio.drop(["vta_vehiculos"], axis=1)    
-    comercio2 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk2", "vta_sec": "vta_sec2"})
-    comercio3 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk3", "vta_sec": "vta_sec3"})    
-    comercio4 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk4", "vta_sec": "vta_sec4"})
-    comercio5 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk5", "vta_sec": "vta_sec5"})
-    comercio6 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk6", "vta_sec": "vta_sec6"})
-
+def def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio, ci = False):
+   
+    
+    if ci == False:    
+        comercio = comercio.drop(["vta_vehiculos"], axis=1)
+        comercio2 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk2", "vta_sec": "vta_sec2"})
+        comercio3 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk3", "vta_sec": "vta_sec3"})    
+        comercio4 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk4", "vta_sec": "vta_sec4"})
+        comercio5 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk5", "vta_sec": "vta_sec5"})
+        comercio6 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk6", "vta_sec": "vta_sec6"})
+    elif ci == True:
+        comercio2 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_sec": "vta_sec2"})
+        comercio3 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_sec": "vta_sec3"})    
+        comercio4 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_sec": "vta_sec4"})
+        comercio5 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_sec": "vta_sec5"})
+        comercio6 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_sec": "vta_sec6"})
+            
     # join de la matriz con el sector comercio
     ## Comercio 1
     impo17_bec_complete = pd.merge(join_impo_clae_bec_bk, comercio.drop(["letra", "clae6_desc"], axis = 1), 
@@ -337,6 +346,10 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro], axis=0)
 
     return datos_bk
+
+def filtro_ci(datos):
+    datos_ci= datos[datos["ue_dest"]== "CI"]
+    return datos_ci
 
 def letra_nn(datos_bk):
     dic = []
