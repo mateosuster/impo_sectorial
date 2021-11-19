@@ -34,7 +34,7 @@ def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):
     
     return x
     
-def def_calc_pond(impo,cont):
+def def_calc_pond(impo,cont, ci = False):
 
     # impo = join_impo_clae_bec_bk_comercio_pond
     # cont = tabla_contingencia_ci
@@ -72,7 +72,10 @@ def def_calc_pond(impo,cont):
         act5_pond = ncm_val[letra_5] / total
         act6_pond = ncm_val[letra_6] / total
 
-        values = [*a[1:42], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
+        if ci == False:
+            values = [*a[1:48], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
+        elif ci == True:
+            values = [*a[1:42], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
         dictionary_list.append(values)
 
     join_final = pd.DataFrame.from_dict(dictionary_list)

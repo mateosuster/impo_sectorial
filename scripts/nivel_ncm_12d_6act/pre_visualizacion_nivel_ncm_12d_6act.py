@@ -34,12 +34,12 @@ def dic_graf(matriz_sisd, dic_ciiu):
     ciiu_desc_3["ciiu3_3c"] =  ciiu_desc_3["ciiu3_letra"] + "_"+ ciiu_desc_3["ciiu3_3c"].astype(str).str.slice(0,3) 
     ciiu_desc_3 = ciiu_desc_3.rename(columns = {"ciiu3_3c" : "letra", "ciiu3_3c_desc":"desc" } )[["letra", "desc"]]
     
-    sector_a_definir = pd.DataFrame({"letra": ["D_29_30_31_32_33", "T"], "desc":[ "D_29_30_31_32_33", "KE PASO CON T"]})
+    sector_a_definir = pd.DataFrame({"letra": ["D_29_30_31_32_33"], "desc":[ "D_29_30_31_32_33"]})
     
     letras_ciiu = pd.concat([letras_ciiu_pd, ciiu_desc_2, ciiu_desc_3, sector_a_definir ], axis = 0).sort_values("letra")
     letras_ciiu = pd.concat([letras_ciiu ,pd.DataFrame({"letra": ["CONS"], "desc":[ "Consumo"]})], axis = 0 )
     
-    letras_ciiu = letras_ciiu[~letras_ciiu["letra"].isin(["P", "Q"])]
+    # letras_ciiu = letras_ciiu[~letras_ciiu["letra"].isin(["P", "Q"])]
     return letras_ciiu
 
 def impo_total(matriz_sisd, letras_ciiu, sectores_desc =False):
@@ -53,7 +53,7 @@ def impo_total(matriz_sisd, letras_ciiu, sectores_desc =False):
     indice = letras_ciiu.desc.values
     letra = letras_ciiu.letra.values
 
-    
+    # matriz_sisd = matriz_sisd_ci
     # transformacion a array de np
     z_visual = matriz_sisd.to_numpy()
     
@@ -90,7 +90,7 @@ def impo_comercio_y_propio(z,letras_ciiu, sectores_desc = False):
     comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = indice )
     return comercio_y_propio.sort_values(by = 'Propio', ascending = False) 
     
-def graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu):
+def graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo):
     #parametro para graficos
     params = {'legend.fontsize': 20,
               'figure.figsize': (20, 10),
@@ -110,7 +110,7 @@ def graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu):
     
     plt.bar(y_pos , impo_tot_sec.iloc[:,0]/(10**6) )
     plt.xticks(y_pos , impo_tot_sec.index, rotation = 75)
-    plt.title("Importaciones de bienes de capital destinadas a cada sector")#, fontsize = 30)
+    plt.title("Importaciones de "+ titulo + " destinadas a cada sector")#, fontsize = 30)
     plt.ylabel("Millones de USD")
     plt.xlabel("Sector \n \n Fuente: CEPXXI en base a Aduana, AFIP y UN Comtrade")
     # plt.subplots_adjust(bottom=0.7,top=0.83)
@@ -127,7 +127,7 @@ def graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu):
     ax.yaxis.set_major_formatter(mtick.PercentFormatter())
     ax.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
     plt.tight_layout(pad=3)
-    plt.title( "Sector abastecedor de importaciones de bienes de capital (en porcentaje)")#,  fontsize = 30)
+    plt.title( "Sector abastecedor de importaciones de" + titulo + " (en porcentaje)")#,  fontsize = 30)
     
     plt.savefig('../data/resultados/comercio_y_propio_letra.png')
 

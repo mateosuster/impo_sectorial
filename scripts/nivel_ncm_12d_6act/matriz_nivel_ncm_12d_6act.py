@@ -113,14 +113,25 @@ def def_matriz_c_prob(prob):
     return matriz_sisd_final
                    
     
-def to_matriz(matriz_sisd_final):
+def to_matriz(matriz_sisd_final, ci = False):
     #probar con index = hs6
+    # matriz_sisd_final = asign_pre_matriz_ci
+    
     z = pd.pivot_table(matriz_sisd_final, values='valor_pond', index=['si'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
     cols=list(z.columns.values)
     cols.pop(cols.index("CONS"))
     z=z[cols+["CONS"]] #ubicacion del consumo ultima colummna
     
-    z= z.append(pd.Series(name='T')) #imputacion de T
+    if ci == False:
+        z= z.append(pd.Series(name='P')) #imputacion de Q
+        z= z.replace(np.nan,0)
+    elif ci == True:
+        z.insert(29, "G", 0)
+        z.insert(44, "Q", 0)
+
+   
+    
+    z= z.append(pd.Series(name='Q')) #imputacion de P
     z= z.replace(np.nan,0)
     
     z= z.append(pd.Series(name='CONS')) #imputacion de CONS

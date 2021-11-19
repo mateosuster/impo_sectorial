@@ -111,6 +111,9 @@ datos = pd.concat([datos.drop( ["letra1","letra2","letra3","letra4", "letra5", "
 datos_bk = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
 
+# cuits importadores unicos
+pd.DataFrame(datos.cuit.unique(), columns = ["cuits"]).to_csv("../data/resultados/cuits_importadores_unicos.csv")
+
 #############################################
 #           Tabla de contingencia           #
 #              producto-sector              #
@@ -127,10 +130,11 @@ tabla_contingencia_ci = def_contingencia(join_impo_clae_bec_ci_comercio)
 join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
 join_impo_clae_bec_ci_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_ci_comercio, tabla_contingencia_ci)
 
-join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia)
-join_final_ci = def_calc_pond(join_impo_clae_bec_ci_comercio_pond, tabla_contingencia_ci)
+join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia, ci = False)
+join_final_ci = def_calc_pond(join_impo_clae_bec_ci_comercio_pond, tabla_contingencia_ci, ci = True)
 #join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
 #join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv")
+
 
 #############################################
 #         ASIGNACIÓN y MATRIZ               #
@@ -147,7 +151,7 @@ asign_pre_matriz_ci= def_matriz_c_prob(matriz_sisd_insumo_ci)
 
 #matriz SISD
 matriz_sisd = to_matriz(asign_pre_matriz)
-matriz_sisd_ci = to_matriz(asign_pre_matriz_ci)
+matriz_sisd_ci = to_matriz(asign_pre_matriz_ci, ci = True)
 # matriz_sisd= pd.read_csv("../data/resultados/matriz_sisd.csv")
 
 matriz_hssd  = pd.pivot_table(asign_pre_matriz, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
@@ -157,16 +161,17 @@ matriz_hssd_ci  = pd.pivot_table(asign_pre_matriz_ci, values='valor_pond', index
 #filtro para destinación de productos
 # x = matriz_hssd[matriz_hssd.index.str.startswith(("870421", "870431"))]
 # x.sum(axis = 0)
-# matriz_sisd.sum().sum()
+matriz_sisd_ci.sum().sum()
 
 # =============================================================================
 #                       Visualizacion
 # =============================================================================
 #preprocesamiento
 sectores_desc = sectores() #Sectores CLAE
-letras_ciiu = dic_graf(matriz_sisd, dic_ciiu)
+
 letras_ciiu = dic_graf(matriz_sisd_ci, dic_ciiu)
 letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,15)
+
 impo_tot_sec = impo_total(matriz_sisd, sectores_desc= False, letras_ciiu = letras_ciiu) 
 impo_tot_sec_ci = impo_total(matriz_sisd_ci, sectores_desc= False, letras_ciiu = letras_ciiu)
 comercio_y_propio = impo_comercio_y_propio(matriz_sisd,letras_ciiu, sectores_desc = False)
@@ -176,14 +181,19 @@ x = pd.merge(matriz_sisd.reset_index(),letras_ciiu, how = "outer", left_on= "si"
 
 # graficos
 
-graficos(matriz_sisd_ci, impo_tot_sec, comercio_y_propio, letras_ciiu)
-
-graficos(matriz_sisd_ci, impo_tot_sec_ci, comercio_y_propio_ci, letras_ciiu)
+graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo = "Bienes de Capital")
+graficos(matriz_sisd_ci, impo_tot_sec_ci, comercio_y_propio_ci, letras_ciiu, titulo = "Consumos Intermedios")
 
 ##### tabla top 5
 # Top 5 de importaciones de cada sector
 top_5_impo = top_5(asign_pre_matriz, letras_ciiu , ncm12_desc_mod, impo_tot_sec) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
 top_5_impo.to_excel("../data/resultados/top5_impo.xlsx")
+
+top_5_impo_ci = top_5(asign_pre_matriz_ci, letras_ciiu , ncm12_desc_mod, impo_tot_sec_ci) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
+top_5_impo_ci.to_excel("../data/resultados/top5_impo_ci.xlsx")
+
+
+asign_pre_matriz_ci[asign_pre_matriz_ci.sd == "P"]
 
 #CUITS QUE IMPORTAN TOP HS6 Industria
 # top_industria = top_5_impo[top_5_impo["letra"]=="C"]["hs6"].iloc[[0,3]]
