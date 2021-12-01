@@ -10,14 +10,15 @@ Original file is located at
 """
 import os
 # os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
-#os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
-os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 import datetime
 import pickle
 from sklearn.model_selection import train_test_split
@@ -25,7 +26,7 @@ from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.metrics import confusion_matrix, plot_confusion_matrix
 from sklearn.metrics import accuracy_score#, scorer
 from sklearn.metrics import classification_report
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_auc_score, accuracy_score, precision_score, recall_score
 from sklearn.metrics import mean_absolute_error
 from urllib.request import urlretrieve
 import xgboost as xgb
@@ -53,7 +54,8 @@ data_pre.replace([np.inf, -np.inf], np.nan, inplace=True)
 
 data_pre["bk_dummy"].value_counts(normalize=True)
 
-X_train , X_test, y_train, y_test = train_test_split(data_pre.drop("bk_dummy", axis =1),  data_pre["bk_dummy"], test_size = 0.3, random_state = 3)#, stratify=True)
+X_train , X_test, y_train, y_test = train_test_split(data_pre.drop("bk_dummy", axis =1),  data_pre["bk_dummy"], test_size = 0.3, random_state = 3
+                                                     , stratify=True)
 
 ## Chequeamos el balanceo en los dataset´s
 for split_name, split in zip(['Entrenamiento', 'Prueba'],[y_train,y_test]):
@@ -143,21 +145,75 @@ random_search.fit(X_train, y_train)
 end = datetime.datetime.now()
 print(end-start)
 
+#mejor modelo
 best_xgb = random_search.best_estimator_
 best_xgb
 
-
+#prediccion default (0.5)
 y_pred = best_xgb.predict(X_test)
 pd.DataFrame(y_pred, index=X_test.index, columns=['bk_dummy']).value_counts()
-
 # plt.hist( y_pred["bk_dummy"])
-
 roc_auc_score(y_test,y_pred)
-
 confusion_matrix(y_test, y_pred, normalize= "pred")#, labels= [1, 0 ])
-
 print(classification_report(y_test, y_pred) )
 
+""" ## Determinacion punto de corte """
+#predicciones
+y_pred = best_xgb.predict_proba(X_test)
+y_pred_df = pd.DataFrame(y_pred, index=X_test.index, columns=["CI", "BK"])
+
+# predicción default
+y_pred_default =  np.where(y_pred_df ['BK'] > y_pred_df['CI'], 1, 0)
+roc_auc_score(y_test,y_pred_default )
+
+#buscando punto de corte
+metrics= pd.DataFrame()
+for corte in np.linspace(0.01,0.99, num = 100): # num indica la cantidad de ptos de corte a explorar
+    prediccion = np.where(y_pred_df ['BK'] > corte, 1, 0)
+    tn, fp, fn, tp = confusion_matrix(y_test, prediccion).ravel()
+    dic = {
+        "punto_corte":  corte,
+        "tp": tp, "tn": tn, "fp" : fp, "fn": fn,
+        "pp" : tp+fp, "np": tn+fn,
+        "acc" : accuracy_score(y_test, prediccion),
+        "precision" : precision_score(y_test, prediccion), #PPV = TP/Predicted Positive
+        "recall" : recall_score(y_test, prediccion), #TPR = TP/Real Positive (sensitivity)
+        "FPR" : fp/(tn+fp), #"falsa alarma": qué tanto clasificamos positivo cuando el verdadero resultado es negativo
+        "auc" : roc_auc_score(y_test, prediccion) 
+        }
+    metrics= pd.concat([metrics, pd.DataFrame(dic, index = [round(corte,2).astype(str)])])
+
+punto_optimo = metrics.sort_values("auc", ascending=False)["punto_corte"][0]
+
+
+# grafico curva ROC
+plt.plot(metrics["FPR"], metrics["recall"])
+plt.plot(0.0769635,0.931076, "ro" )
+plt.title("Curva ROC")
+plt.xlabel("FPR")
+plt.ylabel("TPR")
+
+
+#violin destribuciones de observaciones (N)
+melt_data = pd.melt(metrics, id_vars = "punto_corte", value_vars = ["pp","np"], var_name="ue_dest", value_name="n").sort_values("punto_corte")
+ax = sns.violinplot(data = melt_data,  y = "n", x = "ue_dest" )
+ax.set_title("Distribuciones de BK y CI para todos los puntos de corte")
+ax.set_xlabel("Uso Económico")
+ax.set_ylabel("Observaciones")
+ax.axhline(200034)
+plt.show()
+
+#violin distribucion de probabilidades 
+violin_data = pd.DataFrame({"prob_bk": y_pred_df["BK"], "bk_dummy": y_test})
+violin_data["bk_dummy"] = np.where(violin_data["bk_dummy"]==1, "BK", "CI") 
+ax = sns.violinplot(data = violin_data,  y = "prob_bk", x = "bk_dummy" )
+ax.set_title("Distribuciones de probabilidades de datos test (puntos de corte)")
+ax.set_xlabel("Uso Economico Observado")
+ax.set_ylabel("Probabilidad predicha")
+ax.axhline(punto_optimo)
+plt.show()
+
+# calibracion del modelo https://www.cienciadedatos.net/documentos/py11-calibrar-modelos-machine-learning.html
 
 
 """## Entrenamiento con todos los datos"""
@@ -196,10 +252,10 @@ print(end-start)
 
 # Modelos
 # pickle.dump(best_xgb, open('xgboost_train_cv.sav', 'wb'))
-best_xgb = pickle.load(open('xgboost_train_cv.sav', 'rb'))
+best_xgb = pickle.load(open('modelos\\xgboost_train_cv.sav', 'rb'))
 
 # pickle.dump(xgb_all, open('xgboost_all_data.sav', 'wb'))
-xgb_all = pickle.load(open('xgboost_all_data.sav', 'rb'))
+xgb_all = pickle.load(open('modelos\\xgboost_all_data.sav', 'rb'))
 
 plt.figure(figsize=(20,15))
 xgb.plot_importance(xgb_all, ax=plt.gca())
@@ -209,8 +265,9 @@ data_2pred.head()
 
 data_2pred.info()
 
-clasificacion = xgb_all.predict(data_2pred)
+clasificacion = xgb_all.predict_proba(data_2pred)
 clasificacion_df = pd.DataFrame(clasificacion, columns= ["bk_dummy"])
+clasificacion_df["bk_dummy"]  = np.where(clasificacion_df["bk_dummy"] > punto_optimo, 1, 0)
 clasificacion_df.value_counts()
 
 clasificacion_prob = xgb_all.predict_proba(data_2pred)
