@@ -266,21 +266,20 @@ data_2pred.head()
 data_2pred.info()
 
 clasificacion = xgb_all.predict_proba(data_2pred)
-clasificacion_df = pd.DataFrame(clasificacion, columns= ["bk_dummy"])
-clasificacion_df["bk_dummy"]  = np.where(clasificacion_df["bk_dummy"] > punto_optimo, 1, 0)
-clasificacion_df.value_counts()
 
-clasificacion_prob = xgb_all.predict_proba(data_2pred)
-clasificacion_prob_df = pd.DataFrame(clasificacion_prob)#, columns= ["bk_dummy_0", "bk_dummy_1"])
-clasificacion_df.value_counts()
+clasificacion_df = pd.DataFrame(clasificacion, index=data_2pred.index , columns= ["prob_CI", "prob_BK"])
+clasificacion_df["ue_dest"]  = np.where(clasificacion_df["prob_BK"] > punto_optimo, 1, 0)
+clasificacion_df["ue_dest"].value_counts()
 
-
+# clasificacion_prob = xgb_all.predict_proba(data_2pred)
+# clasificacion_prob_df = pd.DataFrame(clasificacion_prob)#, columns= ["bk_dummy_0", "bk_dummy_1"])
+# clasificacion_df.value_counts()
 
 data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
 datos_predichos = data_model[data_model ["ue_dest"] == "?" ]
-datos_predichos["bk_dummy"] = clasificacion
+datos_predichos["bk_dummy"] = clasificacion_df["ue_dest"] 
 datos_predichos.to_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", index= False, sep = ";")
-datos_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
+# datos_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
 
 plt.hist(x = "bk_dummy", data = datos_predichos )
 
