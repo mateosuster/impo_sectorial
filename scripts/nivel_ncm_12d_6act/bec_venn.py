@@ -44,7 +44,13 @@ from pre_visualizacion_nivel_ncm_12d_6act import *
 # impo_d12 = pd.read_csv("../data/IMPO_17_feature.csv")
 # impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
 #impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
-impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv")      # impo DIARIA
+#impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv")      # impo DIARIA
+
+impo_d12 = pd.read_csv("../data/M_2013a2017_d12.csv", encoding="latin1")      # impo DIARIA
+impo_d12["anyo"] = impo_d12["FECH_OFIC"].str.slice(0,4)
+impo_d12 = impo_d12[impo_d12["anyo"]=="2017"]
+
+
 clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
 #cuit_clae = pd.read_csv( "../data/cuit 2017 impo_con_actividad.csv")
@@ -84,7 +90,6 @@ dic_stp = predo_stp(dic_stp )
 
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
 join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
-join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio)
 
 # =============================================================================
 # EDA BEC5
@@ -315,7 +320,7 @@ data_clasif_ue_dest = pd.concat([data_clasif, stp_ue_dest], axis = 0)
 data_clasif_ue_dest ["ue_dest"].value_counts()
 
 data_clasif_ue_dest["precio_kilo"]= data_clasif_ue_dest["valor"]/data_clasif_ue_dest["kilos"]
-# data_clasif_ue_dest.to_csv("../data/resultados/bk_con_ue_dest.csv")
+ data_clasif_ue_dest.to_csv("../data/resultados/bk_con_ue_dest.csv")
 
 
 ## DATOS NO CLASIFICADOS
@@ -329,55 +334,6 @@ data_not_clasif["precio_kilo"]= data_not_clasif["valor"]/data_not_clasif["kilos"
 # data_not_clasif.to_csv("../data/resultados/bk_sin_ue_dest.csv")
 
 len(data_not_clasif) + len(data_clasif_ue_dest)
-
-
-
-# =============================================================================
-# VENN BK (VIEJO)
-# =============================================================================
-# impo_bec_bk = impo_bec[impo_bec["BEC5EndUse"].str.startswith("CAP", na = False)] 
-# impo_bec_bk ["dest_clean"].value_counts()#.sum()
-# len(impo_bec_bk )
-
-# filtro1st =  impo_bec_bk [impo_bec_bk ["dest_clean"] == "S/TR"] 
-# filtro1ct =  impo_bec_bk [impo_bec_bk ["dest_clean"] == "C/TR"] 
-# filtro1co =  impo_bec_bk [impo_bec_bk ["dest_clean"] == "CONS&Otros"] 
-
-# len(impo_bec_bk )  == ( len(filtro1st) +len(filtro1ct) + len(filtro1co) ) 
-
-# # Filtros de conjuntos
-# set_st = set(filtro1st["HS6_d12"])
-# set_ct = set(filtro1ct["HS6_d12"])
-# set_co = set(filtro1co["HS6_d12"])
-
-# filtro_a = set_st - set_co - set_ct 
-# filtro_b = set_ct - set_st - set_co 
-# filtro_c = set_co - set_ct -set_st 
-
-# filtro_d = (set_st & set_co) - (set_ct )
-# filtro_e = (set_ct & set_co) - ( set_st)
-# filtro_f = (set_ct & set_st) - set_co 
-# filtro_g = set_ct & set_st & set_co 
-
-# dest_a = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_a  )]
-# dest_b = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_b  )]
-# dest_c = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_c  )]
-# dest_d = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_d  )]
-# dest_e = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_e  )]
-# dest_f = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_f  )]
-# dest_g = impo_bec_bk[impo_bec_bk["HS6_d12"].isin( filtro_g )]
-
-# (len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) +len(dest_b)+ len(dest_c)) ==len(impo_bec_bk)
-
-# dest_a["filtro"] = "A" 
-# dest_b["filtro"] = "B" 
-# dest_c["filtro"] = "C" 
-# dest_d["filtro"] = "D" 
-# dest_e["filtro"] = "E"                                          
-# dest_f["filtro"] = "F"
-# dest_g["filtro"] = "G"  
-
-# bk = pd.concat( [dest_a, dest_b, dest_c, dest_d,  dest_e,  dest_f, dest_g], axis = 0)
 
 
 # =============================================================================

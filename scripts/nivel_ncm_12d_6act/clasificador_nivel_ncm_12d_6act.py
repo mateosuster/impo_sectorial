@@ -2,7 +2,7 @@
 """
 Created on Tue Jun 29 11:04:54 2021
 
-@author: igalk
+@author: Igal Kejsefman y Mateo Suster
 """
 
 # =============================================================================
@@ -10,16 +10,18 @@ Created on Tue Jun 29 11:04:54 2021
 # =============================================================================
 import os 
 #Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+#os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 #igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
+
+#VM
+os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 # os.getcwd()
 import pandas as pd
 import numpy as np
 import re
 import tqdm
-import datatable as dt
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
@@ -36,7 +38,7 @@ from nivel_ncm_12d_6act.pre_visualizacion_nivel_ncm_12d_6act import *
 # Cargar bases con las que vamos a trabajar #
 #############################################
 #datasetes utilizados en ultimas corridas 
-impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv")
+impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv") #falta
 clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
 comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";",encoding="utf-8")
@@ -45,7 +47,7 @@ bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
 ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
 data_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", sep = ";").drop("Unnamed: 0", 1)# output del modelo
-datos_clasificados = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+datos_clasificados = pd.read_csv("../data/resultados/data_modelo_diaria.csv") #falta
 # CIIU
 dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")

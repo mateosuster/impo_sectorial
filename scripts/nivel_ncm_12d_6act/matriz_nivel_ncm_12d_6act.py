@@ -8,7 +8,6 @@ import os
 from tqdm import tqdm
 import pandas as pd
 import numpy as np
-import datatable as dt
 
 
 def def_insumo_matriz(raw_data, ci = False):
