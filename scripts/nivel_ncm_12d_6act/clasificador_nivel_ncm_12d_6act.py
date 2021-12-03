@@ -26,10 +26,10 @@ import tqdm
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 
-from nivel_ncm_12d_6act.Bases_nivel_ncm_12d_6act import *
-from nivel_ncm_12d_6act.procesamiento_nivel_ncm_12d_6act import *
-from nivel_ncm_12d_6act.matriz_nivel_ncm_12d_6act import *
-from nivel_ncm_12d_6act.pre_visualizacion_nivel_ncm_12d_6act import *
+from Bases_nivel_ncm_12d_6act import *
+from procesamiento_nivel_ncm_12d_6act import *
+from matriz_nivel_ncm_12d_6act import *
+from pre_visualizacion_nivel_ncm_12d_6act import *
 
 
 
@@ -38,7 +38,7 @@ from nivel_ncm_12d_6act.pre_visualizacion_nivel_ncm_12d_6act import *
 # Cargar bases con las que vamos a trabajar #
 #############################################
 #datasetes utilizados en ultimas corridas 
-impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv") #falta
+#impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv") #falta
 clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
 comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";",encoding="utf-8")
@@ -46,7 +46,7 @@ cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
 bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
 ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
-data_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", sep = ";").drop("Unnamed: 0", 1)# output del modelo
+data_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", sep = ";")
 datos_clasificados = pd.read_csv("../data/resultados/data_modelo_diaria.csv") #falta
 # CIIU
 dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
@@ -76,7 +76,7 @@ hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding =
 #############################################
 # predo_impo_17(impo_17)
 ncm12_desc_mod = predo_ncm12_desc(ncm12_desc )["ncm_desc"]    
-impo_d12  = predo_impo_12d(impo_d12, ncm12_desc_mod )
+#impo_d12  = predo_impo_12d(impo_d12, ncm12_desc_mod )
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae)
