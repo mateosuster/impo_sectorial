@@ -10,9 +10,9 @@ Original file is located at
 """
 import os
 # os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+#os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
-# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 
 import pandas as pd
@@ -41,6 +41,13 @@ data_pre = pd.read_csv( "../data/resultados/data_train_test.csv")
 data_pre.info()
 
 
+data_2pred = pd.read_csv("../data/resultados/data_to_pred.csv")
+data_2pred.info()
+
+data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+
+data_model.info
+
 # data_pre.dropna(inplace=True)
 
 # data_pre.dropna(inplace=True)
@@ -54,8 +61,8 @@ data_pre.replace([np.inf, -np.inf], np.nan, inplace=True)
 
 data_pre["bk_dummy"].value_counts(normalize=True)
 
-X_train , X_test, y_train, y_test = train_test_split(data_pre.drop("bk_dummy", axis =1),  data_pre["bk_dummy"], test_size = 0.3, random_state = 3
-                                                     , stratify=True)
+#X_train , X_test, y_train, y_test = train_test_split(data_pre.drop("bk_dummy", axis =1),  data_pre["bk_dummy"], test_size = 0.3, random_state = 3 , stratify=True)
+X_train , X_test, y_train, y_test = train_test_split(data_pre.drop("bk_dummy", axis =1),  data_pre["bk_dummy"], test_size = 0.3, random_state = 3 , stratify=data_pre["bk_dummy"])
 
 ## Chequeamos el balanceo en los dataset´s
 for split_name, split in zip(['Entrenamiento', 'Prueba'],[y_train,y_test]):
@@ -68,7 +75,7 @@ print("muestras totales {}".format(len(X_train)+len(X_test)))
 
 
 """## Modelo de base"""
-classifier = xgb.sklearn.XGBClassifier(nthread=-1, seed=42)
+classifier = xgb.sklearn.XGBClassifier(nthread=-1, seed=42, enable_categorical = False)
 
 start = datetime.datetime.now()
 classifier.fit(X_train, y_train)
@@ -99,7 +106,7 @@ xgb.plot_tree(classifier, ax=plt.gca())
 
 """
 
-classifier = xgb.sklearn.XGBClassifier(nthread=-1, objective= 'binary:logistic', seed=42)
+classifier = xgb.sklearn.XGBClassifier(nthread=-1, objective= 'binary:logistic', seed=42, enable_categorical = False)
 
 # parameters = {
 #     'max_depth': range (2, 10, 1),
@@ -117,7 +124,7 @@ parameters = {'silent': [False],
         'colsample_bylevel': dists.uniform(0.001, 0.999),
         'reg_lambda':dists.uniform(1, 100),
         'reg_alpha': dists.uniform(1, 200),
-        'n_estimators': range(10, 100, 1)
+        'n_estimators': range(10, 100, 1),
         }
 
 
@@ -137,13 +144,15 @@ random_search = RandomizedSearchCV(
     scoring = 'roc_auc',
     n_jobs = 10,
     cv = 10,                        
-    verbose=True
+    verbose=True,
 )
 
 start = datetime.datetime.now()
 random_search.fit(X_train, y_train)
 end = datetime.datetime.now()
 print(end-start)
+
+########### ik
 
 #mejor modelo
 best_xgb = random_search.best_estimator_
@@ -228,7 +237,7 @@ xgb_all = xgb.sklearn.XGBClassifier(base_score=0.5, booster='gbtree',
               random_state=42, reg_alpha=34.93982083457318,
               reg_lambda=28.683948734756893, scale_pos_weight=1, seed=42,
               silent=False, subsample=0.7536819429003822, tree_method='exact',
-              validate_parameters=1, verbosity=None )
+              validate_parameters=1, verbosity=None, enable_categorical=False)
 
 start = datetime.datetime.now()
 xgb_all.fit(X_train, y_train)
@@ -251,20 +260,18 @@ print(end-start)
 """### Predicción de nuevas observaciones"""
 
 # Modelos
-# pickle.dump(best_xgb, open('xgboost_train_cv.sav', 'wb'))
-best_xgb = pickle.load(open('modelos\\xgboost_train_cv.sav', 'rb'))
+pickle.dump(best_xgb, open('modelos\\xgboost_train_cv.sav', 'wb'))
+#best_xgb = pickle.load(open('modelos\\xgboost_train_cv.sav', 'rb'))
 
-# pickle.dump(xgb_all, open('xgboost_all_data.sav', 'wb'))
-xgb_all = pickle.load(open('modelos\\xgboost_all_data.sav', 'rb'))
+pickle.dump(xgb_all, open('modelos\\xgboost_all_data.sav', 'wb'))
+#xgb_all = pickle.load(open('modelos\\xgboost_all_data.sav', 'rb'))
 
 plt.figure(figsize=(20,15))
 xgb.plot_importance(xgb_all, ax=plt.gca())
 
-data_2pred = pd.read_csv("../data/resultados/data_to_pred.csv")
-data_2pred.head()
-
-data_2pred.info()
-
+###############################################
+# datos a predecir
+#################################
 clasificacion = xgb_all.predict_proba(data_2pred)
 
 clasificacion_df = pd.DataFrame(clasificacion, index=data_2pred.index , columns= ["prob_CI", "prob_BK"])
@@ -275,7 +282,6 @@ clasificacion_df["ue_dest"].value_counts()
 # clasificacion_prob_df = pd.DataFrame(clasificacion_prob)#, columns= ["bk_dummy_0", "bk_dummy_1"])
 # clasificacion_df.value_counts()
 
-data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
 datos_predichos = data_model[data_model ["ue_dest"] == "?" ]
 datos_predichos["bk_dummy"] = clasificacion_df["ue_dest"] 
 datos_predichos.to_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", index= False, sep = ";")
@@ -291,6 +297,7 @@ for boolean , text in zip([True, False], ["Frecuencias Relativas", "Frecuencias 
 # from sklearn.externals import joblib
 
 best_xgb.score(X_test, y_test)
+
 y_pred_ = best_xgb.predict(X_test)
 roc_auc_score(y_test,y_pred_)
 confusion_matrix(y_test, y_pred_, normalize= "pred")#, labels= [1, 0 ])
