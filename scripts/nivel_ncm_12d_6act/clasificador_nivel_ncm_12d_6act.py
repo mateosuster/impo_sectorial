@@ -22,6 +22,7 @@ import pandas as pd
 import numpy as np
 import re
 import tqdm
+import seaborn as sns
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
@@ -121,9 +122,9 @@ pd.DataFrame(datos.cuit.unique(), columns = ["cuits"]).to_csv("../data/resultado
 #              producto-sector              #
 #############################################
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(datos_bk , comercio) 
-join_impo_clae_bec_ci_comercio = def_join_impo_clae_bec_bk_comercio(datos_ci , comercio_ci, ci = True) 
+join_impo_clae_bec_ci_comercio = def_join_impo_clae_bec_bk_comercio(datos_ci , comercio_ci, ci = True)
 
-tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio)
+tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio, datos)
 tabla_contingencia_ci = def_contingencia(join_impo_clae_bec_ci_comercio)
 
 #############################################
@@ -168,6 +169,22 @@ matriz_sisd_ci.sum().sum()
 # =============================================================================
 #                       Visualizacion
 # =============================================================================
+
+#exponentes a aplicar a la tabla de contingencia
+
+z = pd.DataFrame(datos["HS6_d12"].value_counts()).reset_index(drop=True)
+
+z['freq'] = z.groupby('HS6_d12')['HS6_d12'].transform('count')
+
+z =  z.drop_duplicates()
+
+z["expo"] = 2+np.log10(z["HS6_d12"])
+
+sns.lineplot(data= z, x= "HS6_d12", y= "expo")
+
+
+
+
 #preprocesamiento
 sectores_desc = sectores() #Sectores CLAE
 

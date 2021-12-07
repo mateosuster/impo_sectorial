@@ -9,8 +9,7 @@ import numpy as np
 from tqdm import tqdm
 
 
-def def_contingencia(join_impo_clae_bec_bk_comercio):
-    
+def def_contingencia(join_impo_clae_bec_bk_comercio, all):
     impo_by_product_1 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra1" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra1": "letra"})
     impo_by_product_2 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra2" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra2": "letra"})
     impo_by_product_3 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra3" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra3": "letra"})
@@ -19,8 +18,28 @@ def def_contingencia(join_impo_clae_bec_bk_comercio):
     impo_by_product_6 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra6" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra6": "letra"})
     
     impo_by_product = impo_by_product_1.append([impo_by_product_2,impo_by_product_3,impo_by_product_4,impo_by_product_5,impo_by_product_6], ignore_index=True)
-    table = pd.pivot_table(impo_by_product, values='valor', index=['HS6_d12'], columns=['letra'], aggfunc=np.sum, fill_value=0)
-        
+    contingencia = pd.pivot_table(impo_by_product, values='valor', index=['HS6_d12'], columns=['letra'], aggfunc=np.sum, fill_value=0)
+
+    #armo una tabla para tener (ncm, expo) con expo = exponente al que elevar la suma del ncm
+    ncm_expo = pd.DataFrame(all["HS6_d12"].value_counts()).reset_index().set_index("index")
+
+    dictionary_list = []
+
+    for i in list(contingencia.itertuples()):
+        ncm = i[0]
+        expo = ncm_expo.loc[ncm,"HS6_d12"]
+        i = np.array(i[1:])
+        i = pow(i,(2+np.log10(expo)))
+
+        #guardo la fila en un nuevo df
+        values = [ncm, *i] #el asterisco hace unpack list
+        dictionary_list.append(values)
+
+    table = pd.DataFrame.from_dict(dictionary_list)
+    table =  table.set_index(table.columns[0])
+    table.columns = contingencia.columns
+
+
     return table
 
 def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):
@@ -36,10 +55,10 @@ def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):
     
 def def_calc_pond(impo,cont, ci = False):
 
-    # impo = join_impo_clae_bec_bk_comercio_pond
-    # cont = tabla_contingencia_ci
-    # join_final = join_impo_clae_bec_ci_comercio_pond
-    
+     #impo = join_impo_clae_bec_bk_comercio_pond
+     #cont = tabla_contingencia
+     #join_final = join_impo_clae_bec_ci_comercio_pond
+
     join_final = impo.copy()
 
     letra1 = join_final.columns.get_loc("letra1") + 1
@@ -54,7 +73,6 @@ def def_calc_pond(impo,cont, ci = False):
 
 
     for a in tqdm(join_final.itertuples()):
-        
         letra_1 = a[letra1]
         letra_2 = a[letra2]
         letra_3 = a[letra3]
@@ -73,7 +91,7 @@ def def_calc_pond(impo,cont, ci = False):
         act6_pond = ncm_val[letra_6] / total
 
         if ci == False:
-            values = [*a[1:48], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
+            values = [*a[1:54], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
         elif ci == True:
             values = [*a[1:42], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
         dictionary_list.append(values)

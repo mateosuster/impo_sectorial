@@ -216,7 +216,7 @@ def def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio, ci = Fal
    
     
     if ci == False:    
-        comercio = comercio.drop(["vta_vehiculos"], axis=1)
+        #comercio = comercio.drop(["vta_vehiculos"], axis=1)
         comercio2 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk2", "vta_sec": "vta_sec2"})
         comercio3 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk3", "vta_sec": "vta_sec3"})    
         comercio4 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk4", "vta_sec": "vta_sec4"})
