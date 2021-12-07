@@ -10,7 +10,7 @@ Created on Tue Jun 29 11:04:54 2021
 # =============================================================================
 import os 
 #Mateo
-#os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 #igal
@@ -47,7 +47,7 @@ from pre_visualizacion_nivel_ncm_12d_6act import *
 #############################################
 
 #impo 12 d
-# impo_d12 = pd.read_csv("../data/IMPO_17_feature.csv")
+#impo_d12 = pd.read_csv("../data/IMPO_17_feature.csv")
 # impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
 #impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
 #impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv")      # impo DIARIA
