@@ -10,12 +10,17 @@ Created on Tue Jun 29 11:04:54 2021
 # =============================================================================
 import os 
 #Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+#os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 #igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
+
+os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+
+
 os.getcwd()
+
 
 
 import pandas as pd
@@ -49,8 +54,13 @@ from pre_visualizacion_nivel_ncm_12d_6act import *
 
 impo_d12 = pd.read_csv("../data/M_2013a2017_d12.csv", encoding="latin1")      # impo DIARIA
 impo_d12["anyo"] = impo_d12["FECH_OFIC"].str.slice(0,4)
+
+impo_d12 = impo_d12[['anyo','CUIT_IMPOR', 'NOMBRE']]
+
 impo_d12 = impo_d12[impo_d12["anyo"]=="2017"]
 
+impo_d12 = impo_d12.drop_duplicates()
+impo_d12.to_csv("../data/cuit_explotación_2013a2017.csv", index = False)
 
 clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
