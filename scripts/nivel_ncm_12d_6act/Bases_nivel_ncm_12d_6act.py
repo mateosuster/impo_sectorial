@@ -11,6 +11,8 @@ os.getcwd()
 import pandas as pd
 import numpy as np
 import re
+from scipy.stats import median_abs_deviation , zscore
+
 
 
 # def carga_de_bases(x):
@@ -25,6 +27,17 @@ import re
 # #     #transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
 # #     bec_to_clae = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/bec_to_clae.xlsx")
 # #     return impo_17
+
+def predo_impo_all(impo_d12, name_file):
+    impo_d12["anyo"] = impo_d12["FECH_OFIC"].str.slice(0,4)
+
+    #impo_d12 = impo_d12[['anyo','CUIT_IMPOR', 'NOMBRE']]
+    impo_d12 = impo_d12[impo_d12["anyo"]=="2017"]
+    #impo_d12 = impo_d12.drop_duplicates()
+
+    impo_d12.to_csv("../data/"+name_file, index = False)
+    return impo_d12
+
 
 
 def predo_impo_17(impo_17):
@@ -520,3 +533,434 @@ def dic_clae_and_ciiu(clae_to_ciiu,clae, dic_ciiu):
     clae_to_ciiu_mod = pd.concat([clae_to_ciiu_sin_g ,clae_comercio], 0)
     
     return clae_to_ciiu_mod
+
+
+################################
+# CLASIFICACION TIPO BIEN
+################################
+def clasificacion_BK(filtro1):
+
+    filtro1st =  filtro1[filtro1["dest_clean"] == "S/TR"]
+    filtro1ct =  filtro1[filtro1["dest_clean"] == "C/TR"]
+    filtro1co =  filtro1[filtro1["dest_clean"] == "CONS&Otros"]
+
+    len(filtro1)  == ( len(filtro1st) +len(filtro1ct) + len(filtro1co) )
+
+    # Filtros de conjuntos
+    set_st = set(filtro1st["HS6_d12"])
+    set_ct = set(filtro1ct["HS6_d12"])
+    set_co = set(filtro1co["HS6_d12"])
+
+    filtro_a = set_st - set_co - set_ct
+    filtro_b = set_ct - set_st - set_co
+    filtro_c = set_co - set_ct -set_st
+
+    filtro_d = (set_st & set_co) - (set_ct )
+    filtro_e = (set_ct & set_co) - ( set_st)
+    filtro_f = (set_ct & set_st) - set_co
+    filtro_g = set_ct & set_st & set_co
+
+    dest_a = filtro1[filtro1["HS6_d12"].isin( filtro_a  )]
+    dest_b = filtro1[filtro1["HS6_d12"].isin( filtro_b  )]
+    dest_c = filtro1[filtro1["HS6_d12"].isin( filtro_c  )]
+    dest_d = filtro1[filtro1["HS6_d12"].isin( filtro_d  )]
+    dest_e = filtro1[filtro1["HS6_d12"].isin( filtro_e  )]
+    dest_f = filtro1[filtro1["HS6_d12"].isin( filtro_f  )]
+    dest_g = filtro1[filtro1["HS6_d12"].isin( filtro_g )]
+
+    dest_a["filtro"] = "A"
+    dest_b["filtro"] = "B"
+    dest_c["filtro"] = "C"
+    dest_d["filtro"] = "D"
+    dest_e["filtro"] = "E"
+    dest_f["filtro"] = "F"
+    dest_g["filtro"] = "G"
+
+
+    # Consistencia filtro 2
+    #importaciones detectadas con S/T, C/T y Consumo
+    len(filtro1st) +len(filtro1ct) + len(filtro1co)
+
+    (len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) +len(dest_b)+ len(dest_c)) ==len(filtro1)
+
+    # Concateno el filtro 2
+    filtro1 = pd.concat( [dest_a, dest_b, dest_c, dest_d,  dest_e,  dest_f, dest_g], axis = 0)
+
+
+    # filtro1["ue_dest"].value_counts()
+    filtro1["ue_dest"] = np.where((filtro1["filtro"] == "A") &
+                                    (filtro1["dest_clean"] == "S/TR"),
+                                        "BK",
+                                        np.where( (filtro1["filtro"] == "B") &
+                                                (filtro1["dest_clean"] == "C/TR"),
+                                                "CI", ""
+                                                )
+                                    )
+
+    filtro1[["ue_dest", "filtro"]].value_counts()
+
+
+    filtro2 = filtro1[filtro1["ue_dest"] == "" ]
+    # len(filtro2)/len(filtro1)-1
+
+    # filtro2["filtro"].value_counts()
+    # filtro2[["dest_clean", "filtro"]].value_counts()
+    # filtro2[["dest_clean","filtro", "uni_decl" ]].value_counts()
+    # filtro2[["dest_clean","filtro", "uni_est" ]].value_counts()
+
+
+
+    # =============================================================================
+    # ## Aplicando métrica
+    # =============================================================================
+
+    # Aplico métrica 1
+    # dest_c["metric"] = dest_c.apply(lambda x : (x["valor"] * x["kilos"])/x["cant_decl"] , axis = 1)
+    filtro2["metric"] = filtro2.apply(lambda x : metrica(x), axis = 1)
+
+    # CASO D
+    #con uni decl
+    # filtro2_centerD = filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)
+    # filtro2_D = pd.merge(filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="CONS&Otros") ] , filtro2_centerD.drop("dest_clean", axis =1), how = "left", left_on = ["HS6_d12", "uni_decl", "filtro"], right_on = ["HS6_d12", "uni_decl", "filtro"])
+
+    #con uni est
+    filtro2_D_mad= filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)
+    filtro2_D_median = filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median"}).reset_index(drop = True)
+    filtro2_D = pd.merge(filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="CONS&Otros") ] , filtro2_D_mad.drop("dest_clean", axis =1), how = "left", left_on = ["HS6_d12", "uni_decl", "filtro"], right_on = ["HS6_d12", "uni_decl", "filtro"])
+    filtro2_D = pd.merge(filtro2_D, filtro2_D_median.drop("dest_clean", axis =1), how = "left" ,left_on = ["HS6_d12", "uni_decl", "filtro"], right_on = ["HS6_d12", "uni_decl", "filtro"])
+
+    filtro2_D["mad"] = np.where(filtro2_D["mad"]==0, 0.001, filtro2_D["mad"]  )
+    filtro2_D["brecha"] = (filtro2_D["metric"]/filtro2_D["median"])-1
+    filtro2_D["z_score"] = filtro2_D.apply(lambda x: 0.6745*((x["metric"]-x["median"]))/(x["mad"]), axis =1 )
+    filtro2_D["ue_dest"] = np.where(filtro2_D["z_score"] <= -3.5, "CI","BK" ) # no conviene establecer los límites al reves? con un -3.5??
+
+    filtro2_D_bk = filtro2[(filtro2["filtro"]=="D") & (filtro2["dest_clean"]=="S/TR") ]
+    filtro2_D_bk["ue_dest"] = "BK"
+
+    clasif_D = pd.concat([filtro2_D_bk, filtro2_D.drop(["median", "mad", "brecha", "z_score"], axis = 1)] )
+    clasif_D["ue_dest"].value_counts()
+    clasif_D.groupby(["ue_dest"])["valor"].sum()
+
+    # CASO E
+    #con uni est
+    filtro2_E_mad= filtro2[(filtro2["filtro"]=="E") & (filtro2["dest_clean"]=="C/TR") ].groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad"}).reset_index(drop = True)
+    filtro2_E_median = filtro2[(filtro2["filtro"]=="E") & (filtro2["dest_clean"]=="C/TR") ].groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median"}).reset_index(drop = True)
+    filtro2_E = pd.merge(filtro2[(filtro2["filtro"]=="E") & (filtro2["dest_clean"]=="CONS&Otros") ] , filtro2_E_mad.drop("dest_clean", axis =1), how = "left", left_on = ["HS6_d12", "uni_decl", "filtro"], right_on = ["HS6_d12", "uni_decl", "filtro"])
+    filtro2_E = pd.merge(filtro2_E, filtro2_E_median.drop("dest_clean", axis =1), how = "left" ,left_on = ["HS6_d12", "uni_decl", "filtro"], right_on = ["HS6_d12", "uni_decl", "filtro"])
+
+    filtro2_E["mad"] = np.where(filtro2_E["mad"]==0, 0.001, filtro2_E["mad"]  )
+    filtro2_E["brecha"] = (filtro2_E["metric"]/filtro2_E["median"])-1
+    filtro2_E["z_score"] = filtro2_E.apply(lambda x: 0.6745*((x["metric"]-x["median"]))/(x["mad"]), axis =1 )
+    filtro2_E["ue_dest"] = np.where(filtro2_E["z_score"] <= 3.5, "CI","BK" )
+
+    filtro2_E_ci = filtro2[(filtro2["filtro"]=="E") & (filtro2["dest_clean"]=="C/TR") ]
+    filtro2_E_ci["ue_dest"] = "CI"
+
+    clasif_E = pd.concat([filtro2_E_ci, filtro2_E.drop(["median", "mad", "brecha", "z_score"], axis = 1) ])
+    clasif_E["ue_dest"].value_counts()
+
+
+    # CASO G
+    # filtro2[filtro2["filtro"]=="G"].value_counts("dest_clean")
+    filtro2_G_mad_bk = filtro2[(filtro2["filtro"]=="G") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12" , "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad_bk"}).reset_index(drop = True)
+    filtro2_G_median_bk = filtro2[(filtro2["filtro"]=="G") & (filtro2["dest_clean"]=="S/TR") ].groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median_bk"}).reset_index(drop = True)
+    filtro2_G_mad_ci = filtro2[(filtro2["filtro"]=="G") & (filtro2["dest_clean"]=="C/TR") ].groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : median_abs_deviation(x)).rename(columns = {"metric": "mad_ci"}).reset_index(drop = True)
+    filtro2_G_median_ci = filtro2[(filtro2["filtro"]=="G") & (filtro2["dest_clean"]=="C/TR") ].groupby(["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index= False)["metric"].apply(lambda x : x.median()).rename(columns = {"metric": "median_ci"}).reset_index(drop = True)
+
+    filtro2_G = pd.merge(filtro2[(filtro2["filtro"]=="G")  & (filtro2["dest_clean"]=="CONS&Otros")] , filtro2_G_mad_bk.drop(["dest_clean", "filtro"], axis =1) , how = "left", left_on = ["HS6_d12", "uni_decl"], right_on = ["HS6_d12", "uni_decl"])
+    filtro2_G = pd.merge(filtro2_G , filtro2_G_median_bk.drop(["dest_clean", "filtro"], axis =1) , how = "left" ,left_on = ["HS6_d12", "uni_decl"], right_on = ["HS6_d12", "uni_decl"])
+    filtro2_G = pd.merge(filtro2_G , filtro2_G_mad_ci.drop(["dest_clean", "filtro"], axis =1) , how = "left" ,left_on = ["HS6_d12", "uni_decl"], right_on = ["HS6_d12", "uni_decl"])
+    filtro2_G = pd.merge(filtro2_G , filtro2_G_median_ci.drop(["dest_clean", "filtro"], axis =1) , how = "left" ,left_on = ["HS6_d12", "uni_decl"], right_on = ["HS6_d12", "uni_decl"])
+
+    filtro2_G ["mad_bk"] = np.where(filtro2_G ["mad_bk"]==0, 0.001, filtro2_G ["mad_bk"]  )
+    filtro2_G ["mad_ci"] = np.where(filtro2_G ["mad_ci"]==0, 0.001, filtro2_G ["mad_ci"]  )
+    # filtro2_G ["brecha"] = (filtro2_G ["metric"]/filtro2_G ["median"])-1
+    filtro2_G ["z_score_bk"] = filtro2_G .apply(lambda x: 0.6745*((x["metric"]-x["median_bk"]))/(x["mad_bk"]), axis =1 )
+    filtro2_G ["z_score_ci"] = filtro2_G .apply(lambda x: 0.6745*((x["metric"]-x["median_ci"]))/(x["mad_ci"]), axis =1 )
+
+    filtro2_G["ue_dest"] = np.where(np.abs(filtro2_G["z_score_ci"]) > np.abs(filtro2_G["z_score_bk"]), "BK", "CI" )
+    filtro2_G["ue_dest"].value_counts()
+
+    filtro2_G_clas = filtro2[(filtro2["filtro"]=="G")  & (filtro2["dest_clean"]!="CONS&Otros")]
+    filtro2_G_clas ["ue_dest"] = np.where(filtro2_G_clas["dest_clean"]== "S/TR","BK", "CI" )
+    filtro2_G_clas["ue_dest"].value_counts()
+
+    clasif_G = pd.concat([filtro2_G_clas, filtro2_G.drop(["median_bk", "median_ci",  "mad_bk", "mad_ci", "z_score_bk", "z_score_ci"],axis =1 )], axis = 0)
+    clasif_G ["ue_dest"].value_counts()
+
+
+    ## EDA de Datos ya clasificados
+    clasif_AB = filtro1[filtro1["ue_dest"] != "" ]
+    clasif_AB["metric"] = clasif_AB.apply(lambda x: metrica(x), axis = 1)
+
+    data_clasif = pd.concat([clasif_AB, clasif_D ,clasif_E,clasif_G  ], axis= 0)
+    # data_clasif["metric_zscore"] = (data_clasif["metric"] -data_clasif["metric"].mean())/ data_clasif["metric"].std(ddof=1)
+
+    data_clasif[["filtro", "ue_dest"]].value_counts()
+
+    return data_clasif
+
+# JOIN CON DATOS STP Y CLASIFICADOS PROPIOS
+def join_stp_clasif_prop(join_impo_clae_bec_bk, data_clasif):
+    stp_ue_dest = join_impo_clae_bec_bk[join_impo_clae_bec_bk["ue_dest"]=="BK" ]
+    stp_ue_dest ["ue_dest"].value_counts()
+    stp_ue_dest ["metric"] = stp_ue_dest .apply(lambda x: metrica(x), axis = 1)
+    stp_ue_dest["filtro"] = "STP"
+
+    data_clasif_ue_dest = pd.concat([data_clasif, stp_ue_dest], axis = 0)
+    data_clasif_ue_dest ["ue_dest"].value_counts()
+
+    data_clasif_ue_dest["precio_kilo"]= data_clasif_ue_dest["valor"]/data_clasif_ue_dest["kilos"]
+
+    return  data_clasif_ue_dest
+
+
+def clasificacion_CI(impo_bec):
+    impo_bec_ci = impo_bec[impo_bec["BEC5EndUse"].str.startswith("INT", na=False)]
+    impo_bec_ci["dest_clean"].value_counts()  # .sum()
+
+    filtro1st = impo_bec_ci[impo_bec_ci["dest_clean"] == "S/TR"]
+    filtro1ct = impo_bec_ci[impo_bec_ci["dest_clean"] == "C/TR"]
+    filtro1co = impo_bec_ci[impo_bec_ci["dest_clean"] == "CONS&Otros"]
+
+    len(impo_bec_ci) == (len(filtro1st) + len(filtro1ct) + len(filtro1co))
+
+    # Filtros de conjuntos
+    set_st = set(filtro1st["HS6_d12"])
+    set_ct = set(filtro1ct["HS6_d12"])
+    set_co = set(filtro1co["HS6_d12"])
+
+    filtro_a = set_st - set_co - set_ct
+    filtro_b = set_ct - set_st - set_co
+    filtro_c = set_co - set_ct - set_st
+
+    filtro_d = (set_st & set_co) - (set_ct)
+    filtro_e = (set_ct & set_co) - (set_st)
+    filtro_f = (set_ct & set_st) - set_co
+    filtro_g = set_ct & set_st & set_co
+
+    dest_a = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_a)]
+    dest_b = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_b)]
+    dest_c = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_c)]
+    dest_d = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_d)]
+    dest_e = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_e)]
+    dest_f = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_f)]
+    dest_g = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_g)]
+
+    (len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) + len(dest_b) + len(dest_c)) == len(
+        impo_bec_ci)
+
+    dest_a["filtro"] = "A"
+    dest_b["filtro"] = "B"
+    dest_c["filtro"] = "C"
+    dest_d["filtro"] = "D"
+    dest_e["filtro"] = "E"
+    dest_f["filtro"] = "F"
+    dest_g["filtro"] = "G"
+
+    cons_int = pd.concat([dest_a, dest_b, dest_c, dest_d, dest_e, dest_f, dest_g], axis=0)
+    cons_int["metric"] = cons_int.apply(lambda x: metrica(x), axis=1)
+
+    # A , B, C, E
+    cons_int["ue_dest"] = np.where((cons_int["filtro"] == "B") |
+                                   (cons_int["filtro"] == "E") |
+                                   (cons_int["filtro"] == "C"), "CI",
+                                   np.where((cons_int["filtro"] == "A"), "BK",
+                                            np.nan))
+    # D
+    cons_int_D_mad = cons_int[(cons_int["filtro"] == "D") & (cons_int["dest_clean"] == "S/TR")].groupby(
+        ["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index=False)["metric"].apply(
+        lambda x: median_abs_deviation(x)).rename(columns={"metric": "mad"}).reset_index(drop=True)
+    cons_int_D_median = cons_int[(cons_int["filtro"] == "D") & (cons_int["dest_clean"] == "S/TR")].groupby(
+        ["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index=False)["metric"].apply(lambda x: x.median()).rename(
+        columns={"metric": "median"}).reset_index(drop=True)
+    cons_int_D = pd.merge(cons_int[(cons_int["filtro"] == "D") & (cons_int["dest_clean"] == "CONS&Otros")],
+                          cons_int_D_mad.drop("dest_clean", axis=1), how="left",
+                          left_on=["HS6_d12", "uni_decl", "filtro"], right_on=["HS6_d12", "uni_decl", "filtro"])
+    cons_int_D = pd.merge(cons_int_D, cons_int_D_median.drop("dest_clean", axis=1), how="left",
+                          left_on=["HS6_d12", "uni_decl", "filtro"], right_on=["HS6_d12", "uni_decl", "filtro"])
+
+    cons_int_D["mad"] = np.where(cons_int_D["mad"] == 0, 0.001, cons_int_D["mad"])
+    cons_int_D["z_score"] = cons_int_D.apply(lambda x: 0.6745 * ((x["metric"] - x["median"])) / (x["mad"]), axis=1)
+    cons_int_D["ue_dest"] = np.where(cons_int_D["z_score"] > 3.5, "BK", "CI")
+
+    cons_int_D_st = cons_int[(cons_int["filtro"] == "D") & (cons_int["dest_clean"] == "S/TR")]
+    cons_int_D_st["ue_dest"] = "BK"
+
+    cons_int_D = pd.concat([cons_int_D, cons_int_D_st], axis=0)
+    # cons_int_D["ue_dest"].value_counts()
+
+    # CASO G
+    # cons_int[cons_int["filtro"]=="G"].value_counts("dest_clean")
+    cons_int_G_mad_bk = cons_int[(cons_int["filtro"] == "G") & (cons_int["dest_clean"] == "S/TR")].groupby(
+        ["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index=False)["metric"].apply(
+        lambda x: median_abs_deviation(x)).rename(columns={"metric": "mad_bk"}).reset_index(drop=True)
+    cons_int_G_median_bk = cons_int[(cons_int["filtro"] == "G") & (cons_int["dest_clean"] == "S/TR")].groupby(
+        ["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index=False)["metric"].apply(lambda x: x.median()).rename(
+        columns={"metric": "median_bk"}).reset_index(drop=True)
+    cons_int_G_mad_ci = cons_int[(cons_int["filtro"] == "G") & (cons_int["dest_clean"] == "C/TR")].groupby(
+        ["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index=False)["metric"].apply(
+        lambda x: median_abs_deviation(x)).rename(columns={"metric": "mad_ci"}).reset_index(drop=True)
+    cons_int_G_median_ci = cons_int[(cons_int["filtro"] == "G") & (cons_int["dest_clean"] == "C/TR")].groupby(
+        ["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index=False)["metric"].apply(lambda x: x.median()).rename(
+        columns={"metric": "median_ci"}).reset_index(drop=True)
+
+    cons_int_G = pd.merge(cons_int[(cons_int["filtro"] == "G") & (cons_int["dest_clean"] == "CONS&Otros")],
+                          cons_int_G_mad_bk.drop(["dest_clean", "filtro"], axis=1), how="left",
+                          left_on=["HS6_d12", "uni_decl"], right_on=["HS6_d12", "uni_decl"])
+    cons_int_G = pd.merge(cons_int_G, cons_int_G_median_bk.drop(["dest_clean", "filtro"], axis=1), how="left",
+                          left_on=["HS6_d12", "uni_decl"], right_on=["HS6_d12", "uni_decl"])
+    cons_int_G = pd.merge(cons_int_G, cons_int_G_mad_ci.drop(["dest_clean", "filtro"], axis=1), how="left",
+                          left_on=["HS6_d12", "uni_decl"], right_on=["HS6_d12", "uni_decl"])
+    cons_int_G = pd.merge(cons_int_G, cons_int_G_median_ci.drop(["dest_clean", "filtro"], axis=1), how="left",
+                          left_on=["HS6_d12", "uni_decl"], right_on=["HS6_d12", "uni_decl"])
+
+    cons_int_G["mad_bk"] = np.where(cons_int_G["mad_bk"] == 0, 0.001, cons_int_G["mad_bk"])
+    cons_int_G["mad_ci"] = np.where(cons_int_G["mad_ci"] == 0, 0.001, cons_int_G["mad_ci"])
+    cons_int_G["z_score_bk"] = cons_int_G.apply(lambda x: 0.6745 * ((x["metric"] - x["median_bk"])) / (x["mad_bk"]),
+                                                axis=1)
+    cons_int_G["z_score_ci"] = cons_int_G.apply(lambda x: 0.6745 * ((x["metric"] - x["median_ci"])) / (x["mad_ci"]),
+                                                axis=1)
+
+    cons_int_G["ue_dest"] = np.where(np.abs(cons_int_G["z_score_ci"]) > np.abs(cons_int_G["z_score_bk"]), "BK", "CI")
+    cons_int_G["ue_dest"].value_counts()
+
+    cons_int_G_no_cons = cons_int[(cons_int["filtro"] == "G") & (cons_int["dest_clean"] != "CONS&Otros")]
+    cons_int_G_no_cons["ue_dest"] = np.where(cons_int_G_no_cons["dest_clean"] == "S/TR", "BK", "CI")
+    # cons_int_G_clas["ue_dest"].value_counts()
+
+    cons_int_G_clasif = pd.concat([cons_int_G_no_cons, cons_int_G.drop(
+        ["median_bk", "median_ci", "mad_bk", "mad_ci", "z_score_bk", "z_score_ci"], axis=1)], axis=0)
+    cons_int_G_clasif["ue_dest"].value_counts()  # .sum()
+
+    cons_int_clasif = pd.concat([cons_int_D, cons_int_G_clasif, cons_int[cons_int["filtro"].str.contains("A|B|C|E")]])
+
+    return cons_int_clasif
+
+
+def clasificacion_CONS(impo_bec):
+    impo_bec_cons = impo_bec[impo_bec["BEC5EndUse"].str.startswith("CONS", na=False)]
+    impo_bec_cons["dest_clean"].value_counts()  # .sum()
+
+    filtro1st = impo_bec_cons[impo_bec_cons["dest_clean"] == "S/TR"]
+    filtro1ct = impo_bec_cons[impo_bec_cons["dest_clean"] == "C/TR"]
+    filtro1co = impo_bec_cons[impo_bec_cons["dest_clean"] == "CONS&Otros"]
+
+    len(impo_bec_cons) == (len(filtro1st) + len(filtro1ct) + len(filtro1co))
+
+    # Filtros de conjuntos
+    set_st = set(filtro1st["HS6_d12"])
+    set_ct = set(filtro1ct["HS6_d12"])
+    set_co = set(filtro1co["HS6_d12"])
+
+    filtro_a = set_st - set_co - set_ct
+    filtro_b = set_ct - set_st - set_co
+    filtro_c = set_co - set_ct - set_st
+
+    filtro_d = (set_st & set_co) - (set_ct)
+    filtro_e = (set_ct & set_co) - (set_st)
+    filtro_f = (set_ct & set_st) - set_co
+    filtro_g = set_ct & set_st & set_co
+
+    dest_a = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_a)]
+    dest_b = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_b)]
+    dest_c = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_c)]
+    dest_d = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_d)]
+    dest_e = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_e)]
+    dest_f = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_f)]
+    dest_g = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_g)]
+
+    (len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) + len(dest_b) + len(dest_c)) == len(
+        impo_bec_cons)
+
+    dest_a["filtro"] = "A"
+    dest_b["filtro"] = "B"
+    dest_c["filtro"] = "C"
+    dest_d["filtro"] = "D"
+    dest_e["filtro"] = "E"
+    dest_f["filtro"] = "F"
+    dest_g["filtro"] = "G"
+
+    cons_fin = pd.concat([dest_a, dest_b, dest_c, dest_d, dest_e, dest_f, dest_g], axis=0)
+
+    # A, B, C, E
+    cons_fin["ue_dest"] = np.where((cons_fin["filtro"] == "B") |
+                                   (cons_fin["filtro"] == "E") |
+                                   (cons_fin["filtro"] == "C"), "CI",
+                                   np.where((cons_fin["filtro"] == "A"), "BK",
+                                            np.nan))
+    cons_fin["ue_dest"].value_counts()
+
+    cons_fin["metric"] = cons_fin.apply(lambda x: metrica(x), axis=1)
+
+    # D
+    # con uni est
+    cons_fin_D_mad = cons_fin[(cons_fin["filtro"] == "D") & (cons_fin["dest_clean"] == "S/TR")].groupby(
+        ["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index=False)["metric"].apply(
+        lambda x: median_abs_deviation(x)).rename(columns={"metric": "mad"}).reset_index(drop=True)
+    cons_fin_D_median = cons_fin[(cons_fin["filtro"] == "D") & (cons_fin["dest_clean"] == "S/TR")].groupby(
+        ["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index=False)["metric"].apply(lambda x: x.median()).rename(
+        columns={"metric": "median"}).reset_index(drop=True)
+    cons_fin_D = pd.merge(cons_fin[(cons_fin["filtro"] == "D") & (cons_fin["dest_clean"] == "CONS&Otros")],
+                          cons_fin_D_mad.drop("dest_clean", axis=1), how="left",
+                          left_on=["HS6_d12", "uni_decl", "filtro"], right_on=["HS6_d12", "uni_decl", "filtro"])
+    cons_fin_D = pd.merge(cons_fin_D, cons_fin_D_median.drop("dest_clean", axis=1), how="left",
+                          left_on=["HS6_d12", "uni_decl", "filtro"], right_on=["HS6_d12", "uni_decl", "filtro"])
+
+    cons_fin_D["mad"] = np.where(cons_fin_D["mad"] == 0, 0.001, cons_fin_D["mad"])
+    cons_fin_D["brecha"] = (cons_fin_D["metric"] / cons_fin_D["median"]) - 1
+    cons_fin_D["z_score"] = cons_fin_D.apply(lambda x: 0.6745 * ((x["metric"] - x["median"])) / (x["mad"]), axis=1)
+    cons_fin_D["ue_dest"] = np.where(cons_fin_D["z_score"] > 3.5, "BK", "CI")
+
+    cons_fin_D_st = cons_fin[(cons_fin["filtro"] == "D") & (cons_fin["dest_clean"] == "S/TR")]
+    cons_fin_D_st["ue_dest"] = "BK"
+
+    cons_fin_D = pd.concat([cons_fin_D, cons_fin_D_st], axis=0)
+    # cons_fin_D["ue_dest"].value_counts()#.sum()
+
+    # CASO G
+    # cons_fin[cons_fin["filtro"]=="G"].value_counts("dest_clean")
+    cons_fin_G_mad_bk = cons_fin[(cons_fin["filtro"] == "G") & (cons_fin["dest_clean"] == "S/TR")].groupby(
+        ["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index=False)["metric"].apply(
+        lambda x: median_abs_deviation(x)).rename(columns={"metric": "mad_bk"}).reset_index(drop=True)
+    cons_fin_G_median_bk = cons_fin[(cons_fin["filtro"] == "G") & (cons_fin["dest_clean"] == "S/TR")].groupby(
+        ["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index=False)["metric"].apply(lambda x: x.median()).rename(
+        columns={"metric": "median_bk"}).reset_index(drop=True)
+    cons_fin_G_mad_ci = cons_fin[(cons_fin["filtro"] == "G") & (cons_fin["dest_clean"] == "C/TR")].groupby(
+        ["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index=False)["metric"].apply(
+        lambda x: median_abs_deviation(x)).rename(columns={"metric": "mad_ci"}).reset_index(drop=True)
+    cons_fin_G_median_ci = cons_fin[(cons_fin["filtro"] == "G") & (cons_fin["dest_clean"] == "C/TR")].groupby(
+        ["HS6_d12", "dest_clean", "uni_decl", "filtro"], as_index=False)["metric"].apply(lambda x: x.median()).rename(
+        columns={"metric": "median_ci"}).reset_index(drop=True)
+
+    cons_fin_G = pd.merge(cons_fin[(cons_fin["filtro"] == "G") & (cons_fin["dest_clean"] == "CONS&Otros")],
+                          cons_fin_G_mad_bk.drop(["dest_clean", "filtro"], axis=1), how="left",
+                          left_on=["HS6_d12", "uni_decl"], right_on=["HS6_d12", "uni_decl"])
+    cons_fin_G = pd.merge(cons_fin_G, cons_fin_G_median_bk.drop(["dest_clean", "filtro"], axis=1), how="left",
+                          left_on=["HS6_d12", "uni_decl"], right_on=["HS6_d12", "uni_decl"])
+    cons_fin_G = pd.merge(cons_fin_G, cons_fin_G_mad_ci.drop(["dest_clean", "filtro"], axis=1), how="left",
+                          left_on=["HS6_d12", "uni_decl"], right_on=["HS6_d12", "uni_decl"])
+    cons_fin_G = pd.merge(cons_fin_G, cons_fin_G_median_ci.drop(["dest_clean", "filtro"], axis=1), how="left",
+                          left_on=["HS6_d12", "uni_decl"], right_on=["HS6_d12", "uni_decl"])
+
+    cons_fin_G["mad_bk"] = np.where(cons_fin_G["mad_bk"] == 0, 0.001, cons_fin_G["mad_bk"])
+    cons_fin_G["mad_ci"] = np.where(cons_fin_G["mad_ci"] == 0, 0.001, cons_fin_G["mad_ci"])
+    cons_fin_G["z_score_bk"] = cons_fin_G.apply(lambda x: 0.6745 * ((x["metric"] - x["median_bk"])) / (x["mad_bk"]),
+                                                axis=1)
+    cons_fin_G["z_score_ci"] = cons_fin_G.apply(lambda x: 0.6745 * ((x["metric"] - x["median_ci"])) / (x["mad_ci"]),
+                                                axis=1)
+
+    cons_fin_G["ue_dest"] = np.where(np.abs(cons_fin_G["z_score_ci"]) > np.abs(cons_fin_G["z_score_bk"]), "BK", "CI")
+    # cons_fin_G["ue_dest"].value_counts()
+
+    cons_fin_G_no_cons = cons_fin[(cons_fin["filtro"] == "G") & (cons_fin["dest_clean"] != "CONS&Otros")]
+    cons_fin_G_no_cons["ue_dest"] = np.where(cons_fin_G_no_cons["dest_clean"] == "S/TR", "BK", "CI")
+    # cons_fin_G_no_cons["ue_dest"].value_counts()
+
+    cons_fin_G_clasif = pd.concat([cons_fin_G_no_cons, cons_fin_G.drop(
+        ["median_bk", "median_ci", "mad_bk", "mad_ci", "z_score_bk", "z_score_ci"], axis=1)], axis=0)
+    # cons_fin_G_clasif  ["ue_dest"].value_counts()
+
+    cons_fin_clasif = pd.concat([cons_fin_D, cons_fin_G_clasif, cons_fin[cons_fin["filtro"].str.contains("A|B|C|E")]])
+    return cons_fin_clasif
+
