@@ -212,10 +212,15 @@ def predo_ncm(ncm_sector):
 def def_join_impo_clae(impo_anyo_12d, cuit_empresas):
     impo_clae = pd.merge(impo_anyo_12d, cuit_empresas, left_on = "cuit", right_on = "CUIT", how = "right")
     impo_clae.drop(["CUIT"], axis=1, inplace = True)
-       
+    impo_clae["dest_clean"] = impo_clae["destinacion"].apply(lambda x: destinacion_limpio(x))
+
     return impo_clae
 
-def def_join_impo_clae_bec(join_impo_clae, bec_bk):
+def def_join_impo_clae_bec(join_impo_clae, bec):
+    impo_bec = pd.merge(join_impo_clae, bec[["HS6", "BEC5EndUse" ]], how= "left" , left_on = "HS6", right_on= "HS6" )
+    return impo_bec
+
+def def_join_impo_clae_bec_bk(join_impo_clae, bec_bk):
     impo_anyo_12d_bec_bk = pd.merge(join_impo_clae, bec_bk, how= "left" , left_on = "HS6", right_on= "HS6" )
 
     # filtramos las impos que no mergearon (no arrancan con CAP)

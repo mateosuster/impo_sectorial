@@ -9,22 +9,15 @@ Created on Tue Jun 29 11:04:54 2021
 # Directorio de trabajo y librerias
 # =============================================================================
 globals().clear()
-
 import gc
 gc.collect()
 
 import os
 #Mateo
 #os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
-# os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
-
 #igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
-
 os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
-
-
-os.getcwd()
 
 import pandas as pd
 import numpy as np
@@ -44,35 +37,18 @@ from pre_visualizacion_nivel_ncm_12d_6act import *
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
-#impo_d12 = pd.read_csv("../data/IMPO_17_feature.csv")
-# impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
-#impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
-#impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv")      # impo DIARIA
 impo_d12 = pd.read_csv("../data/M_2013a2017_d12.csv", encoding="latin1")      # impo DIARIA
 clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
-#cuit_clae = pd.read_csv( "../data/cuit 2017 impo_con_actividad.csv")
 cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
 bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
-# bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
-#diccionario ncm12d
-# ncm12_desc = pd.read_csv("../data/NCM 12d.csv", sep=";")
-# ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Descripción Completa'].str.split('//', expand=True))], axis=1)
 ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
-
-# parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
-# transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
-
-# bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
-# isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
-# dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 
 
 #############################################
 #           preparación bases               #
 #############################################
-# predo_impo_17(impo_17)
 impo_d12 = predo_impo_all(impo_d12,  name_file ="cuit_explotacion_2013a2017.csv")
 ncm12_desc = predo_ncm12_desc(ncm12_desc )["ncm_desc"]
 impo_d12  = predo_impo_12d(impo_d12, ncm12_desc)
@@ -85,15 +61,13 @@ dic_stp = predo_stp(dic_stp )
 #############################################
 #                joins                      #
 #############################################
-join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas)
-join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk)
+join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas) #incorpora var destinacion limpia
+#join_impo_clae_bec_bk = def_join_impo_clae_bec_bk(join_impo_clae, bec_bk)
 
 # =============================================================================
 # EDA BEC5
 # =============================================================================
-join_impo_clae["dest_clean"] = join_impo_clae["destinacion"].apply(lambda x: destinacion_limpio(x))
-impo_bec = pd.merge(join_impo_clae, bec[["HS6", "BEC5EndUse" ]], how= "left" , left_on = "HS6", right_on= "HS6" )
-
+impo_bec = def_join_impo_clae_bec(join_impo_clae, bec)
 
 #join_impo_clae["dest_clean"].value_counts()
 # impo_bec[impo_bec["BEC5EndUse"].isnull()]
