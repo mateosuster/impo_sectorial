@@ -27,6 +27,17 @@ from scipy.stats import median_abs_deviation , zscore
 # #     #transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
 # #     bec_to_clae = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/bec_to_clae.xlsx")
 # #     return impo_17
+def destinacion_limpio(x):
+    if re.search("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", x)!=None:
+        return "C/TR"
+    elif re.search("S/TRAN|SIN TRANSF|INGR.ZF BIENES", x)!=None:
+        return "S/TR"
+    elif re.search("CONS|ING.ZF MERC", x)!=None:
+        # return "CONS"
+        return "CONS&Otros"
+    else:
+        # return "Otro"
+        return "CONS&Otros"
 
 def predo_impo_all(impo_d12, name_file):
     impo_d12["anyo"] = impo_d12["FECH_OFIC"].str.slice(0,4)
@@ -286,17 +297,7 @@ def def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio, ci = Fal
 # =============================================================================
 # clasificación via destinación
 # =============================================================================
-def destinacion_limpio(x):
-    if re.search("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", x)!=None:
-        return "C/TR"
-    elif re.search("S/TRAN|SIN TRANSF|INGR.ZF BIENES", x)!=None:
-        return "S/TR"
-    elif re.search("CONS|ING.ZF MERC", x)!=None:
-        # return "CONS"
-        return "CONS&Otros"
-    else: 
-        # return "Otro"
-        return "CONS&Otros"
+
     
 def metrica(x):
     return (x["valor"] * x["kilos"])/x["cant_decl"]
@@ -543,6 +544,23 @@ def dic_clae_and_ciiu(clae_to_ciiu,clae, dic_ciiu):
 ################################
 # CLASIFICACION TIPO BIEN
 ################################
+
+def filtro_stp(dic_stp, impo_bec):
+    # vectores filtros
+    # stp_general = dic_stp[dic_stp["utilizacion"]=="General"] # =~ CI
+    stp_especifico = dic_stp[dic_stp["utilizacion"].str.contains("Específico|Transporte", case = False)] # =~ BK
+    #join_impo_clae_bec_bk["dest_clean"] = join_impo_clae_bec_bk["destinacion"].apply(lambda x: destinacion_limpio(x))
+
+    # opción 1
+    impo_bec = impo_bec[impo_bec["BEC5EndUse"].str.startswith("CAP", na=False)]
+    impo_bec["ue_dest"] = np.where(impo_bec["HS6"].isin(stp_especifico ["NCM"]), "BK", "")
+    #impo_bec["ue_dest"].value_counts()
+
+    # filtrado 1
+    filtro1 = impo_bec[impo_bec["ue_dest"]==""]
+
+    return  filtro1, impo_bec
+
 def clasificacion_BK(filtro1):
 
     filtro1st =  filtro1[filtro1["dest_clean"] == "S/TR"]
@@ -703,7 +721,19 @@ def clasificacion_BK(filtro1):
 
     data_clasif[["filtro", "ue_dest"]].value_counts()
 
-    return data_clasif
+    ###############################################
+    ## DATOS NO CLASIFICADOS
+    data_not_clasif = pd.concat([dest_c], axis=0)
+    data_not_clasif["ue_dest"] = "?"  # np.NAN
+
+    # data_not_clasif.isna().sum()
+    data_not_clasif["metric"] = data_not_clasif.apply(lambda x: metrica(x), axis=1)
+    data_not_clasif["precio_kilo"] = data_not_clasif["valor"] / data_not_clasif["kilos"]
+
+    # data_not_clasif.to_csv("../data/resultados/bk_sin_ue_dest.csv")
+
+
+    return data_clasif, data_not_clasif
 
 # JOIN CON DATOS STP Y CLASIFICADOS PROPIOS
 def join_stp_clasif_prop(join_impo_clae_bec_bk, data_clasif):
@@ -840,7 +870,7 @@ def clasificacion_CI(impo_bec):
 
     cons_int_clasif = pd.concat([cons_int_D, cons_int_G_clasif, cons_int[cons_int["filtro"].str.contains("A|B|C|E")]])
 
-    return cons_int_clasif
+    return cons_int_clasif ,impo_bec_ci
 
 
 def clasificacion_CONS(impo_bec):
@@ -967,5 +997,47 @@ def clasificacion_CONS(impo_bec):
     # cons_fin_G_clasif  ["ue_dest"].value_counts()
 
     cons_fin_clasif = pd.concat([cons_fin_D, cons_fin_G_clasif, cons_fin[cons_fin["filtro"].str.contains("A|B|C|E")]])
-    return cons_fin_clasif
+    return cons_fin_clasif, impo_bec_cons
+
+def datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif):
+    # impo_ue_dest = pd.concat([pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha", 'metric', 'ue_dest', 'mad', 'median', 'z_score'], axis = 1), bk], axis =0)
+    cicf_ue_dest = pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha",  'mad', 'median', 'z_score'], axis = 1) #, bk], axis =0)
+    cicf_ue_dest["precio_kilo"] =  cicf_ue_dest["valor"]/cicf_ue_dest["kilos"]
+
+    # bk_ue_dest = pd.read_csv("../data/resultados/bk_con_ue_dest.csv")
+    bk_ue_dest = data_clasif_ue_dest#.copy().drop(['HS4', 'HS4Desc', 'HS6Desc', "BEC5Category"], 1)
+
+    # bk_sin_ue_dest = pd.read_csv("../data/resultados/bk_sin_ue_dest.csv")
+    bk_sin_ue_dest = data_not_clasif#.drop(['HS4', 'HS4Desc', 'HS6Desc', "BEC5Category"], 1)
+
+    print((len(join_impo_clae)-  len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )) - ( len(bk_sin_ue_dest ) + len(bk_ue_dest)+ len(cicf_ue_dest) ))
+
+    data_model = pd.concat([bk_sin_ue_dest , bk_ue_dest, cicf_ue_dest ], axis = 0)
+
+
+    #PREPROCESAMIENTO
+    data_model ['HS6'] = data_model ['HS6'].astype("str")
+    data_model ['HS8'] = data_model ['HS6_d12'].str.slice(0,8)
+    data_model ['HS10'] = data_model ['HS6_d12'].str.slice(0,10)
+
+    data_model["actividades"] = data_model["letra1"] + data_model["letra2"] + data_model["letra3"] + data_model[
+        "letra4"] + data_model["letra5"] + data_model["letra6"]
+    data_model["act_ordenadas"] = data_model["actividades"].apply(
+        lambda x: "".join(sorted(x)))  # "".join(sorted(data_model["actividades"]))
+
+
+    # preprocesamiento etiquetados
+    cols = ["HS6", "HS8", "HS10",
+            'valor', 'kilos', "precio_kilo",
+            "letra1", "letra2", "letra3", "letra4", "letra5", "letra6",
+            "act_ordenadas",
+            "uni_est", "cant_est", "uni_decl", "cant_decl",
+            "metric",
+            "ue_dest"]
+
+    data_model = data_model[cols]
+
+    data_model.to_csv("../data/resultados/data_modelo_diaria.csv", index=False)
+
+    return data_model
 

@@ -80,63 +80,32 @@ bec[bec["BEC5EndUse"].str.startswith("CONS", na = False)]["BEC5EndUse"].value_co
 # =============================================================================
 # Bienes de capital
 # =============================================================================
-# =============================================================================
-#  FILTRO STP entre específicos y generales
-# =============================================================================
+#filtro STP
+filtro1, impo_bec_bk = filtro_stp(dic_stp, impo_bec)
+ya_filtrado = impo_bec_bk[impo_bec_bk["ue_dest"]!=""]
+
 dic_stp["utilizacion"].value_counts()
-
-# vectores filtros
-# stp_general = dic_stp[dic_stp["utilizacion"]=="General"] # =~ CI
-stp_especifico = dic_stp[dic_stp["utilizacion"].str.contains("Específico|Transporte", case = False)] # =~ BK
-join_impo_clae_bec_bk["dest_clean"] = join_impo_clae_bec_bk["destinacion"].apply(lambda x: destinacion_limpio(x))
-
-# opción 1
-join_impo_clae_bec_bk["ue_dest"] = np.where(join_impo_clae_bec_bk["HS6"].isin(stp_especifico ["NCM"]), "BK", "")
-join_impo_clae_bec_bk["ue_dest"].value_counts()
-
-# filtrado 1
-filtro1 = join_impo_clae_bec_bk[join_impo_clae_bec_bk["ue_dest"]==""]
-
-# =============================================================================
-# FILTRO DESTINACION
-# =============================================================================
 filtro1["destinacion"].value_counts()#.sum()
 filtro1["dest_clean"].value_counts()#.sum()
 
-# NUEVA PROPUESTA
-# partidas_n_dest = join_impo_clae_bec_bk.groupby(["HS6_d12", "destinacion"],as_index = False).size().loc[lambda x: ~x["HS6_d12"].isin(partidas_dest["HS6_d12"])]
-ya_filtrado = join_impo_clae_bec_bk[join_impo_clae_bec_bk["ue_dest"]!=""]
+(len(filtro1) + len(ya_filtrado)) == len(impo_bec_bk)
 
-(len(filtro1) + len(ya_filtrado)) == len(join_impo_clae_bec_bk)
-
-data_clasif = clasificacion_BK(filtro1)
+# filtro destinacion
+data_clasif , data_not_clasif= clasificacion_BK(filtro1)
 
 # =============================================================================
 #  Exportacion de datos clasificados con UE dest
 # =============================================================================
 ## DATOS CLASIFICADOS
-
-data_clasif_ue_dest = join_stp_clasif_prop(join_impo_clae_bec_bk, data_clasif)
+data_clasif_ue_dest = join_stp_clasif_prop(impo_bec_bk, data_clasif)
 data_clasif_ue_dest.to_csv("../data/resultados/bk_con_ue_dest.csv")
 
-
-## DATOS NO CLASIFICADOS
-data_not_clasif = pd.concat( [ dest_c], axis = 0)
-data_not_clasif["ue_dest"] = "?" #np.NAN
-
-# data_not_clasif.isna().sum()
-data_not_clasif["metric"] = data_not_clasif.apply(lambda x: metrica(x), axis = 1)
-data_not_clasif["precio_kilo"]= data_not_clasif["valor"]/data_not_clasif["kilos"]
-
-# data_not_clasif.to_csv("../data/resultados/bk_sin_ue_dest.csv")
-
-len(data_not_clasif) + len(data_clasif_ue_dest)
-
+len(data_not_clasif) + len(data_clasif_ue_dest) ==len(impo_bec_bk)
 
 # =============================================================================
 # VENN CI
 # =============================================================================
-cons_int_clasif = clasificacion_CI(impo_bec)
+cons_int_clasif, impo_bec_ci = clasificacion_CI(impo_bec)
 cons_int_clasif ["ue_dest"].value_counts()#.sum()
 cons_int_clasif [["filtro", "ue_dest"]].value_counts()#.sum()
 
@@ -145,7 +114,7 @@ cons_int_clasif [["filtro", "ue_dest"]].value_counts()#.sum()
 # =============================================================================
 # VENN CONS
 # =============================================================================
-cons_fin_clasif = clasificacion_CONS(impo_bec)
+cons_fin_clasif,impo_bec_cons = clasificacion_CONS(impo_bec)
 cons_fin_clasif [["filtro", "ue_dest"]].value_counts()#.sum()
 
 # =============================================================================
@@ -154,27 +123,12 @@ cons_fin_clasif [["filtro", "ue_dest"]].value_counts()#.sum()
 # len(impo_bec_ci) + len(impo_bec_bk) + len(impo_bec_cons) == len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )
 len(impo_bec_ci) + len(data_not_clasif) + len(data_clasif_ue_dest) + len(impo_bec_cons) == len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )
 
-# impo_ue_dest = pd.concat([pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha", 'metric', 'ue_dest', 'mad', 'median', 'z_score'], axis = 1), bk], axis =0)
-cicf_ue_dest = pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha",  'mad', 'median', 'z_score'], axis = 1) #, bk], axis =0)
-cicf_ue_dest["precio_kilo"] =  cicf_ue_dest["valor"]/cicf_ue_dest["kilos"]
+# datos para el modelo
+data_model = datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif)
 
-# bk_ue_dest = pd.read_csv("../data/resultados/bk_con_ue_dest.csv")
-bk_ue_dest = data_clasif_ue_dest.copy().drop(['HS4', 'HS4Desc', 'HS6Desc', "BEC5Category"], 1)
 
-# bk_sin_ue_dest = pd.read_csv("../data/resultados/bk_sin_ue_dest.csv")
-bk_sin_ue_dest = data_not_clasif.drop(['HS4', 'HS4Desc', 'HS6Desc', "BEC5Category"], 1)
-
-(len(join_impo_clae)-  len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )) - ( len(bk_sin_ue_dest ) + len(bk_ue_dest)+ len(cicf_ue_dest) )
-
-data_model = pd.concat([bk_sin_ue_dest , bk_ue_dest, cicf_ue_dest ], axis = 0) 
-data_model ['HS6'] = data_model ['HS6'].astype("str")
-data_model ['HS8'] = data_model ['HS6_d12'].str.slice(0,8)
-data_model ['HS10'] = data_model ['HS6_d12'].str.slice(0,10)
- 
 len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()] ))
-
-# len(data_model)  - data_model["ue_dest"].value_counts().sum()
-
+len(data_model)  - data_model["ue_dest"].value_counts().sum()
 
 # =============================================================================
 # Preprocesamiento de Datos para el modelo
@@ -182,42 +136,40 @@ len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].is
 data_model.info()
 data_model["ue_dest"].value_counts()
 
-data_model["actividades"] = data_model["letra1"]+data_model["letra2"]+data_model["letra3"]+data_model["letra4"]+data_model["letra5"]+data_model["letra6"]
-data_model["act_ordenadas"] = data_model["actividades"].apply(lambda x: "".join(sorted(x ))) #"".join(sorted(data_model["actividades"]))
 
-data_model.to_csv("../data/resultados/data_modelo_diaria.csv", index = False)
+def str_a_num(df):
+  for  (columnName, columnData)  in df.iteritems():
+  # for col in df:
+    # original = np.sort(df[col].unique())
+    original = np.sort(columnData.values.unique())
+    reemplazo = range(len(original))
+    mapa = dict(zip(original, reemplazo))
+    df.loc[:,col] = df.loc[:,col].replace(mapa)
+  return(df)
 
-#preprocesamiento etiquetados
-cols =  [ "HS6", "HS8", "HS10",   
-         'valor',  'kilos', "precio_kilo" , 
-         "letra1",	"letra2",	"letra3", 	"letra4", 	"letra5",	"letra6"	,
-         "act_ordenadas",
-         "uni_est",	"cant_est",	"uni_decl",	"cant_decl",  
-         "metric" ,
-         "ue_dest"]
-
-data_model = data_model[cols]
-
-#Filtros de columnas
-cat_col = list(data_model.select_dtypes(include=['object']).columns)
-cat_col.pop(-1)
-num_col = list(data_model.select_dtypes(include=['float', "int64" ]).columns)
-
-
+def predo_datos_modelo(data_model):
 # data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+# Filtros de columnas
+    cat_col = list(data_model.select_dtypes(include=['object']).columns)
+    cat_col.pop(-1)
+    num_col = list(data_model.select_dtypes(include=['float', "int64"]).columns)
 
-data_pre = pd.concat( [ str_a_num(data_model[cat_col]) , data_model[num_col], data_model["ue_dest"] ], axis = 1  )
+    data_pre = pd.concat( [ str_a_num(data_model[cat_col]) , data_model[num_col], data_model["ue_dest"] ], axis = 1  )
 
-# datos etiquetados
-data_train = data_pre[data_pre ["ue_dest"] != "?" ]
-data_train["bk_dummy"] = data_train["ue_dest"].map({"BK": 1, "CI": 0})
-data_train.drop("ue_dest", axis = 1, inplace = True)
+    # datos etiquetados
+    data_train = data_pre[data_pre ["ue_dest"] != "?" ]
+    data_train["bk_dummy"] = data_train["ue_dest"].map({"BK": 1, "CI": 0})
+    data_train.drop("ue_dest", axis = 1, inplace = True)
 
-# datos no etiquetados
-data_to_clasif = data_pre[data_pre["ue_dest"] == "?" ]
-data_to_clasif.drop("ue_dest", axis = 1, inplace = True)
+    # datos no etiquetados
+    data_to_clasif = data_pre[data_pre["ue_dest"] == "?" ]
+    data_to_clasif.drop("ue_dest", axis = 1, inplace = True)
 
-len(data_pre) == (len(data_train) + len(data_to_clasif))
+    print(len(data_pre) == (len(data_train) + len(data_to_clasif)))
+
+    return data_pre, data_train, data_to_clasif
+
+data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model)
 
 # exportacion de datos
 data_train.to_csv("../data/resultados/data_train_test.csv", index=False)
