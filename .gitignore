@@ -33,3 +33,9 @@ importaciones_bk_pre_intro_matriz.csv
 asign_pre_matriz.csv
 
 M_2013a2017_d12.csv
+
+scripts/data/historico_rda/
+scripts/data/bases_mectra_resumidas_rda_files/
+scripts/data/bases_mectra_csv_files/
+scripts/data/resultados/agr_csv_files/
+
