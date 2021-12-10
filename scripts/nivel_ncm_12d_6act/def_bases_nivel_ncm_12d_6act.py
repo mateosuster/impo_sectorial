@@ -39,16 +39,15 @@ def destinacion_limpio(x):
         # return "Otro"
         return "CONS&Otros"
 
-def predo_impo_all(impo_d12, name_file):
-    impo_d12["anyo"] = impo_d12["FECH_OFIC"].str.slice(0,4)
-
-    #impo_d12 = impo_d12[['anyo','CUIT_IMPOR', 'NOMBRE']]
-    impo_d12 = impo_d12[impo_d12["anyo"]=="2017"]
-    #impo_d12 = impo_d12.drop_duplicates()
-
-    impo_d12.to_csv("../data/"+name_file, index = False)
-    return impo_d12
-
+# def predo_impo_all(impo_d12, name_file):
+#     impo_d12["anyo"] = impo_d12["FECH_OFIC"].str.slice(0,4)
+#
+#     #impo_d12 = impo_d12[['anyo','CUIT_IMPOR', 'NOMBRE']]
+#     impo_d12 = impo_d12[impo_d12["anyo"]=="2017"]
+#     #impo_d12 = impo_d12.drop_duplicates()
+#
+#     impo_d12.to_csv("../data/"+name_file, index = False)
+#     return impo_d12
 
 
 def predo_impo_17(impo_17):
@@ -61,7 +60,9 @@ def predo_impo_17(impo_17):
 
 
 def predo_impo_12d(impo_d12, ncm_desc):
-    impo_d12["ANYO"] = impo_d12["FECH_OFIC"].str.slice(0,4) 
+    impo_d12["ANYO"] = impo_d12["FECH_OFIC"].str.slice(0,4)
+    impo_d12 = impo_d12[impo_d12["ANYO"] == "2017"]             # FILTRO AÑO 2017
+
     impo_d12.rename(columns = {'ANYO':"anio", 'POSIC_SIM':"HS6_d12", 
                                'CIF':"valor", "CUIT_IMPOR":"cuit",
                                "KILOS": "kilos", "DESTINAC": "destinacion",  "DEST": "dest_cod",
@@ -549,8 +550,9 @@ def filtro_stp(dic_stp, impo_bec):
 
     # filtrado 1
     filtro1 = impo_bec[impo_bec["ue_dest"]==""]
+    ya_filtrado = impo_bec[impo_bec["ue_dest"] != ""]
 
-    return  filtro1, impo_bec
+    return  filtro1,ya_filtrado, impo_bec
 
 def clasificacion_BK(filtro1):
 
@@ -990,7 +992,7 @@ def clasificacion_CONS(impo_bec):
     cons_fin_clasif = pd.concat([cons_fin_D, cons_fin_G_clasif, cons_fin[cons_fin["filtro"].str.contains("A|B|C|E")]])
     return cons_fin_clasif, impo_bec_cons
 
-def datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif):
+def datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif, join_impo_clae, impo_bec):
     # impo_ue_dest = pd.concat([pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha", 'metric', 'ue_dest', 'mad', 'median', 'z_score'], axis = 1), bk], axis =0)
     cicf_ue_dest = pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha",  'mad', 'median', 'z_score'], axis = 1) #, bk], axis =0)
     cicf_ue_dest["precio_kilo"] =  cicf_ue_dest["valor"]/cicf_ue_dest["kilos"]
@@ -1001,7 +1003,7 @@ def datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_c
     # bk_sin_ue_dest = pd.read_csv("../data/resultados/bk_sin_ue_dest.csv")
     bk_sin_ue_dest = data_not_clasif#.drop(['HS4', 'HS4Desc', 'HS6Desc', "BEC5Category"], 1)
 
-    print((len(join_impo_clae)-  len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )) - ( len(bk_sin_ue_dest ) + len(bk_ue_dest)+ len(cicf_ue_dest) ))
+    print((len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()])) - (len(bk_sin_ue_dest) + len(bk_ue_dest) + len(cicf_ue_dest)))
 
     data_model = pd.concat([bk_sin_ue_dest , bk_ue_dest, cicf_ue_dest ], axis = 0)
 

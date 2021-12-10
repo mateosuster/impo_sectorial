@@ -9,29 +9,20 @@ Created on Tue Jun 29 11:04:54 2021
 # Directorio de trabajo y librerias
 # =============================================================================
 globals().clear()
-import gc
-#gc.collect()
 
 import os
-#Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
-#igal
+# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
-# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
-import seaborn as sns
+# from scipy.stats import median_abs_deviation , zscore
 
-from scipy.stats import median_abs_deviation , zscore
-
-from Bases_nivel_ncm_12d_6act import *
-from procesamiento_nivel_ncm_12d_6act import *
-from matriz_nivel_ncm_12d_6act import *
-from pre_visualizacion_nivel_ncm_12d_6act import *
-from pre_visualizacion_nivel_ncm_12d_6act import *
+from def_bases_nivel_ncm_12d_6act import *
+from def_procesamiento_nivel_ncm_12d_6act import *
+from def_matriz_nivel_ncm_12d_6act import *
+from def_pre_visualizacion_nivel_ncm_12d_6act import *
 
 
 #############################################
@@ -49,7 +40,7 @@ ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 #############################################
 #           preparación bases               #
 #############################################
-impo_d12 = predo_impo_all(impo_d12,  name_file ="cuit_explotacion_2013a2017.csv")
+# impo_d12 = predo_impo_all(impo_d12,  name_file ="cuit_explotacion_2013a2017.csv")
 ncm12_desc = predo_ncm12_desc(ncm12_desc )["ncm_desc"]
 impo_d12  = predo_impo_12d(impo_d12, ncm12_desc)
 letras = predo_sectores_nombres(clae)
@@ -81,14 +72,13 @@ bec[bec["BEC5EndUse"].str.startswith("CONS", na = False)]["BEC5EndUse"].value_co
 # Bienes de capital
 # =============================================================================
 #filtro STP
-filtro1, impo_bec_bk = filtro_stp(dic_stp, impo_bec)
-ya_filtrado = impo_bec_bk[impo_bec_bk["ue_dest"]!=""]
+filtro1, filtro_stp, impo_bec_bk = filtro_stp(dic_stp, impo_bec)
 
 dic_stp["utilizacion"].value_counts()
 filtro1["destinacion"].value_counts()#.sum()
 filtro1["dest_clean"].value_counts()#.sum()
 
-(len(filtro1) + len(ya_filtrado)) == len(impo_bec_bk)
+(len(filtro1) + len(filtro_stp)) == len(impo_bec_bk)
 
 # filtro destinacion
 data_clasif , data_not_clasif= clasificacion_BK(filtro1)
@@ -128,21 +118,18 @@ len(impo_bec_ci) + len(data_not_clasif) + len(data_clasif_ue_dest) + len(impo_be
 # Preprocesamiento de Datos para el modelo
 # =============================================================================
 # datos para el modelo
-data_model = datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif)
-
+data_model = datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif, join_impo_clae, impo_bec)
+data_model["ue_dest"].value_counts()
 
 len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()] ))
 len(data_model)  - data_model["ue_dest"].value_counts().sum()
 
-data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
-
-data_model.info()
-data_model["ue_dest"].value_counts()
 
 
 # exportacion de datos
 data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model)
 
+data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
 data_train.to_csv("../data/resultados/data_train_test.csv", index=False)
 data_to_clasif.to_csv("../data/resultados/data_to_pred.csv", index=False)
 
