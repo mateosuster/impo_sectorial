@@ -144,7 +144,7 @@ data_model["ue_dest"].value_counts()
 data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model)
 
 data_train.to_csv("../data/resultados/data_train_test.csv", index=False)
-data_to_clasif .to_csv("../data/resultados/data_to_pred.csv", index=False)
+data_to_clasif.to_csv("../data/resultados/data_to_pred.csv", index=False)
 
 
 
