@@ -10,14 +10,14 @@ Created on Tue Jun 29 11:04:54 2021
 # =============================================================================
 globals().clear()
 import gc
-gc.collect()
+#gc.collect()
 
 import os
 #Mateo
-#os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 #igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 import pandas as pd
 import numpy as np
@@ -123,6 +123,10 @@ cons_fin_clasif [["filtro", "ue_dest"]].value_counts()#.sum()
 # len(impo_bec_ci) + len(impo_bec_bk) + len(impo_bec_cons) == len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )
 len(impo_bec_ci) + len(data_not_clasif) + len(data_clasif_ue_dest) + len(impo_bec_cons) == len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )
 
+
+# =============================================================================
+# Preprocesamiento de Datos para el modelo
+# =============================================================================
 # datos para el modelo
 data_model = datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif)
 
@@ -130,48 +134,15 @@ data_model = datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,d
 len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()] ))
 len(data_model)  - data_model["ue_dest"].value_counts().sum()
 
-# =============================================================================
-# Preprocesamiento de Datos para el modelo
-# =============================================================================
+data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+
 data_model.info()
 data_model["ue_dest"].value_counts()
 
 
-def str_a_num(df):
-  for  (columnName, columnData)  in df.iteritems():
-  # for col in df:
-    # original = np.sort(df[col].unique())
-    original = np.sort(columnData.values.unique())
-    reemplazo = range(len(original))
-    mapa = dict(zip(original, reemplazo))
-    df.loc[:,col] = df.loc[:,col].replace(mapa)
-  return(df)
-
-def predo_datos_modelo(data_model):
-# data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
-# Filtros de columnas
-    cat_col = list(data_model.select_dtypes(include=['object']).columns)
-    cat_col.pop(-1)
-    num_col = list(data_model.select_dtypes(include=['float', "int64"]).columns)
-
-    data_pre = pd.concat( [ str_a_num(data_model[cat_col]) , data_model[num_col], data_model["ue_dest"] ], axis = 1  )
-
-    # datos etiquetados
-    data_train = data_pre[data_pre ["ue_dest"] != "?" ]
-    data_train["bk_dummy"] = data_train["ue_dest"].map({"BK": 1, "CI": 0})
-    data_train.drop("ue_dest", axis = 1, inplace = True)
-
-    # datos no etiquetados
-    data_to_clasif = data_pre[data_pre["ue_dest"] == "?" ]
-    data_to_clasif.drop("ue_dest", axis = 1, inplace = True)
-
-    print(len(data_pre) == (len(data_train) + len(data_to_clasif)))
-
-    return data_pre, data_train, data_to_clasif
-
+# exportacion de datos
 data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model)
 
-# exportacion de datos
 data_train.to_csv("../data/resultados/data_train_test.csv", index=False)
 data_to_clasif .to_csv("../data/resultados/data_to_pred.csv", index=False)
 

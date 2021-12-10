@@ -310,16 +310,7 @@ def mod_z(col: pd.Series, thresh: float=3.5):
     return np.abs(mod_z)
 
 
-# =============================================================================
-# preprocesamiento data modelo xgboost
-# =============================================================================
-def str_a_num(df):
-  for col in df:
-    original = np.sort(df[col].unique())
-    reemplazo = list(range(len(original)))
-    mapa = dict(zip(original, reemplazo))
-    df.loc[:,col] = df.loc[:,col].replace(mapa)
-  return(df)
+
 
 # =============================================================================
 # ordenamiento de los datos de modelo
@@ -1040,4 +1031,41 @@ def datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_c
     data_model.to_csv("../data/resultados/data_modelo_diaria.csv", index=False)
 
     return data_model
+
+
+
+def str_a_num(df):
+
+  for  (columnName, columnData)  in df.iteritems():
+    
+    original = np.sort(np.unique(columnData.values ))
+    reemplazo = list(range(len(original))) # lo dejo como lista pero creo q se podria sacar
+    mapa = dict(zip(original, reemplazo))
+    
+    df[ columnName] = df[columnName].map(mapa)
+  return df
+
+def predo_datos_modelo(data_model):
+# data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+# Filtros de columnas
+    cat_col = list(data_model.select_dtypes(include=['object']).columns)
+    cat_col = [elem for elem in cat_col if elem not in ["NOMBRE", "destinacion", "dest_cod", "uni_est", "uni_decl", "descripcion","BEC5EndUse", "ue_dest","filtro", "actividades" ] ]
+    
+    num_col = list(data_model.select_dtypes(include=['float', "int64"]).columns)
+    num_col = [elem for elem in num_col if elem != "cuit"]
+
+    data_pre = pd.concat( [ str_a_num(data_model[cat_col]) , data_model[num_col], data_model["ue_dest"] ], axis = 1  )
+
+    # datos etiquetados
+    data_train = data_pre[data_pre ["ue_dest"] != "?" ]
+    data_train["bk_dummy"] = data_train["ue_dest"].map({"BK": 1, "CI": 0})
+    data_train.drop("ue_dest", axis = 1, inplace = True)
+
+    # datos no etiquetados
+    data_to_clasif = data_pre[data_pre["ue_dest"] == "?" ]
+    data_to_clasif.drop("ue_dest", axis = 1, inplace = True)
+
+    print(len(data_pre) == (len(data_train) + len(data_to_clasif)))
+
+    return data_pre, data_train, data_to_clasif
 
