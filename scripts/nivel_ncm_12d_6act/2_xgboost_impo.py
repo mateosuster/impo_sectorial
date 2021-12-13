@@ -12,7 +12,6 @@ import os
 os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -42,13 +41,14 @@ data_2pred = pd.read_csv("../data/resultados/data_to_pred.csv")
 data_2pred.info()
 
 data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
-
 data_model.info()
 
-
+#sampleo
 # data_pre=data_pre.sample( n = 1000, random_state = 42 )
-data_pre.shape
 
+###########################
+##  Preprocesamiento     ##
+###########################
 #reviso missings
 data_pre.isna().sum()
 data_pre.dropna(axis = 0, inplace = True)
@@ -73,7 +73,6 @@ for split_name, split in zip(['Entrenamiento', 'Prueba'],[y_train,y_test]):
 print("muestras totales {}".format(len(X_train)+len(X_test)))
 
 
-
 """## Modelo de base"""
 classifier = xgb.sklearn.XGBClassifier(nthread=-1, seed=42, enable_categorical = False)
 
@@ -90,22 +89,13 @@ y_pred = classifier.predict(X_test)
 pd.DataFrame(y_pred, index=X_test.index, columns=['bk_dummy']).value_counts()
 
 roc_auc_score(y_test,y_pred)
-
 confusion_matrix(y_test, y_pred, normalize= "pred")#, labels= [1, 0 ])
-
 print(classification_report(y_test, y_pred) )
 
 
-"""## Random y Grid Search """
-
-
+"""## Random Search """
 classifier = xgb.sklearn.XGBClassifier(nthread=-1, objective= 'binary:logistic', seed=42, enable_categorical = False)
 
-# parameters = {
-#     'max_depth': range (2, 10, 1),
-#     'n_estimators': range(60, 220, 40),
-#     'learning_rate': [0.1, 0.01, 0.05]
-# }
 
 parameters = {'silent': [False],
         'max_depth':  range(1, 20, 2),
@@ -146,6 +136,7 @@ roc_auc_score(y_test,y_pred)
 confusion_matrix(y_test, y_pred, normalize= "pred")#, labels= [1, 0 ])
 print(classification_report(y_test, y_pred) )
 
+
 """ ## Determinacion punto de corte """
 #predicciones
 y_pred = best_xgb.predict_proba(X_test)
@@ -173,15 +164,15 @@ for corte in np.linspace(0.01,0.99, num = 100): # num indica la cantidad de ptos
     metrics= pd.concat([metrics, pd.DataFrame(dic, index = [round(corte,2).astype(str)])])
 
 punto_optimo = metrics.sort_values("auc", ascending=False)["punto_corte"][0]
-
+fpr_op = metrics.sort_values("auc", ascending=False)["FPR"][0]
+recall_op =metrics.sort_values("auc", ascending=False)["recall"][0]
 
 # grafico curva ROC
 plt.plot(metrics["FPR"], metrics["recall"])
-plt.plot(0.0769635,0.931076, "ro" )
+plt.plot(fpr_op,recall_op, "ro" )
 plt.title("Curva ROC")
 plt.xlabel("FPR")
 plt.ylabel("TPR")
-
 
 #violin destribuciones de observaciones (N)
 melt_data = pd.melt(metrics, id_vars = "punto_corte", value_vars = ["pp","np"], var_name="ue_dest", value_name="n").sort_values("punto_corte")
@@ -225,23 +216,11 @@ end = datetime.datetime.now()
 print(end-start)
 
 
-
-# xgboos_rscv_all = RandomizedSearchCV(
-#     estimator=classifier,
-#     param_distributions=parameters,
-#     scoring = 'roc_auc',
-#     n_jobs = 10,
-#     cv = 10,
-#     verbose=True)
-# xgboos_rscv_all.fit(data_pre.drop("bk_dummy", 1), data_pre["bk_dummy"]   )
-# best_xgb = xgboos_rscv_all.best_estimator_
-# best_xgb
-
 """### Predicción de nuevas observaciones"""
 
 # Modelos
-pickle.dump(best_xgb, open('modelos\\xgboost_train_cv.sav', 'wb'))
-#best_xgb = pickle.load(open('modelos\\xgboost_train_cv.sav', 'rb'))
+pickle.dump(best_xgb, open('modelos\\xgboost_train_cv.sav', 'wb')) #guarda el modelo
+#best_xgb = pickle.load(open('modelos\\xgboost_train_cv.sav', 'rb')) #carga
 
 pickle.dump(xgb_all, open('modelos\\xgboost_all_data.sav', 'wb'))
 #xgb_all = pickle.load(open('modelos\\xgboost_all_data.sav', 'rb'))
@@ -249,33 +228,9 @@ pickle.dump(xgb_all, open('modelos\\xgboost_all_data.sav', 'wb'))
 plt.figure(figsize=(20,15))
 xgb.plot_importance(xgb_all, ax=plt.gca())
 
-###############################################
-# datos a predecir
-#################################
-clasificacion = xgb_all.predict_proba(data_2pred)
-
-clasificacion_df = pd.DataFrame(clasificacion, index=data_2pred.index , columns= ["prob_CI", "prob_BK"])
-clasificacion_df["ue_dest"]  = np.where(clasificacion_df["prob_BK"] > punto_optimo, 1, 0)
-clasificacion_df["ue_dest"].value_counts()
-
-# clasificacion_prob = xgb_all.predict_proba(data_2pred)
-# clasificacion_prob_df = pd.DataFrame(clasificacion_prob)#, columns= ["bk_dummy_0", "bk_dummy_1"])
-# clasificacion_df.value_counts()
-
-datos_predichos = data_model[data_model ["ue_dest"] == "?" ]
-datos_predichos["bk_dummy"] = clasificacion_df["ue_dest"] 
-datos_predichos.to_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", index= False, sep = ";")
-# datos_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
-
-plt.hist(x = "bk_dummy", data = datos_predichos )
-
-for boolean , text in zip([True, False], ["Frecuencias Relativas", "Frecuencias Abosolutas"] ):
-  print(text+"\n", datos_predichos.bk_dummy.value_counts(normalize= boolean), "\n" )
-
-
-# Exportacion de resultados
-# from sklearn.externals import joblib
-
+##################
+# Métricas de test
+###################
 best_xgb.score(X_test, y_test)
 
 y_pred_ = best_xgb.predict(X_test)
@@ -296,13 +251,30 @@ ax.xaxis.set_ticklabels(['CI', 'BK']); ax.yaxis.set_ticklabels(['CI', 'BK']);
 
 print(classification_report(y_test, y_pred_) )
 
-# joblib.dump(xgboos_rscv_all, 'knn_all_data.pkl')
-# joblib.dump(best_xgb, 'knn_clasif_data.pkl')
+
+###############################################
+# datos a predecir
+################################################
+clasificacion = xgb_all.predict_proba(data_2pred)
+
+clasificacion_df = pd.DataFrame(clasificacion, index=data_2pred.index , columns= ["prob_CI", "prob_BK"])
+clasificacion_df["ue_dest"]  = np.where(clasificacion_df["prob_BK"] > punto_optimo, 1, 0)
+clasificacion_df["ue_dest"].value_counts()
+
+datos_predichos = data_model[data_model ["ue_dest"] == "?" ] #data model posee todos los datos
+datos_predichos["bk_dummy"] = clasificacion_df["ue_dest"] 
+datos_predichos.to_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", index= False, sep = ";")
+# datos_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
+
+plt.hist(x = "bk_dummy", data = datos_predichos )
+
+for boolean , text in zip([True, False], ["Frecuencias Relativas", "Frecuencias Abosolutas"] ):
+  print(text+"\n", datos_predichos.bk_dummy.value_counts(normalize= boolean), "\n" )
+
 
 # Clasficacion de Xgboost entrenado con todos los datos
 # clasificacion_df.to_csv("../data/resultados/datos_clasificados_modelo_train.csv")
 # clasificacion_df.to_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
 
-# joblib.load("knn_gscv_all.pkl")
 
 
