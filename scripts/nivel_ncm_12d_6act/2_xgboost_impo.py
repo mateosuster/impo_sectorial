@@ -43,7 +43,7 @@ data_2pred.info()
 
 data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
 
-data_model.info
+data_model.info()
 
 
 # data_pre=data_pre.sample( n = 1000, random_state = 42 )
@@ -51,6 +51,8 @@ data_pre.shape
 
 #reviso missings
 data_pre.isna().sum()
+data_pre.dropna(axis = 0, inplace = True)
+
 
 #reviso y reemplazo infinitos
 np.isinf(data_pre).values.sum()
