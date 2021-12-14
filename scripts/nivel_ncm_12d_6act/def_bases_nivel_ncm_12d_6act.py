@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 import re
 from scipy.stats import median_abs_deviation , zscore
-
+import datetime
 
 
 # def carga_de_bases(x):
@@ -537,7 +537,7 @@ def dic_clae_and_ciiu(clae_to_ciiu,clae, dic_ciiu):
 # CLASIFICACION TIPO BIEN
 ################################
 
-def filtro_stp(dic_stp, impo_bec):
+def fun_filtro_stp(dic_stp, impo_bec):
     # vectores filtros
     # stp_general = dic_stp[dic_stp["utilizacion"]=="General"] # =~ CI
     stp_especifico = dic_stp[dic_stp["utilizacion"].str.contains("Específico|Transporte", case = False)] # =~ BK
@@ -552,6 +552,8 @@ def filtro_stp(dic_stp, impo_bec):
     filtro1 = impo_bec[impo_bec["ue_dest"]==""]
     ya_filtrado = impo_bec[impo_bec["ue_dest"] != ""]
 
+    print( "Los datos asignados y sin asignar poseen mismo largo que los BK?", (len(filtro1) + len(ya_filtrado)) == len(impo_bec))
+
     return  filtro1,ya_filtrado, impo_bec
 
 def clasificacion_BK(filtro1):
@@ -560,7 +562,7 @@ def clasificacion_BK(filtro1):
     filtro1ct =  filtro1[filtro1["dest_clean"] == "C/TR"]
     filtro1co =  filtro1[filtro1["dest_clean"] == "CONS&Otros"]
 
-    len(filtro1)  == ( len(filtro1st) +len(filtro1ct) + len(filtro1co) )
+    print("los conjuntos poseen mismo longitud que el input?",len(filtro1)  == ( len(filtro1st) +len(filtro1ct) + len(filtro1co) ) )
 
     # Filtros de conjuntos
     set_st = set(filtro1st["HS6_d12"])
@@ -597,7 +599,7 @@ def clasificacion_BK(filtro1):
     #importaciones detectadas con S/T, C/T y Consumo
     len(filtro1st) +len(filtro1ct) + len(filtro1co)
 
-    (len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) +len(dest_b)+ len(dest_c)) ==len(filtro1)
+    print("conjuntos de destinacion igual al input?",(len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) +len(dest_b)+ len(dest_c)) ==len(filtro1))
 
     # Concateno el filtro 2
     filtro1 = pd.concat( [dest_a, dest_b, dest_c, dest_d,  dest_e,  dest_f, dest_g], axis = 0)
@@ -740,6 +742,8 @@ def join_stp_clasif_prop(join_impo_clae_bec_bk, data_clasif):
 
     data_clasif_ue_dest["precio_kilo"]= data_clasif_ue_dest["valor"]/data_clasif_ue_dest["kilos"]
 
+    data_clasif_ue_dest.to_csv("../data/resultados/bk_con_ue_dest.csv")
+
     return  data_clasif_ue_dest
 
 
@@ -751,7 +755,7 @@ def clasificacion_CI(impo_bec):
     filtro1ct = impo_bec_ci[impo_bec_ci["dest_clean"] == "C/TR"]
     filtro1co = impo_bec_ci[impo_bec_ci["dest_clean"] == "CONS&Otros"]
 
-    len(impo_bec_ci) == (len(filtro1st) + len(filtro1ct) + len(filtro1co))
+    print( "consistencia de diagramas", len(impo_bec_ci) == (len(filtro1st) + len(filtro1ct) + len(filtro1co)) )
 
     # Filtros de conjuntos
     set_st = set(filtro1st["HS6_d12"])
@@ -775,8 +779,7 @@ def clasificacion_CI(impo_bec):
     dest_f = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_f)]
     dest_g = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_g)]
 
-    (len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) + len(dest_b) + len(dest_c)) == len(
-        impo_bec_ci)
+    print("consistencia de diagramas 2", (len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) + len(dest_b) + len(dest_c)) == len(impo_bec_ci) )
 
     dest_a["filtro"] = "A"
     dest_b["filtro"] = "B"
@@ -874,7 +877,7 @@ def clasificacion_CONS(impo_bec):
     filtro1ct = impo_bec_cons[impo_bec_cons["dest_clean"] == "C/TR"]
     filtro1co = impo_bec_cons[impo_bec_cons["dest_clean"] == "CONS&Otros"]
 
-    len(impo_bec_cons) == (len(filtro1st) + len(filtro1ct) + len(filtro1co))
+    print("consistencia de diagramas", len(impo_bec_cons) == (len(filtro1st) + len(filtro1ct) + len(filtro1co)) )
 
     # Filtros de conjuntos
     set_st = set(filtro1st["HS6_d12"])
@@ -898,8 +901,7 @@ def clasificacion_CONS(impo_bec):
     dest_f = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_f)]
     dest_g = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_g)]
 
-    (len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) + len(dest_b) + len(dest_c)) == len(
-        impo_bec_cons)
+    print("consistencia de diagramas 2", (len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) + len(dest_b) + len(dest_c)) == len(impo_bec_cons) )
 
     dest_a["filtro"] = "A"
     dest_b["filtro"] = "B"
@@ -1003,7 +1005,7 @@ def datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_c
     # bk_sin_ue_dest = pd.read_csv("../data/resultados/bk_sin_ue_dest.csv")
     bk_sin_ue_dest = data_not_clasif#.drop(['HS4', 'HS4Desc', 'HS6Desc', "BEC5Category"], 1)
 
-    print((len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()])) - (len(bk_sin_ue_dest) + len(bk_ue_dest) + len(cicf_ue_dest)))
+    print("registros faltantes?", (len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()])) - (len(bk_sin_ue_dest) + len(bk_ue_dest) + len(cicf_ue_dest)))
 
     data_model = pd.concat([bk_sin_ue_dest , bk_ue_dest, cicf_ue_dest ], axis = 0)
 

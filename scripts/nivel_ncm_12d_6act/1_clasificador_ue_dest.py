@@ -42,7 +42,7 @@ ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 #############################################
 # impo_d12 = predo_impo_all(impo_d12,  name_file ="cuit_explotacion_2013a2017.csv")
 ncm12_desc = predo_ncm12_desc(ncm12_desc )["ncm_desc"]
-impo_d12  = predo_impo_12d(impo_d12, ncm12_desc)
+impo_d12  = predo_impo_12d(impo_d12, ncm12_desc) # FILTRO AÑO 2017
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae)
@@ -72,13 +72,10 @@ bec[bec["BEC5EndUse"].str.startswith("CONS", na = False)]["BEC5EndUse"].value_co
 # Bienes de capital
 # =============================================================================
 #filtro STP
-filtro1, filtro_stp, impo_bec_bk = filtro_stp(dic_stp, impo_bec)
+filtro1, filtro_stp, impo_bec_bk = fun_filtro_stp(dic_stp, impo_bec) #filtro1 poseen los BK q se van a seguir procesando
 
 dic_stp["utilizacion"].value_counts()
-filtro1["destinacion"].value_counts()#.sum()
 filtro1["dest_clean"].value_counts()#.sum()
-
-(len(filtro1) + len(filtro_stp)) == len(impo_bec_bk)
 
 # filtro destinacion
 data_clasif , data_not_clasif= clasificacion_BK(filtro1)
@@ -87,10 +84,9 @@ data_clasif , data_not_clasif= clasificacion_BK(filtro1)
 #  Exportacion de datos clasificados con UE dest
 # =============================================================================
 ## DATOS CLASIFICADOS
-data_clasif_ue_dest = join_stp_clasif_prop(impo_bec_bk, data_clasif)
-data_clasif_ue_dest.to_csv("../data/resultados/bk_con_ue_dest.csv")
+data_clasif_ue_dest = join_stp_clasif_prop(impo_bec_bk, data_clasif) #guarda csv
+print( "los BK quedan del mismo largo?" , len(data_not_clasif) + len(data_clasif_ue_dest) ==len(impo_bec_bk))
 
-len(data_not_clasif) + len(data_clasif_ue_dest) ==len(impo_bec_bk)
 
 # =============================================================================
 # VENN CI
@@ -118,18 +114,17 @@ len(impo_bec_ci) + len(data_not_clasif) + len(data_clasif_ue_dest) + len(impo_be
 # Preprocesamiento de Datos para el modelo
 # =============================================================================
 # datos para el modelo
-data_model = datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif, join_impo_clae, impo_bec)
+data_model = datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif, join_impo_clae, impo_bec) #esta funcion guarda el datamodel.csv
 data_model["ue_dest"].value_counts()
 
 len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()] ))
 len(data_model)  - data_model["ue_dest"].value_counts().sum()
 
+# preprocesamiento
+data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model)
 
 
 # exportacion de datos
-data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model)
-
-data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
 data_train.to_csv("../data/resultados/data_train_test.csv", index=False)
 data_to_clasif.to_csv("../data/resultados/data_to_pred.csv", index=False)
 

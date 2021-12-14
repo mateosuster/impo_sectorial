@@ -7,10 +7,12 @@ Original file is located at
     https://colab.research.google.com/drive/16uujRCNtIfMg4ZoV-JQxtFRMEqnn3l4I
 """
 
+globals().clear()
+
 import os
 # os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
-# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 import pandas as pd
 import numpy as np
@@ -34,13 +36,12 @@ import scipy.stats.distributions as dists
 
 """# Datos"""
 
-data_pre = pd.read_csv( "../data/resultados/data_train_test.csv")
-data_pre.info()
-
+data_pre = pd.read_csv( "../data/resultados/data_train_test.csv") #data_pre y data_2pred posee los datos como los necesita el modelo
 data_2pred = pd.read_csv("../data/resultados/data_to_pred.csv")
-data_2pred.info()
+data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")  #data_model posee los datos que se utilizaran en el script 3
 
-data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+data_pre.info()
+data_2pred.info()
 data_model.info()
 
 #sampleo
@@ -53,10 +54,14 @@ data_model.info()
 data_pre.isna().sum()
 data_pre.dropna(axis = 0, inplace = True)
 
-
 #reviso y reemplazo infinitos
 np.isinf(data_pre).values.sum()
 data_pre.replace([np.inf, -np.inf], np.nan, inplace=True)
+
+#pruebo borrar las columnas HS
+data_pre.drop(["HS6", "HS8", "HS10"], axis =1, inplace = True)
+data_2pred.drop(["HS6", "HS8", "HS10"], axis =1, inplace = True)
+
 
 # frecuencia de la clase
 data_pre["bk_dummy"].value_counts(normalize=True)
@@ -128,14 +133,6 @@ print(end-start)
 best_xgb = random_search.best_estimator_
 best_xgb
 
-#prediccion default (0.5)
-y_pred = best_xgb.predict(X_test)
-pd.DataFrame(y_pred, index=X_test.index, columns=['bk_dummy']).value_counts()
-# plt.hist( y_pred["bk_dummy"])
-roc_auc_score(y_test,y_pred)
-confusion_matrix(y_test, y_pred, normalize= "pred")#, labels= [1, 0 ])
-print(classification_report(y_test, y_pred) )
-
 
 """ ## Determinacion punto de corte """
 #predicciones
@@ -145,6 +142,9 @@ y_pred_df = pd.DataFrame(y_pred, index=X_test.index, columns=["CI", "BK"])
 # predicción default
 y_pred_default =  np.where(y_pred_df ['BK'] > y_pred_df['CI'], 1, 0)
 roc_auc_score(y_test,y_pred_default )
+confusion_matrix(y_test,y_pred_default, normalize= "pred")#, labels= [1, 0 ])
+print(classification_report(y_test, y_pred_default) )
+
 
 #buscando punto de corte
 metrics= pd.DataFrame()
@@ -180,7 +180,7 @@ ax = sns.violinplot(data = melt_data,  y = "n", x = "ue_dest" )
 ax.set_title("Distribuciones de BK y CI para todos los puntos de corte")
 ax.set_xlabel("Uso Económico")
 ax.set_ylabel("Observaciones")
-ax.axhline(200034)
+# ax.axhline(200034)
 plt.show()
 
 #violin distribucion de probabilidades 
