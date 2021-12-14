@@ -32,7 +32,8 @@ import xgboost as xgb
 # from xgboost import XGBClassifier
 import scipy.stats.distributions as dists
 
-
+##
+semilla = 42
 
 """# Datos"""
 
@@ -45,7 +46,7 @@ data_2pred.info()
 data_model.info()
 
 #sampleo
-# data_pre=data_pre.sample( n = 1000, random_state = 42 )
+# data_pre=data_pre.sample( n = 1000, random_state = semilla )
 
 ###########################
 ##  Preprocesamiento     ##
@@ -67,7 +68,7 @@ data_2pred.drop(["HS6", "HS8", "HS10"], axis =1, inplace = True)
 data_pre["bk_dummy"].value_counts(normalize=True)
 
 #split train test
-X_train , X_test, y_train, y_test = train_test_split(data_pre.drop("bk_dummy", axis =1),  data_pre["bk_dummy"], test_size = 0.3, random_state = 3 , stratify=data_pre["bk_dummy"])
+X_train , X_test, y_train, y_test = train_test_split(data_pre.drop("bk_dummy", axis =1),  data_pre["bk_dummy"], test_size = 0.3, random_state = semilla , stratify=data_pre["bk_dummy"])
 
 ## Chequeamos el balanceo en los dataset´s
 for split_name, split in zip(['Entrenamiento', 'Prueba'],[y_train,y_test]):
@@ -99,20 +100,25 @@ print(classification_report(y_test, y_pred) )
 
 
 """## Random Search """
-classifier = xgb.sklearn.XGBClassifier(nthread=-1, objective= 'binary:logistic', seed=42, enable_categorical = False)
+classifier = xgb.sklearn.XGBClassifier(nthread=-1, objective= 'binary:logistic', seed=semilla, enable_categorical = False)
 
 
 parameters = {'silent': [False],
         'max_depth':  range(1, 20, 2),
+        "max_leaves": range(0, 1000, 10),
         'learning_rate': dists.uniform(0.01, 1), # continuous distribution
         # param2=dists.randint(16, 512 + 1), # discrete distribution
         # param3=['foo', 'bar'],             # specifying possible values directly
+        "min_child_weight": range(1, 50, 2),
+        "max_bin": range(5, 120, 5),
         'subsample': dists.uniform(0.001, 0.999) ,
         'colsample_bytree': dists.uniform(0.001, 0.999),
         'colsample_bylevel': dists.uniform(0.001, 0.999),
         'reg_lambda':dists.uniform(1, 100),
         'reg_alpha': dists.uniform(1, 200),
         'n_estimators': range(10, 100, 1),
+        "tree_method": "hist",
+        "grow_policy":"lossguide"
         }
 
 
@@ -120,7 +126,8 @@ random_search = RandomizedSearchCV(
     estimator=classifier,
     param_distributions=parameters,
     scoring = 'roc_auc',
-    n_jobs = 10,
+    random_state= semilla,
+    n_jobs = -1,
     cv = 5,                        
     verbose=True)
 
@@ -128,6 +135,12 @@ start = datetime.datetime.now()
 random_search.fit(X_train, y_train)
 end = datetime.datetime.now()
 print(end-start)
+
+#cv 's
+cv_results = pd.DataFrame(random_search.cv_results_)
+cv_results.info()
+
+mejores_parametros = random_search.best_params_
 
 #mejor modelo
 best_xgb = random_search.best_estimator_
@@ -176,12 +189,12 @@ plt.ylabel("TPR")
 
 #violin destribuciones de observaciones (N)
 melt_data = pd.melt(metrics, id_vars = "punto_corte", value_vars = ["pp","np"], var_name="ue_dest", value_name="n").sort_values("punto_corte")
-ax = sns.violinplot(data = melt_data,  y = "n", x = "ue_dest" )
-ax.set_title("Distribuciones de BK y CI para todos los puntos de corte")
-ax.set_xlabel("Uso Económico")
-ax.set_ylabel("Observaciones")
-# ax.axhline(200034)
-plt.show()
+# ax = sns.violinplot(data = melt_data,  y = "n", x = "ue_dest" )
+# ax.set_title("Distribuciones de BK y CI para todos los puntos de corte")
+# ax.set_xlabel("Uso Económico")
+# ax.set_ylabel("Observaciones")
+# # ax.axhline(200034)
+# plt.show()
 
 #violin distribucion de probabilidades 
 violin_data = pd.DataFrame({"prob_bk": y_pred_df["BK"], "bk_dummy": y_test})
@@ -195,6 +208,34 @@ plt.show()
 
 # calibracion del modelo https://www.cienciadedatos.net/documentos/py11-calibrar-modelos-machine-learning.html
 
+##################
+# Métricas de test
+###################
+best_xgb.score(X_test, y_test)
+
+y_pred_ = best_xgb.predict_proba(X_test)
+y_pred_df = pd.DataFrame(y_pred_, index=X_test.index , columns= ["prob_CI", "prob_BK"])
+y_pred_df["ue_dest"]  = np.where(y_pred_df["prob_BK"] > punto_optimo, 1, 0)
+
+
+roc_auc_score(y_test,y_pred_df["ue_dest"])
+confusion_matrix(y_test, y_pred_df["ue_dest"], normalize= "pred")#, labels= [1, 0 ])
+cm = confusion_matrix(y_test, y_pred_df["ue_dest"])
+tn, fp, fn, tp = confusion_matrix(y_test, y_pred_df["ue_dest"]).ravel()
+(tn, fp, fn, tp )
+plot_confusion_matrix(best_xgb, X_test, y_test)
+
+import seaborn as sns
+ax= plt.subplot()
+sns.heatmap(cm, annot=True, fmt='g', ax=ax)  #annot=True to annotate cells, ftm='g' to disable scientific notation
+# labels, title and ticks
+ax.set_xlabel('Etiqueta predicha');ax.set_ylabel('Etiqueta verdadera');
+ax.set_title('Matriz de confusión con datos de test');
+ax.xaxis.set_ticklabels(['CI', 'BK']); ax.yaxis.set_ticklabels(['CI', 'BK']);
+
+print(classification_report(y_test, y_pred_df["ue_dest"]) )
+
+
 
 """## Entrenamiento con todos los datos"""
 
@@ -205,61 +246,39 @@ plt.show()
 #               learning_rate=0.4089751175210069, max_delta_step=0, max_depth=17,
 #               min_child_weight=1,  monotone_constraints='()',
 #               n_estimators=54, n_jobs=16, nthread=-1, num_parallel_tree=1,
-#               random_state=42, reg_alpha=34.93982083457318,
+#               random_state=semilla, reg_alpha=34.93982083457318,
 #               reg_lambda=28.683948734756893, scale_pos_weight=1, seed=42,
 #               silent=False, subsample=0.7536819429003822, tree_method='exact',
 #               validate_parameters=1, verbosity=None, enable_categorical=False)
 
+best_xgb.get
 
-xgb_all = xgb.sklearn.XGBClassifier(**random_search.best_params_)
+xgb_all = xgb.sklearn.XGBClassifier(**mejores_parametros, seed=semilla)
+# xgb_all = xgb.sklearn.XGBClassifier(**random_search.best_params_, seed=semilla)
 
 start = datetime.datetime.now()
-xgb_all.fit(X_train, y_train)
+xgb_all.fit(data_pre.drop("bk_dummy", axis =1),  data_pre["bk_dummy"])
 end = datetime.datetime.now()
 print(end-start)
-
-
-"""### Predicción de nuevas observaciones"""
-
-# Modelos
-pickle.dump(best_xgb, open('modelos\\xgboost_train_cv.sav', 'wb')) #guarda el modelo
-#best_xgb = pickle.load(open('modelos\\xgboost_train_cv.sav', 'rb')) #carga
-
-pickle.dump(xgb_all, open('modelos\\xgboost_all_data.sav', 'wb'))
-#xgb_all = pickle.load(open('modelos\\xgboost_all_data.sav', 'rb'))
 
 plt.figure(figsize=(20,15))
 xgb.plot_importance(xgb_all, ax=plt.gca())
 
-##################
-# Métricas de test
-###################
-best_xgb.score(X_test, y_test)
+"""### Exportacion de los modelos"""
 
-y_pred_ = best_xgb.predict(X_test)
-roc_auc_score(y_test,y_pred_)
-confusion_matrix(y_test, y_pred_, normalize= "pred")#, labels= [1, 0 ])
-cm = confusion_matrix(y_test, y_pred_)
-tn, fp, fn, tp = confusion_matrix(y_test, y_pred_).ravel()
-(tn, fp, fn, tp )
-plot_confusion_matrix(best_xgb, X_test, y_test)                                  
+# Modelos
+pickle.dump(best_xgb, open('modelos\\xgboost_train_cv.sav', 'wb')) #guarda el modelo
+best_xgb = pickle.load(open('modelos\\xgboost_train_cv.sav', 'rb')) #carga
 
-import seaborn as sns
-ax= plt.subplot()
-sns.heatmap(cm, annot=True, fmt='g', ax=ax)  #annot=True to annotate cells, ftm='g' to disable scientific notation
-# labels, title and ticks
-ax.set_xlabel('Etiqueta predicha');ax.set_ylabel('Etiqueta verdadera'); 
-ax.set_title('Matriz de confusión con datos de test'); 
-ax.xaxis.set_ticklabels(['CI', 'BK']); ax.yaxis.set_ticklabels(['CI', 'BK']);
+pickle.dump(xgb_all, open('modelos\\xgboost_all_data.sav', 'wb'))
+#xgb_all = pickle.load(open('modelos\\xgboost_all_data.sav', 'rb'))
 
-print(classification_report(y_test, y_pred_) )
 
 
 ###############################################
 # datos a predecir
 ################################################
 clasificacion = xgb_all.predict_proba(data_2pred)
-
 clasificacion_df = pd.DataFrame(clasificacion, index=data_2pred.index , columns= ["prob_CI", "prob_BK"])
 clasificacion_df["ue_dest"]  = np.where(clasificacion_df["prob_BK"] > punto_optimo, 1, 0)
 clasificacion_df["ue_dest"].value_counts()
