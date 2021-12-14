@@ -18,6 +18,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import  json
 import datetime
 import pickle
 from sklearn.model_selection import train_test_split
@@ -142,6 +143,7 @@ cv_results.info()
 
 mejores_parametros = random_search.best_params_
 
+
 #mejor modelo
 best_xgb = random_search.best_estimator_
 best_xgb
@@ -225,7 +227,7 @@ tn, fp, fn, tp = confusion_matrix(y_test, y_pred_df["ue_dest"]).ravel()
 (tn, fp, fn, tp )
 plot_confusion_matrix(best_xgb, X_test, y_test)
 
-import seaborn as sns
+
 ax= plt.subplot()
 sns.heatmap(cm, annot=True, fmt='g', ax=ax)  #annot=True to annotate cells, ftm='g' to disable scientific notation
 # labels, title and ticks
@@ -274,6 +276,8 @@ pickle.dump(xgb_all, open('modelos\\xgboost_all_data.sav', 'wb'))
 #xgb_all = pickle.load(open('modelos\\xgboost_all_data.sav', 'rb'))
 
 
+with open('modelos\\mejores_parametros.json', 'w') as fp:
+    json.dump(mejores_parametros, fp)
 
 ###############################################
 # datos a predecir
