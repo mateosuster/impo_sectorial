@@ -69,12 +69,6 @@ ciiu_dig_let = predo_ciiu(clae_to_ciiu, dic_ciiu)
 # ciiu_letra = predo_ciiu_letra(dic_ciiu, comercio)
 
 
-#############################################
-#                joins:                     ESTA PARTE ES INNCESARIA #
-#############################################
-# join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas) #join CUIT
-# join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk) # filtro BK
-
 ############################################################
 #  Asignación por STP / modificación de actividades x ncm  #
 ############################################################
@@ -82,8 +76,6 @@ ciiu_dig_let = predo_ciiu(clae_to_ciiu, dic_ciiu)
 # impo_bec = pd.merge(join_impo_clae, bec[["HS6", "BEC5EndUse" ]], how= "left" , left_on = "HS6", right_on= "HS6" )
 # (len(datos ) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()]) ) == len(join_impo_clae)
 
-
-#datos_bk = diccionario_especial(datos_bk,ciiu_dig_let) ###### viernes a la noche. cambié el orden de estas lineas
 datos = diccionario_especial(datos,ciiu_dig_let) #cambio igal
 letras_mod = letra_nn(datos) # obtencion de LETRA_nn
 datos = pd.concat([datos.drop( ["letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1),  letras_mod ], axis = 1)
@@ -145,11 +137,10 @@ matriz_hssd_ci  = pd.pivot_table(asign_pre_matriz_ci, values='valor_pond', index
 matriz_sisd_ci.sum().sum()
 
 # =============================================================================
-#                       Visualizacion
+#                       Otros
 # =============================================================================
 
 #exponentes a aplicar a la tabla de contingencia
-
 z = pd.DataFrame(datos["HS6_d12"].value_counts()).reset_index(drop=True)
 
 z['freq'] = z.groupby('HS6_d12')['HS6_d12'].transform('count')
@@ -162,10 +153,11 @@ sns.lineplot(data= z, x= "HS6_d12", y= "expo")
 
 
 
-
+# =============================================================================
+#                       Visualizacion
+# =============================================================================
 #preprocesamiento
 sectores_desc = sectores() #Sectores CLAE
-
 letras_ciiu = dic_graf(matriz_sisd_ci, dic_ciiu)
 letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,15)
 
@@ -177,7 +169,6 @@ comercio_y_propio_ci = impo_comercio_y_propio(matriz_sisd_ci,letras_ciiu, sector
 x = pd.merge(matriz_sisd.reset_index(),letras_ciiu, how = "outer", left_on= "si",  right_on="letra")
 
 # graficos
-
 graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo = "Bienes de Capital")
 graficos(matriz_sisd_ci, impo_tot_sec_ci, comercio_y_propio_ci, letras_ciiu, titulo = "Consumos Intermedios")
 
