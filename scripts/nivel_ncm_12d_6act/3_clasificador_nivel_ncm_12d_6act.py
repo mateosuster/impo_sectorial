@@ -9,12 +9,8 @@ Created on Tue Jun 29 11:04:54 2021
 # Directorio de trabajo y librerias
 # =============================================================================
 import os 
-#Mateo
 #os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
-#igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
-
-#VM
 os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 # os.getcwd()
@@ -34,11 +30,9 @@ from pre_visualizacion_nivel_ncm_12d_6act import *
 
 
 
-
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
-#datasetes utilizados en ultimas corridas 
 #impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv") #falta
 clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
@@ -49,28 +43,12 @@ ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
 data_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", sep = ";")
 datos_clasificados = pd.read_csv("../data/resultados/data_modelo_diaria.csv") #falta
+
 # CIIU
 dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
 hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
 
-
-#impo 12 d
-# impo_d12 = pd.read_csv("../data/IMPO_17_feature.csv")
-# impo_d12 = pd.read_csv("../data/IMPO_2017_12d.csv")
-#impo_17 = pd.read_csv(  "../data/IMPO_2017.csv", sep=";")
-
-#cuit_clae = pd.read_csv( "../data/cuit 2017 impo_con_actividad.csv")
-# bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018.csv")
-# bec_to_clae = pd.read_csv("../data/bec_to_clae.csv")
-#diccionario ncm12d
-# ncm12_desc = pd.read_csv("../data/NCM 12d.csv", sep=";")
-# ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['Descripción Completa'].str.split('//', expand=True))], axis=1)
-
-# parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
-# transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
-
-# bce_cambiario = pd.read_csv("../data/balance_cambiario.csv", skiprows = 3, error_bad_lines=False, sep= ";", na_values =['-'])
 
 #############################################
 #           preparación bases               #
@@ -91,12 +69,6 @@ ciiu_dig_let = predo_ciiu(clae_to_ciiu, dic_ciiu)
 # ciiu_letra = predo_ciiu_letra(dic_ciiu, comercio)
 
 
-#############################################
-#                joins:                     ESTA PARTE ES INNCESARIA #
-#############################################
-# join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas) #join CUIT
-# join_impo_clae_bec_bk = def_join_impo_clae_bec(join_impo_clae, bec_bk) # filtro BK
-
 ############################################################
 #  Asignación por STP / modificación de actividades x ncm  #
 ############################################################
@@ -104,8 +76,6 @@ ciiu_dig_let = predo_ciiu(clae_to_ciiu, dic_ciiu)
 # impo_bec = pd.merge(join_impo_clae, bec[["HS6", "BEC5EndUse" ]], how= "left" , left_on = "HS6", right_on= "HS6" )
 # (len(datos ) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()]) ) == len(join_impo_clae)
 
-
-#datos_bk = diccionario_especial(datos_bk,ciiu_dig_let) ###### viernes a la noche. cambié el orden de estas lineas
 datos = diccionario_especial(datos,ciiu_dig_let) #cambio igal
 letras_mod = letra_nn(datos) # obtencion de LETRA_nn
 datos = pd.concat([datos.drop( ["letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1),  letras_mod ], axis = 1)
@@ -167,11 +137,10 @@ matriz_hssd_ci  = pd.pivot_table(asign_pre_matriz_ci, values='valor_pond', index
 matriz_sisd_ci.sum().sum()
 
 # =============================================================================
-#                       Visualizacion
+#                       Otros
 # =============================================================================
 
 #exponentes a aplicar a la tabla de contingencia
-
 z = pd.DataFrame(datos["HS6_d12"].value_counts()).reset_index(drop=True)
 
 z['freq'] = z.groupby('HS6_d12')['HS6_d12'].transform('count')
@@ -184,10 +153,11 @@ sns.lineplot(data= z, x= "HS6_d12", y= "expo")
 
 
 
-
+# =============================================================================
+#                       Visualizacion
+# =============================================================================
 #preprocesamiento
 sectores_desc = sectores() #Sectores CLAE
-
 letras_ciiu = dic_graf(matriz_sisd_ci, dic_ciiu)
 letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,15)
 
@@ -199,7 +169,6 @@ comercio_y_propio_ci = impo_comercio_y_propio(matriz_sisd_ci,letras_ciiu, sector
 x = pd.merge(matriz_sisd.reset_index(),letras_ciiu, how = "outer", left_on= "si",  right_on="letra")
 
 # graficos
-
 graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo = "Bienes de Capital")
 graficos(matriz_sisd_ci, impo_tot_sec_ci, comercio_y_propio_ci, letras_ciiu, titulo = "Consumos Intermedios")
 
