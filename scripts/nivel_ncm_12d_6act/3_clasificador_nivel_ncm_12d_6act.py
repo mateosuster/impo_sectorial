@@ -9,9 +9,9 @@ Created on Tue Jun 29 11:04:54 2021
 # Directorio de trabajo y librerias
 # =============================================================================
 import os 
-#os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 # os.getcwd()
 import pandas as pd
@@ -23,10 +23,10 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 
-from Bases_nivel_ncm_12d_6act import *
-from procesamiento_nivel_ncm_12d_6act import *
-from matriz_nivel_ncm_12d_6act import *
-from pre_visualizacion_nivel_ncm_12d_6act import *
+from def_bases_nivel_ncm_12d_6act import *
+from def_procesamiento_nivel_ncm_12d_6act import *
+from def_matriz_nivel_ncm_12d_6act import *
+from def_pre_visualizacion_nivel_ncm_12d_6act import *
 
 
 
@@ -80,6 +80,12 @@ datos = diccionario_especial(datos,ciiu_dig_let) #cambio igal
 letras_mod = letra_nn(datos) # obtencion de LETRA_nn
 datos = pd.concat([datos.drop( ["letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1),  letras_mod ], axis = 1)
 # datos.to_csv("../data/resultados/importaciones_bk_pre_intro_matriz.csv")
+
+#exporto dic ciiu
+datos["actividad1"] = datos["actividad1"].astype(str)
+dic_ciiu_propio = datos[["actividad1", "letra1"]].sort_values(by = "actividad1").drop_duplicates()
+dic_ciiu_propio.to_csv("../data/resultados/dic_ciiu_propio.csv")
+
 
 datos_bk = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
