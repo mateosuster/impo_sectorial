@@ -16,12 +16,7 @@ os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.getcwd()
 import pandas as pd
 import numpy as np
-import re
-import tqdm
 import seaborn as sns
-
-import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
 
 from def_bases_nivel_ncm_12d_6act import *
 from def_procesamiento_nivel_ncm_12d_6act import *
@@ -33,7 +28,12 @@ from def_pre_visualizacion_nivel_ncm_12d_6act import *
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
-#impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv") #falta
+#datos
+#impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv") 
+data_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", sep = ";") #faltan columnas (creo q me quedó un archivo viejo)
+datos_clasificados = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+
+#auxiliares
 clae = pd.read_csv( "../data/clae_nombre.csv")
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
 comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";",encoding="utf-8")
@@ -41,8 +41,6 @@ cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
 bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
 ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
-data_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", sep = ";")
-datos_clasificados = pd.read_csv("../data/resultados/data_modelo_diaria.csv") #falta
 
 # CIIU
 dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
@@ -54,6 +52,7 @@ hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding =
 #           preparación bases               #
 #############################################
 # predo_impo_17(impo_17)
+datos = predo_datamodel(data_predichos, datos_clasificados )
 ncm12_desc_mod = predo_ncm12_desc(ncm12_desc )["ncm_desc"]    
 #impo_d12  = predo_impo_12d(impo_d12, ncm12_desc_mod )
 letras = predo_sectores_nombres(clae)
@@ -61,9 +60,10 @@ comercio = predo_comercio(comercio, clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae)
 bec_bk = predo_bec_bk(bec)#, bec_to_clae)
 dic_stp = predo_stp(dic_stp)
-datos = predo_datamodel(data_predichos, datos_clasificados )
-ciiu_dig_let = predo_ciiu(clae_to_ciiu, dic_ciiu)
+ciiu_dig_let = predo_ciiu(clae_to_ciiu, dic_ciiu,clae)
 
+#exporto dic ciiu
+ciiu_dig_let.to_csv("../data/resultados/dic_clae_ciiu_propio.csv")
 # preprocesamiento CIIU
 # dic_ciiu = predo_dic_ciiu(dic_ciiu)
 # ciiu_letra = predo_ciiu_letra(dic_ciiu, comercio)
@@ -81,10 +81,6 @@ letras_mod = letra_nn(datos) # obtencion de LETRA_nn
 datos = pd.concat([datos.drop( ["letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1),  letras_mod ], axis = 1)
 # datos.to_csv("../data/resultados/importaciones_bk_pre_intro_matriz.csv")
 
-#exporto dic ciiu
-datos["actividad1"] = datos["actividad1"].astype(str)
-dic_ciiu_propio = datos[["actividad1", "letra1"]].sort_values(by = "actividad1").drop_duplicates()
-dic_ciiu_propio.to_csv("../data/resultados/dic_ciiu_propio.csv")
 
 
 datos_bk = asignacion_stp_BK(datos, dic_stp)
