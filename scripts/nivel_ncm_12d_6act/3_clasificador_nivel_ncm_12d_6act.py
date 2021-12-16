@@ -62,12 +62,6 @@ bec_bk = predo_bec_bk(bec)#, bec_to_clae)
 dic_stp = predo_stp(dic_stp)
 ciiu_dig_let = predo_ciiu(clae_to_ciiu, dic_ciiu,clae)
 
-#exporto dic ciiu
-ciiu_dig_let.to_csv("../data/resultados/dic_clae_ciiu_propio.csv")
-# preprocesamiento CIIU
-# dic_ciiu = predo_dic_ciiu(dic_ciiu)
-# ciiu_letra = predo_ciiu_letra(dic_ciiu, comercio)
-
 
 ############################################################
 #  Asignación por STP / modificación de actividades x ncm  #
@@ -82,12 +76,9 @@ datos = pd.concat([datos.drop( ["letra1","letra2","letra3","letra4", "letra5", "
 # datos.to_csv("../data/resultados/importaciones_bk_pre_intro_matriz.csv")
 
 
-
 datos_bk = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
 
-# cuits importadores unicos
-pd.DataFrame(datos.cuit.unique(), columns = ["cuits"]).to_csv("../data/resultados/cuits_importadores_unicos.csv")
 
 #############################################
 #           Tabla de contingencia           #
@@ -141,18 +132,12 @@ matriz_sisd_ci.sum().sum()
 # =============================================================================
 #                       Otros
 # =============================================================================
-
 #exponentes a aplicar a la tabla de contingencia
 z = pd.DataFrame(datos["HS6_d12"].value_counts()).reset_index(drop=True)
-
 z['freq'] = z.groupby('HS6_d12')['HS6_d12'].transform('count')
-
 z =  z.drop_duplicates()
-
 z["expo"] = 2+np.log10(z["HS6_d12"])
-
 sns.lineplot(data= z, x= "HS6_d12", y= "expo")
-
 
 
 # =============================================================================
