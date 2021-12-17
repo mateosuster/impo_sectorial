@@ -52,21 +52,20 @@ dic_stp = predo_stp(dic_stp )
 #############################################
 #                joins                      #
 #############################################
-join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas) #incorpora var destinacion limpia
+join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas) #incorpora var destinacion limpia y borra destinacion
 #join_impo_clae_bec_bk = def_join_impo_clae_bec_bk(join_impo_clae, bec_bk)
+impo_bec = def_join_impo_clae_bec(join_impo_clae, bec)
 
 # =============================================================================
 # EDA BEC5
 # =============================================================================
-impo_bec = def_join_impo_clae_bec(join_impo_clae, bec)
-
 #join_impo_clae["dest_clean"].value_counts()
 # impo_bec[impo_bec["BEC5EndUse"].isnull()]
 # impo_d12[impo_d12["descripcion"].isnull()]
-bec["BEC5EndUse"].value_counts().sum()
-bec[bec["BEC5EndUse"].str.startswith("CAP", na = False)]["BEC5EndUse"].value_counts()#.sum()
-bec[bec["BEC5EndUse"].str.startswith("INT", na = False)]["BEC5EndUse"].value_counts()#.sum()
-bec[bec["BEC5EndUse"].str.startswith("CONS", na = False)]["BEC5EndUse"].value_counts()#.sum()
+# bec["BEC5EndUse"].value_counts().sum()
+# bec[bec["BEC5EndUse"].str.startswith("CAP", na = False)]["BEC5EndUse"].value_counts()#.sum()
+# bec[bec["BEC5EndUse"].str.startswith("INT", na = False)]["BEC5EndUse"].value_counts()#.sum()
+# bec[bec["BEC5EndUse"].str.startswith("CONS", na = False)]["BEC5EndUse"].value_counts()#.sum()
 
 # =============================================================================
 # Bienes de capital
@@ -78,15 +77,14 @@ dic_stp["utilizacion"].value_counts()
 filtro1["dest_clean"].value_counts()#.sum()
 
 # filtro destinacion
-data_clasif , data_not_clasif= clasificacion_BK(filtro1)
+data_clasif_bk , data_not_clasif_bk= clasificacion_BK(filtro1)
 
 # =============================================================================
 #  Exportacion de datos clasificados con UE dest
 # =============================================================================
 ## DATOS CLASIFICADOS
-data_clasif_ue_dest = join_stp_clasif_prop(impo_bec_bk, data_clasif) #guarda csv
-print( "los BK quedan del mismo largo?" , len(data_not_clasif) + len(data_clasif_ue_dest) ==len(impo_bec_bk))
-
+data_clasif_ue_dest_bk = join_stp_clasif_prop(impo_bec_bk, data_clasif_bk) #guarda csv
+print( "los BK quedan del mismo largo?" , len(data_not_clasif_bk) + len(data_clasif_ue_dest_bk) ==len(impo_bec_bk))
 
 # =============================================================================
 # VENN CI
@@ -94,8 +92,6 @@ print( "los BK quedan del mismo largo?" , len(data_not_clasif) + len(data_clasif
 cons_int_clasif, impo_bec_ci = clasificacion_CI(impo_bec)
 cons_int_clasif ["ue_dest"].value_counts()#.sum()
 cons_int_clasif [["filtro", "ue_dest"]].value_counts()#.sum()
-
-
 
 # =============================================================================
 # VENN CONS
@@ -106,27 +102,24 @@ cons_fin_clasif [["filtro", "ue_dest"]].value_counts()#.sum()
 # =============================================================================
 # Consistencia de diagramas
 # =============================================================================
-# len(impo_bec_ci) + len(impo_bec_bk) + len(impo_bec_cons) == len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )
-len(impo_bec_ci) + len(data_not_clasif) + len(data_clasif_ue_dest) + len(impo_bec_cons) == len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )
+len(impo_bec_ci) + len(impo_bec_bk) + len(impo_bec_cons) == len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )
+len(impo_bec_ci) + len(data_not_clasif_bk) + len(data_clasif_ue_dest_bk) + len(impo_bec_cons) == len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()] )
 
 
 # =============================================================================
 # Preprocesamiento de Datos para el modelo
 # =============================================================================
-# datos para el modelo
-data_model = datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif, join_impo_clae, impo_bec) #esta funcion guarda el datamodel.csv
+# Concatenacion de clasificación anterior para el modelo
+data_model = concatenacion_ue_dest(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest_bk,data_not_clasif_bk, join_impo_clae, impo_bec) #concatena y crea algunas vars
 data_model["ue_dest"].value_counts()
-
 len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()] ))
-len(data_model)  - data_model["ue_dest"].value_counts().sum()
 
 # preprocesamiento
-data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model)
-
+data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model) #deja los datos listo para entrenar el modelo
 
 # exportacion de datos
 data_train.to_csv("../data/resultados/data_train_test.csv", index=False)
 data_to_clasif.to_csv("../data/resultados/data_to_pred.csv", index=False)
-
+data_model.to_csv("../data/resultados/data_modelo_diaria.csv", index=False)
 
 

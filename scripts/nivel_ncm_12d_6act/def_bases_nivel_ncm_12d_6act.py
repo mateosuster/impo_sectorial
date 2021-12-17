@@ -222,8 +222,8 @@ def predo_ncm(ncm_sector):
 
 def def_join_impo_clae(impo_anyo_12d, cuit_empresas):
     impo_clae = pd.merge(impo_anyo_12d, cuit_empresas, left_on = "cuit", right_on = "CUIT", how = "right")
-    impo_clae.drop(["CUIT"], axis=1, inplace = True)
     impo_clae["dest_clean"] = impo_clae["destinacion"].apply(lambda x: destinacion_limpio(x))
+    impo_clae.drop(["CUIT", "destinacion"], axis=1, inplace=True)
 
     return impo_clae
 
@@ -565,13 +565,15 @@ def fun_filtro_stp(dic_stp, impo_bec):
 
     return  filtro1,ya_filtrado, impo_bec
 
-def clasificacion_BK(filtro1):
+def clasif_diag(impo_bec, tipo_bien):
+    impo_bec_ci = impo_bec[impo_bec["BEC5EndUse"].str.startswith(tipo_bien, na=False)]
+    impo_bec_ci["dest_clean"].value_counts()  # .sum()
 
-    filtro1st =  filtro1[filtro1["dest_clean"] == "S/TR"]
-    filtro1ct =  filtro1[filtro1["dest_clean"] == "C/TR"]
-    filtro1co =  filtro1[filtro1["dest_clean"] == "CONS&Otros"]
+    filtro1st = impo_bec_ci[impo_bec_ci["dest_clean"] == "S/TR"]
+    filtro1ct = impo_bec_ci[impo_bec_ci["dest_clean"] == "C/TR"]
+    filtro1co = impo_bec_ci[impo_bec_ci["dest_clean"] == "CONS&Otros"]
 
-    print("los conjuntos poseen mismo longitud que el input?",len(filtro1)  == ( len(filtro1st) +len(filtro1ct) + len(filtro1co) ) )
+    print( "Archivos con igual longitud?", len(impo_bec_ci) == (len(filtro1st) + len(filtro1ct) + len(filtro1co)) )
 
     # Filtros de conjuntos
     set_st = set(filtro1st["HS6_d12"])
@@ -580,20 +582,22 @@ def clasificacion_BK(filtro1):
 
     filtro_a = set_st - set_co - set_ct
     filtro_b = set_ct - set_st - set_co
-    filtro_c = set_co - set_ct -set_st
+    filtro_c = set_co - set_ct - set_st
 
-    filtro_d = (set_st & set_co) - (set_ct )
-    filtro_e = (set_ct & set_co) - ( set_st)
+    filtro_d = (set_st & set_co) - (set_ct)
+    filtro_e = (set_ct & set_co) - (set_st)
     filtro_f = (set_ct & set_st) - set_co
     filtro_g = set_ct & set_st & set_co
 
-    dest_a = filtro1[filtro1["HS6_d12"].isin( filtro_a  )]
-    dest_b = filtro1[filtro1["HS6_d12"].isin( filtro_b  )]
-    dest_c = filtro1[filtro1["HS6_d12"].isin( filtro_c  )]
-    dest_d = filtro1[filtro1["HS6_d12"].isin( filtro_d  )]
-    dest_e = filtro1[filtro1["HS6_d12"].isin( filtro_e  )]
-    dest_f = filtro1[filtro1["HS6_d12"].isin( filtro_f  )]
-    dest_g = filtro1[filtro1["HS6_d12"].isin( filtro_g )]
+    dest_a = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_a)]
+    dest_b = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_b)]
+    dest_c = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_c)]
+    dest_d = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_d)]
+    dest_e = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_e)]
+    dest_f = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_f)]
+    dest_g = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_g)]
+
+    print("consistencia de diagramas 2", (len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) + len(dest_b) + len(dest_c)) == len(impo_bec_ci) )
 
     dest_a["filtro"] = "A"
     dest_b["filtro"] = "B"
@@ -603,16 +607,12 @@ def clasificacion_BK(filtro1):
     dest_f["filtro"] = "F"
     dest_g["filtro"] = "G"
 
+    data_post = pd.concat([dest_a, dest_b, dest_c, dest_d, dest_e, dest_f, dest_g], axis=0)
+    return data_post, dest_c
 
-    # Consistencia filtro 2
-    #importaciones detectadas con S/T, C/T y Consumo
-    len(filtro1st) +len(filtro1ct) + len(filtro1co)
 
-    print("conjuntos de destinacion igual al input?",(len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) +len(dest_b)+ len(dest_c)) ==len(filtro1))
-
-    # Concateno el filtro 2
-    filtro1 = pd.concat( [dest_a, dest_b, dest_c, dest_d,  dest_e,  dest_f, dest_g], axis = 0)
-
+def clasificacion_BK(filtro1):
+    filtro1, dest_c = clasif_diag(filtro1, "CAP")
 
     # filtro1["ue_dest"].value_counts()
     filtro1["ue_dest"] = np.where((filtro1["filtro"] == "A") &
@@ -624,7 +624,7 @@ def clasificacion_BK(filtro1):
                                                 )
                                     )
 
-    filtro1[["ue_dest", "filtro"]].value_counts()
+    # filtro1[["ue_dest", "filtro"]].value_counts()
 
 
     filtro2 = filtro1[filtro1["ue_dest"] == "" ]
@@ -757,48 +757,9 @@ def join_stp_clasif_prop(join_impo_clae_bec_bk, data_clasif):
 
 
 def clasificacion_CI(impo_bec):
+    cons_int , dest_c= clasif_diag(impo_bec, "INT")
     impo_bec_ci = impo_bec[impo_bec["BEC5EndUse"].str.startswith("INT", na=False)]
-    impo_bec_ci["dest_clean"].value_counts()  # .sum()
 
-    filtro1st = impo_bec_ci[impo_bec_ci["dest_clean"] == "S/TR"]
-    filtro1ct = impo_bec_ci[impo_bec_ci["dest_clean"] == "C/TR"]
-    filtro1co = impo_bec_ci[impo_bec_ci["dest_clean"] == "CONS&Otros"]
-
-    print( "consistencia de diagramas", len(impo_bec_ci) == (len(filtro1st) + len(filtro1ct) + len(filtro1co)) )
-
-    # Filtros de conjuntos
-    set_st = set(filtro1st["HS6_d12"])
-    set_ct = set(filtro1ct["HS6_d12"])
-    set_co = set(filtro1co["HS6_d12"])
-
-    filtro_a = set_st - set_co - set_ct
-    filtro_b = set_ct - set_st - set_co
-    filtro_c = set_co - set_ct - set_st
-
-    filtro_d = (set_st & set_co) - (set_ct)
-    filtro_e = (set_ct & set_co) - (set_st)
-    filtro_f = (set_ct & set_st) - set_co
-    filtro_g = set_ct & set_st & set_co
-
-    dest_a = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_a)]
-    dest_b = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_b)]
-    dest_c = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_c)]
-    dest_d = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_d)]
-    dest_e = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_e)]
-    dest_f = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_f)]
-    dest_g = impo_bec_ci[impo_bec_ci["HS6_d12"].isin(filtro_g)]
-
-    print("consistencia de diagramas 2", (len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) + len(dest_b) + len(dest_c)) == len(impo_bec_ci) )
-
-    dest_a["filtro"] = "A"
-    dest_b["filtro"] = "B"
-    dest_c["filtro"] = "C"
-    dest_d["filtro"] = "D"
-    dest_e["filtro"] = "E"
-    dest_f["filtro"] = "F"
-    dest_g["filtro"] = "G"
-
-    cons_int = pd.concat([dest_a, dest_b, dest_c, dest_d, dest_e, dest_f, dest_g], axis=0)
     cons_int["metric"] = cons_int.apply(lambda x: metrica(x), axis=1)
 
     # A , B, C, E
@@ -879,48 +840,8 @@ def clasificacion_CI(impo_bec):
 
 
 def clasificacion_CONS(impo_bec):
+    cons_fin , dest_c= clasif_diag(impo_bec, "CONS")
     impo_bec_cons = impo_bec[impo_bec["BEC5EndUse"].str.startswith("CONS", na=False)]
-    impo_bec_cons["dest_clean"].value_counts()  # .sum()
-
-    filtro1st = impo_bec_cons[impo_bec_cons["dest_clean"] == "S/TR"]
-    filtro1ct = impo_bec_cons[impo_bec_cons["dest_clean"] == "C/TR"]
-    filtro1co = impo_bec_cons[impo_bec_cons["dest_clean"] == "CONS&Otros"]
-
-    print("consistencia de diagramas", len(impo_bec_cons) == (len(filtro1st) + len(filtro1ct) + len(filtro1co)) )
-
-    # Filtros de conjuntos
-    set_st = set(filtro1st["HS6_d12"])
-    set_ct = set(filtro1ct["HS6_d12"])
-    set_co = set(filtro1co["HS6_d12"])
-
-    filtro_a = set_st - set_co - set_ct
-    filtro_b = set_ct - set_st - set_co
-    filtro_c = set_co - set_ct - set_st
-
-    filtro_d = (set_st & set_co) - (set_ct)
-    filtro_e = (set_ct & set_co) - (set_st)
-    filtro_f = (set_ct & set_st) - set_co
-    filtro_g = set_ct & set_st & set_co
-
-    dest_a = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_a)]
-    dest_b = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_b)]
-    dest_c = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_c)]
-    dest_d = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_d)]
-    dest_e = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_e)]
-    dest_f = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_f)]
-    dest_g = impo_bec_cons[impo_bec_cons["HS6_d12"].isin(filtro_g)]
-
-    print("consistencia de diagramas 2", (len(dest_d) + len(dest_e) + len(dest_f) + len(dest_g) + len(dest_a) + len(dest_b) + len(dest_c)) == len(impo_bec_cons) )
-
-    dest_a["filtro"] = "A"
-    dest_b["filtro"] = "B"
-    dest_c["filtro"] = "C"
-    dest_d["filtro"] = "D"
-    dest_e["filtro"] = "E"
-    dest_f["filtro"] = "F"
-    dest_g["filtro"] = "G"
-
-    cons_fin = pd.concat([dest_a, dest_b, dest_c, dest_d, dest_e, dest_f, dest_g], axis=0)
 
     # A, B, C, E
     cons_fin["ue_dest"] = np.where((cons_fin["filtro"] == "B") |
@@ -1003,48 +924,40 @@ def clasificacion_CONS(impo_bec):
     cons_fin_clasif = pd.concat([cons_fin_D, cons_fin_G_clasif, cons_fin[cons_fin["filtro"].str.contains("A|B|C|E")]])
     return cons_fin_clasif, impo_bec_cons
 
-def datos_modelo(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif, join_impo_clae, impo_bec):
+def concatenacion_ue_dest(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif, join_impo_clae, impo_bec):
     # impo_ue_dest = pd.concat([pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha", 'metric', 'ue_dest', 'mad', 'median', 'z_score'], axis = 1), bk], axis =0)
     cicf_ue_dest = pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha",  'mad', 'median', 'z_score'], axis = 1) #, bk], axis =0)
     cicf_ue_dest["precio_kilo"] =  cicf_ue_dest["valor"]/cicf_ue_dest["kilos"]
 
-    # bk_ue_dest = pd.read_csv("../data/resultados/bk_con_ue_dest.csv")
     bk_ue_dest = data_clasif_ue_dest#.copy().drop(['HS4', 'HS4Desc', 'HS6Desc', "BEC5Category"], 1)
-
-    # bk_sin_ue_dest = pd.read_csv("../data/resultados/bk_sin_ue_dest.csv")
     bk_sin_ue_dest = data_not_clasif#.drop(['HS4', 'HS4Desc', 'HS6Desc', "BEC5Category"], 1)
 
     print("registros faltantes?", (len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()])) - (len(bk_sin_ue_dest) + len(bk_ue_dest) + len(cicf_ue_dest)))
-
     data_model = pd.concat([bk_sin_ue_dest , bk_ue_dest, cicf_ue_dest ], axis = 0)
-
 
     #PREPROCESAMIENTO
     data_model ['HS6'] = data_model ['HS6'].astype("str")
     data_model ['HS8'] = data_model ['HS6_d12'].str.slice(0,8)
     data_model ['HS10'] = data_model ['HS6_d12'].str.slice(0,10)
-
     data_model["actividades"] = data_model["letra1"] + data_model["letra2"] + data_model["letra3"] + data_model[
         "letra4"] + data_model["letra5"] + data_model["letra6"]
     data_model["act_ordenadas"] = data_model["actividades"].apply(
         lambda x: "".join(sorted(x)))  # "".join(sorted(data_model["actividades"]))
 
-
     # preprocesamiento etiquetados
-    cols = ["HS6", "HS8", "HS10",
-            'valor', 'kilos', "precio_kilo",
-            "letra1", "letra2", "letra3", "letra4", "letra5", "letra6",
-            "act_ordenadas",
+    cols = ["cuit", "NOMBRE",
+            "HS6", "HS8", "HS10", "HS6_d12",
             "uni_est", "cant_est", "uni_decl", "cant_decl",
-            "metric",
+            'valor', 'kilos', "precio_kilo", "metric",
+            "letra1", "letra2", "letra3", "letra4", "letra5", "letra6",
+            "actividad1","actividad2","actividad3","actividad4","actividad5","actividad6",
+            "act_ordenadas",
+            "dest_clean", "filtro", "BEC5EndUse",
             "ue_dest"]
 
     data_model = data_model[cols]
 
-    data_model.to_csv("../data/resultados/data_modelo_diaria.csv", index=False)
-
     return data_model
-
 
 
 def str_a_num(df):
@@ -1059,15 +972,21 @@ def str_a_num(df):
   return df
 
 def predo_datos_modelo(data_model):
-# data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
-# Filtros de columnas
+    # data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+    # Filtros de columnas
+    cols_reservadas = ["cuit", "NOMBRE", "HS6_d12",  "dest_clean",
+                       "actividad1","actividad2","actividad3","actividad4","actividad5","actividad6",
+                       "act_ordenadas"
+                       "uni_est", "uni_decl", "BEC5EndUse", "filtro" ,
+                       "ue_dest" ]
     cat_col = list(data_model.select_dtypes(include=['object']).columns)
-    cat_col = [elem for elem in cat_col if elem not in ["NOMBRE", "destinacion", "dest_cod", "uni_est", "uni_decl", "descripcion","BEC5EndUse", "ue_dest","filtro", "actividades" ] ]
+    cat_col = [elem for elem in cat_col if elem not in cols_reservadas ]
     
     num_col = list(data_model.select_dtypes(include=['float', "int64"]).columns)
     num_col = [elem for elem in num_col if elem != "cuit"]
 
-    data_pre = pd.concat( [ str_a_num(data_model[cat_col]) , data_model[num_col], data_model["ue_dest"] ], axis = 1  )
+    one_hot = pd.get_dummies(data_model, columns= ["BEC5EndUse"])[["BEC5EndUse_CAP", "BEC5EndUse_INT", "BEC5EndUse_CONS"]]
+    data_pre = pd.concat( [ str_a_num(data_model[cat_col]) , data_model[num_col], one_hot, data_model["ue_dest"] ], axis = 1  )
 
     # datos etiquetados
     data_train = data_pre[data_pre ["ue_dest"] != "?" ]
