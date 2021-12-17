@@ -35,25 +35,15 @@ switch ( Sys.info()[['sysname']],
 )
 
 
-#CLAE to CIIU
-clae.ciiu.path<- paste0(data.folder,"/Pasar de CLAE6 a CIIU3.xlsx")
-clae.ciiu <- read_excel(clae.ciiu.path, col_types = c("text","text","text"))
-setDT(clae.ciiu)
-clae.ciiu <- clae.ciiu[, clae6:= str_pad(clae6, 6, pad = "0")]
-clae.ciiu <- clae.ciiu[, ciiu3_4c:= str_pad(ciiu3_4c, 4, pad = "0")]
-clae.ciiu <- clae.ciiu %>% select(clae6,ciiu3_4c)
-
-
-#CIIU PROPIOS
-ciiu.propios.path <- paste0(data.folder,"/resultados/dic_ciiu_propio.csv")
-ciiu.propios <- fread(ciiu.propios.path, colClasses = c("character","character"))
-ciiu.propios <- ciiu.propios[, actividad1:= ifelse(nchar(actividad1)==3,
-                                                   str_pad(actividad1,4, pad = "0"),
-                                                   actividad1)]
-ciiu.propios <- ciiu.propios[, actividad1:= ifelse(nchar(actividad1)==5,
-                                                   str_pad(actividad1,6, pad = "0"),
-                                                   actividad1)]
-
+#CLAE to CIIU_LETRA
+clae_ciiu_letra.propios.path <- paste0(data.folder,"/resultados/dic_clae_ciiu_propio.csv")
+clae_ciiu_letra <- fread(clae_ciiu_letra.propios.path, colClasses = c("character","character",
+                                                        "character","character",
+                                                        "character","character",
+                                                        "character"),
+                      select = c("clae6","propio_letra_2"))
+clae_ciiu_letra <- clae_ciiu_letra[ , clae6:=str_pad(clae6, 6, pad = "0")]
+clae_ciiu_letra <- clae_ciiu_letra[clae6!="000000",]
 
 #ZONA to PROVINCIA
 zona.prov.path <- paste0(data.folder,"/zona_loc.csv")
@@ -74,8 +64,8 @@ Ntrab.prom.mens_by_anio.zona.clae <- function(file.list){
   
   frames <- data.table()
   
-  #for (f in file.list){
-  for (f in files){
+  for (f in file.list){
+  #for (f in files){
     name <- str_extract(f, '[m][0-9]+')
     cat("Processing...", name,"\n")
     df <- fread(f, select = cols)
@@ -85,52 +75,35 @@ Ntrab.prom.mens_by_anio.zona.clae <- function(file.list){
     agr <- agr[clae6!="000000"] #saco los clae6==0 --> no tienen asignación de actividad
     
     #join con clae.ciiu
-    agr <- inner_join(agr, clae.ciiu, by= c("clae6"="clae6"))
-    nomb1 <- names(agr)
-    nomb2 <- append(nomb1,c("letra1"))
-    agr <- left_join(agr, ciiu.propios, by=c("clae6"="actividad1")) %>% select(nomb2)
-    nomb2 <- append(nomb1, c("letraA"))
-    names(agr) <- nomb2
-    nomb3 <- append(nomb2, c("letra1"))
-    agr <- left_join(agr, ciiu.propios, by = c("ciiu3_4c"="actividad1")) %>% select(nomb3)
-    nomb3 <- append(nomb2, c("letraB"))
-    names(agr) <- nomb3
-    agr <- agr[,letra_ciiu:= ifelse(is.na(letraA),letraB,letraA)]
-    
-    selected.cols <- c("cuit","zona","mes","anio","letra_ciiu","Ncuil")
-    agr <- agr %>% select(all_of(selected.cols))
+    agr <- inner_join(agr, clae_ciiu_letra, by= c("clae6"="clae6"))
     
     #Join con zona.prov
     agr <- inner_join(agr, zona.prov, by= c("zona"="zona"))
-    agr <- agr[, .(SumMes = sum(Ncuil)), by= c("letra_ciiu","zona_prov","mes","anio")] #Suma de los cuils únicos
-    frames <- setDT(rbind(frames, b))
+    agr <- agr[, .(SumMes = sum(Ncuil)), by= c("propio_letra_2","zona_prov","mes","anio")] #Suma de los cuils únicos
+    frames <- setDT(rbind(frames, agr))
     cat("Done...", name,"\n")
-    
-  }
+    }
   
   #Calculo pŕomedio mensual 
-  frames <- frames[, .(Ntrab.prom_mens = sum(SumMes)/12), by= c("letra_ciiu","zona_prov","anio")] #Acá siempre vamos a contar con anios de 12 meses
+  frames <- frames[, .(Ntrab.prom_mens = sum(SumMes)/12), by= c("propio_letra_2","zona_prov","anio")] #Acá siempre vamos a contar con anios de 12 meses
   
   #Realizo join con densidad
-  names(frames) <- c("letra_ciiu","provincia","anio","ntrab_pmens")
+  names(frames) <- c("propio_letra_2","provincia","anio","ntrab_pmens")
   frames <- left_join(frames, densidad, by= c("provincia"="Provincia")) %>% 
-                   select(letra_ciiu, provincia, anio, ntrab_pmens, densidad)
+                   select(propio_letra_2, provincia, anio, ntrab_pmens, densidad)
   
   
-  frames <- frames %>% group_by(letra_ciiu,anio) %>% mutate(prop = ntrab_pmens/sum(ntrab_pmens))
+  #Hago la agregación
+  frames <- frames %>% group_by(propio_letra_2,anio) %>% mutate(prop = ntrab_pmens/sum(ntrab_pmens))
   setDT(frames)
   frames <- frames[, dens_prop:= densidad * prop]
-  frames <- frames %>% group_by(letra_ciiu, anio) %>% summarise(dens_prop = sum(dens_prop))
-  
+  frames <- frames %>% group_by(propio_letra_2, anio) %>% summarise(dens_prop = sum(dens_prop))
   frames <- frames %>% mutate(inv.dens_prop = 1/dens_prop)
-  
   sum.inv.dens_prop <- sum(frames$inv.dens_prop)
-  
   frames <- frames %>% group_by(anio) %>% mutate(coeficiente = inv.dens_prop/sum.inv.dens_prop)
   
   #Me quedo con lo que me interesa nomás. 
-  frames <- frames %>% select(letra_ciiu, anio, coeficiente)
-  
+  frames <- frames %>% select(propio_letra_2, anio, coeficiente)
   return(frames)
 }
 
