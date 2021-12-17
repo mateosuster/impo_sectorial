@@ -84,11 +84,13 @@ datos_ci = filtro_ci(datos)
 #           Tabla de contingencia           #
 #              producto-sector              #
 #############################################
+comercio["clae6"] = comercio["clae6"].astype(str)
+comercio_ci["clae6"] = comercio_ci["clae6"].astype(str)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(datos_bk , comercio) 
 join_impo_clae_bec_ci_comercio = def_join_impo_clae_bec_bk_comercio(datos_ci , comercio_ci, ci = True)
 
 tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio, datos)
-tabla_contingencia_ci = def_contingencia(join_impo_clae_bec_ci_comercio)
+tabla_contingencia_ci = def_contingencia(join_impo_clae_bec_ci_comercio, datos)
 
 #############################################
 #      ponderación por ncm y letra          #
@@ -118,7 +120,8 @@ asign_pre_matriz_ci= def_matriz_c_prob(matriz_sisd_insumo_ci)
 #matriz SISD
 matriz_sisd = to_matriz(asign_pre_matriz)
 matriz_sisd_ci = to_matriz(asign_pre_matriz_ci, ci = True)
-# matriz_sisd= pd.read_csv("../data/resultados/matriz_sisd.csv")
+matriz_sisd= pd.read_csv("../data/resultados/matriz_sisd.csv")
+# matriz_sisd_ci= pd.read_csv("../data/resultados/matriz_sisd_ci.csv")
 
 matriz_hssd  = pd.pivot_table(asign_pre_matriz, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
 matriz_hssd_ci  = pd.pivot_table(asign_pre_matriz_ci, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
@@ -145,7 +148,9 @@ sns.lineplot(data= z, x= "HS6_d12", y= "expo")
 # =============================================================================
 #preprocesamiento
 sectores_desc = sectores() #Sectores CLAE
-letras_ciiu = dic_graf(matriz_sisd_ci, dic_ciiu)
+# letras_ciiu = dic_graf(matriz_sisd_ci, dic_ciiu)
+letras_ciiu = dic_graf(matriz_sisd, dic_ciiu)
+letras_ciiu.to_csv("../data/resultados/desc_letra_propio.csv", index = False)
 letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,15)
 
 impo_tot_sec = impo_total(matriz_sisd, sectores_desc= False, letras_ciiu = letras_ciiu) 

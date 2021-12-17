@@ -14,16 +14,15 @@ os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
 import seaborn as sns
 # import plotinpy as pnp
 
 # import prince
 # from prince import ca
-from nivel_ncm_12d_6act.Bases_nivel_ncm_12d_6act import *
-from nivel_ncm_12d_6act.procesamiento_nivel_ncm_12d_6act import *
-from nivel_ncm_12d_6act.matriz_nivel_ncm_12d_6act import *
-from nivel_ncm_12d_6act.pre_visualizacion_nivel_ncm_12d_6act import *
+from def_bases_nivel_ncm_12d_6act import *
+from def_procesamiento_nivel_ncm_12d_6act import *
+from def_matriz_nivel_ncm_12d_6act import *
+from def_pre_visualizacion_nivel_ncm_12d_6act import *
 
 # =============================================================================
 # Cargo datos 
@@ -42,7 +41,7 @@ ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 ncm12_desc = predo_ncm12_desc(ncm12_desc )["ncm_desc"]    
 sectores_desc = sectores() #Sectores CLAE
 letras_ciiu = pd.DataFrame(matriz_sisd.index)
-impo_tot_sec = impo_total(z = matriz_sisd, sectores_desc= False) 
+impo_tot_sec = impo_total(matriz_sisd = matriz_sisd,letras_ciiu=letras_ciiu, sectores_desc= False) 
 comercio_y_propio = impo_comercio_y_propio(matriz_sisd, sectores_desc = False) 
 
 dic_ciiu.info()
@@ -53,9 +52,6 @@ x = dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith("34")]
 # CIIU
 # =============================================================================
 impo_ciiu_letra = impo_ciiu_letra(hs_to_isic , dic_ciiu, datos_bk )
-
-
-
 
 
 
