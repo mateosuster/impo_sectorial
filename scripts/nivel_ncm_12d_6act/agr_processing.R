@@ -34,6 +34,7 @@ switch ( Sys.info()[['sysname']],
          Linux   = {data.folder <- "./data"} #Nacho
 )
 
+
 #CLAE to CIIU
 clae.ciiu.path<- paste0(data.folder,"/Pasar de CLAE6 a CIIU3.xlsx")
 clae.ciiu <- read_excel(clae.ciiu.path, col_types = c("text","text","text"))
@@ -41,6 +42,17 @@ setDT(clae.ciiu)
 clae.ciiu <- clae.ciiu[, clae6:= str_pad(clae6, 6, pad = "0")]
 clae.ciiu <- clae.ciiu[, ciiu3_4c:= str_pad(ciiu3_4c, 4, pad = "0")]
 clae.ciiu <- clae.ciiu %>% select(clae6,ciiu3_4c)
+
+
+#CIIU PROPIOS
+ciiu.propios.path <- paste0(data.folder,"/resultados/dic_ciiu_propio.csv")
+ciiu.propios <- fread(ciiu.propios.path, colClasses = c("character","character"))
+ciiu.propios <- ciiu.propios[, actividad1:= ifelse(nchar(actividad1)==3,
+                                                   str_pad(actividad1,4, pad = "0"),
+                                                   actividad1)]
+ciiu.propios <- ciiu.propios[, actividad1:= ifelse(nchar(actividad1)==5,
+                                                   str_pad(actividad1,6, pad = "0"),
+                                                   actividad1)]
 
 
 #ZONA to PROVINCIA
@@ -62,8 +74,8 @@ Ntrab.prom.mens_by_anio.zona.clae <- function(file.list){
   
   frames <- data.table()
   
-  for (f in file.list){
-  #for (f in files){
+  #for (f in file.list){
+  for (f in files){
     name <- str_extract(f, '[m][0-9]+')
     cat("Processing...", name,"\n")
     df <- fread(f, select = cols)
@@ -71,29 +83,44 @@ Ntrab.prom.mens_by_anio.zona.clae <- function(file.list){
     agr <- df[, .(Ncuil = uniqueN(cuil)), by = c("cuit","clae6","zona","mes","anio")] #Cuantos empleados hay por empresa, clae y zona en un mes/anio determinado
     agr <- agr[, clae6:= str_pad(clae6, 6, pad = "0")]
     agr <- agr[clae6!="000000"] #saco los clae6==0 --> no tienen asignación de actividad
+    
     #join con clae.ciiu
     agr <- inner_join(agr, clae.ciiu, by= c("clae6"="clae6"))
+    nomb1 <- names(agr)
+    nomb2 <- append(nomb1,c("letra1"))
+    agr <- left_join(agr, ciiu.propios, by=c("clae6"="actividad1")) %>% select(nomb2)
+    nomb2 <- append(nomb1, c("letraA"))
+    names(agr) <- nomb2
+    nomb3 <- append(nomb2, c("letra1"))
+    agr <- left_join(agr, ciiu.propios, by = c("ciiu3_4c"="actividad1")) %>% select(nomb3)
+    nomb3 <- append(nomb2, c("letraB"))
+    names(agr) <- nomb3
+    agr <- agr[,letra_ciiu:= ifelse(is.na(letraA),letraB,letraA)]
+    
+    selected.cols <- c("cuit","zona","mes","anio","letra_ciiu","Ncuil")
+    agr <- agr %>% select(all_of(selected.cols))
     
     #Join con zona.prov
     agr <- inner_join(agr, zona.prov, by= c("zona"="zona"))
-    agr <- agr[, .(SumMes = sum(Ncuil)), by= c("ciiu3_4c","zona_prov","mes","anio")] #Suma de los cuils únicos
-    frames <- setDT(rbind(frames, agr))
+    agr <- agr[, .(SumMes = sum(Ncuil)), by= c("letra_ciiu","zona_prov","mes","anio")] #Suma de los cuils únicos
+    frames <- setDT(rbind(frames, b))
     cat("Done...", name,"\n")
+    
   }
   
   #Calculo pŕomedio mensual 
-  frames <- frames[, .(Ntrab.prom_mens = sum(SumMes)/12), by= c("ciiu3_4c","zona_prov","anio")] #Acá siempre vamos a contar con anios de 12 meses
+  frames <- frames[, .(Ntrab.prom_mens = sum(SumMes)/12), by= c("letra_ciiu","zona_prov","anio")] #Acá siempre vamos a contar con anios de 12 meses
   
   #Realizo join con densidad
-  names(frames) <- c("ciiu","provincia","anio","ntrab_pmens")
+  names(frames) <- c("letra_ciiu","provincia","anio","ntrab_pmens")
   frames <- left_join(frames, densidad, by= c("provincia"="Provincia")) %>% 
-                   select(ciiu, provincia, anio, ntrab_pmens, densidad)
+                   select(letra_ciiu, provincia, anio, ntrab_pmens, densidad)
   
   
-  frames <- frames %>% group_by(ciiu,anio) %>% mutate(prop = ntrab_pmens/sum(ntrab_pmens))
+  frames <- frames %>% group_by(letra_ciiu,anio) %>% mutate(prop = ntrab_pmens/sum(ntrab_pmens))
   setDT(frames)
   frames <- frames[, dens_prop:= densidad * prop]
-  frames <- frames %>% group_by(ciiu, anio) %>% summarise(dens_prop = sum(dens_prop))
+  frames <- frames %>% group_by(letra_ciiu, anio) %>% summarise(dens_prop = sum(dens_prop))
   
   frames <- frames %>% mutate(inv.dens_prop = 1/dens_prop)
   
@@ -102,7 +129,7 @@ Ntrab.prom.mens_by_anio.zona.clae <- function(file.list){
   frames <- frames %>% group_by(anio) %>% mutate(coeficiente = inv.dens_prop/sum.inv.dens_prop)
   
   #Me quedo con lo que me interesa nomás. 
-  frames <- frames %>% select(ciiu, anio, coeficiente)
+  frames <- frames %>% select(letra_ciiu, anio, coeficiente)
   
   return(frames)
 }
@@ -122,3 +149,6 @@ fwrite(frames, paste0(csv_agr_folder,"/","mectra_agr_", Sys.Date(),".csv"))
 
 rm(list=ls())
 gc()
+
+
+
