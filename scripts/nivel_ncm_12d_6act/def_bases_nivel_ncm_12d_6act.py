@@ -210,10 +210,9 @@ def predo_bec_bk(bec):#, bec_to_clae):
 
 
 def predo_stp(dic_stp ):
-
     dic_stp.columns = ["NCM", "desc", "ciiu", "desc_gral", "utilizacion", "demanda"]
     dic_stp.dropna(thresh = 3, inplace= True)
-    agro_stp = dic_stp[dic_stp["demanda"].str.contains("agrí", case = False)]
+    # agro_stp = dic_stp[dic_stp["demanda"].str.contains("agrí", case = False)]
 
     return dic_stp
 
@@ -243,8 +242,6 @@ def def_join_impo_clae_bec_bk(join_impo_clae, bec_bk):
 
 
 def def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio, ci = False):
-   
-    
     if ci == False:    
         #comercio = comercio.drop(["vta_vehiculos"], axis=1)
         comercio2 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk2", "vta_sec": "vta_sec2"})
@@ -421,7 +418,7 @@ def predo_dic_ciiu(dic_ciiu):
 
 
 
-def predo_ciiu(clae_to_ciiu, dic_ciiu):
+def predo_ciiu(clae_to_ciiu, dic_ciiu,clae):
     # Join ciiu digitos con letra (posee clae para hacer el join)
     clae_to_ciiu.loc[clae_to_ciiu["ciiu3_4c"].isnull(),"ciiu3_4c"  ] = 4539
     ciiu_dig_let = pd.merge(dic_ciiu[["ciiu3_4c", "ciiu3_letra"]], clae_to_ciiu.drop("clae6_desc", 1), left_on = "ciiu3_4c", right_on = "ciiu3_4c" , how = "inner") #"ciiu3_4c_desc"
@@ -437,6 +434,18 @@ def predo_ciiu(clae_to_ciiu, dic_ciiu):
                                     # "ciiu3_4c_desc" : ["", "", "", ""],
                                     'ciiu3_4c': ["2429", "6350", "5121", "29_30_31_32_33"]})    
     ciiu_dig_let = pd.concat([ciiu_dig_let, claes_faltantes ], axis = 0)
+    clae["clae6"] = clae["clae6"].astype("int64")
+    ciiu_dig_let = pd.merge(ciiu_dig_let , clae[["clae6", "letra"]], how = "left", left_on= "clae6", right_on= "clae6").rename(columns = {"letra": "clae6_letra"})
+    
+    ciiu_dig_let["propio"] = np.where(ciiu_dig_let["clae6_letra"]=="G",ciiu_dig_let["clae6"], ciiu_dig_let["ciiu3_4c"]   )  
+    ciiu_dig_let["propio_letra"] = np.where(ciiu_dig_let["clae6_letra"]=="G", ciiu_dig_let["clae6_letra"], ciiu_dig_let["ciiu3_letra"]   )
+    ciiu_dig_let["propio_letra_2"] =np.where(ciiu_dig_let["propio_letra"].isin( ["H", "I"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
+                                               np.where(ciiu_dig_let["propio_letra"]=="D", np.where(ciiu_dig_let["propio"]=="29_30_31_32_33", "D_29_30_31_32_33",
+                                                                                                    "D"+"_"+ciiu_dig_let["propio"].str.slice(start=0,stop=2) 
+                                                                                                    ), ciiu_dig_let["propio_letra"] 
+                                                        ) )
+                                                      
+    
     return ciiu_dig_let
 
 
