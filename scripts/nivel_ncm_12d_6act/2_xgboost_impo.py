@@ -219,7 +219,6 @@ y_pred_ = best_xgb.predict_proba(X_test)
 y_pred_df = pd.DataFrame(y_pred_, index=X_test.index , columns= ["prob_CI", "prob_BK"])
 y_pred_df["ue_dest"]  = np.where(y_pred_df["prob_BK"] > punto_optimo, 1, 0)
 
-
 roc_auc_score(y_test,y_pred_df["ue_dest"])
 confusion_matrix(y_test, y_pred_df["ue_dest"], normalize= "pred")#, labels= [1, 0 ])
 cm = confusion_matrix(y_test, y_pred_df["ue_dest"])
@@ -238,21 +237,7 @@ ax.xaxis.set_ticklabels(['CI', 'BK']); ax.yaxis.set_ticklabels(['CI', 'BK']);
 print(classification_report(y_test, y_pred_df["ue_dest"]) )
 
 
-
 """## Entrenamiento con todos los datos"""
-
-# xgb_all = xgb.sklearn.XGBClassifier(base_score=0.5, booster='gbtree',
-#               colsample_bylevel=0.9176911274292641, colsample_bynode=1,
-#               colsample_bytree=0.2362802135886268, gamma=0, gpu_id=-1,
-#               importance_type='gain', interaction_constraints='',
-#               learning_rate=0.4089751175210069, max_delta_step=0, max_depth=17,
-#               min_child_weight=1,  monotone_constraints='()',
-#               n_estimators=54, n_jobs=16, nthread=-1, num_parallel_tree=1,
-#               random_state=semilla, reg_alpha=34.93982083457318,
-#               reg_lambda=28.683948734756893, scale_pos_weight=1, seed=42,
-#               silent=False, subsample=0.7536819429003822, tree_method='exact',
-#               validate_parameters=1, verbosity=None, enable_categorical=False)
-
 best_xgb.get
 
 xgb_all = xgb.sklearn.XGBClassifier(**mejores_parametros, seed=semilla)
@@ -273,7 +258,7 @@ pickle.dump(best_xgb, open('modelos\\xgboost_train_cv.sav', 'wb')) #guarda el mo
 best_xgb = pickle.load(open('modelos\\xgboost_train_cv.sav', 'rb')) #carga
 
 pickle.dump(xgb_all, open('modelos\\xgboost_all_data.sav', 'wb'))
-#xgb_all = pickle.load(open('modelos\\xgboost_all_data.sav', 'rb'))
+xgb_all = pickle.load(open('modelos\\xgboost_all_data.sav', 'rb'))
 
 
 with open('modelos\\mejores_parametros.json', 'w') as fp:
@@ -288,7 +273,7 @@ clasificacion_df["ue_dest"]  = np.where(clasificacion_df["prob_BK"] > punto_opti
 clasificacion_df["ue_dest"].value_counts()
 
 datos_predichos = data_model[data_model ["ue_dest"] == "?" ] #data model posee todos los datos
-datos_predichos["bk_dummy"] = clasificacion_df["ue_dest"] 
+datos_predichos["bk_dummy"] = clasificacion_df["ue_dest"]
 datos_predichos.to_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", index= False, sep = ";")
 # datos_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
 
@@ -297,6 +282,8 @@ plt.hist(x = "bk_dummy", data = datos_predichos )
 for boolean , text in zip([True, False], ["Frecuencias Relativas", "Frecuencias Abosolutas"] ):
   print(text+"\n", datos_predichos.bk_dummy.value_counts(normalize= boolean), "\n" )
 
+datos_clasificados = pd.concat([data_model[data_model ["ue_dest"] != "?" ], datos_predichos],axis= 0)
+len(datos_clasificados) == len(data_model)
 
 # Clasficacion de Xgboost entrenado con todos los datos
 # clasificacion_df.to_csv("../data/resultados/datos_clasificados_modelo_train.csv")
