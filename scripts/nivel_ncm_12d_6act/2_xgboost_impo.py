@@ -42,7 +42,8 @@ data_pre = pd.read_csv( "../data/resultados/data_train_test.csv") #data_pre y da
 data_2pred = pd.read_csv("../data/resultados/data_to_pred.csv")
 data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")  #data_model posee los datos que se utilizaran en el script 3
 
-data_pre.info()
+#SELECCIOONAR LAS COLUMNAS RELEVANTES
+data_pre.info() 
 data_2pred.info()
 data_model.info()
 
