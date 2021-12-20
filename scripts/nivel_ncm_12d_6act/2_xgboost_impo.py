@@ -138,7 +138,7 @@ cv_results.info()
 plt.hist(cv_results["mean_test_score"])
 plt.hist(cv_results["std_test_score"])
 
-x = cv_results.sort_values("std_test_score")
+params_stables = cv_results.sort_values("std_test_score")["params"][0]
 
 mejores_parametros = random_search.best_params_
 mejores_parametros
@@ -259,9 +259,10 @@ best_xgb = pickle.load(open('modelos\\xgboost_train_cv.sav', 'rb')) #carga
 pickle.dump(xgb_all, open('modelos\\xgboost_all_data.sav', 'wb'))
 xgb_all = pickle.load(open('modelos\\xgboost_all_data.sav', 'rb'))
 
-
-with open('modelos\\mejores_parametros_10iters.json', 'w') as fp:
+with open('modelos\\mejores_parametros_100iters.json', 'w') as fp:
     json.dump(mejores_parametros, fp)
+with open('modelos\\mejores_estables_100iters.json', 'w') as fp:
+    json.dump(params_stables, fp)
 
 ###############################################
 # datos a predecir
