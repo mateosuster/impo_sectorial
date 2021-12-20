@@ -3,7 +3,7 @@ globals().clear()
 
 import os
 # os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
-# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 import pandas as pd
@@ -100,7 +100,7 @@ classifier = xgb.sklearn.XGBClassifier(nthread=-1, objective= 'binary:logistic',
 parameters = {'silent': [False],
         'max_depth':  range(1, 20, 2),
         "max_leaves": range(0, 1000, 10),
-        'learning_rate': dists.uniform(0.01, 1), # continuous distribution
+        'learning_rate': dists.uniform(0.001, 1), # continuous distribution
         # param2=dists.randint(16, 512 + 1), # discrete distribution
         # param3=['foo', 'bar'],             # specifying possible values directly
         "min_child_weight": range(1, 50, 2),
@@ -110,7 +110,7 @@ parameters = {'silent': [False],
         'colsample_bylevel': dists.uniform(0.001, 0.999),
         'reg_lambda':dists.uniform(1, 100),
         'reg_alpha': dists.uniform(1, 200),
-        'n_estimators': range(10, 100, 1),
+        'n_estimators': range(50, 200, 1),
         "tree_method": ['hist'],
         "grow_policy": ['lossguide']
         }
