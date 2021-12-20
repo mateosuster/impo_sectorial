@@ -4,7 +4,7 @@ globals().clear()
 import os
 # os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
 os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 import pandas as pd
 import numpy as np
@@ -34,7 +34,6 @@ data_pre = pd.read_csv( "../data/heavys/data_train_test.csv") #data_pre y data_2
 data_2pred = pd.read_csv("../data/resultados/data_to_pred.csv")
 data_model = pd.read_csv("../data/heavys/data_modelo_diaria.csv")  #data_model posee los datos que se utilizaran en el script 3
 
-#SELECCIOONAR LAS COLUMNAS RELEVANTES
 data_pre.info()
 data_2pred.info()
 data_model.info()
@@ -61,7 +60,12 @@ data_pre.replace([np.inf, -np.inf], np.nan, inplace=True)
 # data_pre.drop(["HS6", "HS8", "HS10"], axis =1, inplace = True)
 # data_2pred.drop(["HS6", "HS8", "HS10"], axis =1, inplace = True)
 
+# filtro unicamente hs a predecir
+# data_pre = data_pre[data_pre["HS6"].isin(np.unique(data_2pred["HS6"])) ]
 
+#########################
+# Split train test
+###########################
 # frecuencia de la clase
 data_pre["bk_dummy"].value_counts(normalize=True)
 
@@ -133,6 +137,7 @@ print(end-start)
 
 #cv 's
 cv_results = pd.DataFrame(random_search.cv_results_)
+cv_results.to_csv("./modelos/random_cv_results.csv")
 cv_results.info()
 
 plt.hist(cv_results["mean_test_score"])
@@ -212,18 +217,48 @@ plt.show()
 ##################
 # Métricas de test
 ###################
-best_xgb.score(X_test, y_test)
-
 y_pred_ = best_xgb.predict_proba(X_test)
-y_pred_df = pd.DataFrame(y_pred_, index=X_test.index , columns= ["prob_CI", "prob_BK"])
-y_pred_df["ue_dest"]  = np.where(y_pred_df["prob_BK"] > punto_optimo, 1, 0)
+y_pred_df = pd.DataFrame( y_pred_, index=X_test.index , columns= [ "prob_CI", "prob_BK"])
+y_pred_df["y_test"] = y_test
+y_pred_df["y_pred"]  = np.where(y_pred_df["prob_BK"] > punto_optimo, 1, 0)
+y_pred_df["valor"] = X_test.valor
 
-roc_auc_score(y_test,y_pred_df["ue_dest"])
-confusion_matrix(y_test, y_pred_df["ue_dest"], normalize= "pred")#, labels= [1, 0 ])
-cm = confusion_matrix(y_test, y_pred_df["ue_dest"])
-tn, fp, fn, tp = confusion_matrix(y_test, y_pred_df["ue_dest"]).ravel()
+sns.heatmap(confusion_matrix(y_test, y_pred), annot = True , fmt = ".0f",
+            xticklabels = ["CI", "BK"], yticklabels = ["CI", "BK"])
+plt.title("Matriz de confusión. Datos de test")
+
+# Confussion matrix in USD
+y_pred_df["error"] = np.where(y_pred_df["y_pred"]!=y_pred_df["y_test"] , y_pred_df["valor"],0)
+y_pred_df["error"].sum()/y_pred_df["valor"].sum()*100
+
+y_pred_df["clasificacion"] =np.where((y_pred_df["y_pred"]==1) & (y_pred_df["y_test"]==1), "TP",
+                                     np.where((y_pred_df["y_pred"]==1) & (y_pred_df["y_test"]==0), "FP", 
+                                              np.where((y_pred_df["y_pred"]==0) & (y_pred_df["y_test"]==0), "TN",
+                                                       np.where((y_pred_df["y_pred"]==0) & (y_pred_df["y_test"]==1), "FN", np.nan
+                                                                )
+                                                       ) 
+                                              )
+                                     )
+cm_usd = y_pred_df.groupby(["clasificacion"])["valor"].sum()/1e6
+cm_usd_plt = pd.DataFrame({ "CI": cm_usd.iloc[[2,1]].values, "BK": cm_usd.values[0::3]} , index= ["CI", "BK"]   )  
+sns.heatmap(cm_usd_plt, annot=True, fmt=".0f")
+plt.title("Matriz de confusión en millones de USD. Datos de test")
+
+
+#metricas
+y_pred = y_pred_df["y_pred"]
+roc_auc_score(y_test,y_pred )
+confusion_matrix(y_test, y_pred , normalize= "pred")#, labels= [1, 0 ])
+cm = confusion_matrix(y_test, y_pred )
+tn, fp, fn, tp = confusion_matrix(y_test, y_pred ).ravel()
 (tn, fp, fn, tp )
-plot_confusion_matrix(best_xgb, X_test, y_test)
+
+# neg: CI; pos: BK
+y_pred.value_counts()
+y_test.value_counts()
+tn+fp
+tp+fn
+
 
 
 ax= plt.subplot()
