@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 29 11:04:54 2021
-
-@author: igalk
-"""
 
 # =============================================================================
 # Directorio de trabajo y librerias
@@ -17,14 +11,11 @@ os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 import pandas as pd
 import numpy as np
-# from scipy.stats import median_abs_deviation , zscore
-
 from def_bases_nivel_ncm_12d_6act import *
-from def_procesamiento_nivel_ncm_12d_6act import *
-from def_matriz_nivel_ncm_12d_6act import *
 from def_pre_visualizacion_nivel_ncm_12d_6act import *
+import datetime
 
-
+start = datetime.datetime.now()
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
@@ -118,8 +109,9 @@ len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].is
 data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model) #deja los datos listo para entrenar el modelo
 
 # exportacion de datos
-data_train.to_csv("../data/resultados/data_train_test.csv", index=False)
+data_train.to_csv("../data/heavys/data_train_test.csv", index=False)
 data_to_clasif.to_csv("../data/resultados/data_to_pred.csv", index=False)
-data_model.to_csv("../data/resultados/data_modelo_diaria.csv", index=False)
+data_model.to_csv("../data/heavys/data_modelo_diaria.csv", index=False)
 
-
+end = datetime.datetime.now()
+print(end-start)

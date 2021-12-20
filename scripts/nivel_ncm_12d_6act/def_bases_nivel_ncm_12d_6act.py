@@ -976,7 +976,7 @@ def predo_datos_modelo(data_model):
     # Filtros de columnas
     cols_reservadas = ["cuit", "NOMBRE", "HS6_d12",  "dest_clean",
                        "actividad1","actividad2","actividad3","actividad4","actividad5","actividad6",
-                       "act_ordenadas"
+                       "act_ordenadas",
                        "uni_est", "uni_decl", "BEC5EndUse", "filtro" ,
                        "ue_dest" ]
     cat_col = list(data_model.select_dtypes(include=['object']).columns)
