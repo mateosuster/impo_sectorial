@@ -195,19 +195,6 @@ def predo_cuit_clae(cuit_clae , clae):
     return cuit_clae6 
     
      
-def predo_bec_bk(bec):#, bec_to_clae):
-    bec_cap = bec[bec["BEC5EndUse"].str.startswith("CAP", na = False)]
-    filtro = [ "HS4", "HS4Desc", "HS6", "HS6Desc", "BEC5Category", "BEC5EndUse"]
-    #partes y accesorios dentro de start with cap
-    # partes_accesorios  = bec_cap[bec_cap["HS6Desc"].str.contains("part|acces")]   
-    # partes_accesorios["BEC5EndUse"].value_counts()
-    # filtro bienes de capital
-    # bec_bk = bec_cap.loc[~bec_cap["HS6"].isin( partes_accesorios["HS6"])]
-    # bec_bk = bec_bk[filtro]
-    bec_cap = bec_cap[filtro]
-    
-    return bec_cap
-
 
 def predo_stp(dic_stp ):
     dic_stp.columns = ["NCM", "desc", "ciiu", "desc_gral", "utilizacion", "demanda"]
@@ -351,12 +338,6 @@ def filtro_ci(datos):
     return datos_ci
 
 
- 
- # CIIU 
-def predo_dic_ciiu(dic_ciiu):
-    dic_ciiu["ciiu3_4c"] = dic_ciiu["ciiu3_4c"].astype(str)
-    return dic_ciiu
-
 
 
 def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
@@ -414,47 +395,7 @@ def diccionario_especial(datos, dic_propio):
     return datos_bk_a_ciiu
 
 
-
-
-def predo_ciiu_letra(dic_ciiu, comercio):
-
-    ciiu3_4c_comercio = dic_ciiu[dic_ciiu["ciiu3_letra"]=="G"]["ciiu3_4c"]
-    
-    ciiu_letra =  dic_ciiu[["ciiu3_4c", "ciiu3_letra"]]
-    ciiu_letra = ciiu_letra [~ciiu_letra ["ciiu3_4c"].isin(ciiu3_4c_comercio)]
-    ciiu_letra  = pd.concat([ciiu_letra  , comercio[["clae6", "letra"]].rename(columns = {"clae6":"ciiu3_4c", "letra":"ciiu3_letra"})], axis = 0)
-    ciiu_letra["ciiu3_4c"] = ciiu_letra["ciiu3_4c"].astype(str)
-    return ciiu_letra
    
-def dic_clae_and_ciiu(clae_to_ciiu,clae, dic_ciiu):
-    ciiu3_4c_comercio = dic_ciiu[dic_ciiu["ciiu3_letra"]=="G"]["ciiu3_4c"] # vector de filtro
-
-    # clae_to_ciiu.dropna(inplace = True)
-    clae_to_ciiu["ciiu3_4c"] = clae_to_ciiu["ciiu3_4c"].astype(int).astype(str)
-    
-    clae_to_ciiu = clae_to_ciiu[clae_to_ciiu["clae6"] !=332000] 
-    # clae_to_ciiu["ciiu3_4c"] = np.where(clae_to_ciiu["clae6"] ==332000, 
-    #                                     "29_30_31_32_33", 
-    #                                     clae_to_ciiu["ciiu3_4c"]  )
-    # clae_to_ciiu.drop_duplicates(subset= "clae6", inplace = True) 
-
-    claes_faltantes = pd.DataFrame({'clae6': [204000, 523032, 462110, 332000], 'clae6_desc': ["Servicios industriales para la fabricación de sustancias y productos quí­micos", 
-                                                                         "Servicios de operadores logísticos seguros (OLS) en el Ámbito aduanero",
-                                                                         "Acopio de algodón", "Instalación de maquinaria y equipos industriales" 
-                                                       ] , 'ciiu3_4c': ["2429", "6350", "5121", "29_30_31_32_33"]})    
-    clae_to_ciiu = pd.concat([clae_to_ciiu, claes_faltantes ], axis = 0)
-
-    clae_to_ciiu_sin_g = clae_to_ciiu[~clae_to_ciiu["ciiu3_4c"].isin(ciiu3_4c_comercio )]
-    clae_to_ciiu_sin_g.sort_values(by = "clae6", ascending = True, inplace = True)
-    
-    #3 
-    clae["ciiu3_4c"] = clae["clae6"]
-    clae["clae6"] = clae["clae6"].astype(int)
-    clae_comercio = clae[clae["letra"] =="G"][["clae6","clae6_desc", "ciiu3_4c"]]
-    
-    clae_to_ciiu_mod = pd.concat([clae_to_ciiu_sin_g ,clae_comercio], 0)
-    
-    return clae_to_ciiu_mod
 
 
 ################################

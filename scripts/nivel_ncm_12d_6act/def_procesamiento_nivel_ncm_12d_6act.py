@@ -9,7 +9,7 @@ import numpy as np
 from tqdm import tqdm
 
 
-def def_contingencia(join_impo_clae_bec_bk_comercio, all):
+def def_contingencia(join_impo_clae_bec_bk_comercio, todos):
     impo_by_product_1 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra1" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra1": "letra"})
     impo_by_product_2 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra2" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra2": "letra"})
     impo_by_product_3 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra3" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra3": "letra"})
@@ -21,7 +21,7 @@ def def_contingencia(join_impo_clae_bec_bk_comercio, all):
     contingencia = pd.pivot_table(impo_by_product, values='valor', index=['HS6_d12'], columns=['letra'], aggfunc=np.sum, fill_value=0)
 
     #armo una tabla para tener (ncm, expo) con expo = exponente al que elevar la suma del ncm
-    ncm_expo = pd.DataFrame(all["HS6_d12"].value_counts()).reset_index().set_index("index")
+    ncm_expo = pd.DataFrame(todos["HS6_d12"].value_counts()).reset_index().set_index("index")
 
     dictionary_list = []
 
@@ -42,24 +42,21 @@ def def_contingencia(join_impo_clae_bec_bk_comercio, all):
 
     return table
 
-def def_join_impo_clae_bec_bk_comercio_pond(ncm_act_pond, tabla_contingencia):
-    x = ncm_act_pond.copy()
-    x["letra1_pond"] = np.nan
-    x["letra2_pond"] = np.nan
-    x["letra3_pond"] = np.nan
-    x["letra4_pond"] = np.nan
-    x["letra5_pond"] = np.nan
-    x["letra6_pond"] = np.nan
-    
-    return x
-    
-def def_calc_pond(impo,cont, ci = False):
 
+def def_calc_pond(impo,cont, ci = False):
+    join_final = impo.copy()
+    
+    join_final["letra1_pond"] = np.nan
+    join_final["letra2_pond"] = np.nan
+    join_final["letra3_pond"] = np.nan
+    join_final["letra4_pond"] = np.nan
+    join_final["letra5_pond"] = np.nan
+    join_final["letra6_pond"] = np.nan
+    
      #impo = join_impo_clae_bec_bk_comercio_pond
      #cont = tabla_contingencia
      #join_final = join_impo_clae_bec_ci_comercio_pond
-
-    join_final = impo.copy()
+    # join_final = impo.copy()
 
     letra1 = join_final.columns.get_loc("letra1") + 1
     letra2 = join_final.columns.get_loc("letra2") + 1

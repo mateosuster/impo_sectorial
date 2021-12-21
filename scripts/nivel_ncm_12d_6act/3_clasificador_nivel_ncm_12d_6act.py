@@ -46,8 +46,7 @@ ncm12_desc_mod = predo_ncm12_desc(ncm12_desc )["ncm_desc"]
 #impo_d12  = predo_impo_12d(impo_d12, ncm12_desc_mod )
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
-cuit_empresas= predo_cuit_clae(cuit_clae, clae)
-bec_bk = predo_bec_bk(bec)#, bec_to_clae)
+cuit_empresas= predo_cuit_clae(cuit_clae, clae) #meter loop aca
 dic_stp = predo_stp(dic_stp)
 dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
 
@@ -62,20 +61,17 @@ datos_ci = filtro_ci(datos)
 #           Tabla de contingencia           #
 #              producto-sector              #
 #############################################
-join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(datos_bk , comercio) 
-join_impo_clae_bec_ci_comercio = def_join_impo_clae_bec_bk_comercio(datos_ci , comercio_ci, ci = True)
+datos_bk_comercio = def_join_impo_clae_bec_bk_comercio(datos_bk , comercio)  #emprolijar esta funcion con un loop
+datos_ci_comercio  = def_join_impo_clae_bec_bk_comercio(datos_ci , comercio_ci, ci = True)
 
-tabla_contingencia = def_contingencia(join_impo_clae_bec_bk_comercio, datos)
-tabla_contingencia_ci = def_contingencia(join_impo_clae_bec_ci_comercio, datos)
+tabla_contingencia = def_contingencia(datos_bk_comercio , datos)
+tabla_contingencia_ci = def_contingencia(datos_ci_comercio  , datos)
 
 #############################################
 #      ponderación por ncm y letra          #
 #############################################
-join_impo_clae_bec_bk_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_bk_comercio, tabla_contingencia)
-join_impo_clae_bec_ci_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(join_impo_clae_bec_ci_comercio, tabla_contingencia_ci)
-
-join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia, ci = False)
-join_final_ci = def_calc_pond(join_impo_clae_bec_ci_comercio_pond, tabla_contingencia_ci, ci = True)
+datos_bk_comercio_pond= def_calc_pond(datos_bk_comercio,tabla_contingencia, ci = False) #ROMPENNNNNNNNNN
+datos_ci_comercio_pond = def_calc_pond(datos_ci_comercio , tabla_contingencia_ci, ci = True)
 #join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
 
 
