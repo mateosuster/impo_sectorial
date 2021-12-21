@@ -313,15 +313,6 @@ def mod_z(col: pd.Series, thresh: float=3.5):
 # =============================================================================
 # ordenamiento de los datos de modelo
 # =============================================================================
-def predo_datamodel(data_predichos,datos_clasificados):
-    data_predichos["ue_dest"] =np.where(data_predichos["bk_dummy"]== 1, "BK" , "CI")
-    data_predichos.drop("bk_dummy", 1, inplace=True)
-    
-    datos_clasificados = datos_clasificados [datos_clasificados ["ue_dest"] != "?" ]
-    
-    datos = pd.concat([data_predichos, datos_clasificados], 0)
-    return datos
-
 
 def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     datos_bk = datos[datos["ue_dest"]== "BK"]
@@ -345,7 +336,7 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     letras = ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]
     for letra in letras:
         data_trans[letra] = data_trans[letra].replace(regex=[r'^D.*$'],value="I_60") #con regex, buscar que empiece con D_ y poner I_60
-        data_trans[letra] = data_trans[letra].replace(["G","K", "J"] , "I_60")
+        data_trans[letra] = data_trans[letra].replace(["G","K", "J"] , "I_60") #CIIU => K: Act inmobiliarias y empresariales // J: intermediacion financiera 
     
     for letra in letras:
         data_agro[letra] = data_agro[letra].replace(regex=[r'^D.*$'],value="A") #con regex, buscar que empiece con D_ y poner A
@@ -359,57 +350,7 @@ def filtro_ci(datos):
     datos_ci= datos[datos["ue_dest"]== "CI"]
     return datos_ci
 
-def letra_nn(datos_bk):
-    dic = []
-    dic_list = []
-    
-    letra1 = datos_bk.columns.get_loc("letra1") + 1
-    letra2 = datos_bk.columns.get_loc("letra2") + 1
-    letra3 = datos_bk.columns.get_loc("letra3") + 1
-    letra4 = datos_bk.columns.get_loc("letra4") + 1
-    letra5 = datos_bk.columns.get_loc("letra5") + 1
-    letra6 = datos_bk.columns.get_loc("letra6") + 1
-    
-    actividad1 = datos_bk.columns.get_loc("actividad1") + 1
-    actividad2 = datos_bk.columns.get_loc("actividad2") + 1
-    actividad3 = datos_bk.columns.get_loc("actividad3") + 1
-    actividad4 = datos_bk.columns.get_loc("actividad4") + 1
-    actividad5 = datos_bk.columns.get_loc("actividad5") + 1
-    actividad6 = datos_bk.columns.get_loc("actividad6") + 1
-    
-    
-    for x in datos_bk.itertuples():
-        dic = []
-        for letra, act, letra_name in zip([letra1, letra2, letra3,letra4, letra5, letra6],
-                                     [actividad1, actividad2, actividad3,actividad4, actividad5, actividad6],
-                                     ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]):
-            
-            if x[letra] in [ "H"]:
-                new_letra= x[letra] +"_"+ str(x[act])[0:3] 
-            elif x[letra] == "D": 
-                if str(x[act]) == "29_30_31_32_33":
-                    new_letra =  "D_29_30_31_32_33"
-                else:
-                    new_letra= x[letra] +"_"+ str(x[act])[0:2]
-            elif x[letra] in ["I"]:
-                new_letra= x[letra] +"_"+ str(x[act])[0:2] 
-            #     if str(x[act]) == "64":
-            #         new_letra= x[letra] +"_"+ str(x[act])[0:2]
-            #     else: 
-            #         new_letra = "I_60_61_62_63"
-            else:
-                new_letra= x[letra] 
-                
-            # dic[letra_name] = new_letra
-            dic.append(new_letra)
-            
-        dic_list.append(dic)    
-        
-    letras_trans = pd.DataFrame.from_dict(dic_list) 
-    letras_trans.columns = ["letra1","letra2","letra3","letra4", "letra5", "letra6"]
-    return letras_trans
- 
-   
+
  
  # CIIU 
 def predo_dic_ciiu(dic_ciiu):
@@ -418,7 +359,7 @@ def predo_dic_ciiu(dic_ciiu):
 
 
 
-def predo_ciiu(clae_to_ciiu, dic_ciiu,clae):
+def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
     # Join ciiu digitos con letra (posee clae para hacer el join)
     clae_to_ciiu.loc[clae_to_ciiu["ciiu3_4c"].isnull(),"ciiu3_4c"  ] = 4539
     ciiu_dig_let = pd.merge(dic_ciiu[["ciiu3_4c", "ciiu3_letra"]], clae_to_ciiu.drop("clae6_desc", 1), left_on = "ciiu3_4c", right_on = "ciiu3_4c" , how = "inner") #"ciiu3_4c_desc"
@@ -439,66 +380,40 @@ def predo_ciiu(clae_to_ciiu, dic_ciiu,clae):
     
     ciiu_dig_let["propio"] = np.where(ciiu_dig_let["clae6_letra"]=="G",ciiu_dig_let["clae6"], ciiu_dig_let["ciiu3_4c"]   )  
     ciiu_dig_let["propio_letra"] = np.where(ciiu_dig_let["clae6_letra"]=="G", ciiu_dig_let["clae6_letra"], ciiu_dig_let["ciiu3_letra"]   )
-    ciiu_dig_let["propio_letra_2"] =np.where(ciiu_dig_let["propio_letra"].isin( ["H", "I"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
-                                               np.where(ciiu_dig_let["propio_letra"]=="D", np.where(ciiu_dig_let["propio"]=="29_30_31_32_33", "D_29_30_31_32_33",
+    ciiu_dig_let["propio_letra_2"] =np.where(ciiu_dig_let["propio_letra"].isin( ["I"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
+                                             np.where(ciiu_dig_let["propio_letra"].isin( ["H"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=3),
+                                                      np.where(ciiu_dig_let["propio_letra"]=="D", np.where(ciiu_dig_let["propio"]=="29_30_31_32_33", "D_29_30_31_32_33",
                                                                                                     "D"+"_"+ciiu_dig_let["propio"].str.slice(start=0,stop=2) 
-                                                                                                    ), ciiu_dig_let["propio_letra"] 
-                                                        ) )
-                                                      
+                                                                                                    ), 
+                                                               ciiu_dig_let["propio_letra"]
+                                                               ) 
+                                                      )
+                                             )
+                   
+    #join descripcion                                   
+    desc = pd.read_csv("../data/resultados/desc_letra_propio.csv")
+    ciiu_dig_let = pd.merge(ciiu_dig_let, desc, how= "left", left_on = "propio_letra_2", right_on = "letra")
     
     return ciiu_dig_let
 
 
-def diccionario_especial(datos_bk,ciiu_dig_let):
+def diccionario_especial(datos, dic_propio):
     # conversion CLAE a CIIU (codigo para funcion)
-    datos_bk_a_ciiu= datos_bk[[ "actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6" ,
-                               "letra1","letra2","letra3","letra4", "letra5", "letra6"]].copy()
+    datos_bk_a_ciiu= datos#[[ "actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6" ,
+                              # "letra1","letra2","letra3","letra4", "letra5", "letra6"]].copy()
     
+    ciiu_dig_let = dic_propio[["clae6", "propio", "propio_letra_2"]]
     # ESTE ES EL POSTA
-    for clae_i, ciiu_name, letra_name in zip(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"],
-                               ["ciiu_act1", "ciiu_act2", "ciiu_act3", "ciiu_act4", "ciiu_act5", "ciiu_act6"],
-                               ["ciiu_letra1","ciiu_letra2","ciiu_letra3","ciiu_letra4", "ciiu_letra5", "ciiu_letra6"]):
+    for clae_i, letra_i in zip(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"],
+                               ["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"]):
         
         # ciiu_data.rename(columns = {"ciiu3_4c": ciiu_name })
-        datos_bk_a_ciiu= pd.merge(datos_bk_a_ciiu , ciiu_dig_let, how = "left" ,left_on = clae_i, right_on= "clae6" ).drop("clae6", 1)
-        datos_bk_a_ciiu.rename(columns = {"ciiu3_4c": ciiu_name, "ciiu3_letra": letra_name  }, inplace = True)
+        datos_bk_a_ciiu= pd.merge(datos_bk_a_ciiu , ciiu_dig_let, how = "left" ,left_on = clae_i, right_on= "clae6" ).drop(["clae6",clae_i,letra_i ], 1)
+        datos_bk_a_ciiu.rename(columns = {"propio": clae_i, "propio_letra_2": letra_i  }, inplace = True)
     
-    # datos_bk_a_ciiu.isnull().values.any()
-    # datos_bk_a_ciiu.isnull().sum()
-    
-
-    for clae_i, clae_letra_i, ciiu_i, ciiu_letra_i, dic_i, dic_letra_i in zip(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"],
-                                                          ["letra1","letra2","letra3","letra4", "letra5", "letra6"],                     
-                                                       ["ciiu_act1", "ciiu_act2", "ciiu_act3", "ciiu_act4", "ciiu_act5", "ciiu_act6"],
-                                                       ["ciiu_letra1","ciiu_letra2","ciiu_letra3","ciiu_letra4", "ciiu_letra5", "ciiu_letra6"] ,
-                                                       ["dic_act1", "dic_act2", "dic_act3", "dic_act4", "dic_act5", "dic_act6"],
-                                                       ["dic_letra1","dic_letra2","dic_letra3","dic_letra4", "dic_letra5", "dic_letra6"]):
-    
-        datos_bk_a_ciiu[dic_i] = np.where(datos_bk_a_ciiu[clae_letra_i]=="G", datos_bk_a_ciiu[clae_i] , datos_bk_a_ciiu[ciiu_i])
-        datos_bk_a_ciiu[dic_letra_i] = np.where(datos_bk_a_ciiu[clae_letra_i]=="G", datos_bk_a_ciiu[clae_letra_i] , datos_bk_a_ciiu[ciiu_letra_i])
-    
-    # datos_bk_a_ciiu.isnull().values.any()
-    # datos_bk_a_ciiu.to_csv("../data/resultados/datos_bk_a_ciiu.csv")
+    return datos_bk_a_ciiu
 
 
-    # tiro las columnas que vamos a unir
-    datos_bk.drop( ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6",
-             "letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1, inplace = True)     
-    datos_bk_a_ciiu.drop(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6",
-                          "letra1","letra2","letra3","letra4", "letra5", "letra6" ],axis = 1, inplace = True)
-
-    # renombro columnas
-    datos_bk_a_ciiu.rename(columns = {"dic_act1": "actividad1", "dic_act2" :"actividad2","dic_act3" :"actividad3", 
-                                      "dic_act4" : "actividad4","dic_act5": "actividad5","dic_act6": "actividad6",
-                                      "dic_letra1": "letra1","dic_letra2":"letra2","dic_letra3":"letra3",
-                                      "dic_letra4":"letra4", "dic_letra5":"letra5", "dic_letra6":"letra6"
-                                      }, inplace = True)
-    #selecciono
-    datos_bk_a_ciiu = datos_bk_a_ciiu[["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6",
-             "letra1","letra2","letra3","letra4", "letra5", "letra6"]]
-    #concateno
-    datos_bk = pd.concat([datos_bk.reset_index(drop = True), datos_bk_a_ciiu.reset_index(drop = True)], axis = 1)
-    return datos_bk
 
 
 def predo_ciiu_letra(dic_ciiu, comercio):
@@ -933,7 +848,7 @@ def concatenacion_ue_dest(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,d
     bk_sin_ue_dest = data_not_clasif#.drop(['HS4', 'HS4Desc', 'HS6Desc', "BEC5Category"], 1)
 
     print("registros faltantes?", (len(join_impo_clae) - len(impo_bec[impo_bec["BEC5EndUse"].isnull()])) - (len(bk_sin_ue_dest) + len(bk_ue_dest) + len(cicf_ue_dest)))
-    data_model = pd.concat([bk_sin_ue_dest , bk_ue_dest, cicf_ue_dest ], axis = 0)
+    data_model = pd.concat([bk_sin_ue_dest , bk_ue_dest, cicf_ue_dest ], axis = 0) #los datos sin clasificar quedan arriba del dataset
 
     #PREPROCESAMIENTO
     data_model ['HS6'] = data_model ['HS6'].astype("str")

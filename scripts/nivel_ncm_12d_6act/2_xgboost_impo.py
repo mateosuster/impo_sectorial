@@ -1,6 +1,4 @@
 
-globals().clear()
-
 import os
 # os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
 os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
@@ -81,8 +79,10 @@ for split_name, split in zip(['Entrenamiento', 'Prueba'],[y_train,y_test]):
 print("muestras totales {}".format(len(X_train)+len(X_test)))
 print("registros completos?", (len(X_train)+len(X_test)+len(data_2pred))  == len(data_model) )
 
+#############################
+# """## Modelo de base"""
+#############################
 
-"""## Modelo de base"""
 classifier = xgb.sklearn.XGBClassifier(nthread=-1, seed=semilla, enable_categorical = False)
 
 start = datetime.datetime.now()
@@ -97,8 +97,9 @@ roc_auc_score(y_test,y_pred)
 confusion_matrix(y_test, y_pred, normalize= "pred")#, labels= [1, 0 ])
 print(classification_report(y_test, y_pred) )
 
-
-"""## Random Search """
+#############################
+# """## Random Search """
+############################
 classifier = xgb.sklearn.XGBClassifier(nthread=-1, objective= 'binary:logistic', seed=semilla, enable_categorical = False)
 
 parameters = {'silent': [False],
@@ -153,8 +154,11 @@ best_xgb = random_search.best_estimator_
 best_xgb
 
 
-""" ## Determinacion punto de corte """
-#predicciones
+
+################################
+# Determinacion punto de corte 
+############################
+#predicciones default
 y_pred = best_xgb.predict_proba(X_test)
 y_pred_df = pd.DataFrame(y_pred, index=X_test.index, columns=["CI", "BK"])
 
@@ -164,8 +168,6 @@ roc_auc_score(y_test,y_pred_default )
 confusion_matrix(y_test,y_pred_default, normalize= "pred")#, labels= [1, 0 ])
 print(classification_report(y_test, y_pred_default) )
 
-
-#buscando punto de corte
 metrics= pd.DataFrame()
 for corte in np.linspace(0.01,0.99, num = 100): # num indica la cantidad de ptos de corte a explorar
     prediccion = np.where(y_pred_df ['BK'] > corte, 1, 0)
@@ -214,9 +216,9 @@ plt.show()
 
 # calibracion del modelo https://www.cienciadedatos.net/documentos/py11-calibrar-modelos-machine-learning.html
 
-##################
+#############################
 # Métricas de test
-###################
+##############################
 y_pred_ = best_xgb.predict_proba(X_test)
 y_pred_df = pd.DataFrame( y_pred_, index=X_test.index , columns= [ "prob_CI", "prob_BK"])
 y_pred_df["y_test"] = y_test
@@ -270,8 +272,9 @@ ax.xaxis.set_ticklabels(['CI', 'BK']); ax.yaxis.set_ticklabels(['CI', 'BK']);
 
 print(classification_report(y_test, y_pred_df["ue_dest"]) )
 
-
-"""## Entrenamiento con todos los datos"""
+###########################################
+#"""## Entrenamiento con todos los datos"""
+###########################################
 best_xgb.get
 
 xgb_all = xgb.sklearn.XGBClassifier(**mejores_parametros, seed=semilla)
@@ -285,8 +288,9 @@ print(end-start)
 plt.figure(figsize=(20,15))
 xgb.plot_importance(xgb_all, ax=plt.gca())
 
-"""### Exportacion de los modelos"""
-
+#######################################
+# """### Exportacion de los modelos"""
+#######################################
 # Modelos
 pickle.dump(best_xgb, open('modelos\\xgboost_train_cv.sav', 'wb')) #guarda el modelo
 best_xgb = pickle.load(open('modelos\\xgboost_train_cv.sav', 'rb')) #carga
@@ -300,29 +304,31 @@ with open('modelos\\mejores_estables_100iters.json', 'w') as fp:
     json.dump(params_stables, fp)
 
 ###############################################
-# datos a predecir
+# Predección de nuevas observaciones
 ################################################
 clasificacion = xgb_all.predict_proba(data_2pred)
 clasificacion_df = pd.DataFrame(clasificacion, index=data_2pred.index , columns= ["prob_CI", "prob_BK"])
-clasificacion_df["ue_dest"]  = np.where(clasificacion_df["prob_BK"] > punto_optimo, 1, 0)
+clasificacion_df["ue_dest"]  = np.where(clasificacion_df["prob_BK"] > punto_optimo, "BK", "CI")
 clasificacion_df["ue_dest"].value_counts()
 
 datos_predichos = data_model[data_model ["ue_dest"] == "?" ] #data model posee todos los datos
-datos_predichos["bk_dummy"] = clasificacion_df["ue_dest"]
-datos_predichos.to_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", index= False, sep = ";")
-# datos_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
+datos_predichos["ue_dest"] = clasificacion_df["ue_dest"]
 
-plt.hist(x = "bk_dummy", data = datos_predichos )
+plt.hist(x = "ue_dest", data = datos_predichos )
 
 for boolean , text in zip([True, False], ["Frecuencias Relativas", "Frecuencias Abosolutas"] ):
-  print(text+"\n", datos_predichos.bk_dummy.value_counts(normalize= boolean), "\n" )
+  print(text+"\n", datos_predichos.ue_dest.value_counts(normalize= boolean), "\n" )
 
-datos_clasificados = pd.concat([data_model[data_model ["ue_dest"] != "?" ], datos_predichos],axis= 0)
-len(datos_clasificados) == len(data_model)
 
-# Clasficacion de Xgboost entrenado con todos los datos
-# clasificacion_df.to_csv("../data/resultados/datos_clasificados_modelo_train.csv")
-# clasificacion_df.to_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
 
+#############################
+# Exportacion de resultados
+#############################
+
+datos_all = pd.concat([datos_predichos , data_model[data_model ["ue_dest"] != "?" ] ] , axis = 0) 
+len(data_model )== len(datos_all)
+
+datos_all.to_csv("../data/heavys/datos_clasificados_modelo_all_data.csv", index= False, sep = ";")
+# datos_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
 
 

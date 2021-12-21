@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 29 11:04:54 2021
-
-@author: Igal Kejsefman y Mateo Suster
-"""
 
 # =============================================================================
 # Directorio de trabajo y librerias
@@ -28,31 +22,26 @@ from def_pre_visualizacion_nivel_ncm_12d_6act import *
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
-#datos
-#impo_d12 = pd.read_csv("../data/impo_2017_diaria.csv") 
-data_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv", sep = ";") #faltan columnas (creo q me quedó un archivo viejo)
-datos_clasificados = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
+datos = pd.read_csv("../data/heavys/datos_clasificados_modelo_all_data.csv", sep = ";") #faltan columnas (creo q me quedó un archivo viejo)
 
 #auxiliares
 clae = pd.read_csv( "../data/clae_nombre.csv")
-comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
-comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";",encoding="utf-8")
-cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
-bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
-ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
-dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
-
-# CIIU
 dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
 hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
+cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
+comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
+comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";",encoding="utf-8")
+bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
+dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
+ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
+
 
 
 #############################################
 #           preparación bases               #
 #############################################
 # predo_impo_17(impo_17)
-datos = predo_datamodel(data_predichos, datos_clasificados )
 ncm12_desc_mod = predo_ncm12_desc(ncm12_desc )["ncm_desc"]    
 #impo_d12  = predo_impo_12d(impo_d12, ncm12_desc_mod )
 letras = predo_sectores_nombres(clae)
@@ -60,21 +49,10 @@ comercio = predo_comercio(comercio, clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae)
 bec_bk = predo_bec_bk(bec)#, bec_to_clae)
 dic_stp = predo_stp(dic_stp)
-ciiu_dig_let = predo_ciiu(clae_to_ciiu, dic_ciiu,clae)
+dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
 
-
-############################################################
-#  Asignación por STP / modificación de actividades x ncm  #
-############################################################
-#revisión de nulos de BEC5EndUSE
-# impo_bec = pd.merge(join_impo_clae, bec[["HS6", "BEC5EndUse" ]], how= "left" , left_on = "HS6", right_on= "HS6" )
-# (len(datos ) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()]) ) == len(join_impo_clae)
-
-datos = diccionario_especial(datos,ciiu_dig_let) #cambio igal
-letras_mod = letra_nn(datos) # obtencion de LETRA_nn
-datos = pd.concat([datos.drop( ["letra1","letra2","letra3","letra4", "letra5", "letra6"], axis = 1),  letras_mod ], axis = 1)
+datos = diccionario_especial(datos, dic_propio) 
 # datos.to_csv("../data/resultados/importaciones_bk_pre_intro_matriz.csv")
-
 
 datos_bk = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
@@ -84,8 +62,6 @@ datos_ci = filtro_ci(datos)
 #           Tabla de contingencia           #
 #              producto-sector              #
 #############################################
-comercio["clae6"] = comercio["clae6"].astype(str)
-comercio_ci["clae6"] = comercio_ci["clae6"].astype(str)
 join_impo_clae_bec_bk_comercio = def_join_impo_clae_bec_bk_comercio(datos_bk , comercio) 
 join_impo_clae_bec_ci_comercio = def_join_impo_clae_bec_bk_comercio(datos_ci , comercio_ci, ci = True)
 
@@ -101,7 +77,6 @@ join_impo_clae_bec_ci_comercio_pond = def_join_impo_clae_bec_bk_comercio_pond(jo
 join_final = def_calc_pond(join_impo_clae_bec_bk_comercio_pond,tabla_contingencia, ci = False)
 join_final_ci = def_calc_pond(join_impo_clae_bec_ci_comercio_pond, tabla_contingencia_ci, ci = True)
 #join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
-#join_final = pd.read_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv")
 
 
 #############################################
