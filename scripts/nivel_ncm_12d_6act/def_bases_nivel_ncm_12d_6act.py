@@ -330,8 +330,11 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
         data_agro[letra] = data_agro[letra].replace(["G","K", "J"] , "A")
     
     datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro], axis=0)
-
-    return datos_bk
+    
+    datos_bk_sin_picks = datos_bk[~datos_bk["HS6"].isin[870421, 870431]]
+    bk_picks = datos_bk[datos_bk["HS6"].isin[870421, 870431]]
+    
+    return datos_bk, datos_bk_sin_picks, bk_picks
 
 def filtro_ci(datos):
     datos_ci= datos[datos["ue_dest"]== "CI"]
