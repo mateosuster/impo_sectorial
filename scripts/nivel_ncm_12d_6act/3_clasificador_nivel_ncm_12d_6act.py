@@ -58,54 +58,48 @@ datos_ci = filtro_ci(datos)
 
 
 #############################################
-#           Tabla de contingencia           #
-#              producto-sector              #
+#         BK                                 #
 #############################################
 datos_bk_comercio = def_join_impo_clae_bec_bk_comercio(datos_bk , comercio)  #emprolijar esta funcion con un loop
-datos_ci_comercio  = def_join_impo_clae_bec_bk_comercio(datos_ci , comercio_ci, ci = True)
-
-tabla_contingencia = def_contingencia(datos_bk_comercio , datos)
-tabla_contingencia_ci = def_contingencia(datos_ci_comercio  , datos)
-
-#############################################
-#      ponderación por ncm y letra          #
-#############################################
-datos_bk_comercio_pond= def_calc_pond(datos_bk_comercio,tabla_contingencia, ci = False) #ROMPENNNNNNNNNN
-datos_ci_comercio_pond = def_calc_pond(datos_ci_comercio , tabla_contingencia_ci, ci = True)
-#join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
-
-
-#############################################
-#         ASIGNACIÓN y MATRIZ               #
-#############################################
-matriz_sisd_insumo = def_insumo_matriz(join_final)
-matriz_sisd_insumo_ci = def_insumo_matriz(join_final_ci, ci = True)
-# matriz_sisd_insumo.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
-#matriz_sisd_insumo= pd.read_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv")
-
-#asignación por probabilidad de G-bk (insumo para la matriz)
+tabla_contingencia = def_contingencia(datos_bk_comercio , datos) #Tabla de contingencia producto-sector   
+datos_bk_comercio_pond= def_calc_pond(datos_bk_comercio,tabla_contingencia, ci = False) #ponderación por ncm y letra #ROMPEEN
+matriz_sisd_insumo = def_insumo_matriz(join_final) ##asignación por probabilidad de G-bk (insumo para la matriz)
 asign_pre_matriz= def_matriz_c_prob(matriz_sisd_insumo)
-asign_pre_matriz_ci= def_matriz_c_prob(matriz_sisd_insumo_ci)
-# asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
-
-#matriz SISD
-matriz_sisd = to_matriz(asign_pre_matriz)
-matriz_sisd_ci = to_matriz(asign_pre_matriz_ci, ci = True)
-matriz_sisd= pd.read_csv("../data/resultados/matriz_sisd.csv")
-# matriz_sisd_ci= pd.read_csv("../data/resultados/matriz_sisd_ci.csv")
-
+matriz_sisd = to_matriz(asign_pre_matriz) #matriz SISD
 matriz_hssd  = pd.pivot_table(asign_pre_matriz, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
-matriz_hssd_ci  = pd.pivot_table(asign_pre_matriz_ci, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
+
+
+#join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
+# matriz_sisd_insumo.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
+# asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
 # matriz_sisd.to_csv("../data/resultados/matriz_sisd.csv")
 
+#matriz_sisd_insumo= pd.read_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv")
+#matriz_sisd= pd.read_csv("../data/resultados/matriz_sisd.csv")
+
+#############################################
+#             CI                          #
+#############################################
+datos_ci_comercio  = def_join_impo_clae_bec_bk_comercio(datos_ci , comercio_ci, ci = True)
+tabla_contingencia_ci = def_contingencia(datos_ci_comercio  , datos)
+datos_ci_comercio_pond = def_calc_pond(datos_ci_comercio , tabla_contingencia_ci, ci = True)
+matriz_sisd_insumo_ci = def_insumo_matriz(join_final_ci, ci = True)
+asign_pre_matriz_ci= def_matriz_c_prob(matriz_sisd_insumo_ci)
+matriz_sisd_ci = to_matriz(asign_pre_matriz_ci, ci = True)
+matriz_hssd_ci  = pd.pivot_table(asign_pre_matriz_ci, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
+
+# matriz_sisd_ci= pd.read_csv("../data/resultados/matriz_sisd_ci.csv")
+
+
+# =============================================================================
+#                       Otros
+# =============================================================================
 #filtro para destinación de productos
 # x = matriz_hssd[matriz_hssd.index.str.startswith(("870421", "870431"))]
 # x.sum(axis = 0)
 matriz_sisd_ci.sum().sum()
 
-# =============================================================================
-#                       Otros
-# =============================================================================
+
 #exponentes a aplicar a la tabla de contingencia
 z = pd.DataFrame(datos["HS6_d12"].value_counts()).reset_index(drop=True)
 z['freq'] = z.groupby('HS6_d12')['HS6_d12'].transform('count')
@@ -115,7 +109,7 @@ sns.lineplot(data= z, x= "HS6_d12", y= "expo")
 
 
 # =============================================================================
-#                       Visualizacion
+#                       Visualizacion (MOVER AL OTRO SCRIPT)
 # =============================================================================
 #preprocesamiento
 sectores_desc = sectores() #Sectores CLAE
