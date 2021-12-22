@@ -142,12 +142,9 @@ def predo_cuit_clae(cuit_clae , clae):
     
     #relleno los que tienen solo act 1
     cuit_clae6["suma"] = cuit_clae6.loc[:,["actividad2","actividad3","actividad4","actividad5","actividad6"]].sum(axis=1)
-    
-    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad2']] = cuit_clae6['actividad1']
-    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad3']] = cuit_clae6['actividad1']    
-    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad4']] = cuit_clae6['actividad1']    
-    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad5']] = cuit_clae6['actividad1']
-    cuit_clae6.loc[cuit_clae6['suma']<1, ['actividad6']] = cuit_clae6['actividad1']
+
+    for clae_i in ["actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]:
+        cuit_clae6.loc[cuit_clae6['suma']<1, [clae_i]] = cuit_clae6['actividad1']
     
     #relleno los que tienen hasta act 2
     cuit_clae6["suma"] = cuit_clae6.loc[:,["actividad3","actividad4","actividad5","actividad6"]].sum(axis=1)    
