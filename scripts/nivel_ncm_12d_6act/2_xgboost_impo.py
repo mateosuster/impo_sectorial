@@ -1,8 +1,8 @@
 
 import os
 # os.chdir("C:/Users/Administrator/Documents/equipo investigacion/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
-# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 import pandas as pd
 import numpy as np
@@ -12,7 +12,7 @@ import  json
 import datetime
 import pickle
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+from sklearn.model_selection import  RandomizedSearchCV
 from sklearn.metrics import confusion_matrix, plot_confusion_matrix
 from sklearn.metrics import accuracy_score#, scorer
 from sklearn.metrics import classification_report
@@ -42,12 +42,12 @@ data_model.info()
 ###########################
 ##  Preprocesamiento     ##
 ###########################
-#pruebo borrar las columnas de unidad
+#pruebo borrar las columnas de cantidad
 data_pre.drop(["cant_est", "cant_decl"], axis =1, inplace = True)
 data_2pred.drop(["cant_est", "cant_decl"], axis =1, inplace = True)
 
 #reviso missings
-data_pre.isna().sum() #no hay missings
+data_pre.isna().sum().sum() #no hay missings
 # data_pre.dropna(axis = 0, inplace = True)
 
 #reviso y reemplazo infinitos
@@ -128,7 +128,7 @@ random_search = RandomizedSearchCV(
     random_state= semilla,
     n_jobs = -1,
     cv = 5,
-    n_iter=100,
+    n_iter=150,
     verbose=True)
 
 start = datetime.datetime.now()
@@ -136,13 +136,14 @@ random_search.fit(X_train, y_train)
 end = datetime.datetime.now()
 print(end-start)
 
+#correr desde aca
 #cv 's
 cv_results = pd.DataFrame(random_search.cv_results_)
 cv_results.to_csv("./modelos/random_cv_results.csv")
 cv_results.info()
 
-plt.hist(cv_results["mean_test_score"])
-plt.hist(cv_results["std_test_score"])
+# plt.hist(cv_results["mean_test_score"])
+# plt.hist(cv_results["std_test_score"])
 
 params_stables = cv_results.sort_values("std_test_score")["params"][0]
 
@@ -182,37 +183,37 @@ for corte in np.linspace(0.01,0.99, num = 100): # num indica la cantidad de ptos
         "FPR" : fp/(tn+fp), #"falsa alarma": qué tanto clasificamos positivo cuando el verdadero resultado es negativo
         "auc" : roc_auc_score(y_test, prediccion) 
         }
-    metrics= pd.concat([metrics, pd.DataFrame(dic, index = [round(corte,2).astype(str)])])
+metrics= pd.concat([metrics, pd.DataFrame(dic, index = [round(corte,2).astype(str)])])
 
 punto_optimo = metrics.sort_values("auc", ascending=False)["punto_corte"][0]
 fpr_op = metrics.sort_values("auc", ascending=False)["FPR"][0]
 recall_op =metrics.sort_values("auc", ascending=False)["recall"][0]
 
-# grafico curva ROC
-plt.plot(metrics["FPR"], metrics["recall"])
-plt.plot(fpr_op,recall_op, "ro" )
-plt.title("Curva ROC")
-plt.xlabel("FPR")
-plt.ylabel("TPR")
-
-#violin destribuciones de observaciones (N)
-melt_data = pd.melt(metrics, id_vars = "punto_corte", value_vars = ["pp","np"], var_name="ue_dest", value_name="n").sort_values("punto_corte")
-# ax = sns.violinplot(data = melt_data,  y = "n", x = "ue_dest" )
-# ax.set_title("Distribuciones de BK y CI para todos los puntos de corte")
-# ax.set_xlabel("Uso Económico")
-# ax.set_ylabel("Observaciones")
-# # ax.axhline(200034)
+# # grafico curva ROC
+# plt.plot(metrics["FPR"], metrics["recall"])
+# plt.plot(fpr_op,recall_op, "ro" )
+# plt.title("Curva ROC")
+# plt.xlabel("FPR")
+# plt.ylabel("TPR")
+#
+# #violin destribuciones de observaciones (N)
+# melt_data = pd.melt(metrics, id_vars = "punto_corte", value_vars = ["pp","np"], var_name="ue_dest", value_name="n").sort_values("punto_corte")
+# # ax = sns.violinplot(data = melt_data,  y = "n", x = "ue_dest" )
+# # ax.set_title("Distribuciones de BK y CI para todos los puntos de corte")
+# # ax.set_xlabel("Uso Económico")
+# # ax.set_ylabel("Observaciones")
+# # # ax.axhline(200034)
+# # plt.show()
+#
+# #violin distribucion de probabilidades
+# violin_data = pd.DataFrame({"prob_bk": y_pred_df["BK"], "bk_dummy": y_test})
+# violin_data["bk_dummy"] = np.where(violin_data["bk_dummy"]==1, "BK", "CI")
+# ax = sns.violinplot(data = violin_data,  y = "prob_bk", x = "bk_dummy" )
+# ax.set_title("Distribuciones de probabilidades de datos test (puntos de corte)")
+# ax.set_xlabel("Uso Economico Observado")
+# ax.set_ylabel("Probabilidad predicha")
+# ax.axhline(punto_optimo)
 # plt.show()
-
-#violin distribucion de probabilidades 
-violin_data = pd.DataFrame({"prob_bk": y_pred_df["BK"], "bk_dummy": y_test})
-violin_data["bk_dummy"] = np.where(violin_data["bk_dummy"]==1, "BK", "CI") 
-ax = sns.violinplot(data = violin_data,  y = "prob_bk", x = "bk_dummy" )
-ax.set_title("Distribuciones de probabilidades de datos test (puntos de corte)")
-ax.set_xlabel("Uso Economico Observado")
-ax.set_ylabel("Probabilidad predicha")
-ax.axhline(punto_optimo)
-plt.show()
 
 # calibracion del modelo https://www.cienciadedatos.net/documentos/py11-calibrar-modelos-machine-learning.html
 
@@ -225,9 +226,9 @@ y_pred_df["y_test"] = y_test
 y_pred_df["y_pred"]  = np.where(y_pred_df["prob_BK"] > punto_optimo, 1, 0)
 y_pred_df["valor"] = X_test.valor
 
-sns.heatmap(confusion_matrix(y_test, y_pred), annot = True , fmt = ".0f",
-            xticklabels = ["CI", "BK"], yticklabels = ["CI", "BK"])
-plt.title("Matriz de confusión. Datos de test")
+#sns.heatmap(confusion_matrix(y_test, y_pred), annot = True , fmt = ".0f",
+#            xticklabels = ["CI", "BK"], yticklabels = ["CI", "BK"])
+#plt.title("Matriz de confusión. Datos de test")
 
 # Confussion matrix in USD
 y_pred_df["error"] = np.where(y_pred_df["y_pred"]!=y_pred_df["y_test"] , y_pred_df["valor"],0)
@@ -243,8 +244,8 @@ y_pred_df["clasificacion"] =np.where((y_pred_df["y_pred"]==1) & (y_pred_df["y_te
                                      )
 cm_usd = y_pred_df.groupby(["clasificacion"])["valor"].sum()/1e6
 cm_usd_plt = pd.DataFrame({ "CI": cm_usd.iloc[[2,1]].values, "BK": cm_usd.values[0::3]} , index= ["CI", "BK"]   )  
-sns.heatmap(cm_usd_plt, annot=True, fmt=".0f")
-plt.title("Matriz de confusión en millones de USD. Datos de test")
+#sns.heatmap(cm_usd_plt, annot=True, fmt=".0f")
+#plt.title("Matriz de confusión en millones de USD. Datos de test")
 
 
 #metricas
@@ -263,14 +264,14 @@ tp+fn
 
 
 
-ax= plt.subplot()
-sns.heatmap(cm, annot=True, fmt='g', ax=ax)  #annot=True to annotate cells, ftm='g' to disable scientific notation
+#ax= plt.subplot()
+#sns.heatmap(cm, annot=True, fmt='g', ax=ax)  #annot=True to annotate cells, ftm='g' to disable scientific notation
 # labels, title and ticks
-ax.set_xlabel('Etiqueta predicha');ax.set_ylabel('Etiqueta verdadera');
-ax.set_title('Matriz de confusión con datos de test');
-ax.xaxis.set_ticklabels(['CI', 'BK']); ax.yaxis.set_ticklabels(['CI', 'BK']);
+#ax.set_xlabel('Etiqueta predicha');ax.set_ylabel('Etiqueta verdadera');
+#ax.set_title('Matriz de confusión con datos de test');
+#ax.xaxis.set_ticklabels(['CI', 'BK']); ax.yaxis.set_ticklabels(['CI', 'BK']);
 
-print(classification_report(y_test, y_pred_df["ue_dest"]) )
+#print(classification_report(y_test, y_pred_df["ue_dest"]) )
 
 ###########################################
 #"""## Entrenamiento con todos los datos"""
@@ -285,8 +286,8 @@ xgb_all.fit(data_pre.drop("bk_dummy", axis =1),  data_pre["bk_dummy"])
 end = datetime.datetime.now()
 print(end-start)
 
-plt.figure(figsize=(20,15))
-xgb.plot_importance(xgb_all, ax=plt.gca())
+# plt.figure(figsize=(20,15))
+# xgb.plot_importance(xgb_all, ax=plt.gca())
 
 #######################################
 # """### Exportacion de los modelos"""
@@ -298,9 +299,9 @@ best_xgb = pickle.load(open('modelos\\xgboost_train_cv.sav', 'rb')) #carga
 pickle.dump(xgb_all, open('modelos\\xgboost_all_data.sav', 'wb'))
 xgb_all = pickle.load(open('modelos\\xgboost_all_data.sav', 'rb'))
 
-with open('modelos\\mejores_parametros_100iters.json', 'w') as fp:
+with open('modelos\\mejores_parametros_150iters.json', 'w') as fp:
     json.dump(mejores_parametros, fp)
-with open('modelos\\mejores_estables_100iters.json', 'w') as fp:
+with open('modelos\\mejores_estables_150iters.json', 'w') as fp:
     json.dump(params_stables, fp)
 
 ###############################################
@@ -314,7 +315,7 @@ clasificacion_df["ue_dest"].value_counts()
 datos_predichos = data_model[data_model ["ue_dest"] == "?" ] #data model posee todos los datos
 datos_predichos["ue_dest"] = clasificacion_df["ue_dest"]
 
-plt.hist(x = "ue_dest", data = datos_predichos )
+#plt.hist(x = "ue_dest", data = datos_predichos )
 
 for boolean , text in zip([True, False], ["Frecuencias Relativas", "Frecuencias Abosolutas"] ):
   print(text+"\n", datos_predichos.ue_dest.value_counts(normalize= boolean), "\n" )
