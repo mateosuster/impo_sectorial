@@ -53,7 +53,7 @@ dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
 datos = diccionario_especial(datos, dic_propio) 
 # datos.to_csv("../data/resultados/importaciones_bk_pre_intro_matriz.csv")
 
-datos_bk = asignacion_stp_BK(datos, dic_stp)
+datos_bk , datos_bk_sin_picks, bk_picks = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
 
 
