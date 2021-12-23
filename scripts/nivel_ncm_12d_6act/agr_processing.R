@@ -64,8 +64,8 @@ Ntrab.prom.mens_by_anio.zona.clae <- function(file.list){
   
   frames <- data.table()
   
-  for (f in file.list){
-  #for (f in files){
+  #for (f in file.list){
+  for (f in files){
     name <- str_extract(f, '[m][0-9]+')
     cat("Processing...", name,"\n")
     df <- fread(f, select = cols)
@@ -79,7 +79,7 @@ Ntrab.prom.mens_by_anio.zona.clae <- function(file.list){
     
     #Join con zona.prov
     agr <- inner_join(agr, zona.prov, by= c("zona"="zona"))
-    agr <- agr[, .(SumMes = sum(Ncuil)), by= c("propio_letra_2","zona_prov","mes","anio")] #Suma de los cuils únicos
+    agr <- agr[, .(SumMes = sum(Ncuil)), by= c("propio_letra_2","zona_prov","anio")] #Suma de los cuils únicos
     frames <- setDT(rbind(frames, agr))
     cat("Done...", name,"\n")
     }
@@ -96,11 +96,14 @@ Ntrab.prom.mens_by_anio.zona.clae <- function(file.list){
   #Hago la agregación
   frames <- frames %>% group_by(propio_letra_2,anio) %>% mutate(prop = ntrab_pmens/sum(ntrab_pmens))
   setDT(frames)
+  
   frames <- frames[, dens_prop:= densidad * prop]
   frames <- frames %>% group_by(propio_letra_2, anio) %>% summarise(dens_prop = sum(dens_prop))
   frames <- frames %>% mutate(inv.dens_prop = 1/dens_prop)
-  sum.inv.dens_prop <- sum(frames$inv.dens_prop)
-  frames <- frames %>% group_by(anio) %>% mutate(coeficiente = inv.dens_prop/sum.inv.dens_prop)
+  sum.inv.by.year <- frames %>% group_by(anio) %>% summarise(sum.inv.dens_prop = sum(inv.dens_prop))
+  frames <- inner_join(frames, sum.inv.by.year, by= c("anio"="anio"))
+  
+  frames <- frames %>% mutate(coeficiente = inv.dens_prop/sum.inv.dens_prop)
   
   #Me quedo con lo que me interesa nomás. 
   frames <- frames %>% select(propio_letra_2, anio, coeficiente)
