@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 
 
-def def_insumo_matriz(raw_data, ci = False):
+def def_asignacion_sec(raw_data, ci = False):
 
     letra1 = raw_data.columns.get_loc("letra1") + 1
     letra2 = raw_data.columns.get_loc("letra2") + 1
@@ -49,7 +49,11 @@ def def_insumo_matriz(raw_data, ci = False):
     letra6_pond = raw_data.columns.get_loc("letra6_pond") + 1
     
     ue_dest_loc =  raw_data.columns.get_loc("ue_dest") + 1
-    
+    cuit_loc =  raw_data.columns.get_loc("cuit") + 1
+    hs12_loc =  raw_data.columns.get_loc("HS6_d12") + 1
+    valor_loc =  raw_data.columns.get_loc("valor") + 1
+
+
     dictionary_list = []
 
     for a in tqdm(raw_data.itertuples()):
@@ -71,9 +75,9 @@ def def_insumo_matriz(raw_data, ci = False):
             else:
                 letra_sd = a[b]
 
-            values = {'cuit': a[1],
-                      "hs6_d12": a[3],
-                      "valor_pond": a[6] * a[e],
+            values = {'cuit': a[cuit_loc],
+                      "hs6_d12": a[hs12_loc],
+                      "valor_pond": a[valor_loc] * a[e],
                       "si": a[letra1],
                       "sd": letra_sd,
                       "ue_dest": a[ue_dest_loc]}
@@ -90,7 +94,7 @@ def def_insumo_matriz(raw_data, ci = False):
 
     return for_fill
     
-def def_matriz_c_prob(prob):
+def def_asignacion_prob(prob):
     
     calc_prob = prob.copy()
     calc_none = prob.copy()

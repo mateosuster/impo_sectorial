@@ -10,14 +10,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 
-def sectores():
-    sectores_desc = {"A":	"Agricultura",  "B":	"Minas y canteras", "C":	"Industria", "D": "Energía",
-                     "E":	"Agua y residuos", "F":	"Construcción", "G": "Comercio", "H":	"Transporte",
-                     "I":	"Alojamiento", "J":	"Comunicaciones", "K":	"Serv. financieros","L":	"Serv. inmobiliarios",
-                     "M":	"Serv. profesionales", "N":	"Serv. apoyo", "O":	"Sector público", "P":	"Enseñanza",
-                     "Q":	"Serv. sociales", "R":	"Serv. culturales", "S":	"Serv. personales", "T":	"Serv. doméstico",
-                     "U": "Serv. organizaciones" , "CONS": "Consumo" }
-    return sectores_desc
+
+
 
 def dic_graf(matriz_sisd, dic_ciiu):
     # letras_ciiu = pd.DataFrame(matriz_sisd.index)
@@ -90,7 +84,7 @@ def impo_comercio_y_propio(z,letras_ciiu, sectores_desc = False):
     comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = indice )
     return comercio_y_propio.sort_values(by = 'Propio', ascending = False) 
     
-def graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo):
+def graficos(dic_propio, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo):
     #parametro para graficos
     params = {'legend.fontsize': 20,
               'figure.figsize': (20, 10),
@@ -100,28 +94,35 @@ def graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo):
               'ytick.labelsize':20
              }
     plt.rcParams.update(params)
-     
-    
+
+    dic_graf = pd.concat([dic_propio[["propio_letra_2", "desc"]], pd.DataFrame({"propio_letra_2": ["CONS"], "desc": ["Consumo"]})], axis=0).drop_duplicates()
+
+    impo_tot_sec = pd.merge(impo_tot_sec,dic_graf , how = "left", left_on ="letra", right_on="propio_letra_2")
+    impo_tot_sec["desc"] =  impo_tot_sec["desc"].str.slice(0,15)
+    impo_tot_sec.set_index("desc",inplace=True)
+    impo_tot_sec.sort_values("impo_tot",ascending=False, inplace=True)
+
     ##### grafico 1
     #posiciones para graf
-    y_pos = np.arange(len(letras_ciiu["desc"])) 
+    y_pos = np.arange(len(impo_tot_sec["desc"]))
+
     # y_pos = np.arange(len(sectores_desc.values())) 
     # y_pos = np.arange(len(matriz_sisd.index.values)) 
     
     plt.bar(y_pos , impo_tot_sec.iloc[:,0]/(10**6) )
-    plt.xticks(y_pos , impo_tot_sec.index, rotation = 75)
+    plt.xticks(y_pos , impo_tot_sec.index, rotation = 90)
     plt.title("Importaciones de "+ titulo + " destinadas a cada sector")#, fontsize = 30)
     plt.ylabel("Millones de USD")
     plt.xlabel("Sector \n \n Fuente: CEPXXI en base a Aduana, AFIP y UN Comtrade")
     # plt.subplots_adjust(bottom=0.7,top=0.83)
     plt.tight_layout()
     plt.show()
-    plt.savefig('../data/resultados/impo_totales_letra.png')
+    plt.savefig('../data/resultados/impo_totales_letra'+titulo+'.png')
     
 
     ##### grafico 2
     #graf division comercio y propio
-    ax = comercio_y_propio.plot(kind = "bar", rot = 75,
+    ax = comercio_y_propio.plot(kind = "bar", rot = 90,
                                 stacked = True, ylabel = "", 
                                 xlabel = "Sector \n \n Fuente: CEPXXII en base a Aduana, AFIP y UN Comtrade")
     ax.yaxis.set_major_formatter(mtick.PercentFormatter())
@@ -129,7 +130,7 @@ def graficos(matriz_sisd, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo):
     plt.tight_layout(pad=3)
     plt.title( "Sector abastecedor de importaciones de" + titulo + " (en porcentaje)")#,  fontsize = 30)
     
-    plt.savefig('../data/resultados/comercio_y_propio_letra.png')
+    plt.savefig('../data/resultados/comercio_y_propio_letra'+titulo+'.png')
 
 
 def top_5(asign_pre_matriz, letras_ciiu , ncm12_desc, impo_tot_sec):

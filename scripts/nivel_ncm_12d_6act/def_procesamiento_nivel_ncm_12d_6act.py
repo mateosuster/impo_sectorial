@@ -10,13 +10,18 @@ from tqdm import tqdm
 
 
 def def_contingencia(join_impo_clae_bec_bk_comercio, todos):
-    impo_by_product_1 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra1" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra1": "letra"})
-    impo_by_product_2 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra2" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra2": "letra"})
-    impo_by_product_3 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra3" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra3": "letra"})
-    impo_by_product_4 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra4" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra4": "letra"})
-    impo_by_product_5 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra5" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra5": "letra"})
-    impo_by_product_6 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra6" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra6": "letra"})
-    
+    # join_impo_clae_bec_bk_comercio, todos = datos_bk_comercio, datos
+    # impo_by_product_1 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra1" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra1": "letra"})
+    # impo_by_product_2 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra2" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra2": "letra"})
+    # impo_by_product_3 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra3" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra3": "letra"})
+    # impo_by_product_4 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra4" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra4": "letra"})
+    # impo_by_product_5 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra5" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra5": "letra"})
+    # impo_by_product_6 = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", "letra6" ], as_index = False).agg({'valor': sum}).rename(columns = {"letra6": "letra"})
+
+    for i in range(1,7):
+        letra_i ="letra"+str(i)
+        globals()["impo_by_product_%s" % i] = join_impo_clae_bec_bk_comercio.groupby(["HS6_d12", letra_i], as_index=False).agg({'valor': sum}).rename(columns={letra_i: "letra"})
+
     impo_by_product = impo_by_product_1.append([impo_by_product_2,impo_by_product_3,impo_by_product_4,impo_by_product_5,impo_by_product_6], ignore_index=True)
     contingencia = pd.pivot_table(impo_by_product, values='valor', index=['HS6_d12'], columns=['letra'], aggfunc=np.sum, fill_value=0)
 
@@ -28,11 +33,11 @@ def def_contingencia(join_impo_clae_bec_bk_comercio, todos):
     for i in list(contingencia.itertuples()):
         ncm = i[0]
         expo = ncm_expo.loc[ncm,"HS6_d12"]
-        i = np.array(i[1:])
-        i = pow(i,(2+np.log10(expo)))
+        acts = np.array(i[1:])
+        acts_pow = pow(acts,(2+np.log10(expo)))
 
         #guardo la fila en un nuevo df
-        values = [ncm, *i] #el asterisco hace unpack list
+        values = [ncm, *acts_pow] #el asterisco hace unpack list
         dictionary_list.append(values)
 
     table = pd.DataFrame.from_dict(dictionary_list)
@@ -43,7 +48,9 @@ def def_contingencia(join_impo_clae_bec_bk_comercio, todos):
     return table
 
 
-def def_calc_pond(impo,cont, ci = False):
+def def_ponderaciones(impo,cont, ci = False):
+    # impo,cont,ci = datos_bk_comercio, tabla_contingencia , False
+
     join_final = impo.copy()
     
     join_final["letra1_pond"] = np.nan
@@ -88,13 +95,13 @@ def def_calc_pond(impo,cont, ci = False):
         act6_pond = ncm_val[letra_6] / total
 
         if ci == False:
-            values = [*a[1:54], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
+            values = [*a[1:44], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
         elif ci == True:
-            values = [*a[1:42], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
+            values = [*a[1:38], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
         dictionary_list.append(values)
 
-    join_final = pd.DataFrame.from_dict(dictionary_list)
-    join_final.columns = impo.columns
+    rtn = pd.DataFrame.from_dict(dictionary_list)
+    rtn.columns = join_final.columns
 
-    return join_final
+    return rtn
 

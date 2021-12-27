@@ -225,7 +225,7 @@ def def_join_impo_clae_bec_bk(join_impo_clae, bec_bk):
     return impo_anyo_12d_bec_bk
 
 
-def def_join_impo_clae_bec_bk_comercio(join_impo_clae_bec_bk, comercio, ci = False):
+def def_join_comercio(join_impo_clae_bec_bk, comercio, ci = False):
     if ci == False:    
         #comercio = comercio.drop(["vta_vehiculos"], axis=1)
         comercio2 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk2", "vta_sec": "vta_sec2"})
@@ -328,8 +328,8 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     
     datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro], axis=0)
     
-    datos_bk_sin_picks = datos_bk[~datos_bk["HS6"].isin[870421, 870431]]
-    bk_picks = datos_bk[datos_bk["HS6"].isin[870421, 870431]]
+    datos_bk_sin_picks = datos_bk[~datos_bk["HS6"].isin([870421, 870431])]
+    bk_picks = datos_bk[datos_bk["HS6"].isin([870421, 870431])]
     
     return datos_bk, datos_bk_sin_picks, bk_picks
 
@@ -374,7 +374,8 @@ def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
     #join descripcion                                   
     desc = pd.read_csv("../data/resultados/desc_letra_propio.csv")
     ciiu_dig_let = pd.merge(ciiu_dig_let, desc, how= "left", left_on = "propio_letra_2", right_on = "letra")
-    
+    ciiu_dig_let.to_csv("../data/resultados/dic_clae_ciiu_propio.csv")
+
     return ciiu_dig_let
 
 
