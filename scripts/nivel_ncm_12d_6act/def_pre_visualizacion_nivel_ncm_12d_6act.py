@@ -36,7 +36,14 @@ def dic_graf(matriz_sisd, dic_ciiu):
     # letras_ciiu = letras_ciiu[~letras_ciiu["letra"].isin(["P", "Q"])]
     return letras_ciiu
 
-def impo_total(matriz_sisd, letras_ciiu, sectores_desc =False):
+def impo_total(matriz_sisd, dic_propio, sectores_desc =False, largo_actividad=20):
+    # letras_ciiu = dic_graf(matriz_sisd, dic_ciiu)
+    # letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,largo_actividad)
+    
+    matriz_sisd = matriz_sisd_bk
+    
+    letras_ciiu= dic_propio[["propio_letra_2", "desc"]].drop_duplicates().rename(columns = {"propio_letra_2": "letra"}).dropna().sort_values("letra")
+    letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,largo_actividad)
     # if sectores_desc == True:
     #     indice = z.index
     #     letra =  indice.values
@@ -66,13 +73,19 @@ def impo_total(matriz_sisd, letras_ciiu, sectores_desc =False):
     
     return impo_tot_sec
 
-def impo_comercio_y_propio(z,letras_ciiu, sectores_desc = False):
+def impo_comercio_y_propio(matriz_sisd, dic_propio, sectores_desc = False, largo_actividad=20):
+    # letras_ciiu = dic_graf(matriz_sisd, dic_ciiu)
+    # letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,largo_actividad)
+    
+    letras_ciiu= dic_propio[["propio_letra_2", "desc"]].drop_duplicates()
+    letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,largo_actividad)
+    
     # indice = z.index
     indice = letras_ciiu.desc.values
     # letra = letras_ciiu.letra.values
     
     # transformacion a array de np
-    z_visual = z.to_numpy()
+    z_visual = matriz_sisd.to_numpy()
     
     #diagonal y totales col y row
     diagonal = np.diag(z_visual)
@@ -84,7 +97,7 @@ def impo_comercio_y_propio(z,letras_ciiu, sectores_desc = False):
     comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = indice )
     return comercio_y_propio.sort_values(by = 'Propio', ascending = False) 
     
-def graficos(dic_propio, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo):
+def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest):
     #parametro para graficos
     params = {'legend.fontsize': 20,
               'figure.figsize': (20, 10),
@@ -95,19 +108,22 @@ def graficos(dic_propio, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo):
              }
     plt.rcParams.update(params)
 
+    #diccionario para el eje x y ordenamiento de los datos
     dic_graf = pd.concat([dic_propio[["propio_letra_2", "desc"]], pd.DataFrame({"propio_letra_2": ["CONS"], "desc": ["Consumo"]})], axis=0).drop_duplicates()
-
-    impo_tot_sec = pd.merge(impo_tot_sec,dic_graf , how = "left", left_on ="letra", right_on="propio_letra_2")
-    impo_tot_sec["desc"] =  impo_tot_sec["desc"].str.slice(0,15)
-    impo_tot_sec.set_index("desc",inplace=True)
+    impo_tot_sec = pd.merge(impo_tot_sec,dic_graf , how = "left", left_on ="letra", right_on="propio_letra_2")#.drop("propio_letra_2",1)
+    impo_tot_sec["desc"] =  impo_tot_sec["desc"].str.slice(0,20)
+    impo_tot_sec.set_index(["desc"],inplace=True)
     impo_tot_sec.sort_values("impo_tot",ascending=False, inplace=True)
 
+    #titulo
+    if ue_dest == "bk":
+        titulo = "Bienes de Capital"
+    elif titulo == "ci":
+        ue_dest = "Consumos Intermedios"
+    
     ##### grafico 1
     #posiciones para graf
-    y_pos = np.arange(len(impo_tot_sec["desc"]))
-
-    # y_pos = np.arange(len(sectores_desc.values())) 
-    # y_pos = np.arange(len(matriz_sisd.index.values)) 
+    y_pos = np.arange(len(impo_tot_sec.index))
     
     plt.bar(y_pos , impo_tot_sec.iloc[:,0]/(10**6) )
     plt.xticks(y_pos , impo_tot_sec.index, rotation = 90)
@@ -115,9 +131,10 @@ def graficos(dic_propio, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo):
     plt.ylabel("Millones de USD")
     plt.xlabel("Sector \n \n Fuente: CEPXXI en base a Aduana, AFIP y UN Comtrade")
     # plt.subplots_adjust(bottom=0.7,top=0.83)
+    plt.grid()
     plt.tight_layout()
     plt.show()
-    plt.savefig('../data/resultados/impo_totales_letra'+titulo+'.png')
+    plt.savefig('../data/resultados/impo_totales_letra_'+ue_dest+'.png')
     
 
     ##### grafico 2
@@ -128,9 +145,10 @@ def graficos(dic_propio, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo):
     ax.yaxis.set_major_formatter(mtick.PercentFormatter())
     ax.legend(loc='best', bbox_to_anchor=(1.0, 0.5))
     plt.tight_layout(pad=3)
-    plt.title( "Sector abastecedor de importaciones de" + titulo + " (en porcentaje)")#,  fontsize = 30)
+    plt.grid()
+    plt.title( "Sector abastecedor de importaciones de " + titulo + " (en porcentaje)")#,  fontsize = 30)
     
-    plt.savefig('../data/resultados/comercio_y_propio_letra'+titulo+'.png')
+    plt.savefig('../data/resultados/comercio_y_propio_letra_'+ue_dest+'.png')
 
 
 def top_5(asign_pre_matriz, letras_ciiu , ncm12_desc, impo_tot_sec):

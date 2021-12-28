@@ -352,9 +352,9 @@ def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
     ciiu_dig_let = ciiu_dig_let[ciiu_dig_let["clae6"] !=332000] 
     
     #agrego los clae faltantes
-    claes_faltantes = pd.DataFrame({'clae6': [204000, 523032, 462110, 332000], 'ciiu3_letra': ["D", "I", "G", "D"  ] , 
+    claes_faltantes = pd.DataFrame({'clae6': [204000, 523032, 462110, 332000, np.nan], 'ciiu3_letra': ["D", "I", "G", "D" ,"CONS" ] , 
                                     # "ciiu3_4c_desc" : ["", "", "", ""],
-                                    'ciiu3_4c': ["2429", "6350", "5121", "29_30_31_32_33"]})    
+                                    'ciiu3_4c': ["2429", "6350", "5121", "29_30_31_32_33", "CONS"]})    
     ciiu_dig_let = pd.concat([ciiu_dig_let, claes_faltantes ], axis = 0)
     clae["clae6"] = clae["clae6"].astype("int64")
     ciiu_dig_let = pd.merge(ciiu_dig_let , clae[["clae6", "letra"]], how = "left", left_on= "clae6", right_on= "clae6").rename(columns = {"letra": "clae6_letra"})

@@ -64,11 +64,10 @@ asign_pre_matriz= def_asignacion_prob(matriz_sisd_insumo)
 matriz_sisd_bk = to_matriz(asign_pre_matriz) #matriz SISD
 matriz_hssd_bk  = pd.pivot_table(asign_pre_matriz, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0)
 
-
-#join_final.to_csv("../data/resultados/impo_con_ponderaciones_12d_6act_post_ml.csv", index=False)
 # matriz_sisd_insumo.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
 # asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
 # matriz_sisd_bk.to_csv("../data/resultados/matriz_sisd.csv")
+# matriz_hssd_bk.to_csv("../data/resultados/matriz_hssd_bk.csv")
 
 #matriz_sisd_insumo= pd.read_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv")
 #matriz_sisd= pd.read_csv("../data/resultados/matriz_sisd.csv")
@@ -110,13 +109,9 @@ sns.lineplot(data= z, x= "HS6_d12", y= "expo")
 #                       Visualizacion (MOVER AL OTRO SCRIPT)
 # =============================================================================
 #preprocesamiento
-letras_ciiu = dic_graf(matriz_sisd_bk, dic_ciiu)
-letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,15)
 
-tick_x = dic_propio["desc"].drop_duplicates().str.slice(0,15)
-
-impo_tot_sec = impo_total(matriz_sisd_bk, sectores_desc= False, letras_ciiu = letras_ciiu)
-comercio_y_propio = impo_comercio_y_propio(matriz_sisd_bk,letras_ciiu, sectores_desc = False)
+impo_tot_sec = impo_total(matriz_sisd_bk, dic_propio, sectores_desc= False)
+comercio_y_propio = impo_comercio_y_propio(matriz_sisd_bk,dic_propio, sectores_desc = False)
 
 impo_tot_sec_ci = impo_total(matriz_sisd_ci, sectores_desc= False, letras_ciiu = letras_ciiu)
 comercio_y_propio_ci = impo_comercio_y_propio(matriz_sisd_ci,letras_ciiu, sectores_desc = False)
@@ -124,8 +119,8 @@ comercio_y_propio_ci = impo_comercio_y_propio(matriz_sisd_ci,letras_ciiu, sector
 x = pd.merge(matriz_sisd_bk.reset_index(),letras_ciiu, how = "outer", left_on= "si",  right_on="letra")
 
 # graficos
-graficos(dic_propio, impo_tot_sec, comercio_y_propio, letras_ciiu, titulo = "Bienes de Capital")
-graficos(dic_propio, impo_tot_sec_ci, comercio_y_propio_ci, letras_ciiu, titulo = "Consumos Intermedios")
+graficos(dic_propio, impo_tot_sec, comercio_y_propio, ue_dest = "bk")
+graficos(dic_propio, impo_tot_sec_ci, comercio_y_propio_ci,  ue_dest= "ci")
 
 ##### tabla top 5
 # Top 5 de importaciones de cada sector
