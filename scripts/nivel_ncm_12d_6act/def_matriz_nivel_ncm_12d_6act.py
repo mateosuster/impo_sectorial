@@ -125,6 +125,9 @@ def to_matriz(matriz_sisd_final, ci = False):
     if ci == False:
         z= z.append(pd.Series(name='P')) #imputacion de Q
         z= z.replace(np.nan,0)
+        
+        z.insert(29, "G", 0) # AGREGO G !!!
+        
     elif ci == True:
         z.insert(29, "G", 0)
         z.insert(44, "Q", 0)
