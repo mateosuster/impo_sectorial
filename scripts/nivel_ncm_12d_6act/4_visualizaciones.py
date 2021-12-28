@@ -24,6 +24,69 @@ from def_procesamiento_nivel_ncm_12d_6act import *
 from def_matriz_nivel_ncm_12d_6act import *
 from def_pre_visualizacion_nivel_ncm_12d_6act import *
 
+
+#############################
+            # DATOS
+#############################
+
+
+
+
+
+##########################
+# Resultados propios 
+##########################
+impo_tot_sec, comercio_y_propio = impo_total(matriz_sisd_bk, dic_propio, sectores_desc= False)
+impo_tot_sec_ci, comercio_y_propio_ci  = impo_total(matriz_sisd_ci,dic_propio, sectores_desc= False)
+
+x = pd.merge(matriz_sisd_bk.reset_index(),letras_ciiu, how = "outer", left_on= "si",  right_on="letra")
+
+# graficos
+graficos(dic_propio, impo_tot_sec, comercio_y_propio, ue_dest = "bk")
+graficos(dic_propio, impo_tot_sec_ci, comercio_y_propio_ci,  ue_dest= "ci")
+
+
+
+
+# =============================================================================
+#                   Top 5 de importaciones de cada sector
+# =============================================================================
+top_5_impo = top_5(asign_pre_matriz, letras_ciiu , ncm12_desc_mod, impo_tot_sec) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
+top_5_impo.to_excel("../data/resultados/top5_impo.xlsx")
+
+top_5_impo_ci = top_5(asign_pre_matriz_ci, letras_ciiu , ncm12_desc_mod, impo_tot_sec_ci) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
+top_5_impo_ci.to_excel("../data/resultados/top5_impo_ci.xlsx")
+
+
+asign_pre_matriz_ci[asign_pre_matriz_ci.sd == "P"]
+
+#CUITS QUE IMPORTAN TOP HS6 Industria
+# top_industria = top_5_impo[top_5_impo["letra"]=="C"]["hs6"].iloc[[0,3]]
+# cuit_top_c = join_impo_clae[join_impo_clae["HS6"].isin(top_industria )].sort_values("valor",ascending=False)#["CUIT_IMPOR"].unique()
+# cuit_empresas[cuit_empresas["cuit"].isin(cuit_top_c)]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # =============================================================================
 # Cargo datos 
 # =============================================================================
