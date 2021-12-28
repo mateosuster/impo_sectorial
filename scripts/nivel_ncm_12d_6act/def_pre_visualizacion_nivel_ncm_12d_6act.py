@@ -13,35 +13,8 @@ import matplotlib.ticker as mtick
 
 
 
-# def dic_graf(matriz_sisd, dic_ciiu):
-#     # letras_ciiu = pd.DataFrame(matriz_sisd.index)
-    
-#     # armo nuevo diccionario
-#     letras_ciiu_pd =  dic_ciiu[["ciiu3_letra", "ciiu3_letra_desc"]].drop_duplicates(subset = "ciiu3_letra")[~dic_ciiu["ciiu3_letra"].isin(["D", "I", "H"]) ].dropna().rename(columns = {"ciiu3_letra" : "letra", "ciiu3_letra_desc":"desc" } )
-    
-#     digitos = tuple(list(map(str, range(15, 38))) + list(map(str, range(60, 65))) )
-#     ciiu_desc_2= dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith(digitos )][[ "ciiu3_letra", "ciiu3_2c", "ciiu3_2c_desc" ]].drop_duplicates()
-#     ciiu_desc_2["ciiu3_2c"] =  ciiu_desc_2["ciiu3_letra"] + "_"+ ciiu_desc_2["ciiu3_2c"].astype(str).str.slice(0,2) 
-#     ciiu_desc_2 = ciiu_desc_2.rename(columns = {"ciiu3_2c" : "letra", "ciiu3_2c_desc":"desc" } )[["letra", "desc"]]
-    
-#     ciiu_desc_3= dic_ciiu[dic_ciiu["ciiu3_3c"].astype(str).str.startswith( ("551", "552"), na = False)][[ "ciiu3_letra", "ciiu3_3c", "ciiu3_3c_desc"  ]].drop_duplicates()
-#     ciiu_desc_3["ciiu3_3c"] =  ciiu_desc_3["ciiu3_letra"] + "_"+ ciiu_desc_3["ciiu3_3c"].astype(str).str.slice(0,3) 
-#     ciiu_desc_3 = ciiu_desc_3.rename(columns = {"ciiu3_3c" : "letra", "ciiu3_3c_desc":"desc" } )[["letra", "desc"]]
-    
-#     sector_a_definir = pd.DataFrame({"letra": ["D_29_30_31_32_33"], "desc":[ "D_29_30_31_32_33"]})
-    
-#     letras_ciiu = pd.concat([letras_ciiu_pd, ciiu_desc_2, ciiu_desc_3, sector_a_definir ], axis = 0).sort_values("letra")
-#     letras_ciiu = pd.concat([letras_ciiu ,pd.DataFrame({"letra": ["CONS"], "desc":[ "Consumo"]})], axis = 0 )
-    
-#     # letras_ciiu = letras_ciiu[~letras_ciiu["letra"].isin(["P", "Q"])]
-#     return letras_ciiu
-
 def impo_total(matriz_sisd, dic_propio, sectores_desc =False, largo_actividad=20):
-    # letras_ciiu = dic_graf(matriz_sisd, dic_ciiu)
-    # letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,largo_actividad)
-    
-    # matriz_sisd = matriz_sisd_bk
-    
+
     letras_ciiu= dic_propio[["propio_letra_2", "desc"]].drop_duplicates().rename(columns = {"propio_letra_2": "letra"}).dropna().sort_values("letra")
     letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,largo_actividad)
     letras_ciiu= letras_ciiu[letras_ciiu["letra"]!= "CONS"]
@@ -60,44 +33,21 @@ def impo_total(matriz_sisd, dic_propio, sectores_desc =False, largo_actividad=20
     # transformacion a array de np
     z_visual = matriz_sisd.to_numpy()
     
-    #diagonal y totales col y row
+    #total y diagonal 
     col_sum  = np.nansum(z_visual , axis=0)
-    
-    # sectores
-    # sectores_desc.pop("U")
-    # sectores = pd.DataFrame( { "desc":sectores_desc.values(), "letra": sectores_desc.keys() })
-
-    #importaciones totales (ordenadas)
-    # impo_tot_sec = pd.DataFrame({"impo_tot": col_sum, "letra":sectores_desc.keys() }, index=sectores_desc.values())  
-    impo_tot_sec = pd.DataFrame({"impo_tot": col_sum, "letra":letra}, index=indice)  
-    # impo_tot_sec = pd.DataFrame({"impo_tot": col_sum } )  
-    # impo_tot_sec.sort_values(by = "impo_tot", ascending= False, inplace = True)
-    
-    return impo_tot_sec
-
-def impo_comercio_y_propio(matriz_sisd, dic_propio, sectores_desc = False, largo_actividad=20):
-    # letras_ciiu = dic_graf(matriz_sisd, dic_ciiu)
-    # letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,largo_actividad)
-    
-    letras_ciiu= dic_propio[["propio_letra_2", "desc"]].drop_duplicates()
-    letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,largo_actividad)
-    
-    # indice = z.index
-    indice = letras_ciiu.desc.values
-    # letra = letras_ciiu.letra.values
-    
-    # transformacion a array de np
-    z_visual = matriz_sisd.to_numpy()
-    
-    #diagonal y totales col y row
     diagonal = np.diag(z_visual)
-    col_sum  = np.nansum(z_visual , axis=0)
+   
+    #importaciones totales (ordenadas)
+    impo_tot_sec = pd.DataFrame({"impo_tot": col_sum, "letra":letra}, index=indice)  
     
     #diagonal sobre total col y comercio sobre total
     diag_total_col = diagonal/col_sum
     g_total_col = z_visual[29][:]/col_sum
-    comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = indice )
-    return comercio_y_propio.sort_values(by = 'Propio', ascending = False) 
+    comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = indice ).sort_values(by = 'Propio', ascending = False) 
+    
+    return impo_tot_sec, comercio_y_propio
+
+
     
 def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest):
     #parametro para graficos

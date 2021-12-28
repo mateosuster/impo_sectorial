@@ -106,12 +106,9 @@ sns.lineplot(data= z, x= "HS6_d12", y= "expo")
 # =============================================================================
 #                       Visualizacion (MOVER AL OTRO SCRIPT)
 # =============================================================================
-#preprocesamiento
-impo_tot_sec = impo_total(matriz_sisd_bk, dic_propio, sectores_desc= False)
-comercio_y_propio = impo_comercio_y_propio(matriz_sisd_bk,dic_propio, sectores_desc = False)
+impo_tot_sec, comercio_y_propio = impo_total(matriz_sisd_bk, dic_propio, sectores_desc= False)
 
-impo_tot_sec_ci = impo_total(matriz_sisd_ci,dic_propio, sectores_desc= False)
-comercio_y_propio_ci = impo_comercio_y_propio(matriz_sisd_ci,dic_propio, sectores_desc = False)
+impo_tot_sec_ci, comercio_y_propio_ci  = impo_total(matriz_sisd_ci,dic_propio, sectores_desc= False)
 
 x = pd.merge(matriz_sisd_bk.reset_index(),letras_ciiu, how = "outer", left_on= "si",  right_on="letra")
 
