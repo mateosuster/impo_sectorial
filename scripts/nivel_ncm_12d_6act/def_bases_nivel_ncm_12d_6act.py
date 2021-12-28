@@ -85,7 +85,7 @@ def predo_ncm12_desc(ncm12_desc ):
     ncm12_desc.rename(columns = {"POSICION": "HS_12d", "DESCRIPCIO":"hs6_d12_desc"}, inplace = True) 
     ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['hs6_d12_desc'].str.split('//', expand=True))], axis=1)
     dic = {"ncm_desc": ncm12_desc, "ncm_split": ncm12_desc_split }
-    return dic
+    return dic["ncm_desc"]
 
 def predo_sectores_nombres(clae):
     letras_np = pd.unique(clae['letra'])
@@ -378,7 +378,7 @@ def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
     #join descripcion                                   
     desc = pd.read_csv("../data/resultados/desc_letra_propio.csv")
     ciiu_dig_let = pd.merge(ciiu_dig_let, desc, how= "left", left_on = "propio_letra_2", right_on = "letra")
-    ciiu_dig_let.to_csv("../data/resultados/dic_clae_ciiu_propio.csv")
+    ciiu_dig_let.to_csv("../data/resultados/dic_clae_ciiu_propio.csv", index=False)
 
     return ciiu_dig_let
 
