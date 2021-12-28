@@ -1,17 +1,14 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jul  1 10:44:28 2021
 
-@author: igalk
-"""
-import os
+
 from tqdm import tqdm
 import pandas as pd
 import numpy as np
 
 
 def def_asignacion_sec(raw_data, ci = False):
-
+    
+    # 1global letra_sd
+    
     letra1 = raw_data.columns.get_loc("letra1") + 1
     letra2 = raw_data.columns.get_loc("letra2") + 1
     letra3 = raw_data.columns.get_loc("letra3") + 1
