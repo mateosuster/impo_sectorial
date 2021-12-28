@@ -38,9 +38,7 @@ vector_comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep =
 #############################################
 #           preparación bases               #
 #############################################
-# predo_impo_17(impo_17)
-ncm12_desc_mod = predo_ncm12_desc(ncm12_desc )["ncm_desc"]    
-#impo_d12  = predo_impo_12d(impo_d12, ncm12_desc_mod )
+ncm12_desc_mod = predo_ncm12_desc(ncm12_desc )["ncm_desc"] 
 letras = predo_sectores_nombres(clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae) #meter loop aca
 dic_stp = predo_stp(dic_stp)
