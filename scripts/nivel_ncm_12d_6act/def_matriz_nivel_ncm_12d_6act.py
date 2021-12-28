@@ -7,7 +7,7 @@ import numpy as np
 
 def def_asignacion_sec(raw_data, ci = False):
     
-    # 1global letra_sd
+    letra_sd = np.nan
     
     letra1 = raw_data.columns.get_loc("letra1") + 1
     letra2 = raw_data.columns.get_loc("letra2") + 1
