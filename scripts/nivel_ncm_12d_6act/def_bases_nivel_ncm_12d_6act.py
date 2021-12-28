@@ -226,6 +226,10 @@ def def_join_impo_clae_bec_bk(join_impo_clae, bec_bk):
 
 
 def def_join_comercio(join_impo_clae_bec_bk, comercio, ci = False):
+    
+    # conversion de vector de comercio para que se pueda realizar el merge
+    comercio["clae6"] = comercio["clae6"].astype(str)
+    
     if ci == False:    
         #comercio = comercio.drop(["vta_vehiculos"], axis=1)
         comercio2 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk2", "vta_sec": "vta_sec2"})

@@ -13,37 +13,39 @@ import matplotlib.ticker as mtick
 
 
 
-def dic_graf(matriz_sisd, dic_ciiu):
-    # letras_ciiu = pd.DataFrame(matriz_sisd.index)
+# def dic_graf(matriz_sisd, dic_ciiu):
+#     # letras_ciiu = pd.DataFrame(matriz_sisd.index)
     
-    # armo nuevo diccionario
-    letras_ciiu_pd =  dic_ciiu[["ciiu3_letra", "ciiu3_letra_desc"]].drop_duplicates(subset = "ciiu3_letra")[~dic_ciiu["ciiu3_letra"].isin(["D", "I", "H"]) ].dropna().rename(columns = {"ciiu3_letra" : "letra", "ciiu3_letra_desc":"desc" } )
+#     # armo nuevo diccionario
+#     letras_ciiu_pd =  dic_ciiu[["ciiu3_letra", "ciiu3_letra_desc"]].drop_duplicates(subset = "ciiu3_letra")[~dic_ciiu["ciiu3_letra"].isin(["D", "I", "H"]) ].dropna().rename(columns = {"ciiu3_letra" : "letra", "ciiu3_letra_desc":"desc" } )
     
-    digitos = tuple(list(map(str, range(15, 38))) + list(map(str, range(60, 65))) )
-    ciiu_desc_2= dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith(digitos )][[ "ciiu3_letra", "ciiu3_2c", "ciiu3_2c_desc" ]].drop_duplicates()
-    ciiu_desc_2["ciiu3_2c"] =  ciiu_desc_2["ciiu3_letra"] + "_"+ ciiu_desc_2["ciiu3_2c"].astype(str).str.slice(0,2) 
-    ciiu_desc_2 = ciiu_desc_2.rename(columns = {"ciiu3_2c" : "letra", "ciiu3_2c_desc":"desc" } )[["letra", "desc"]]
+#     digitos = tuple(list(map(str, range(15, 38))) + list(map(str, range(60, 65))) )
+#     ciiu_desc_2= dic_ciiu[dic_ciiu["ciiu3_2c"].astype(str).str.startswith(digitos )][[ "ciiu3_letra", "ciiu3_2c", "ciiu3_2c_desc" ]].drop_duplicates()
+#     ciiu_desc_2["ciiu3_2c"] =  ciiu_desc_2["ciiu3_letra"] + "_"+ ciiu_desc_2["ciiu3_2c"].astype(str).str.slice(0,2) 
+#     ciiu_desc_2 = ciiu_desc_2.rename(columns = {"ciiu3_2c" : "letra", "ciiu3_2c_desc":"desc" } )[["letra", "desc"]]
     
-    ciiu_desc_3= dic_ciiu[dic_ciiu["ciiu3_3c"].astype(str).str.startswith( ("551", "552"), na = False)][[ "ciiu3_letra", "ciiu3_3c", "ciiu3_3c_desc"  ]].drop_duplicates()
-    ciiu_desc_3["ciiu3_3c"] =  ciiu_desc_3["ciiu3_letra"] + "_"+ ciiu_desc_3["ciiu3_3c"].astype(str).str.slice(0,3) 
-    ciiu_desc_3 = ciiu_desc_3.rename(columns = {"ciiu3_3c" : "letra", "ciiu3_3c_desc":"desc" } )[["letra", "desc"]]
+#     ciiu_desc_3= dic_ciiu[dic_ciiu["ciiu3_3c"].astype(str).str.startswith( ("551", "552"), na = False)][[ "ciiu3_letra", "ciiu3_3c", "ciiu3_3c_desc"  ]].drop_duplicates()
+#     ciiu_desc_3["ciiu3_3c"] =  ciiu_desc_3["ciiu3_letra"] + "_"+ ciiu_desc_3["ciiu3_3c"].astype(str).str.slice(0,3) 
+#     ciiu_desc_3 = ciiu_desc_3.rename(columns = {"ciiu3_3c" : "letra", "ciiu3_3c_desc":"desc" } )[["letra", "desc"]]
     
-    sector_a_definir = pd.DataFrame({"letra": ["D_29_30_31_32_33"], "desc":[ "D_29_30_31_32_33"]})
+#     sector_a_definir = pd.DataFrame({"letra": ["D_29_30_31_32_33"], "desc":[ "D_29_30_31_32_33"]})
     
-    letras_ciiu = pd.concat([letras_ciiu_pd, ciiu_desc_2, ciiu_desc_3, sector_a_definir ], axis = 0).sort_values("letra")
-    letras_ciiu = pd.concat([letras_ciiu ,pd.DataFrame({"letra": ["CONS"], "desc":[ "Consumo"]})], axis = 0 )
+#     letras_ciiu = pd.concat([letras_ciiu_pd, ciiu_desc_2, ciiu_desc_3, sector_a_definir ], axis = 0).sort_values("letra")
+#     letras_ciiu = pd.concat([letras_ciiu ,pd.DataFrame({"letra": ["CONS"], "desc":[ "Consumo"]})], axis = 0 )
     
-    # letras_ciiu = letras_ciiu[~letras_ciiu["letra"].isin(["P", "Q"])]
-    return letras_ciiu
+#     # letras_ciiu = letras_ciiu[~letras_ciiu["letra"].isin(["P", "Q"])]
+#     return letras_ciiu
 
 def impo_total(matriz_sisd, dic_propio, sectores_desc =False, largo_actividad=20):
     # letras_ciiu = dic_graf(matriz_sisd, dic_ciiu)
     # letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,largo_actividad)
     
-    matriz_sisd = matriz_sisd_bk
+    # matriz_sisd = matriz_sisd_bk
     
     letras_ciiu= dic_propio[["propio_letra_2", "desc"]].drop_duplicates().rename(columns = {"propio_letra_2": "letra"}).dropna().sort_values("letra")
     letras_ciiu["desc"] = letras_ciiu["desc"].str.slice(0,largo_actividad)
+    letras_ciiu= letras_ciiu[letras_ciiu["letra"]!= "CONS"]
+    letras_ciiu = pd.concat([letras_ciiu , pd.DataFrame({"letra":"CONS", "desc": "Consumo"}, index= [None])], axis = 0)
     # if sectores_desc == True:
     #     indice = z.index
     #     letra =  indice.values

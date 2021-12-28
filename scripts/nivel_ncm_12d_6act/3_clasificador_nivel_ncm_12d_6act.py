@@ -3,9 +3,9 @@
 # Directorio de trabajo y librerias
 # =============================================================================
 import os 
-# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 # os.getcwd()
 import pandas as pd
@@ -109,12 +109,11 @@ sns.lineplot(data= z, x= "HS6_d12", y= "expo")
 #                       Visualizacion (MOVER AL OTRO SCRIPT)
 # =============================================================================
 #preprocesamiento
-
 impo_tot_sec = impo_total(matriz_sisd_bk, dic_propio, sectores_desc= False)
 comercio_y_propio = impo_comercio_y_propio(matriz_sisd_bk,dic_propio, sectores_desc = False)
 
-impo_tot_sec_ci = impo_total(matriz_sisd_ci, sectores_desc= False, letras_ciiu = letras_ciiu)
-comercio_y_propio_ci = impo_comercio_y_propio(matriz_sisd_ci,letras_ciiu, sectores_desc = False)
+impo_tot_sec_ci = impo_total(matriz_sisd_ci,dic_propio, sectores_desc= False)
+comercio_y_propio_ci = impo_comercio_y_propio(matriz_sisd_ci,dic_propio, sectores_desc = False)
 
 x = pd.merge(matriz_sisd_bk.reset_index(),letras_ciiu, how = "outer", left_on= "si",  right_on="letra")
 

@@ -1,953 +1,953 @@
-,ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio_letra,propio,propio_letra_2,letra,desc
-0,0,,0.0,0,,0,,,
-1,111,A,11111.0,A,A,111,A,A,"Agricultura, ganadería, caza y silvicultura"
-2,111,A,11112.0,A,A,111,A,A,"Agricultura, ganadería, caza y silvicultura"
-3,111,A,11119.0,A,A,111,A,A,"Agricultura, ganadería, caza y silvicultura"
-4,111,A,11121.0,A,A,111,A,A,"Agricultura, ganadería, caza y silvicultura"
-5,111,A,11129.0,A,A,111,A,A,"Agricultura, ganadería, caza y silvicultura"
-6,111,A,11130.0,A,A,111,A,A,"Agricultura, ganadería, caza y silvicultura"
-7,111,A,11211.0,A,A,111,A,A,"Agricultura, ganadería, caza y silvicultura"
-8,111,A,11291.0,A,A,111,A,A,"Agricultura, ganadería, caza y silvicultura"
-9,111,A,11299.0,A,A,111,A,A,"Agricultura, ganadería, caza y silvicultura"
-10,111,A,12600.0,A,A,111,A,A,"Agricultura, ganadería, caza y silvicultura"
-11,115,A,13011.0,A,A,115,A,A,"Agricultura, ganadería, caza y silvicultura"
-12,115,A,13012.0,A,A,115,A,A,"Agricultura, ganadería, caza y silvicultura"
-13,115,A,13013.0,A,A,115,A,A,"Agricultura, ganadería, caza y silvicultura"
-14,115,A,13019.0,A,A,115,A,A,"Agricultura, ganadería, caza y silvicultura"
-15,115,A,13020.0,A,A,115,A,A,"Agricultura, ganadería, caza y silvicultura"
-16,112,A,11310.0,A,A,112,A,A,"Agricultura, ganadería, caza y silvicultura"
-17,112,A,11321.0,A,A,112,A,A,"Agricultura, ganadería, caza y silvicultura"
-18,112,A,11329.0,A,A,112,A,A,"Agricultura, ganadería, caza y silvicultura"
-19,112,A,11331.0,A,A,112,A,A,"Agricultura, ganadería, caza y silvicultura"
-20,112,A,11341.0,A,A,112,A,A,"Agricultura, ganadería, caza y silvicultura"
-21,112,A,11342.0,A,A,112,A,A,"Agricultura, ganadería, caza y silvicultura"
-22,112,A,11911.0,A,A,112,A,A,"Agricultura, ganadería, caza y silvicultura"
-23,112,A,11912.0,A,A,112,A,A,"Agricultura, ganadería, caza y silvicultura"
-24,114,A,11400.0,A,A,114,A,A,"Agricultura, ganadería, caza y silvicultura"
-25,114,A,11501.0,A,A,114,A,A,"Agricultura, ganadería, caza y silvicultura"
-26,114,A,11509.0,A,A,114,A,A,"Agricultura, ganadería, caza y silvicultura"
-27,114,A,12110.0,A,A,114,A,A,"Agricultura, ganadería, caza y silvicultura"
-28,114,A,12510.0,A,A,114,A,A,"Agricultura, ganadería, caza y silvicultura"
-29,114,A,12590.0,A,A,114,A,A,"Agricultura, ganadería, caza y silvicultura"
-30,114,A,12701.0,A,A,114,A,A,"Agricultura, ganadería, caza y silvicultura"
-31,114,A,12709.0,A,A,114,A,A,"Agricultura, ganadería, caza y silvicultura"
-32,114,A,12800.0,A,A,114,A,A,"Agricultura, ganadería, caza y silvicultura"
-33,114,A,12900.0,A,A,114,A,A,"Agricultura, ganadería, caza y silvicultura"
-34,114,A,11990.0,A,A,114,A,A,"Agricultura, ganadería, caza y silvicultura"
-35,113,A,12121.0,A,A,113,A,A,"Agricultura, ganadería, caza y silvicultura"
-36,113,A,12200.0,A,A,113,A,A,"Agricultura, ganadería, caza y silvicultura"
-37,113,A,12311.0,A,A,113,A,A,"Agricultura, ganadería, caza y silvicultura"
-38,113,A,12319.0,A,A,113,A,A,"Agricultura, ganadería, caza y silvicultura"
-39,113,A,12320.0,A,A,113,A,A,"Agricultura, ganadería, caza y silvicultura"
-40,113,A,12410.0,A,A,113,A,A,"Agricultura, ganadería, caza y silvicultura"
-41,113,A,12420.0,A,A,113,A,A,"Agricultura, ganadería, caza y silvicultura"
-42,113,A,12490.0,A,A,113,A,A,"Agricultura, ganadería, caza y silvicultura"
-43,121,A,14113.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-44,121,A,14114.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-45,121,A,14115.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-46,121,A,14121.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-47,121,A,14211.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-48,121,A,14221.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-49,121,A,14300.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-50,121,A,14410.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-51,121,A,14420.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-52,121,A,14440.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-53,121,A,14510.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-54,121,A,14520.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-55,121,A,14610.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-56,121,A,14620.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-57,121,A,14710.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-58,121,A,14720.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-59,121,A,14430.0,A,A,121,A,A,"Agricultura, ganadería, caza y silvicultura"
-60,122,A,14810.0,A,A,122,A,A,"Agricultura, ganadería, caza y silvicultura"
-61,122,A,14820.0,A,A,122,A,A,"Agricultura, ganadería, caza y silvicultura"
-62,122,A,14910.0,A,A,122,A,A,"Agricultura, ganadería, caza y silvicultura"
-63,122,A,14920.0,A,A,122,A,A,"Agricultura, ganadería, caza y silvicultura"
-64,122,A,14930.0,A,A,122,A,A,"Agricultura, ganadería, caza y silvicultura"
-65,122,A,14990.0,A,A,122,A,A,"Agricultura, ganadería, caza y silvicultura"
-66,141,A,16111.0,A,A,141,A,A,"Agricultura, ganadería, caza y silvicultura"
-67,141,A,16112.0,A,A,141,A,A,"Agricultura, ganadería, caza y silvicultura"
-68,141,A,16113.0,A,A,141,A,A,"Agricultura, ganadería, caza y silvicultura"
-69,141,A,16119.0,A,A,141,A,A,"Agricultura, ganadería, caza y silvicultura"
-70,141,A,16120.0,A,A,141,A,A,"Agricultura, ganadería, caza y silvicultura"
-71,141,A,16130.0,A,A,141,A,A,"Agricultura, ganadería, caza y silvicultura"
-72,141,A,16140.0,A,A,141,A,A,"Agricultura, ganadería, caza y silvicultura"
-73,141,A,16150.0,A,A,141,A,A,"Agricultura, ganadería, caza y silvicultura"
-74,141,A,16190.0,A,A,141,A,A,"Agricultura, ganadería, caza y silvicultura"
-75,141,A,813000.0,N,A,141,A,A,"Agricultura, ganadería, caza y silvicultura"
-76,5121,G,461014.0,G,G,461014.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-77,5121,G,462120.0,G,G,462120.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-78,5121,G,462131.0,G,G,462131.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-79,5121,G,462132.0,G,G,462132.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-80,5121,G,462190.0,G,G,462190.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-81,5121,G,462201.0,G,G,462201.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-82,5121,G,462209.0,G,G,462209.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-83,142,A,16210.0,A,A,142,A,A,"Agricultura, ganadería, caza y silvicultura"
-84,142,A,16220.0,A,A,142,A,A,"Agricultura, ganadería, caza y silvicultura"
-85,142,A,16230.0,A,A,142,A,A,"Agricultura, ganadería, caza y silvicultura"
-86,142,A,16291.0,A,A,142,A,A,"Agricultura, ganadería, caza y silvicultura"
-87,142,A,16292.0,A,A,142,A,A,"Agricultura, ganadería, caza y silvicultura"
-88,142,A,16299.0,A,A,142,A,A,"Agricultura, ganadería, caza y silvicultura"
-89,150,A,17010.0,A,A,150,A,A,"Agricultura, ganadería, caza y silvicultura"
-90,150,A,17020.0,A,A,150,A,A,"Agricultura, ganadería, caza y silvicultura"
-91,201,A,21010.0,A,A,201,A,A,"Agricultura, ganadería, caza y silvicultura"
-92,201,A,21020.0,A,A,201,A,A,"Agricultura, ganadería, caza y silvicultura"
-93,201,A,21030.0,A,A,201,A,A,"Agricultura, ganadería, caza y silvicultura"
-94,202,A,22010.0,A,A,202,A,A,"Agricultura, ganadería, caza y silvicultura"
-95,202,A,22020.0,A,A,202,A,A,"Agricultura, ganadería, caza y silvicultura"
-96,203,A,24010.0,A,A,203,A,A,"Agricultura, ganadería, caza y silvicultura"
-97,203,A,24020.0,A,A,203,A,A,"Agricultura, ganadería, caza y silvicultura"
-98,501,B,31110.0,A,B,501,B,B,Pesca
-99,501,B,31120.0,A,B,501,B,B,Pesca
-100,501,B,31130.0,A,B,501,B,B,Pesca
-101,501,B,31200.0,A,B,501,B,B,Pesca
-102,503,B,31300.0,A,B,503,B,B,Pesca
-103,502,B,32000.0,A,B,502,B,B,Pesca
-104,1010,C,51000.0,B,C,1010,C,C,Explotación de minas y canteras
-105,1110,C,61000.0,B,C,1110,C,C,Explotación de minas y canteras
-106,1110,C,62000.0,B,C,1110,C,C,Explotación de minas y canteras
-107,1310,C,71000.0,B,C,1310,C,C,Explotación de minas y canteras
-108,1200,C,72100.0,B,C,1200,C,C,Explotación de minas y canteras
-109,1320,C,72910.0,B,C,1320,C,C,Explotación de minas y canteras
-110,1320,C,72990.0,B,C,1320,C,C,Explotación de minas y canteras
-111,1411,C,81100.0,B,C,1411,C,C,Explotación de minas y canteras
-112,1412,C,81200.0,B,C,1412,C,C,Explotación de minas y canteras
-113,1413,C,81300.0,B,C,1413,C,C,Explotación de minas y canteras
-114,1414,C,81400.0,B,C,1414,C,C,Explotación de minas y canteras
-115,1421,C,89110.0,B,C,1421,C,C,Explotación de minas y canteras
-116,1421,C,89120.0,B,C,1421,C,C,Explotación de minas y canteras
-117,1030,C,89200.0,B,C,1030,C,C,Explotación de minas y canteras
-118,1422,C,89300.0,B,C,1422,C,C,Explotación de minas y canteras
-119,1429,C,89900.0,B,C,1429,C,C,Explotación de minas y canteras
-120,1120,C,91000.0,B,C,1120,C,C,Explotación de minas y canteras
-121,7421,K,711001.0,M,K,7421,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-122,7421,K,711002.0,M,K,7421,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-123,7421,K,711003.0,M,K,7421,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-124,7421,K,711009.0,M,K,7421,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-125,1511,D,101011.0,C,D,1511,D_15,D_15,Alimentos
-126,1511,D,101012.0,C,D,1511,D_15,D_15,Alimentos
-127,1511,D,101013.0,C,D,1511,D_15,D_15,Alimentos
-128,1511,D,101020.0,C,D,1511,D_15,D_15,Alimentos
-129,1511,D,101030.0,C,D,1511,D_15,D_15,Alimentos
-130,1511,D,101040.0,C,D,1511,D_15,D_15,Alimentos
-131,1511,D,101091.0,C,D,1511,D_15,D_15,Alimentos
-132,1511,D,101099.0,C,D,1511,D_15,D_15,Alimentos
-133,1512,D,102001.0,C,D,1512,D_15,D_15,Alimentos
-134,1512,D,102002.0,C,D,1512,D_15,D_15,Alimentos
-135,1512,D,102003.0,C,D,1512,D_15,D_15,Alimentos
-136,1513,D,103011.0,C,D,1513,D_15,D_15,Alimentos
-137,1513,D,103012.0,C,D,1513,D_15,D_15,Alimentos
-138,1513,D,103020.0,C,D,1513,D_15,D_15,Alimentos
-139,1513,D,103030.0,C,D,1513,D_15,D_15,Alimentos
-140,1513,D,103091.0,C,D,1513,D_15,D_15,Alimentos
-141,1513,D,103099.0,C,D,1513,D_15,D_15,Alimentos
-142,1514,D,104011.0,C,D,1514,D_15,D_15,Alimentos
-143,1514,D,104012.0,C,D,1514,D_15,D_15,Alimentos
-144,1514,D,104013.0,C,D,1514,D_15,D_15,Alimentos
-145,1514,D,104020.0,C,D,1514,D_15,D_15,Alimentos
-146,1520,D,105010.0,C,D,1520,D_15,D_15,Alimentos
-147,1520,D,105020.0,C,D,1520,D_15,D_15,Alimentos
-148,1520,D,105030.0,C,D,1520,D_15,D_15,Alimentos
-149,1520,D,105090.0,C,D,1520,D_15,D_15,Alimentos
-150,1531,D,106110.0,C,D,1531,D_15,D_15,Alimentos
-151,1531,D,106120.0,C,D,1531,D_15,D_15,Alimentos
-152,1531,D,106131.0,C,D,1531,D_15,D_15,Alimentos
-153,1531,D,106139.0,C,D,1531,D_15,D_15,Alimentos
-154,1532,D,106200.0,C,D,1532,D_15,D_15,Alimentos
-155,1541,D,107110.0,C,D,1541,D_15,D_15,Alimentos
-156,1541,D,107121.0,C,D,1541,D_15,D_15,Alimentos
-157,1541,D,107129.0,C,D,1541,D_15,D_15,Alimentos
-158,1542,D,107200.0,C,D,1542,D_15,D_15,Alimentos
-159,1543,D,107301.0,C,D,1543,D_15,D_15,Alimentos
-160,1543,D,107309.0,C,D,1543,D_15,D_15,Alimentos
-161,1544,D,107410.0,C,D,1544,D_15,D_15,Alimentos
-162,1544,D,107420.0,C,D,1544,D_15,D_15,Alimentos
-163,1549,D,107500.0,C,D,1549,D_15,D_15,Alimentos
-164,1549,D,107911.0,C,D,1549,D_15,D_15,Alimentos
-165,1549,D,107912.0,C,D,1549,D_15,D_15,Alimentos
-166,1549,D,107920.0,C,D,1549,D_15,D_15,Alimentos
-167,1549,D,107930.0,C,D,1549,D_15,D_15,Alimentos
-168,1549,D,107991.0,C,D,1549,D_15,D_15,Alimentos
-169,1549,D,107992.0,C,D,1549,D_15,D_15,Alimentos
-170,1549,D,107999.0,C,D,1549,D_15,D_15,Alimentos
-171,2429,D,201220.0,C,D,2429,D_24,D_24,Productos químicos
-172,2429,D,202906.0,C,D,2429,D_24,D_24,Productos químicos
-173,2429,D,202907.0,C,D,2429,D_24,D_24,Productos químicos
-174,2429,D,202908.0,C,D,2429,D_24,D_24,Productos químicos
-175,1533,D,108000.0,C,D,1533,D_15,D_15,Alimentos
-176,1551,D,110100.0,C,D,1551,D_15,D_15,Alimentos
-177,1551,D,201210.0,C,D,1551,D_15,D_15,Alimentos
-178,1552,D,110211.0,C,D,1552,D_15,D_15,Alimentos
-179,1552,D,110212.0,C,D,1552,D_15,D_15,Alimentos
-180,1552,D,110290.0,C,D,1552,D_15,D_15,Alimentos
-181,1553,D,110300.0,C,D,1553,D_15,D_15,Alimentos
-182,1554,D,110411.0,C,D,1554,D_15,D_15,Alimentos
-183,1554,D,110412.0,C,D,1554,D_15,D_15,Alimentos
-184,1554,D,110420.0,C,D,1554,D_15,D_15,Alimentos
-185,1554,D,110491.0,C,D,1554,D_15,D_15,Alimentos
-186,1554,D,110492.0,C,D,1554,D_15,D_15,Alimentos
-187,1600,D,120010.0,C,D,1600,D_16,D_16,Tabaco
-188,1600,D,120091.0,C,D,1600,D_16,D_16,Tabaco
-189,1600,D,120099.0,C,D,1600,D_16,D_16,Tabaco
-190,1711,D,131110.0,C,D,1711,D_17,D_17,Productos textiles
-191,1711,D,131120.0,C,D,1711,D_17,D_17,Productos textiles
-192,1711,D,131131.0,C,D,1711,D_17,D_17,Productos textiles
-193,1711,D,131132.0,C,D,1711,D_17,D_17,Productos textiles
-194,1711,D,131139.0,C,D,1711,D_17,D_17,Productos textiles
-195,1711,D,131201.0,C,D,1711,D_17,D_17,Productos textiles
-196,1711,D,131202.0,C,D,1711,D_17,D_17,Productos textiles
-197,1711,D,131209.0,C,D,1711,D_17,D_17,Productos textiles
-198,1712,D,131300.0,C,D,1712,D_17,D_17,Productos textiles
-199,1712,D,149000.0,C,D,1712,D_17,D_17,Productos textiles
-200,1729,D,139900.0,C,D,1729,D_17,D_17,Productos textiles
-201,1730,D,139100.0,C,D,1730,D_17,D_17,Productos textiles
-202,1730,D,143010.0,C,D,1730,D_17,D_17,Productos textiles
-203,1730,D,143020.0,C,D,1730,D_17,D_17,Productos textiles
-204,1721,D,139201.0,C,D,1721,D_17,D_17,Productos textiles
-205,1721,D,139202.0,C,D,1721,D_17,D_17,Productos textiles
-206,1721,D,139203.0,C,D,1721,D_17,D_17,Productos textiles
-207,1721,D,139204.0,C,D,1721,D_17,D_17,Productos textiles
-208,1721,D,139209.0,C,D,1721,D_17,D_17,Productos textiles
-209,1722,D,139300.0,C,D,1722,D_17,D_17,Productos textiles
-210,1723,D,139400.0,C,D,1723,D_17,D_17,Productos textiles
-211,1810,D,141110.0,C,D,1810,D_18,D_18,Confecciones
-212,1810,D,141120.0,C,D,1810,D_18,D_18,Confecciones
-213,1810,D,141130.0,C,D,1810,D_18,D_18,Confecciones
-214,1810,D,141140.0,C,D,1810,D_18,D_18,Confecciones
-215,1810,D,141191.0,C,D,1810,D_18,D_18,Confecciones
-216,1810,D,141199.0,C,D,1810,D_18,D_18,Confecciones
-217,1810,D,141201.0,C,D,1810,D_18,D_18,Confecciones
-218,1810,D,141202.0,C,D,1810,D_18,D_18,Confecciones
-219,1820,D,142000.0,C,D,1820,D_18,D_18,Confecciones
-220,1911,D,151100.0,C,D,1911,D_19,D_19,Cuero
-221,1912,D,151200.0,C,D,1912,D_19,D_19,Cuero
-222,1920,D,152011.0,C,D,1920,D_19,D_19,Cuero
-223,1920,D,152021.0,C,D,1920,D_19,D_19,Cuero
-224,1920,D,152031.0,C,D,1920,D_19,D_19,Cuero
-225,1920,D,152040.0,C,D,1920,D_19,D_19,Cuero
-226,2010,D,161001.0,C,D,2010,D_20,D_20,Madera
-227,2010,D,161002.0,C,D,2010,D_20,D_20,Madera
-228,2021,D,162100.0,C,D,2021,D_20,D_20,Madera
-229,2022,D,162201.0,C,D,2022,D_20,D_20,Madera
-230,2022,D,162202.0,C,D,2022,D_20,D_20,Madera
-231,2023,D,162300.0,C,D,2023,D_20,D_20,Madera
-232,2029,D,162901.0,C,D,2029,D_20,D_20,Madera
-233,2029,D,162902.0,C,D,2029,D_20,D_20,Madera
-234,2029,D,162903.0,C,D,2029,D_20,D_20,Madera
-235,2029,D,162909.0,C,D,2029,D_20,D_20,Madera
-236,2101,D,170101.0,C,D,2101,D_21,D_21,Papel
-237,2101,D,170102.0,C,D,2101,D_21,D_21,Papel
-238,2102,D,170201.0,C,D,2102,D_21,D_21,Papel
-239,2102,D,170202.0,C,D,2102,D_21,D_21,Papel
-240,2109,D,170910.0,C,D,2109,D_21,D_21,Papel
-241,2109,D,170990.0,C,D,2109,D_21,D_21,Papel
-242,2221,D,181101.0,C,D,2221,D_22,D_22,Edición
-243,2221,D,181109.0,C,D,2221,D_22,D_22,Edición
-244,2892,D,259200.0,C,D,2892,D_28,D_28,Otros productos de metal
-245,2222,D,181200.0,C,D,2222,D_22,D_22,Edición
-246,2230,D,182000.0,C,D,2230,D_22,D_22,Edición
-247,2310,D,191000.0,C,D,2310,D_23,D_23,Productos de petróleo
-248,2320,D,192000.0,C,D,2320,D_23,D_23,Productos de petróleo
-249,2411,D,201110.0,C,D,2411,D_24,D_24,Productos químicos
-250,2411,D,201120.0,C,D,2411,D_24,D_24,Productos químicos
-251,2411,D,201130.0,C,D,2411,D_24,D_24,Productos químicos
-252,2411,D,201180.0,C,D,2411,D_24,D_24,Productos químicos
-253,2411,D,201190.0,C,D,2411,D_24,D_24,Productos químicos
-254,2330,D,201140.0,C,D,2330,D_23,D_23,Productos de petróleo
-255,2412,D,201300.0,C,D,2412,D_24,D_24,Productos químicos
-256,2413,D,201401.0,C,D,2413,D_24,D_24,Productos químicos
-257,2413,D,201409.0,C,D,2413,D_24,D_24,Productos químicos
-258,2421,D,202101.0,C,D,2421,D_24,D_24,Productos químicos
-259,2422,D,202200.0,C,D,2422,D_24,D_24,Productos químicos
-260,2424,D,202311.0,C,D,2424,D_24,D_24,Productos químicos
-261,2424,D,202312.0,C,D,2424,D_24,D_24,Productos químicos
-262,2424,D,202320.0,C,D,2424,D_24,D_24,Productos químicos
-263,3699,D,329010.0,C,D,3699,D_36,D_36,Muebles
-264,3699,D,329020.0,C,D,3699,D_36,D_36,Muebles
-265,3699,D,329030.0,C,D,3699,D_36,D_36,Muebles
-266,3699,D,329040.0,C,D,3699,D_36,D_36,Muebles
-267,3699,D,329090.0,C,D,3699,D_36,D_36,Muebles
-268,2430,D,203000.0,C,D,2430,D_24,D_24,Productos químicos
-269,2423,D,210010.0,C,D,2423,D_24,D_24,Productos químicos
-270,2423,D,210020.0,C,D,2423,D_24,D_24,Productos químicos
-271,2423,D,210030.0,C,D,2423,D_24,D_24,Productos químicos
-272,2423,D,210090.0,C,D,2423,D_24,D_24,Productos químicos
-273,2511,D,221110.0,C,D,2511,D_25,D_25,Productos de caucho y plástico
-274,2511,D,221120.0,C,D,2511,D_25,D_25,Productos de caucho y plástico
-275,2519,D,221901.0,C,D,2519,D_25,D_25,Productos de caucho y plástico
-276,2519,D,221909.0,C,D,2519,D_25,D_25,Productos de caucho y plástico
-277,2520,D,222010.0,C,D,2520,D_25,D_25,Productos de caucho y plástico
-278,2520,D,222090.0,C,D,2520,D_25,D_25,Productos de caucho y plástico
-279,2610,D,231010.0,C,D,2610,D_26,D_26,Otros minerales no metálicos
-280,2610,D,231020.0,C,D,2610,D_26,D_26,Otros minerales no metálicos
-281,2610,D,231090.0,C,D,2610,D_26,D_26,Otros minerales no metálicos
-282,2692,D,239100.0,C,D,2692,D_26,D_26,Otros minerales no metálicos
-283,2693,D,239201.0,C,D,2693,D_26,D_26,Otros minerales no metálicos
-284,2693,D,239202.0,C,D,2693,D_26,D_26,Otros minerales no metálicos
-285,2693,D,239209.0,C,D,2693,D_26,D_26,Otros minerales no metálicos
-286,2691,D,239310.0,C,D,2691,D_26,D_26,Otros minerales no metálicos
-287,2691,D,239391.0,C,D,2691,D_26,D_26,Otros minerales no metálicos
-288,2691,D,239399.0,C,D,2691,D_26,D_26,Otros minerales no metálicos
-289,2694,D,239410.0,C,D,2694,D_26,D_26,Otros minerales no metálicos
-290,2694,D,239421.0,C,D,2694,D_26,D_26,Otros minerales no metálicos
-291,2694,D,239422.0,C,D,2694,D_26,D_26,Otros minerales no metálicos
-292,2695,D,239510.0,C,D,2695,D_26,D_26,Otros minerales no metálicos
-293,2695,D,239591.0,C,D,2695,D_26,D_26,Otros minerales no metálicos
-294,2695,D,239592.0,C,D,2695,D_26,D_26,Otros minerales no metálicos
-295,2695,D,239593.0,C,D,2695,D_26,D_26,Otros minerales no metálicos
-296,2696,D,239600.0,C,D,2696,D_26,D_26,Otros minerales no metálicos
-297,2699,D,239900.0,C,D,2699,D_26,D_26,Otros minerales no metálicos
-298,2710,D,241001.0,C,D,2710,D_27,D_27,Metales comunes
-299,2710,D,241009.0,C,D,2710,D_27,D_27,Metales comunes
-300,2720,D,242010.0,C,D,2720,D_27,D_27,Metales comunes
-301,2720,D,242090.0,C,D,2720,D_27,D_27,Metales comunes
-302,2731,D,243100.0,C,D,2731,D_27,D_27,Metales comunes
-303,2732,D,243200.0,C,D,2732,D_27,D_27,Metales comunes
-304,2811,D,251101.0,C,D,2811,D_28,D_28,Otros productos de metal
-305,2811,D,251102.0,C,D,2811,D_28,D_28,Otros productos de metal
-306,2812,D,251200.0,C,D,2812,D_28,D_28,Otros productos de metal
-307,2813,D,251300.0,C,D,2813,D_28,D_28,Otros productos de metal
-308,2927,D,252000.0,C,D,2927,D_29,D_29,Maquinaria y equipo
-309,2891,D,259100.0,C,D,2891,D_28,D_28,Otros productos de metal
-310,2893,D,259301.0,C,D,2893,D_28,D_28,Otros productos de metal
-311,2893,D,259302.0,C,D,2893,D_28,D_28,Otros productos de metal
-312,2893,D,259309.0,C,D,2893,D_28,D_28,Otros productos de metal
-313,2929,D,282901.0,C,D,2929,D_29,D_29,Maquinaria y equipo
-314,2929,D,282909.0,C,D,2929,D_29,D_29,Maquinaria y equipo
-315,2899,D,259910.0,C,D,2899,D_28,D_28,Otros productos de metal
-316,2899,D,259991.0,C,D,2899,D_28,D_28,Otros productos de metal
-317,2899,D,259992.0,C,D,2899,D_28,D_28,Otros productos de metal
-318,2899,D,259993.0,C,D,2899,D_28,D_28,Otros productos de metal
-319,2899,D,259999.0,C,D,2899,D_28,D_28,Otros productos de metal
-320,3110,D,271010.0,C,D,3110,D_31,D_31,Aparatos eléctricos
-321,3120,D,271020.0,C,D,3120,D_31,D_31,Aparatos eléctricos
-322,3130,D,273110.0,C,D,3130,D_31,D_31,Aparatos eléctricos
-323,3130,D,273190.0,C,D,3130,D_31,D_31,Aparatos eléctricos
-324,3210,D,261000.0,C,D,3210,D_32,D_32,Radio y televisión
-325,3230,D,264000.0,C,D,3230,D_32,D_32,Radio y televisión
-326,3000,D,262000.0,C,D,3000,D_30,D_30,Maquinaria de oficina
-327,3000,D,281700.0,C,D,3000,D_30,D_30,Maquinaria de oficina
-328,3190,D,279000.0,C,D,3190,D_31,D_31,Aparatos eléctricos
-329,3220,D,263000.0,C,D,3220,D_32,D_32,Radio y televisión
-330,3694,D,324000.0,C,D,3694,D_36,D_36,Muebles
-331,3310,D,265101.0,C,D,3310,D_33,D_33,Instrumentos médicos
-332,3310,D,265102.0,C,D,3310,D_33,D_33,Instrumentos médicos
-333,3330,D,265200.0,C,D,3330,D_33,D_33,Instrumentos médicos
-334,3311,D,266010.0,C,D,3311,D_33,D_33,Instrumentos médicos
-335,3311,D,266090.0,C,D,3311,D_33,D_33,Instrumentos médicos
-336,2919,D,281900.0,C,D,2919,D_29,D_29,Maquinaria y equipo
-337,3320,D,267001.0,C,D,3320,D_33,D_33,Instrumentos médicos
-338,3320,D,267002.0,C,D,3320,D_33,D_33,Instrumentos médicos
-339,3320,D,268000.0,C,D,3320,D_33,D_33,Instrumentos médicos
-340,3140,D,272000.0,C,D,3140,D_31,D_31,Aparatos eléctricos
-341,3150,D,274000.0,C,D,3150,D_31,D_31,Aparatos eléctricos
-342,2930,D,275010.0,C,D,2930,D_29,D_29,Maquinaria y equipo
-343,2930,D,275020.0,C,D,2930,D_29,D_29,Maquinaria y equipo
-344,2930,D,275091.0,C,D,2930,D_29,D_29,Maquinaria y equipo
-345,2930,D,275092.0,C,D,2930,D_29,D_29,Maquinaria y equipo
-346,2930,D,275099.0,C,D,2930,D_29,D_29,Maquinaria y equipo
-347,2922,D,282200.0,C,D,2922,D_29,D_29,Maquinaria y equipo
-348,2911,D,281100.0,C,D,2911,D_29,D_29,Maquinaria y equipo
-349,2912,D,281201.0,C,D,2912,D_29,D_29,Maquinaria y equipo
-350,2912,D,281301.0,C,D,2912,D_29,D_29,Maquinaria y equipo
-351,2913,D,281400.0,C,D,2913,D_29,D_29,Maquinaria y equipo
-352,2914,D,281500.0,C,D,2914,D_29,D_29,Maquinaria y equipo
-353,2915,D,281600.0,C,D,2915,D_29,D_29,Maquinaria y equipo
-354,3599,D,309900.0,C,D,3599,D_35,D_35,Otros equipo de transporte
-355,2921,D,282110.0,C,D,2921,D_29,D_29,Maquinaria y equipo
-356,2921,D,282120.0,C,D,2921,D_29,D_29,Maquinaria y equipo
-357,2921,D,282130.0,C,D,2921,D_29,D_29,Maquinaria y equipo
-358,2923,D,282300.0,C,D,2923,D_29,D_29,Maquinaria y equipo
-359,2924,D,282400.0,C,D,2924,D_29,D_29,Maquinaria y equipo
-360,2925,D,282500.0,C,D,2925,D_29,D_29,Maquinaria y equipo
-361,2926,D,282600.0,C,D,2926,D_29,D_29,Maquinaria y equipo
-362,3410,D,291000.0,C,D,3410,D_34,D_34,Automotores
-363,3420,D,292000.0,C,D,3420,D_34,D_34,Automotores
-364,3430,D,293011.0,C,D,3430,D_34,D_34,Automotores
-365,3430,D,293090.0,C,D,3430,D_34,D_34,Automotores
-366,3610,D,310010.0,C,D,3610,D_36,D_36,Muebles
-367,3610,D,310020.0,C,D,3610,D_36,D_36,Muebles
-368,3610,D,310030.0,C,D,3610,D_36,D_36,Muebles
-369,3511,D,301100.0,C,D,3511,D_35,D_35,Otros equipo de transporte
-370,3512,D,301200.0,C,D,3512,D_35,D_35,Otros equipo de transporte
-371,3520,D,302000.0,C,D,3520,D_35,D_35,Otros equipo de transporte
-372,3530,D,303000.0,C,D,3530,D_35,D_35,Otros equipo de transporte
-373,3590,D,309100.0,C,D,3590,D_35,D_35,Otros equipo de transporte
-374,3590,D,309200.0,C,D,3590,D_35,D_35,Otros equipo de transporte
-375,3691,D,321011.0,C,D,3691,D_36,D_36,Muebles
-376,3691,D,321012.0,C,D,3691,D_36,D_36,Muebles
-377,3691,D,321020.0,C,D,3691,D_36,D_36,Muebles
-378,3692,D,322001.0,C,D,3692,D_36,D_36,Muebles
-379,3693,D,323001.0,C,D,3693,D_36,D_36,Muebles
-380,2211,D,581100.0,J,D,2211,D_22,D_22,Edición
-381,7250,K,951100.0,S,K,7250,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-382,4011,E,351110.0,D,E,4011,E,E,"Suministro de electricidad, gas y agua"
-383,4011,E,351120.0,D,E,4011,E,E,"Suministro de electricidad, gas y agua"
-384,4011,E,351130.0,D,E,4011,E,E,"Suministro de electricidad, gas y agua"
-385,4011,E,351190.0,D,E,4011,E,E,"Suministro de electricidad, gas y agua"
-386,4012,E,351201.0,D,E,4012,E,E,"Suministro de electricidad, gas y agua"
-387,5119,G,351310.0,D,G,5119,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-388,5119,G,461031.0,G,G,461031.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-389,5119,G,461032.0,G,G,461032.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-390,5119,G,461039.0,G,G,461039.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-391,5119,G,461040.0,G,G,461040.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-392,5119,G,461091.0,G,G,461091.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-393,5119,G,461092.0,G,G,461092.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-394,5119,G,461093.0,G,G,461093.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-395,5119,G,461094.0,G,G,461094.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-396,5119,G,461095.0,G,G,461095.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-397,5119,G,461099.0,G,G,461099.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-398,4013,E,351320.0,D,E,4013,E,E,"Suministro de electricidad, gas y agua"
-399,4020,E,352010.0,D,E,4020,E,E,"Suministro de electricidad, gas y agua"
-400,4020,E,352020.0,D,E,4020,E,E,"Suministro de electricidad, gas y agua"
-401,4030,E,353001.0,D,E,4030,E,E,"Suministro de electricidad, gas y agua"
-402,4100,E,360010.0,E,E,4100,E,E,"Suministro de electricidad, gas y agua"
-403,4100,E,360020.0,E,E,4100,E,E,"Suministro de electricidad, gas y agua"
-404,9000,O,370000.0,E,O,9000,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-405,9000,O,381100.0,E,O,9000,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-406,9000,O,381200.0,E,O,9000,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-407,9000,O,390000.0,E,O,9000,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-408,3710,D,382010.0,E,D,3710,D_37,D_37,Reciclamiento de desperdicios y desechos
-409,3720,D,382020.0,E,D,3720,D_37,D_37,Reciclamiento de desperdicios y desechos
-410,4520,F,410011.0,F,F,4520,F,F,Construcción
-411,4520,F,410021.0,F,F,4520,F,F,Construcción
-412,4520,F,421000.0,F,F,4520,F,F,Construcción
-413,4520,F,429090.0,F,F,4520,F,F,Construcción
-414,4520,F,439910.0,F,F,4520,F,F,Construcción
-415,4533,F,432200.0,F,F,4533,F,F,Construcción
-416,4533,F,422100.0,F,F,4533,F,F,Construcción
-417,4533,F,429010.0,F,F,4533,F,F,Construcción
-418,4531,F,432110.0,F,F,4531,F,F,Construcción
-419,4531,F,432190.0,F,F,4531,F,F,Construcción
-420,4531,F,432910.0,F,F,4531,F,F,Construcción
-421,4531,F,422200.0,F,F,4531,F,F,Construcción
-422,7010,K,681010.0,L,K,7010,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-423,7010,K,681020.0,L,K,7010,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-424,7010,K,681098.0,L,K,7010,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-425,7010,K,681099.0,L,K,7010,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-426,4539,F,432990.0,F,F,4539,F,F,Construcción
-427,4539,F,439990.0,F,F,4539,F,F,Construcción
-428,4511,F,431100.0,F,F,4511,F,F,Construcción
-429,4519,F,431210.0,F,F,4519,F,F,Construcción
-430,4550,F,439100.0,F,F,4550,F,F,Construcción
-431,4512,F,431220.0,F,F,4512,F,F,Construcción
-432,4532,F,432920.0,F,F,4532,F,F,Construcción
-433,4541,F,433010.0,F,F,4541,F,F,Construcción
-434,4542,F,433020.0,F,F,4542,F,F,Construcción
-435,4543,F,433030.0,F,F,4543,F,F,Construcción
-436,4544,F,433040.0,F,F,4544,F,F,Construcción
-437,4549,F,433090.0,F,F,4549,F,F,Construcción
-438,5011,G,451110.0,G,G,451110.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-439,5011,G,451190.0,G,G,451190.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-440,5012,G,451210.0,G,G,451210.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-441,5012,G,451290.0,G,G,451290.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-442,5020,G,452101.0,G,G,452101.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-443,5020,G,452210.0,G,G,452210.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-444,5020,G,452220.0,G,G,452220.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-445,5020,G,452300.0,G,G,452300.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-446,5020,G,452401.0,G,G,452401.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-447,5020,G,452500.0,G,G,452500.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-448,5020,G,452600.0,G,G,452600.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-449,5020,G,452700.0,G,G,452700.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-450,5020,G,452800.0,G,G,452800.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-451,5020,G,452910.0,G,G,452910.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-452,5020,G,452990.0,G,G,452990.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-453,5031,G,453100.0,G,G,453100.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-454,5032,G,453210.0,G,G,453210.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-455,5032,G,453220.0,G,G,453220.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-456,5032,G,453291.0,G,G,453291.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-457,5032,G,453292.0,G,G,453292.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-458,5040,G,454010.0,G,G,454010.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-459,5040,G,454020.0,G,G,454020.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-460,5111,G,461011.0,G,G,461011.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-461,5111,G,461012.0,G,G,461012.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-462,5111,G,461013.0,G,G,461013.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-463,5111,G,461019.0,G,G,461019.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-464,5111,G,461021.0,G,G,461021.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-465,5111,G,461022.0,G,G,461022.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-466,5111,G,461029.0,G,G,461029.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-467,5122,G,463111.0,G,G,463111.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-468,5122,G,463112.0,G,G,463112.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-469,5122,G,463121.0,G,G,463121.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-470,5122,G,463129.0,G,G,463129.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-471,5122,G,463130.0,G,G,463130.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-472,5122,G,463140.0,G,G,463140.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-473,5122,G,463151.0,G,G,463151.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-474,5122,G,463152.0,G,G,463152.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-475,5122,G,463153.0,G,G,463153.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-476,5122,G,463154.0,G,G,463154.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-477,5122,G,463159.0,G,G,463159.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-478,5122,G,463160.0,G,G,463160.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-479,5122,G,463170.0,G,G,463170.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-480,5122,G,463191.0,G,G,463191.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-481,5122,G,463199.0,G,G,463199.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-482,5123,G,463211.0,G,G,463211.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-483,5123,G,463212.0,G,G,463212.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-484,5123,G,463219.0,G,G,463219.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-485,5123,G,463220.0,G,G,463220.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-486,5124,G,463300.0,G,G,463300.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-487,5131,G,464111.0,G,G,464111.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-488,5131,G,464112.0,G,G,464112.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-489,5131,G,464113.0,G,G,464113.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-490,5131,G,464114.0,G,G,464114.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-491,5131,G,464119.0,G,G,464119.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-492,5131,G,464121.0,G,G,464121.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-493,5131,G,464122.0,G,G,464122.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-494,5131,G,464129.0,G,G,464129.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-495,5131,G,464130.0,G,G,464130.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-496,5131,G,464141.0,G,G,464141.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-497,5131,G,464142.0,G,G,464142.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-498,5131,G,464149.0,G,G,464149.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-499,5131,G,464150.0,G,G,464150.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-500,5132,G,464211.0,G,G,464211.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-501,5132,G,464212.0,G,G,464212.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-502,5132,G,464221.0,G,G,464221.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-503,5132,G,464222.0,G,G,464222.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-504,5132,G,464223.0,G,G,464223.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-505,5133,G,464310.0,G,G,464310.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-506,5133,G,464320.0,G,G,464320.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-507,5133,G,464330.0,G,G,464330.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-508,5133,G,464340.0,G,G,464340.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-509,5134,G,464410.0,G,G,464410.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-510,5134,G,464420.0,G,G,464420.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-511,5135,G,464501.0,G,G,464501.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-512,5135,G,464502.0,G,G,464502.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-513,5135,G,464610.0,G,G,464610.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-514,5135,G,464620.0,G,G,464620.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-515,5135,G,464631.0,G,G,464631.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-516,5135,G,464632.0,G,G,464632.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-517,5135,G,464910.0,G,G,464910.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-518,5139,G,463180.0,G,G,463180.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-519,5139,G,464920.0,G,G,464920.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-520,5139,G,464930.0,G,G,464930.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-521,5139,G,464940.0,G,G,464940.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-522,5139,G,464950.0,G,G,464950.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-523,5139,G,464991.0,G,G,464991.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-524,5139,G,464999.0,G,G,464999.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-525,5139,G,466370.0,G,G,466370.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-526,5159,G,465100.0,G,G,465100.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-527,5159,G,465210.0,G,G,465210.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-528,5159,G,465220.0,G,G,465220.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-529,5159,G,465910.0,G,G,465910.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-530,5159,G,465920.0,G,G,465920.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-531,5159,G,465930.0,G,G,465930.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-532,5159,G,465990.0,G,G,465990.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-533,5159,G,474010.0,G,G,474010.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-534,5151,G,465310.0,G,G,465310.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-535,5151,G,465320.0,G,G,465320.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-536,5151,G,465330.0,G,G,465330.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-537,5151,G,465340.0,G,G,465340.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-538,5151,G,465350.0,G,G,465350.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-539,5151,G,465360.0,G,G,465360.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-540,5151,G,465390.0,G,G,465390.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-541,5152,G,465400.0,G,G,465400.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-542,5153,G,465500.0,G,G,465500.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-543,5154,G,465610.0,G,G,465610.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-544,5154,G,465690.0,G,G,465690.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-545,5141,G,466110.0,G,G,466110.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-546,5141,G,466121.0,G,G,466121.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-547,5141,G,466129.0,G,G,466129.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-548,5142,G,466200.0,G,G,466200.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-549,5143,G,466310.0,G,G,466310.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-550,5143,G,466320.0,G,G,466320.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-551,5143,G,466330.0,G,G,466330.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-552,5143,G,466340.0,G,G,466340.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-553,5143,G,466350.0,G,G,466350.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-554,5143,G,466360.0,G,G,466360.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-555,5143,G,466391.0,G,G,466391.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-556,5143,G,466399.0,G,G,466399.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-557,5149,G,466910.0,G,G,466910.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-558,5149,G,466920.0,G,G,466920.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-559,5149,G,466931.0,G,G,466931.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-560,5149,G,466932.0,G,G,466932.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-561,5149,G,466939.0,G,G,466939.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-562,5149,G,466940.0,G,G,466940.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-563,5149,G,466990.0,G,G,466990.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-564,5190,G,469010.0,G,G,469010.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-565,5190,G,469090.0,G,G,469090.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-566,5211,G,471110.0,G,G,471110.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-567,5211,G,471120.0,G,G,471120.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-568,5211,G,471130.0,G,G,471130.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-569,5211,G,471190.0,G,G,471190.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-570,5212,G,471900.0,G,G,471900.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-571,5221,G,472111.0,G,G,472111.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-572,5221,G,472112.0,G,G,472112.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-573,5221,G,472120.0,G,G,472120.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-574,5222,G,472130.0,G,G,472130.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-575,5222,G,472140.0,G,G,472140.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-576,5229,G,472150.0,G,G,472150.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-577,5229,G,472190.0,G,G,472190.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-578,5229,G,472300.0,G,G,472300.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-579,5223,G,472160.0,G,G,472160.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-580,5224,G,472171.0,G,G,472171.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-581,5224,G,472172.0,G,G,472172.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-582,5225,G,472200.0,G,G,472200.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-583,5050,G,473000.0,G,G,473000.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-584,5239,G,474020.0,G,G,474020.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-585,5239,G,476310.0,G,G,476310.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-586,5239,G,476320.0,G,G,476320.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-587,5239,G,476400.0,G,G,476400.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-588,5239,G,477140.0,G,G,477140.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-589,5239,G,477440.0,G,G,477440.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-590,5239,G,477450.0,G,G,477450.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-591,5239,G,477460.0,G,G,477460.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-592,5239,G,477470.0,G,G,477470.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-593,5239,G,477480.0,G,G,477480.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-594,5239,G,477490.0,G,G,477490.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-595,5239,G,477840.0,G,G,477840.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-596,5235,G,475300.0,G,G,475300.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-597,5235,G,475410.0,G,G,475410.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-598,5235,G,475420.0,G,G,475420.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-599,5235,G,475430.0,G,G,475430.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-600,5235,G,475440.0,G,G,475440.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-601,5235,G,475490.0,G,G,475490.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-602,5235,G,476200.0,G,G,476200.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-603,5232,G,475110.0,G,G,475110.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-604,5232,G,475120.0,G,G,475120.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-605,5232,G,475190.0,G,G,475190.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-606,5236,G,475210.0,G,G,475210.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-607,5236,G,475220.0,G,G,475220.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-608,5236,G,475230.0,G,G,475230.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-609,5236,G,475240.0,G,G,475240.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-610,5236,G,475250.0,G,G,475250.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-611,5236,G,475260.0,G,G,475260.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-612,5236,G,475270.0,G,G,475270.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-613,5236,G,475290.0,G,G,475290.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-614,5238,G,476110.0,G,G,476110.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-615,5238,G,476120.0,G,G,476120.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-616,5238,G,476130.0,G,G,476130.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-617,5233,G,477110.0,G,G,477110.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-618,5233,G,477120.0,G,G,477120.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-619,5233,G,477130.0,G,G,477130.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-620,5233,G,477150.0,G,G,477150.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-621,5233,G,477190.0,G,G,477190.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-622,5234,G,477210.0,G,G,477210.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-623,5234,G,477220.0,G,G,477220.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-624,5234,G,477230.0,G,G,477230.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-625,5234,G,477290.0,G,G,477290.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-626,5231,G,477310.0,G,G,477310.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-627,5231,G,477320.0,G,G,477320.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-628,5231,G,477330.0,G,G,477330.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-629,5237,G,477410.0,G,G,477410.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-630,5237,G,477420.0,G,G,477420.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-631,5237,G,477430.0,G,G,477430.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-632,5241,G,477810.0,G,G,477810.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-633,5242,G,477820.0,G,G,477820.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-634,5249,G,477830.0,G,G,477830.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-635,5249,G,477890.0,G,G,477890.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-636,5252,G,478010.0,G,G,478010.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-637,5252,G,478090.0,G,G,478090.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-638,5251,G,479101.0,G,G,479101.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-639,5251,G,479109.0,G,G,479109.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-640,5259,G,479900.0,G,G,479900.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-641,6010,I,491110.0,H,I,6010,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-642,6010,I,491120.0,H,I,6010,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-643,6010,I,491200.0,H,I,6010,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-644,6022,I,492110.0,H,I,6022,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-645,6022,I,492120.0,H,I,6022,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-646,6022,I,492130.0,H,I,6022,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-647,6022,I,492140.0,H,I,6022,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-648,6022,I,492150.0,H,I,6022,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-649,6022,I,492160.0,H,I,6022,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-650,6022,I,492170.0,H,I,6022,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-651,6022,I,492180.0,H,I,6022,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-652,6022,I,492190.0,H,I,6022,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-653,6021,I,492210.0,H,I,6021,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-654,6021,I,492221.0,H,I,6021,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-655,6021,I,492229.0,H,I,6021,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-656,6021,I,492230.0,H,I,6021,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-657,6021,I,492240.0,H,I,6021,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-658,6021,I,492250.0,H,I,6021,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-659,6021,I,492280.0,H,I,6021,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-660,6021,I,492290.0,H,I,6021,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-661,6030,I,493110.0,H,I,6030,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-662,6030,I,493120.0,H,I,6030,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-663,6030,I,493200.0,H,I,6030,I_60,I_60,Transporte ferroviario y automotor y por tuberias
-664,6110,I,501100.0,H,I,6110,I_61,I_61,Transporte marítimo y fluvial
-665,6110,I,501200.0,H,I,6110,I_61,I_61,Transporte marítimo y fluvial
-666,6120,I,502101.0,H,I,6120,I_61,I_61,Transporte marítimo y fluvial
-667,6120,I,502200.0,H,I,6120,I_61,I_61,Transporte marítimo y fluvial
-668,6200,I,511000.0,H,I,6200,I_62,I_62,Transporte aéreo de cargas y de pasajeros
-669,6200,I,512000.0,H,I,6200,I_62,I_62,Transporte aéreo de cargas y de pasajeros
-670,6310,I,521010.0,H,I,6310,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-671,6310,I,521020.0,H,I,6310,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-672,6310,I,521030.0,H,I,6310,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-673,6320,I,522010.0,H,I,6320,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-674,6320,I,522020.0,H,I,6320,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-675,6320,I,522091.0,H,I,6320,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-676,6320,I,522092.0,H,I,6320,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-677,6320,I,522099.0,H,I,6320,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-678,6350,I,523011.0,H,I,6350,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-679,6350,I,523019.0,H,I,6350,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-680,6350,I,523020.0,H,I,6350,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-681,6350,I,523031.0,H,I,6350,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-682,6350,I,523039.0,H,I,6350,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-683,6350,I,523090.0,H,I,6350,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-684,6331,I,524110.0,H,I,6331,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-685,6331,I,524120.0,H,I,6331,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-686,6331,I,524130.0,H,I,6331,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-687,6331,I,524190.0,H,I,6331,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-688,6332,I,524210.0,H,I,6332,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-689,6332,I,524220.0,H,I,6332,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-690,6332,I,524230.0,H,I,6332,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-691,6332,I,524290.0,H,I,6332,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-692,6333,I,524310.0,H,I,6333,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-693,6333,I,524320.0,H,I,6333,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-694,6333,I,524330.0,H,I,6333,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-695,6333,I,524390.0,H,I,6333,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-696,6410,I,530010.0,H,I,6410,I_64,I_64,Correos y telecomunicaciones
-697,6410,I,530090.0,H,I,6410,I_64,I_64,Correos y telecomunicaciones
-698,5512,H,551010.0,I,H,5512,H_551,H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
-699,5512,H,551021.0,I,H,5512,H_551,H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
-700,5512,H,551022.0,I,H,5512,H_551,H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
-701,5512,H,551023.0,I,H,5512,H_551,H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
-702,5512,H,551090.0,I,H,5512,H_551,H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
-703,5511,H,552000.0,I,H,5511,H_551,H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
-704,5521,H,561011.0,I,H,5521,H_552,H_552,Servicios de expendio de comidas y bebidas
-705,5521,H,561012.0,I,H,5521,H_552,H_552,Servicios de expendio de comidas y bebidas
-706,5521,H,561013.0,I,H,5521,H_552,H_552,Servicios de expendio de comidas y bebidas
-707,5521,H,561014.0,I,H,5521,H_552,H_552,Servicios de expendio de comidas y bebidas
-708,5521,H,561019.0,I,H,5521,H_552,H_552,Servicios de expendio de comidas y bebidas
-709,5521,H,561030.0,I,H,5521,H_552,H_552,Servicios de expendio de comidas y bebidas
-710,5521,H,562091.0,I,H,5521,H_552,H_552,Servicios de expendio de comidas y bebidas
-711,5522,H,561020.0,I,H,5522,H_552,H_552,Servicios de expendio de comidas y bebidas
-712,5522,H,561040.0,I,H,5522,H_552,H_552,Servicios de expendio de comidas y bebidas
-713,5522,H,562010.0,I,H,5522,H_552,H_552,Servicios de expendio de comidas y bebidas
-714,5522,H,562099.0,I,H,5522,H_552,H_552,Servicios de expendio de comidas y bebidas
-715,7240,K,631120.0,J,K,7240,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-716,7240,K,631190.0,J,K,7240,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-717,7240,K,631200.0,J,K,7240,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-718,2212,D,581300.0,J,D,2212,D_22,D_22,Edición
-719,2219,D,581200.0,J,D,2219,D_22,D_22,Edición
-720,2219,D,581900.0,J,D,2219,D_22,D_22,Edición
-721,9211,O,591110.0,J,O,9211,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-722,9211,O,591120.0,J,O,9211,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-723,9211,O,591200.0,J,O,9211,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-724,9212,O,591300.0,J,O,9212,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-725,2213,D,592000.0,J,D,2213,D_22,D_22,Edición
-726,9214,O,749002.0,M,O,9214,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-727,9214,O,900011.0,R,O,9214,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-728,9214,O,900021.0,R,O,9214,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-729,9214,O,900030.0,R,O,9214,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-730,9214,O,900040.0,R,O,9214,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-731,6420,I,602100.0,J,I,6420,I_64,I_64,Correos y telecomunicaciones
-732,6420,I,602200.0,J,I,6420,I_64,I_64,Correos y telecomunicaciones
-733,6420,I,602310.0,J,I,6420,I_64,I_64,Correos y telecomunicaciones
-734,6420,I,611010.0,J,I,6420,I_64,I_64,Correos y telecomunicaciones
-735,6420,I,611090.0,J,I,6420,I_64,I_64,Correos y telecomunicaciones
-736,6420,I,612000.0,J,I,6420,I_64,I_64,Correos y telecomunicaciones
-737,6420,I,613000.0,J,I,6420,I_64,I_64,Correos y telecomunicaciones
-738,6420,I,614010.0,J,I,6420,I_64,I_64,Correos y telecomunicaciones
-739,6420,I,614090.0,J,I,6420,I_64,I_64,Correos y telecomunicaciones
-740,6420,I,619000.0,J,I,6420,I_64,I_64,Correos y telecomunicaciones
-741,6420,I,602900.0,J,I,6420,I_64,I_64,Correos y telecomunicaciones
-742,9213,O,601000.0,J,O,9213,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-743,9213,O,602320.0,J,O,9213,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-744,7220,K,620100.0,J,K,7220,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-745,7210,K,620200.0,J,K,7210,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-746,7210,K,620300.0,J,K,7210,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-747,7290,K,620900.0,J,K,7290,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-748,7230,K,631110.0,J,K,7230,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-749,9220,O,639100.0,J,O,9220,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-750,9220,O,639900.0,J,O,9220,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-751,7499,K,99000.0,B,K,7499,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-752,7499,K,109000.0,C,K,7499,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-753,7499,K,663000.0,K,K,7499,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-754,7499,K,741000.0,M,K,7499,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-755,7499,K,749001.0,M,K,7499,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-756,7499,K,749009.0,M,K,7499,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-757,7499,K,774000.0,N,K,7499,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-758,7499,K,822000.0,N,K,7499,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-759,7499,K,823000.0,N,K,7499,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-760,7499,K,829100.0,N,K,7499,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-761,7499,K,829900.0,N,K,7499,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-762,7499,K,821100.0,N,K,7499,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-763,6511,J,641100.0,K,J,6511,J,J,Intermediación financiera
-764,6521,J,641910.0,K,J,6521,J,J,Intermediación financiera
-765,6521,J,641920.0,K,J,6521,J,J,Intermediación financiera
-766,6521,J,641930.0,K,J,6521,J,J,Intermediación financiera
-767,6521,J,649100.0,K,J,6521,J,J,Intermediación financiera
-768,6522,J,641941.0,K,J,6522,J,J,Intermediación financiera
-769,6522,J,641942.0,K,J,6522,J,J,Intermediación financiera
-770,6522,J,641943.0,K,J,6522,J,J,Intermediación financiera
-771,6590,J,642000.0,K,J,6590,J,J,Intermediación financiera
-772,6590,J,643001.0,K,J,6590,J,J,Intermediación financiera
-773,6590,J,643009.0,K,J,6590,J,J,Intermediación financiera
-774,6590,J,649210.0,K,J,6590,J,J,Intermediación financiera
-775,6590,J,649220.0,K,J,6590,J,J,Intermediación financiera
-776,6590,J,649290.0,K,J,6590,J,J,Intermediación financiera
-777,6590,J,649910.0,K,J,6590,J,J,Intermediación financiera
-778,6590,J,649991.0,K,J,6590,J,J,Intermediación financiera
-779,6590,J,649999.0,K,J,6590,J,J,Intermediación financiera
-780,6610,J,651110.0,K,J,6610,J,J,Intermediación financiera
-781,6610,J,651120.0,K,J,6610,J,J,Intermediación financiera
-782,6610,J,651130.0,K,J,6610,J,J,Intermediación financiera
-783,6610,J,651210.0,K,J,6610,J,J,Intermediación financiera
-784,6610,J,651220.0,K,J,6610,J,J,Intermediación financiera
-785,6610,J,651320.0,K,J,6610,J,J,Intermediación financiera
-786,6610,J,652000.0,K,J,6610,J,J,Intermediación financiera
-787,7530,L,843000.0,O,L,7530,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-788,7530,L,651310.0,K,L,7530,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-789,6620,J,653000.0,K,J,6620,J,J,Intermediación financiera
-790,6711,J,661111.0,K,J,6711,J,J,Intermediación financiera
-791,6711,J,661121.0,K,J,6711,J,J,Intermediación financiera
-792,6711,J,661131.0,K,J,6711,J,J,Intermediación financiera
-793,6712,J,661910.0,K,J,6712,J,J,Intermediación financiera
-794,6719,J,661920.0,K,J,6719,J,J,Intermediación financiera
-795,6719,J,661930.0,K,J,6719,J,J,Intermediación financiera
-796,6719,J,661991.0,K,J,6719,J,J,Intermediación financiera
-797,6719,J,661999.0,K,J,6719,J,J,Intermediación financiera
-798,6719,J,661992.0,K,J,6719,J,J,Intermediación financiera
-799,6721,J,662010.0,K,J,6721,J,J,Intermediación financiera
-800,6721,J,662020.0,K,J,6721,J,J,Intermediación financiera
-801,6721,J,662090.0,K,J,6721,J,J,Intermediación financiera
-802,7020,K,682010.0,L,K,7020,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-803,7020,K,682091.0,L,K,7020,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-804,7020,K,682099.0,L,K,7020,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-805,7020,K,811000.0,N,K,7020,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-806,7020,K,949920.0,S,K,7020,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-807,7410,K,691001.0,M,K,7410,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-808,7410,K,691002.0,M,K,7410,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-809,7410,K,692000.0,M,K,7410,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-810,7410,K,702010.0,M,K,7410,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-811,7410,K,702091.0,M,K,7410,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-812,7410,K,702092.0,M,K,7410,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-813,7410,K,702099.0,M,K,7410,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-814,7410,K,732000.0,M,K,7410,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-815,7410,K,749003.0,M,K,7410,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-816,7422,K,712000.0,M,K,7422,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-817,7492,K,801010.0,N,K,7492,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-818,7492,K,801020.0,N,K,7492,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-819,7492,K,801090.0,N,K,7492,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-820,7311,K,721010.0,M,K,7311,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-821,7312,K,721020.0,M,K,7312,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-822,7313,K,721030.0,M,K,7313,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-823,7319,K,721090.0,M,K,7319,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-824,7321,K,722010.0,M,K,7321,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-825,7322,K,722020.0,M,K,7322,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-826,7430,K,731001.0,M,K,7430,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-827,7430,K,731009.0,M,K,7430,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-828,7494,K,742000.0,M,K,7494,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-829,8520,N,750000.0,M,N,8520,N,N,Servicios sociales y de salud
-830,7111,K,771110.0,N,K,7111,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-831,7111,K,771190.0,N,K,7111,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-832,7111,K,771290.0,N,K,7111,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-833,7112,K,771210.0,N,K,7112,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-834,7113,K,771220.0,N,K,7113,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-835,7130,K,772010.0,N,K,7130,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-836,7130,K,772091.0,N,K,7130,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-837,7130,K,772099.0,N,K,7130,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-838,7120,K,773010.0,N,K,7120,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-839,7120,K,773020.0,N,K,7120,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-840,7120,K,773030.0,N,K,7120,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-841,7120,K,773040.0,N,K,7120,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-842,7120,K,773090.0,N,K,7120,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-843,7491,K,780000.0,N,K,7491,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-844,6340,I,791100.0,N,I,6340,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-845,6340,I,791200.0,N,I,6340,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-846,6340,I,791901.0,N,I,6340,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-847,6340,I,791909.0,N,I,6340,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-848,7493,K,812010.0,N,K,7493,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-849,7493,K,812020.0,N,K,7493,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-850,7493,K,812090.0,N,K,7493,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-851,7496,K,821900.0,N,K,7496,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-852,7495,K,829200.0,N,K,7495,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-853,7511,L,841100.0,O,L,7511,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-854,7512,L,841200.0,O,L,7512,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-855,7513,L,841300.0,O,L,7513,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-856,7519,L,841900.0,O,L,7519,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-857,7521,L,842100.0,O,L,7521,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-858,7522,L,842200.0,O,L,7522,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-859,7524,L,842300.0,O,L,7524,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-860,7523,L,842400.0,O,L,7523,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-861,7525,L,842500.0,O,L,7525,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-862,8530,N,851010.0,P,N,8530,N,N,Servicios sociales y de salud
-863,8530,N,855000.0,P,N,8530,N,N,Servicios sociales y de salud
-864,8530,N,870210.0,Q,N,8530,N,N,Servicios sociales y de salud
-865,8530,N,870220.0,Q,N,8530,N,N,Servicios sociales y de salud
-866,8530,N,870910.0,Q,N,8530,N,N,Servicios sociales y de salud
-867,8530,N,870920.0,Q,N,8530,N,N,Servicios sociales y de salud
-868,8530,N,870990.0,Q,N,8530,N,N,Servicios sociales y de salud
-869,8530,N,880000.0,Q,N,8530,N,N,Servicios sociales y de salud
-870,8000,M,854940.0,P,M,8000,M,M,Enseñanza
-871,8000,M,851020.0,P,M,8000,M,M,Enseñanza
-872,8000,M,852100.0,P,M,8000,M,M,Enseñanza
-873,8000,M,852200.0,P,M,8000,M,M,Enseñanza
-874,8000,M,853100.0,P,M,8000,M,M,Enseñanza
-875,8000,M,853201.0,P,M,8000,M,M,Enseñanza
-876,8000,M,853300.0,P,M,8000,M,M,Enseñanza
-877,8000,M,854910.0,P,M,8000,M,M,Enseñanza
-878,8000,M,854920.0,P,M,8000,M,M,Enseñanza
-879,8000,M,854930.0,P,M,8000,M,M,Enseñanza
-880,8000,M,854960.0,P,M,8000,M,M,Enseñanza
-881,8000,M,854990.0,P,M,8000,M,M,Enseñanza
-882,9241,O,931010.0,R,O,9241,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-883,9241,O,931020.0,R,O,9241,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-884,9241,O,931030.0,R,O,9241,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-885,9241,O,931041.0,R,O,9241,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-886,9241,O,931042.0,R,O,9241,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-887,9241,O,931050.0,R,O,9241,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-888,9241,O,931090.0,R,O,9241,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-889,9241,O,854950.0,P,O,9241,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-890,9219,O,900091.0,R,O,9219,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-891,9219,O,939010.0,R,O,9219,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-892,9219,O,939030.0,R,O,9219,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-893,8510,N,861010.0,Q,N,8510,N,N,Servicios sociales y de salud
-894,8510,N,861020.0,Q,N,8510,N,N,Servicios sociales y de salud
-895,8510,N,862110.0,Q,N,8510,N,N,Servicios sociales y de salud
-896,8510,N,862120.0,Q,N,8510,N,N,Servicios sociales y de salud
-897,8510,N,862130.0,Q,N,8510,N,N,Servicios sociales y de salud
-898,8510,N,862200.0,Q,N,8510,N,N,Servicios sociales y de salud
-899,8510,N,863110.0,Q,N,8510,N,N,Servicios sociales y de salud
-900,8510,N,863120.0,Q,N,8510,N,N,Servicios sociales y de salud
-901,8510,N,863190.0,Q,N,8510,N,N,Servicios sociales y de salud
-902,8510,N,863200.0,Q,N,8510,N,N,Servicios sociales y de salud
-903,8510,N,863300.0,Q,N,8510,N,N,Servicios sociales y de salud
-904,8510,N,864000.0,Q,N,8510,N,N,Servicios sociales y de salud
-905,8510,N,869010.0,Q,N,8510,N,N,Servicios sociales y de salud
-906,8510,N,869090.0,Q,N,8510,N,N,Servicios sociales y de salud
-907,8510,N,870100.0,Q,N,8510,N,N,Servicios sociales y de salud
-908,9230,O,910100.0,R,O,9230,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-909,9230,O,910200.0,R,O,9230,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-910,9230,O,910300.0,R,O,9230,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-911,9100,O,910900.0,R,O,9100,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-912,9100,O,941100.0,S,O,9100,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-913,9100,O,941200.0,S,O,9100,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-914,9100,O,942000.0,S,O,9100,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-915,9100,O,949100.0,S,O,9100,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-916,9100,O,949200.0,S,O,9100,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-917,9100,O,949910.0,S,O,9100,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-918,9100,O,949930.0,S,O,9100,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-919,9100,O,949990.0,S,O,9100,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-920,9249,O,920001.0,R,O,9249,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-921,9249,O,920009.0,R,O,9249,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-922,9249,O,939020.0,R,O,9249,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-923,9249,O,939090.0,R,O,9249,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-924,5269,G,331101.0,C,G,5269,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-925,5269,G,331210.0,C,G,5269,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-926,5269,G,331220.0,C,G,5269,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-927,5269,G,331290.0,C,G,5269,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-928,5269,G,331301.0,C,G,5269,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-929,5269,G,331400.0,C,G,5269,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-930,5269,G,331900.0,C,G,5269,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-931,5269,G,951200.0,S,G,5269,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-932,5269,G,952300.0,S,G,5269,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-933,5269,G,952910.0,S,G,5269,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-934,5269,G,952920.0,S,G,5269,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-935,5269,G,952990.0,S,G,5269,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-936,5262,G,952100.0,S,G,5262,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-937,5261,G,952200.0,S,G,5261,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-938,9301,O,960101.0,S,O,9301,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-939,9301,O,960102.0,S,O,9301,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-940,9302,O,960201.0,S,O,9302,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-941,9302,O,960202.0,S,O,9302,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-942,9303,O,960300.0,S,O,9303,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-943,9309,O,960910.0,S,O,9309,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-944,9309,O,960990.0,S,O,9309,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-945,9500,P,970000.0,T,P,9500,P,P,Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores
-946,9900,Q,990000.0,U,Q,9900,Q,Q,Organizaciones y órganos extraterritoriales
-947,2429,D,204000.0,C,D,2429,D_24,D_24,Productos químicos
-948,6350,I,523032.0,H,I,6350,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-949,5121,G,462110.0,G,G,462110.0,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-950,29_30_31_32_33,D,332000.0,C,D,29_30_31_32_33,D_29_30_31_32_33,D_29_30_31_32_33,D_29_30_31_32_33
+,ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,desc
+0,0,,0.0,0,0,,,,
+1,111,A,11111.0,A,111,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+2,111,A,11112.0,A,111,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+3,111,A,11119.0,A,111,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+4,111,A,11121.0,A,111,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+5,111,A,11129.0,A,111,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+6,111,A,11130.0,A,111,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+7,111,A,11211.0,A,111,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+8,111,A,11291.0,A,111,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+9,111,A,11299.0,A,111,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+10,111,A,12600.0,A,111,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+11,115,A,13011.0,A,115,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+12,115,A,13012.0,A,115,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+13,115,A,13013.0,A,115,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+14,115,A,13019.0,A,115,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+15,115,A,13020.0,A,115,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+16,112,A,11310.0,A,112,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+17,112,A,11321.0,A,112,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+18,112,A,11329.0,A,112,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+19,112,A,11331.0,A,112,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+20,112,A,11341.0,A,112,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+21,112,A,11342.0,A,112,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+22,112,A,11911.0,A,112,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+23,112,A,11912.0,A,112,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+24,114,A,11400.0,A,114,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+25,114,A,11501.0,A,114,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+26,114,A,11509.0,A,114,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+27,114,A,12110.0,A,114,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+28,114,A,12510.0,A,114,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+29,114,A,12590.0,A,114,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+30,114,A,12701.0,A,114,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+31,114,A,12709.0,A,114,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+32,114,A,12800.0,A,114,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+33,114,A,12900.0,A,114,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+34,114,A,11990.0,A,114,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+35,113,A,12121.0,A,113,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+36,113,A,12200.0,A,113,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+37,113,A,12311.0,A,113,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+38,113,A,12319.0,A,113,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+39,113,A,12320.0,A,113,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+40,113,A,12410.0,A,113,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+41,113,A,12420.0,A,113,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+42,113,A,12490.0,A,113,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+43,121,A,14113.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+44,121,A,14114.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+45,121,A,14115.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+46,121,A,14121.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+47,121,A,14211.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+48,121,A,14221.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+49,121,A,14300.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+50,121,A,14410.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+51,121,A,14420.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+52,121,A,14440.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+53,121,A,14510.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+54,121,A,14520.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+55,121,A,14610.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+56,121,A,14620.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+57,121,A,14710.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+58,121,A,14720.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+59,121,A,14430.0,A,121,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+60,122,A,14810.0,A,122,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+61,122,A,14820.0,A,122,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+62,122,A,14910.0,A,122,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+63,122,A,14920.0,A,122,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+64,122,A,14930.0,A,122,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+65,122,A,14990.0,A,122,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+66,141,A,16111.0,A,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+67,141,A,16112.0,A,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+68,141,A,16113.0,A,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+69,141,A,16119.0,A,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+70,141,A,16120.0,A,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+71,141,A,16130.0,A,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+72,141,A,16140.0,A,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+73,141,A,16150.0,A,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+74,141,A,16190.0,A,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+75,141,A,813000.0,N,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+76,5121,G,461014.0,G,461014.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+77,5121,G,462120.0,G,462120.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+78,5121,G,462131.0,G,462131.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+79,5121,G,462132.0,G,462132.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+80,5121,G,462190.0,G,462190.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+81,5121,G,462201.0,G,462201.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+82,5121,G,462209.0,G,462209.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+83,142,A,16210.0,A,142,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+84,142,A,16220.0,A,142,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+85,142,A,16230.0,A,142,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+86,142,A,16291.0,A,142,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+87,142,A,16292.0,A,142,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+88,142,A,16299.0,A,142,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+89,150,A,17010.0,A,150,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+90,150,A,17020.0,A,150,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+91,201,A,21010.0,A,201,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+92,201,A,21020.0,A,201,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+93,201,A,21030.0,A,201,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+94,202,A,22010.0,A,202,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+95,202,A,22020.0,A,202,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+96,203,A,24010.0,A,203,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+97,203,A,24020.0,A,203,A,A,A,"Agricultura, ganadería, caza y silvicultura"
+98,501,B,31110.0,A,501,B,B,B,Pesca
+99,501,B,31120.0,A,501,B,B,B,Pesca
+100,501,B,31130.0,A,501,B,B,B,Pesca
+101,501,B,31200.0,A,501,B,B,B,Pesca
+102,503,B,31300.0,A,503,B,B,B,Pesca
+103,502,B,32000.0,A,502,B,B,B,Pesca
+104,1010,C,51000.0,B,1010,C,C,C,Explotación de minas y canteras
+105,1110,C,61000.0,B,1110,C,C,C,Explotación de minas y canteras
+106,1110,C,62000.0,B,1110,C,C,C,Explotación de minas y canteras
+107,1310,C,71000.0,B,1310,C,C,C,Explotación de minas y canteras
+108,1200,C,72100.0,B,1200,C,C,C,Explotación de minas y canteras
+109,1320,C,72910.0,B,1320,C,C,C,Explotación de minas y canteras
+110,1320,C,72990.0,B,1320,C,C,C,Explotación de minas y canteras
+111,1411,C,81100.0,B,1411,C,C,C,Explotación de minas y canteras
+112,1412,C,81200.0,B,1412,C,C,C,Explotación de minas y canteras
+113,1413,C,81300.0,B,1413,C,C,C,Explotación de minas y canteras
+114,1414,C,81400.0,B,1414,C,C,C,Explotación de minas y canteras
+115,1421,C,89110.0,B,1421,C,C,C,Explotación de minas y canteras
+116,1421,C,89120.0,B,1421,C,C,C,Explotación de minas y canteras
+117,1030,C,89200.0,B,1030,C,C,C,Explotación de minas y canteras
+118,1422,C,89300.0,B,1422,C,C,C,Explotación de minas y canteras
+119,1429,C,89900.0,B,1429,C,C,C,Explotación de minas y canteras
+120,1120,C,91000.0,B,1120,C,C,C,Explotación de minas y canteras
+121,7421,K,711001.0,M,7421,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+122,7421,K,711002.0,M,7421,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+123,7421,K,711003.0,M,7421,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+124,7421,K,711009.0,M,7421,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+125,1511,D,101011.0,C,1511,D,D_15,D_15,Alimentos
+126,1511,D,101012.0,C,1511,D,D_15,D_15,Alimentos
+127,1511,D,101013.0,C,1511,D,D_15,D_15,Alimentos
+128,1511,D,101020.0,C,1511,D,D_15,D_15,Alimentos
+129,1511,D,101030.0,C,1511,D,D_15,D_15,Alimentos
+130,1511,D,101040.0,C,1511,D,D_15,D_15,Alimentos
+131,1511,D,101091.0,C,1511,D,D_15,D_15,Alimentos
+132,1511,D,101099.0,C,1511,D,D_15,D_15,Alimentos
+133,1512,D,102001.0,C,1512,D,D_15,D_15,Alimentos
+134,1512,D,102002.0,C,1512,D,D_15,D_15,Alimentos
+135,1512,D,102003.0,C,1512,D,D_15,D_15,Alimentos
+136,1513,D,103011.0,C,1513,D,D_15,D_15,Alimentos
+137,1513,D,103012.0,C,1513,D,D_15,D_15,Alimentos
+138,1513,D,103020.0,C,1513,D,D_15,D_15,Alimentos
+139,1513,D,103030.0,C,1513,D,D_15,D_15,Alimentos
+140,1513,D,103091.0,C,1513,D,D_15,D_15,Alimentos
+141,1513,D,103099.0,C,1513,D,D_15,D_15,Alimentos
+142,1514,D,104011.0,C,1514,D,D_15,D_15,Alimentos
+143,1514,D,104012.0,C,1514,D,D_15,D_15,Alimentos
+144,1514,D,104013.0,C,1514,D,D_15,D_15,Alimentos
+145,1514,D,104020.0,C,1514,D,D_15,D_15,Alimentos
+146,1520,D,105010.0,C,1520,D,D_15,D_15,Alimentos
+147,1520,D,105020.0,C,1520,D,D_15,D_15,Alimentos
+148,1520,D,105030.0,C,1520,D,D_15,D_15,Alimentos
+149,1520,D,105090.0,C,1520,D,D_15,D_15,Alimentos
+150,1531,D,106110.0,C,1531,D,D_15,D_15,Alimentos
+151,1531,D,106120.0,C,1531,D,D_15,D_15,Alimentos
+152,1531,D,106131.0,C,1531,D,D_15,D_15,Alimentos
+153,1531,D,106139.0,C,1531,D,D_15,D_15,Alimentos
+154,1532,D,106200.0,C,1532,D,D_15,D_15,Alimentos
+155,1541,D,107110.0,C,1541,D,D_15,D_15,Alimentos
+156,1541,D,107121.0,C,1541,D,D_15,D_15,Alimentos
+157,1541,D,107129.0,C,1541,D,D_15,D_15,Alimentos
+158,1542,D,107200.0,C,1542,D,D_15,D_15,Alimentos
+159,1543,D,107301.0,C,1543,D,D_15,D_15,Alimentos
+160,1543,D,107309.0,C,1543,D,D_15,D_15,Alimentos
+161,1544,D,107410.0,C,1544,D,D_15,D_15,Alimentos
+162,1544,D,107420.0,C,1544,D,D_15,D_15,Alimentos
+163,1549,D,107500.0,C,1549,D,D_15,D_15,Alimentos
+164,1549,D,107911.0,C,1549,D,D_15,D_15,Alimentos
+165,1549,D,107912.0,C,1549,D,D_15,D_15,Alimentos
+166,1549,D,107920.0,C,1549,D,D_15,D_15,Alimentos
+167,1549,D,107930.0,C,1549,D,D_15,D_15,Alimentos
+168,1549,D,107991.0,C,1549,D,D_15,D_15,Alimentos
+169,1549,D,107992.0,C,1549,D,D_15,D_15,Alimentos
+170,1549,D,107999.0,C,1549,D,D_15,D_15,Alimentos
+171,2429,D,201220.0,C,2429,D,D_24,D_24,Productos químicos
+172,2429,D,202906.0,C,2429,D,D_24,D_24,Productos químicos
+173,2429,D,202907.0,C,2429,D,D_24,D_24,Productos químicos
+174,2429,D,202908.0,C,2429,D,D_24,D_24,Productos químicos
+175,1533,D,108000.0,C,1533,D,D_15,D_15,Alimentos
+176,1551,D,110100.0,C,1551,D,D_15,D_15,Alimentos
+177,1551,D,201210.0,C,1551,D,D_15,D_15,Alimentos
+178,1552,D,110211.0,C,1552,D,D_15,D_15,Alimentos
+179,1552,D,110212.0,C,1552,D,D_15,D_15,Alimentos
+180,1552,D,110290.0,C,1552,D,D_15,D_15,Alimentos
+181,1553,D,110300.0,C,1553,D,D_15,D_15,Alimentos
+182,1554,D,110411.0,C,1554,D,D_15,D_15,Alimentos
+183,1554,D,110412.0,C,1554,D,D_15,D_15,Alimentos
+184,1554,D,110420.0,C,1554,D,D_15,D_15,Alimentos
+185,1554,D,110491.0,C,1554,D,D_15,D_15,Alimentos
+186,1554,D,110492.0,C,1554,D,D_15,D_15,Alimentos
+187,1600,D,120010.0,C,1600,D,D_16,D_16,Tabaco
+188,1600,D,120091.0,C,1600,D,D_16,D_16,Tabaco
+189,1600,D,120099.0,C,1600,D,D_16,D_16,Tabaco
+190,1711,D,131110.0,C,1711,D,D_17,D_17,Productos textiles
+191,1711,D,131120.0,C,1711,D,D_17,D_17,Productos textiles
+192,1711,D,131131.0,C,1711,D,D_17,D_17,Productos textiles
+193,1711,D,131132.0,C,1711,D,D_17,D_17,Productos textiles
+194,1711,D,131139.0,C,1711,D,D_17,D_17,Productos textiles
+195,1711,D,131201.0,C,1711,D,D_17,D_17,Productos textiles
+196,1711,D,131202.0,C,1711,D,D_17,D_17,Productos textiles
+197,1711,D,131209.0,C,1711,D,D_17,D_17,Productos textiles
+198,1712,D,131300.0,C,1712,D,D_17,D_17,Productos textiles
+199,1712,D,149000.0,C,1712,D,D_17,D_17,Productos textiles
+200,1729,D,139900.0,C,1729,D,D_17,D_17,Productos textiles
+201,1730,D,139100.0,C,1730,D,D_17,D_17,Productos textiles
+202,1730,D,143010.0,C,1730,D,D_17,D_17,Productos textiles
+203,1730,D,143020.0,C,1730,D,D_17,D_17,Productos textiles
+204,1721,D,139201.0,C,1721,D,D_17,D_17,Productos textiles
+205,1721,D,139202.0,C,1721,D,D_17,D_17,Productos textiles
+206,1721,D,139203.0,C,1721,D,D_17,D_17,Productos textiles
+207,1721,D,139204.0,C,1721,D,D_17,D_17,Productos textiles
+208,1721,D,139209.0,C,1721,D,D_17,D_17,Productos textiles
+209,1722,D,139300.0,C,1722,D,D_17,D_17,Productos textiles
+210,1723,D,139400.0,C,1723,D,D_17,D_17,Productos textiles
+211,1810,D,141110.0,C,1810,D,D_18,D_18,Confecciones
+212,1810,D,141120.0,C,1810,D,D_18,D_18,Confecciones
+213,1810,D,141130.0,C,1810,D,D_18,D_18,Confecciones
+214,1810,D,141140.0,C,1810,D,D_18,D_18,Confecciones
+215,1810,D,141191.0,C,1810,D,D_18,D_18,Confecciones
+216,1810,D,141199.0,C,1810,D,D_18,D_18,Confecciones
+217,1810,D,141201.0,C,1810,D,D_18,D_18,Confecciones
+218,1810,D,141202.0,C,1810,D,D_18,D_18,Confecciones
+219,1820,D,142000.0,C,1820,D,D_18,D_18,Confecciones
+220,1911,D,151100.0,C,1911,D,D_19,D_19,Cuero
+221,1912,D,151200.0,C,1912,D,D_19,D_19,Cuero
+222,1920,D,152011.0,C,1920,D,D_19,D_19,Cuero
+223,1920,D,152021.0,C,1920,D,D_19,D_19,Cuero
+224,1920,D,152031.0,C,1920,D,D_19,D_19,Cuero
+225,1920,D,152040.0,C,1920,D,D_19,D_19,Cuero
+226,2010,D,161001.0,C,2010,D,D_20,D_20,Madera
+227,2010,D,161002.0,C,2010,D,D_20,D_20,Madera
+228,2021,D,162100.0,C,2021,D,D_20,D_20,Madera
+229,2022,D,162201.0,C,2022,D,D_20,D_20,Madera
+230,2022,D,162202.0,C,2022,D,D_20,D_20,Madera
+231,2023,D,162300.0,C,2023,D,D_20,D_20,Madera
+232,2029,D,162901.0,C,2029,D,D_20,D_20,Madera
+233,2029,D,162902.0,C,2029,D,D_20,D_20,Madera
+234,2029,D,162903.0,C,2029,D,D_20,D_20,Madera
+235,2029,D,162909.0,C,2029,D,D_20,D_20,Madera
+236,2101,D,170101.0,C,2101,D,D_21,D_21,Papel
+237,2101,D,170102.0,C,2101,D,D_21,D_21,Papel
+238,2102,D,170201.0,C,2102,D,D_21,D_21,Papel
+239,2102,D,170202.0,C,2102,D,D_21,D_21,Papel
+240,2109,D,170910.0,C,2109,D,D_21,D_21,Papel
+241,2109,D,170990.0,C,2109,D,D_21,D_21,Papel
+242,2221,D,181101.0,C,2221,D,D_22,D_22,Edición
+243,2221,D,181109.0,C,2221,D,D_22,D_22,Edición
+244,2892,D,259200.0,C,2892,D,D_28,D_28,Otros productos de metal
+245,2222,D,181200.0,C,2222,D,D_22,D_22,Edición
+246,2230,D,182000.0,C,2230,D,D_22,D_22,Edición
+247,2310,D,191000.0,C,2310,D,D_23,D_23,Productos de petróleo
+248,2320,D,192000.0,C,2320,D,D_23,D_23,Productos de petróleo
+249,2411,D,201110.0,C,2411,D,D_24,D_24,Productos químicos
+250,2411,D,201120.0,C,2411,D,D_24,D_24,Productos químicos
+251,2411,D,201130.0,C,2411,D,D_24,D_24,Productos químicos
+252,2411,D,201180.0,C,2411,D,D_24,D_24,Productos químicos
+253,2411,D,201190.0,C,2411,D,D_24,D_24,Productos químicos
+254,2330,D,201140.0,C,2330,D,D_23,D_23,Productos de petróleo
+255,2412,D,201300.0,C,2412,D,D_24,D_24,Productos químicos
+256,2413,D,201401.0,C,2413,D,D_24,D_24,Productos químicos
+257,2413,D,201409.0,C,2413,D,D_24,D_24,Productos químicos
+258,2421,D,202101.0,C,2421,D,D_24,D_24,Productos químicos
+259,2422,D,202200.0,C,2422,D,D_24,D_24,Productos químicos
+260,2424,D,202311.0,C,2424,D,D_24,D_24,Productos químicos
+261,2424,D,202312.0,C,2424,D,D_24,D_24,Productos químicos
+262,2424,D,202320.0,C,2424,D,D_24,D_24,Productos químicos
+263,3699,D,329010.0,C,3699,D,D_36,D_36,Muebles
+264,3699,D,329020.0,C,3699,D,D_36,D_36,Muebles
+265,3699,D,329030.0,C,3699,D,D_36,D_36,Muebles
+266,3699,D,329040.0,C,3699,D,D_36,D_36,Muebles
+267,3699,D,329090.0,C,3699,D,D_36,D_36,Muebles
+268,2430,D,203000.0,C,2430,D,D_24,D_24,Productos químicos
+269,2423,D,210010.0,C,2423,D,D_24,D_24,Productos químicos
+270,2423,D,210020.0,C,2423,D,D_24,D_24,Productos químicos
+271,2423,D,210030.0,C,2423,D,D_24,D_24,Productos químicos
+272,2423,D,210090.0,C,2423,D,D_24,D_24,Productos químicos
+273,2511,D,221110.0,C,2511,D,D_25,D_25,Productos de caucho y plástico
+274,2511,D,221120.0,C,2511,D,D_25,D_25,Productos de caucho y plástico
+275,2519,D,221901.0,C,2519,D,D_25,D_25,Productos de caucho y plástico
+276,2519,D,221909.0,C,2519,D,D_25,D_25,Productos de caucho y plástico
+277,2520,D,222010.0,C,2520,D,D_25,D_25,Productos de caucho y plástico
+278,2520,D,222090.0,C,2520,D,D_25,D_25,Productos de caucho y plástico
+279,2610,D,231010.0,C,2610,D,D_26,D_26,Otros minerales no metálicos
+280,2610,D,231020.0,C,2610,D,D_26,D_26,Otros minerales no metálicos
+281,2610,D,231090.0,C,2610,D,D_26,D_26,Otros minerales no metálicos
+282,2692,D,239100.0,C,2692,D,D_26,D_26,Otros minerales no metálicos
+283,2693,D,239201.0,C,2693,D,D_26,D_26,Otros minerales no metálicos
+284,2693,D,239202.0,C,2693,D,D_26,D_26,Otros minerales no metálicos
+285,2693,D,239209.0,C,2693,D,D_26,D_26,Otros minerales no metálicos
+286,2691,D,239310.0,C,2691,D,D_26,D_26,Otros minerales no metálicos
+287,2691,D,239391.0,C,2691,D,D_26,D_26,Otros minerales no metálicos
+288,2691,D,239399.0,C,2691,D,D_26,D_26,Otros minerales no metálicos
+289,2694,D,239410.0,C,2694,D,D_26,D_26,Otros minerales no metálicos
+290,2694,D,239421.0,C,2694,D,D_26,D_26,Otros minerales no metálicos
+291,2694,D,239422.0,C,2694,D,D_26,D_26,Otros minerales no metálicos
+292,2695,D,239510.0,C,2695,D,D_26,D_26,Otros minerales no metálicos
+293,2695,D,239591.0,C,2695,D,D_26,D_26,Otros minerales no metálicos
+294,2695,D,239592.0,C,2695,D,D_26,D_26,Otros minerales no metálicos
+295,2695,D,239593.0,C,2695,D,D_26,D_26,Otros minerales no metálicos
+296,2696,D,239600.0,C,2696,D,D_26,D_26,Otros minerales no metálicos
+297,2699,D,239900.0,C,2699,D,D_26,D_26,Otros minerales no metálicos
+298,2710,D,241001.0,C,2710,D,D_27,D_27,Metales comunes
+299,2710,D,241009.0,C,2710,D,D_27,D_27,Metales comunes
+300,2720,D,242010.0,C,2720,D,D_27,D_27,Metales comunes
+301,2720,D,242090.0,C,2720,D,D_27,D_27,Metales comunes
+302,2731,D,243100.0,C,2731,D,D_27,D_27,Metales comunes
+303,2732,D,243200.0,C,2732,D,D_27,D_27,Metales comunes
+304,2811,D,251101.0,C,2811,D,D_28,D_28,Otros productos de metal
+305,2811,D,251102.0,C,2811,D,D_28,D_28,Otros productos de metal
+306,2812,D,251200.0,C,2812,D,D_28,D_28,Otros productos de metal
+307,2813,D,251300.0,C,2813,D,D_28,D_28,Otros productos de metal
+308,2927,D,252000.0,C,2927,D,D_29,D_29,Maquinaria y equipo
+309,2891,D,259100.0,C,2891,D,D_28,D_28,Otros productos de metal
+310,2893,D,259301.0,C,2893,D,D_28,D_28,Otros productos de metal
+311,2893,D,259302.0,C,2893,D,D_28,D_28,Otros productos de metal
+312,2893,D,259309.0,C,2893,D,D_28,D_28,Otros productos de metal
+313,2929,D,282901.0,C,2929,D,D_29,D_29,Maquinaria y equipo
+314,2929,D,282909.0,C,2929,D,D_29,D_29,Maquinaria y equipo
+315,2899,D,259910.0,C,2899,D,D_28,D_28,Otros productos de metal
+316,2899,D,259991.0,C,2899,D,D_28,D_28,Otros productos de metal
+317,2899,D,259992.0,C,2899,D,D_28,D_28,Otros productos de metal
+318,2899,D,259993.0,C,2899,D,D_28,D_28,Otros productos de metal
+319,2899,D,259999.0,C,2899,D,D_28,D_28,Otros productos de metal
+320,3110,D,271010.0,C,3110,D,D_31,D_31,Aparatos eléctricos
+321,3120,D,271020.0,C,3120,D,D_31,D_31,Aparatos eléctricos
+322,3130,D,273110.0,C,3130,D,D_31,D_31,Aparatos eléctricos
+323,3130,D,273190.0,C,3130,D,D_31,D_31,Aparatos eléctricos
+324,3210,D,261000.0,C,3210,D,D_32,D_32,Radio y televisión
+325,3230,D,264000.0,C,3230,D,D_32,D_32,Radio y televisión
+326,3000,D,262000.0,C,3000,D,D_30,D_30,Maquinaria de oficina
+327,3000,D,281700.0,C,3000,D,D_30,D_30,Maquinaria de oficina
+328,3190,D,279000.0,C,3190,D,D_31,D_31,Aparatos eléctricos
+329,3220,D,263000.0,C,3220,D,D_32,D_32,Radio y televisión
+330,3694,D,324000.0,C,3694,D,D_36,D_36,Muebles
+331,3310,D,265101.0,C,3310,D,D_33,D_33,Instrumentos médicos
+332,3310,D,265102.0,C,3310,D,D_33,D_33,Instrumentos médicos
+333,3330,D,265200.0,C,3330,D,D_33,D_33,Instrumentos médicos
+334,3311,D,266010.0,C,3311,D,D_33,D_33,Instrumentos médicos
+335,3311,D,266090.0,C,3311,D,D_33,D_33,Instrumentos médicos
+336,2919,D,281900.0,C,2919,D,D_29,D_29,Maquinaria y equipo
+337,3320,D,267001.0,C,3320,D,D_33,D_33,Instrumentos médicos
+338,3320,D,267002.0,C,3320,D,D_33,D_33,Instrumentos médicos
+339,3320,D,268000.0,C,3320,D,D_33,D_33,Instrumentos médicos
+340,3140,D,272000.0,C,3140,D,D_31,D_31,Aparatos eléctricos
+341,3150,D,274000.0,C,3150,D,D_31,D_31,Aparatos eléctricos
+342,2930,D,275010.0,C,2930,D,D_29,D_29,Maquinaria y equipo
+343,2930,D,275020.0,C,2930,D,D_29,D_29,Maquinaria y equipo
+344,2930,D,275091.0,C,2930,D,D_29,D_29,Maquinaria y equipo
+345,2930,D,275092.0,C,2930,D,D_29,D_29,Maquinaria y equipo
+346,2930,D,275099.0,C,2930,D,D_29,D_29,Maquinaria y equipo
+347,2922,D,282200.0,C,2922,D,D_29,D_29,Maquinaria y equipo
+348,2911,D,281100.0,C,2911,D,D_29,D_29,Maquinaria y equipo
+349,2912,D,281201.0,C,2912,D,D_29,D_29,Maquinaria y equipo
+350,2912,D,281301.0,C,2912,D,D_29,D_29,Maquinaria y equipo
+351,2913,D,281400.0,C,2913,D,D_29,D_29,Maquinaria y equipo
+352,2914,D,281500.0,C,2914,D,D_29,D_29,Maquinaria y equipo
+353,2915,D,281600.0,C,2915,D,D_29,D_29,Maquinaria y equipo
+354,3599,D,309900.0,C,3599,D,D_35,D_35,Otros equipo de transporte
+355,2921,D,282110.0,C,2921,D,D_29,D_29,Maquinaria y equipo
+356,2921,D,282120.0,C,2921,D,D_29,D_29,Maquinaria y equipo
+357,2921,D,282130.0,C,2921,D,D_29,D_29,Maquinaria y equipo
+358,2923,D,282300.0,C,2923,D,D_29,D_29,Maquinaria y equipo
+359,2924,D,282400.0,C,2924,D,D_29,D_29,Maquinaria y equipo
+360,2925,D,282500.0,C,2925,D,D_29,D_29,Maquinaria y equipo
+361,2926,D,282600.0,C,2926,D,D_29,D_29,Maquinaria y equipo
+362,3410,D,291000.0,C,3410,D,D_34,D_34,Automotores
+363,3420,D,292000.0,C,3420,D,D_34,D_34,Automotores
+364,3430,D,293011.0,C,3430,D,D_34,D_34,Automotores
+365,3430,D,293090.0,C,3430,D,D_34,D_34,Automotores
+366,3610,D,310010.0,C,3610,D,D_36,D_36,Muebles
+367,3610,D,310020.0,C,3610,D,D_36,D_36,Muebles
+368,3610,D,310030.0,C,3610,D,D_36,D_36,Muebles
+369,3511,D,301100.0,C,3511,D,D_35,D_35,Otros equipo de transporte
+370,3512,D,301200.0,C,3512,D,D_35,D_35,Otros equipo de transporte
+371,3520,D,302000.0,C,3520,D,D_35,D_35,Otros equipo de transporte
+372,3530,D,303000.0,C,3530,D,D_35,D_35,Otros equipo de transporte
+373,3590,D,309100.0,C,3590,D,D_35,D_35,Otros equipo de transporte
+374,3590,D,309200.0,C,3590,D,D_35,D_35,Otros equipo de transporte
+375,3691,D,321011.0,C,3691,D,D_36,D_36,Muebles
+376,3691,D,321012.0,C,3691,D,D_36,D_36,Muebles
+377,3691,D,321020.0,C,3691,D,D_36,D_36,Muebles
+378,3692,D,322001.0,C,3692,D,D_36,D_36,Muebles
+379,3693,D,323001.0,C,3693,D,D_36,D_36,Muebles
+380,2211,D,581100.0,J,2211,D,D_22,D_22,Edición
+381,7250,K,951100.0,S,7250,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+382,4011,E,351110.0,D,4011,E,E,E,"Suministro de electricidad, gas y agua"
+383,4011,E,351120.0,D,4011,E,E,E,"Suministro de electricidad, gas y agua"
+384,4011,E,351130.0,D,4011,E,E,E,"Suministro de electricidad, gas y agua"
+385,4011,E,351190.0,D,4011,E,E,E,"Suministro de electricidad, gas y agua"
+386,4012,E,351201.0,D,4012,E,E,E,"Suministro de electricidad, gas y agua"
+387,5119,G,351310.0,D,5119,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+388,5119,G,461031.0,G,461031.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+389,5119,G,461032.0,G,461032.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+390,5119,G,461039.0,G,461039.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+391,5119,G,461040.0,G,461040.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+392,5119,G,461091.0,G,461091.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+393,5119,G,461092.0,G,461092.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+394,5119,G,461093.0,G,461093.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+395,5119,G,461094.0,G,461094.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+396,5119,G,461095.0,G,461095.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+397,5119,G,461099.0,G,461099.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+398,4013,E,351320.0,D,4013,E,E,E,"Suministro de electricidad, gas y agua"
+399,4020,E,352010.0,D,4020,E,E,E,"Suministro de electricidad, gas y agua"
+400,4020,E,352020.0,D,4020,E,E,E,"Suministro de electricidad, gas y agua"
+401,4030,E,353001.0,D,4030,E,E,E,"Suministro de electricidad, gas y agua"
+402,4100,E,360010.0,E,4100,E,E,E,"Suministro de electricidad, gas y agua"
+403,4100,E,360020.0,E,4100,E,E,E,"Suministro de electricidad, gas y agua"
+404,9000,O,370000.0,E,9000,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+405,9000,O,381100.0,E,9000,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+406,9000,O,381200.0,E,9000,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+407,9000,O,390000.0,E,9000,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+408,3710,D,382010.0,E,3710,D,D_37,D_37,Reciclamiento de desperdicios y desechos
+409,3720,D,382020.0,E,3720,D,D_37,D_37,Reciclamiento de desperdicios y desechos
+410,4520,F,410011.0,F,4520,F,F,F,Construcción
+411,4520,F,410021.0,F,4520,F,F,F,Construcción
+412,4520,F,421000.0,F,4520,F,F,F,Construcción
+413,4520,F,429090.0,F,4520,F,F,F,Construcción
+414,4520,F,439910.0,F,4520,F,F,F,Construcción
+415,4533,F,432200.0,F,4533,F,F,F,Construcción
+416,4533,F,422100.0,F,4533,F,F,F,Construcción
+417,4533,F,429010.0,F,4533,F,F,F,Construcción
+418,4531,F,432110.0,F,4531,F,F,F,Construcción
+419,4531,F,432190.0,F,4531,F,F,F,Construcción
+420,4531,F,432910.0,F,4531,F,F,F,Construcción
+421,4531,F,422200.0,F,4531,F,F,F,Construcción
+422,7010,K,681010.0,L,7010,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+423,7010,K,681020.0,L,7010,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+424,7010,K,681098.0,L,7010,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+425,7010,K,681099.0,L,7010,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+426,4539,F,432990.0,F,4539,F,F,F,Construcción
+427,4539,F,439990.0,F,4539,F,F,F,Construcción
+428,4511,F,431100.0,F,4511,F,F,F,Construcción
+429,4519,F,431210.0,F,4519,F,F,F,Construcción
+430,4550,F,439100.0,F,4550,F,F,F,Construcción
+431,4512,F,431220.0,F,4512,F,F,F,Construcción
+432,4532,F,432920.0,F,4532,F,F,F,Construcción
+433,4541,F,433010.0,F,4541,F,F,F,Construcción
+434,4542,F,433020.0,F,4542,F,F,F,Construcción
+435,4543,F,433030.0,F,4543,F,F,F,Construcción
+436,4544,F,433040.0,F,4544,F,F,F,Construcción
+437,4549,F,433090.0,F,4549,F,F,F,Construcción
+438,5011,G,451110.0,G,451110.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+439,5011,G,451190.0,G,451190.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+440,5012,G,451210.0,G,451210.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+441,5012,G,451290.0,G,451290.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+442,5020,G,452101.0,G,452101.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+443,5020,G,452210.0,G,452210.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+444,5020,G,452220.0,G,452220.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+445,5020,G,452300.0,G,452300.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+446,5020,G,452401.0,G,452401.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+447,5020,G,452500.0,G,452500.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+448,5020,G,452600.0,G,452600.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+449,5020,G,452700.0,G,452700.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+450,5020,G,452800.0,G,452800.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+451,5020,G,452910.0,G,452910.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+452,5020,G,452990.0,G,452990.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+453,5031,G,453100.0,G,453100.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+454,5032,G,453210.0,G,453210.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+455,5032,G,453220.0,G,453220.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+456,5032,G,453291.0,G,453291.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+457,5032,G,453292.0,G,453292.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+458,5040,G,454010.0,G,454010.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+459,5040,G,454020.0,G,454020.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+460,5111,G,461011.0,G,461011.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+461,5111,G,461012.0,G,461012.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+462,5111,G,461013.0,G,461013.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+463,5111,G,461019.0,G,461019.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+464,5111,G,461021.0,G,461021.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+465,5111,G,461022.0,G,461022.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+466,5111,G,461029.0,G,461029.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+467,5122,G,463111.0,G,463111.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+468,5122,G,463112.0,G,463112.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+469,5122,G,463121.0,G,463121.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+470,5122,G,463129.0,G,463129.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+471,5122,G,463130.0,G,463130.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+472,5122,G,463140.0,G,463140.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+473,5122,G,463151.0,G,463151.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+474,5122,G,463152.0,G,463152.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+475,5122,G,463153.0,G,463153.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+476,5122,G,463154.0,G,463154.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+477,5122,G,463159.0,G,463159.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+478,5122,G,463160.0,G,463160.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+479,5122,G,463170.0,G,463170.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+480,5122,G,463191.0,G,463191.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+481,5122,G,463199.0,G,463199.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+482,5123,G,463211.0,G,463211.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+483,5123,G,463212.0,G,463212.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+484,5123,G,463219.0,G,463219.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+485,5123,G,463220.0,G,463220.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+486,5124,G,463300.0,G,463300.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+487,5131,G,464111.0,G,464111.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+488,5131,G,464112.0,G,464112.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+489,5131,G,464113.0,G,464113.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+490,5131,G,464114.0,G,464114.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+491,5131,G,464119.0,G,464119.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+492,5131,G,464121.0,G,464121.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+493,5131,G,464122.0,G,464122.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+494,5131,G,464129.0,G,464129.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+495,5131,G,464130.0,G,464130.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+496,5131,G,464141.0,G,464141.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+497,5131,G,464142.0,G,464142.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+498,5131,G,464149.0,G,464149.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+499,5131,G,464150.0,G,464150.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+500,5132,G,464211.0,G,464211.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+501,5132,G,464212.0,G,464212.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+502,5132,G,464221.0,G,464221.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+503,5132,G,464222.0,G,464222.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+504,5132,G,464223.0,G,464223.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+505,5133,G,464310.0,G,464310.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+506,5133,G,464320.0,G,464320.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+507,5133,G,464330.0,G,464330.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+508,5133,G,464340.0,G,464340.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+509,5134,G,464410.0,G,464410.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+510,5134,G,464420.0,G,464420.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+511,5135,G,464501.0,G,464501.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+512,5135,G,464502.0,G,464502.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+513,5135,G,464610.0,G,464610.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+514,5135,G,464620.0,G,464620.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+515,5135,G,464631.0,G,464631.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+516,5135,G,464632.0,G,464632.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+517,5135,G,464910.0,G,464910.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+518,5139,G,463180.0,G,463180.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+519,5139,G,464920.0,G,464920.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+520,5139,G,464930.0,G,464930.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+521,5139,G,464940.0,G,464940.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+522,5139,G,464950.0,G,464950.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+523,5139,G,464991.0,G,464991.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+524,5139,G,464999.0,G,464999.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+525,5139,G,466370.0,G,466370.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+526,5159,G,465100.0,G,465100.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+527,5159,G,465210.0,G,465210.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+528,5159,G,465220.0,G,465220.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+529,5159,G,465910.0,G,465910.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+530,5159,G,465920.0,G,465920.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+531,5159,G,465930.0,G,465930.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+532,5159,G,465990.0,G,465990.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+533,5159,G,474010.0,G,474010.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+534,5151,G,465310.0,G,465310.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+535,5151,G,465320.0,G,465320.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+536,5151,G,465330.0,G,465330.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+537,5151,G,465340.0,G,465340.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+538,5151,G,465350.0,G,465350.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+539,5151,G,465360.0,G,465360.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+540,5151,G,465390.0,G,465390.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+541,5152,G,465400.0,G,465400.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+542,5153,G,465500.0,G,465500.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+543,5154,G,465610.0,G,465610.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+544,5154,G,465690.0,G,465690.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+545,5141,G,466110.0,G,466110.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+546,5141,G,466121.0,G,466121.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+547,5141,G,466129.0,G,466129.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+548,5142,G,466200.0,G,466200.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+549,5143,G,466310.0,G,466310.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+550,5143,G,466320.0,G,466320.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+551,5143,G,466330.0,G,466330.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+552,5143,G,466340.0,G,466340.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+553,5143,G,466350.0,G,466350.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+554,5143,G,466360.0,G,466360.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+555,5143,G,466391.0,G,466391.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+556,5143,G,466399.0,G,466399.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+557,5149,G,466910.0,G,466910.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+558,5149,G,466920.0,G,466920.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+559,5149,G,466931.0,G,466931.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+560,5149,G,466932.0,G,466932.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+561,5149,G,466939.0,G,466939.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+562,5149,G,466940.0,G,466940.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+563,5149,G,466990.0,G,466990.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+564,5190,G,469010.0,G,469010.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+565,5190,G,469090.0,G,469090.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+566,5211,G,471110.0,G,471110.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+567,5211,G,471120.0,G,471120.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+568,5211,G,471130.0,G,471130.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+569,5211,G,471190.0,G,471190.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+570,5212,G,471900.0,G,471900.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+571,5221,G,472111.0,G,472111.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+572,5221,G,472112.0,G,472112.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+573,5221,G,472120.0,G,472120.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+574,5222,G,472130.0,G,472130.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+575,5222,G,472140.0,G,472140.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+576,5229,G,472150.0,G,472150.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+577,5229,G,472190.0,G,472190.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+578,5229,G,472300.0,G,472300.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+579,5223,G,472160.0,G,472160.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+580,5224,G,472171.0,G,472171.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+581,5224,G,472172.0,G,472172.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+582,5225,G,472200.0,G,472200.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+583,5050,G,473000.0,G,473000.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+584,5239,G,474020.0,G,474020.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+585,5239,G,476310.0,G,476310.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+586,5239,G,476320.0,G,476320.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+587,5239,G,476400.0,G,476400.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+588,5239,G,477140.0,G,477140.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+589,5239,G,477440.0,G,477440.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+590,5239,G,477450.0,G,477450.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+591,5239,G,477460.0,G,477460.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+592,5239,G,477470.0,G,477470.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+593,5239,G,477480.0,G,477480.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+594,5239,G,477490.0,G,477490.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+595,5239,G,477840.0,G,477840.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+596,5235,G,475300.0,G,475300.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+597,5235,G,475410.0,G,475410.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+598,5235,G,475420.0,G,475420.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+599,5235,G,475430.0,G,475430.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+600,5235,G,475440.0,G,475440.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+601,5235,G,475490.0,G,475490.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+602,5235,G,476200.0,G,476200.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+603,5232,G,475110.0,G,475110.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+604,5232,G,475120.0,G,475120.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+605,5232,G,475190.0,G,475190.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+606,5236,G,475210.0,G,475210.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+607,5236,G,475220.0,G,475220.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+608,5236,G,475230.0,G,475230.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+609,5236,G,475240.0,G,475240.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+610,5236,G,475250.0,G,475250.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+611,5236,G,475260.0,G,475260.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+612,5236,G,475270.0,G,475270.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+613,5236,G,475290.0,G,475290.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+614,5238,G,476110.0,G,476110.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+615,5238,G,476120.0,G,476120.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+616,5238,G,476130.0,G,476130.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+617,5233,G,477110.0,G,477110.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+618,5233,G,477120.0,G,477120.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+619,5233,G,477130.0,G,477130.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+620,5233,G,477150.0,G,477150.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+621,5233,G,477190.0,G,477190.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+622,5234,G,477210.0,G,477210.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+623,5234,G,477220.0,G,477220.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+624,5234,G,477230.0,G,477230.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+625,5234,G,477290.0,G,477290.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+626,5231,G,477310.0,G,477310.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+627,5231,G,477320.0,G,477320.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+628,5231,G,477330.0,G,477330.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+629,5237,G,477410.0,G,477410.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+630,5237,G,477420.0,G,477420.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+631,5237,G,477430.0,G,477430.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+632,5241,G,477810.0,G,477810.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+633,5242,G,477820.0,G,477820.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+634,5249,G,477830.0,G,477830.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+635,5249,G,477890.0,G,477890.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+636,5252,G,478010.0,G,478010.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+637,5252,G,478090.0,G,478090.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+638,5251,G,479101.0,G,479101.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+639,5251,G,479109.0,G,479109.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+640,5259,G,479900.0,G,479900.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+641,6010,I,491110.0,H,6010,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+642,6010,I,491120.0,H,6010,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+643,6010,I,491200.0,H,6010,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+644,6022,I,492110.0,H,6022,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+645,6022,I,492120.0,H,6022,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+646,6022,I,492130.0,H,6022,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+647,6022,I,492140.0,H,6022,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+648,6022,I,492150.0,H,6022,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+649,6022,I,492160.0,H,6022,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+650,6022,I,492170.0,H,6022,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+651,6022,I,492180.0,H,6022,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+652,6022,I,492190.0,H,6022,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+653,6021,I,492210.0,H,6021,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+654,6021,I,492221.0,H,6021,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+655,6021,I,492229.0,H,6021,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+656,6021,I,492230.0,H,6021,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+657,6021,I,492240.0,H,6021,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+658,6021,I,492250.0,H,6021,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+659,6021,I,492280.0,H,6021,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+660,6021,I,492290.0,H,6021,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+661,6030,I,493110.0,H,6030,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+662,6030,I,493120.0,H,6030,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+663,6030,I,493200.0,H,6030,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
+664,6110,I,501100.0,H,6110,I,I_61,I_61,Transporte marítimo y fluvial
+665,6110,I,501200.0,H,6110,I,I_61,I_61,Transporte marítimo y fluvial
+666,6120,I,502101.0,H,6120,I,I_61,I_61,Transporte marítimo y fluvial
+667,6120,I,502200.0,H,6120,I,I_61,I_61,Transporte marítimo y fluvial
+668,6200,I,511000.0,H,6200,I,I_62,I_62,Transporte aéreo de cargas y de pasajeros
+669,6200,I,512000.0,H,6200,I,I_62,I_62,Transporte aéreo de cargas y de pasajeros
+670,6310,I,521010.0,H,6310,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+671,6310,I,521020.0,H,6310,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+672,6310,I,521030.0,H,6310,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+673,6320,I,522010.0,H,6320,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+674,6320,I,522020.0,H,6320,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+675,6320,I,522091.0,H,6320,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+676,6320,I,522092.0,H,6320,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+677,6320,I,522099.0,H,6320,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+678,6350,I,523011.0,H,6350,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+679,6350,I,523019.0,H,6350,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+680,6350,I,523020.0,H,6350,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+681,6350,I,523031.0,H,6350,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+682,6350,I,523039.0,H,6350,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+683,6350,I,523090.0,H,6350,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+684,6331,I,524110.0,H,6331,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+685,6331,I,524120.0,H,6331,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+686,6331,I,524130.0,H,6331,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+687,6331,I,524190.0,H,6331,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+688,6332,I,524210.0,H,6332,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+689,6332,I,524220.0,H,6332,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+690,6332,I,524230.0,H,6332,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+691,6332,I,524290.0,H,6332,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+692,6333,I,524310.0,H,6333,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+693,6333,I,524320.0,H,6333,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+694,6333,I,524330.0,H,6333,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+695,6333,I,524390.0,H,6333,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+696,6410,I,530010.0,H,6410,I,I_64,I_64,Correos y telecomunicaciones
+697,6410,I,530090.0,H,6410,I,I_64,I_64,Correos y telecomunicaciones
+698,5512,H,551010.0,I,5512,H,H_551,H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
+699,5512,H,551021.0,I,5512,H,H_551,H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
+700,5512,H,551022.0,I,5512,H,H_551,H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
+701,5512,H,551023.0,I,5512,H,H_551,H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
+702,5512,H,551090.0,I,5512,H,H_551,H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
+703,5511,H,552000.0,I,5511,H,H_551,H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
+704,5521,H,561011.0,I,5521,H,H_552,H_552,Servicios de expendio de comidas y bebidas
+705,5521,H,561012.0,I,5521,H,H_552,H_552,Servicios de expendio de comidas y bebidas
+706,5521,H,561013.0,I,5521,H,H_552,H_552,Servicios de expendio de comidas y bebidas
+707,5521,H,561014.0,I,5521,H,H_552,H_552,Servicios de expendio de comidas y bebidas
+708,5521,H,561019.0,I,5521,H,H_552,H_552,Servicios de expendio de comidas y bebidas
+709,5521,H,561030.0,I,5521,H,H_552,H_552,Servicios de expendio de comidas y bebidas
+710,5521,H,562091.0,I,5521,H,H_552,H_552,Servicios de expendio de comidas y bebidas
+711,5522,H,561020.0,I,5522,H,H_552,H_552,Servicios de expendio de comidas y bebidas
+712,5522,H,561040.0,I,5522,H,H_552,H_552,Servicios de expendio de comidas y bebidas
+713,5522,H,562010.0,I,5522,H,H_552,H_552,Servicios de expendio de comidas y bebidas
+714,5522,H,562099.0,I,5522,H,H_552,H_552,Servicios de expendio de comidas y bebidas
+715,7240,K,631120.0,J,7240,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+716,7240,K,631190.0,J,7240,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+717,7240,K,631200.0,J,7240,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+718,2212,D,581300.0,J,2212,D,D_22,D_22,Edición
+719,2219,D,581200.0,J,2219,D,D_22,D_22,Edición
+720,2219,D,581900.0,J,2219,D,D_22,D_22,Edición
+721,9211,O,591110.0,J,9211,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+722,9211,O,591120.0,J,9211,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+723,9211,O,591200.0,J,9211,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+724,9212,O,591300.0,J,9212,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+725,2213,D,592000.0,J,2213,D,D_22,D_22,Edición
+726,9214,O,749002.0,M,9214,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+727,9214,O,900011.0,R,9214,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+728,9214,O,900021.0,R,9214,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+729,9214,O,900030.0,R,9214,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+730,9214,O,900040.0,R,9214,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+731,6420,I,602100.0,J,6420,I,I_64,I_64,Correos y telecomunicaciones
+732,6420,I,602200.0,J,6420,I,I_64,I_64,Correos y telecomunicaciones
+733,6420,I,602310.0,J,6420,I,I_64,I_64,Correos y telecomunicaciones
+734,6420,I,611010.0,J,6420,I,I_64,I_64,Correos y telecomunicaciones
+735,6420,I,611090.0,J,6420,I,I_64,I_64,Correos y telecomunicaciones
+736,6420,I,612000.0,J,6420,I,I_64,I_64,Correos y telecomunicaciones
+737,6420,I,613000.0,J,6420,I,I_64,I_64,Correos y telecomunicaciones
+738,6420,I,614010.0,J,6420,I,I_64,I_64,Correos y telecomunicaciones
+739,6420,I,614090.0,J,6420,I,I_64,I_64,Correos y telecomunicaciones
+740,6420,I,619000.0,J,6420,I,I_64,I_64,Correos y telecomunicaciones
+741,6420,I,602900.0,J,6420,I,I_64,I_64,Correos y telecomunicaciones
+742,9213,O,601000.0,J,9213,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+743,9213,O,602320.0,J,9213,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+744,7220,K,620100.0,J,7220,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+745,7210,K,620200.0,J,7210,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+746,7210,K,620300.0,J,7210,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+747,7290,K,620900.0,J,7290,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+748,7230,K,631110.0,J,7230,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+749,9220,O,639100.0,J,9220,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+750,9220,O,639900.0,J,9220,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+751,7499,K,99000.0,B,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+752,7499,K,109000.0,C,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+753,7499,K,663000.0,K,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+754,7499,K,741000.0,M,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+755,7499,K,749001.0,M,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+756,7499,K,749009.0,M,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+757,7499,K,774000.0,N,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+758,7499,K,822000.0,N,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+759,7499,K,823000.0,N,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+760,7499,K,829100.0,N,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+761,7499,K,829900.0,N,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+762,7499,K,821100.0,N,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+763,6511,J,641100.0,K,6511,J,J,J,Intermediación financiera
+764,6521,J,641910.0,K,6521,J,J,J,Intermediación financiera
+765,6521,J,641920.0,K,6521,J,J,J,Intermediación financiera
+766,6521,J,641930.0,K,6521,J,J,J,Intermediación financiera
+767,6521,J,649100.0,K,6521,J,J,J,Intermediación financiera
+768,6522,J,641941.0,K,6522,J,J,J,Intermediación financiera
+769,6522,J,641942.0,K,6522,J,J,J,Intermediación financiera
+770,6522,J,641943.0,K,6522,J,J,J,Intermediación financiera
+771,6590,J,642000.0,K,6590,J,J,J,Intermediación financiera
+772,6590,J,643001.0,K,6590,J,J,J,Intermediación financiera
+773,6590,J,643009.0,K,6590,J,J,J,Intermediación financiera
+774,6590,J,649210.0,K,6590,J,J,J,Intermediación financiera
+775,6590,J,649220.0,K,6590,J,J,J,Intermediación financiera
+776,6590,J,649290.0,K,6590,J,J,J,Intermediación financiera
+777,6590,J,649910.0,K,6590,J,J,J,Intermediación financiera
+778,6590,J,649991.0,K,6590,J,J,J,Intermediación financiera
+779,6590,J,649999.0,K,6590,J,J,J,Intermediación financiera
+780,6610,J,651110.0,K,6610,J,J,J,Intermediación financiera
+781,6610,J,651120.0,K,6610,J,J,J,Intermediación financiera
+782,6610,J,651130.0,K,6610,J,J,J,Intermediación financiera
+783,6610,J,651210.0,K,6610,J,J,J,Intermediación financiera
+784,6610,J,651220.0,K,6610,J,J,J,Intermediación financiera
+785,6610,J,651320.0,K,6610,J,J,J,Intermediación financiera
+786,6610,J,652000.0,K,6610,J,J,J,Intermediación financiera
+787,7530,L,843000.0,O,7530,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+788,7530,L,651310.0,K,7530,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+789,6620,J,653000.0,K,6620,J,J,J,Intermediación financiera
+790,6711,J,661111.0,K,6711,J,J,J,Intermediación financiera
+791,6711,J,661121.0,K,6711,J,J,J,Intermediación financiera
+792,6711,J,661131.0,K,6711,J,J,J,Intermediación financiera
+793,6712,J,661910.0,K,6712,J,J,J,Intermediación financiera
+794,6719,J,661920.0,K,6719,J,J,J,Intermediación financiera
+795,6719,J,661930.0,K,6719,J,J,J,Intermediación financiera
+796,6719,J,661991.0,K,6719,J,J,J,Intermediación financiera
+797,6719,J,661999.0,K,6719,J,J,J,Intermediación financiera
+798,6719,J,661992.0,K,6719,J,J,J,Intermediación financiera
+799,6721,J,662010.0,K,6721,J,J,J,Intermediación financiera
+800,6721,J,662020.0,K,6721,J,J,J,Intermediación financiera
+801,6721,J,662090.0,K,6721,J,J,J,Intermediación financiera
+802,7020,K,682010.0,L,7020,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+803,7020,K,682091.0,L,7020,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+804,7020,K,682099.0,L,7020,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+805,7020,K,811000.0,N,7020,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+806,7020,K,949920.0,S,7020,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+807,7410,K,691001.0,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+808,7410,K,691002.0,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+809,7410,K,692000.0,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+810,7410,K,702010.0,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+811,7410,K,702091.0,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+812,7410,K,702092.0,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+813,7410,K,702099.0,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+814,7410,K,732000.0,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+815,7410,K,749003.0,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+816,7422,K,712000.0,M,7422,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+817,7492,K,801010.0,N,7492,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+818,7492,K,801020.0,N,7492,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+819,7492,K,801090.0,N,7492,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+820,7311,K,721010.0,M,7311,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+821,7312,K,721020.0,M,7312,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+822,7313,K,721030.0,M,7313,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+823,7319,K,721090.0,M,7319,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+824,7321,K,722010.0,M,7321,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+825,7322,K,722020.0,M,7322,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+826,7430,K,731001.0,M,7430,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+827,7430,K,731009.0,M,7430,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+828,7494,K,742000.0,M,7494,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+829,8520,N,750000.0,M,8520,N,N,N,Servicios sociales y de salud
+830,7111,K,771110.0,N,7111,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+831,7111,K,771190.0,N,7111,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+832,7111,K,771290.0,N,7111,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+833,7112,K,771210.0,N,7112,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+834,7113,K,771220.0,N,7113,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+835,7130,K,772010.0,N,7130,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+836,7130,K,772091.0,N,7130,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+837,7130,K,772099.0,N,7130,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+838,7120,K,773010.0,N,7120,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+839,7120,K,773020.0,N,7120,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+840,7120,K,773030.0,N,7120,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+841,7120,K,773040.0,N,7120,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+842,7120,K,773090.0,N,7120,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+843,7491,K,780000.0,N,7491,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+844,6340,I,791100.0,N,6340,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+845,6340,I,791200.0,N,6340,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+846,6340,I,791901.0,N,6340,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+847,6340,I,791909.0,N,6340,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+848,7493,K,812010.0,N,7493,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+849,7493,K,812020.0,N,7493,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+850,7493,K,812090.0,N,7493,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+851,7496,K,821900.0,N,7496,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+852,7495,K,829200.0,N,7495,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+853,7511,L,841100.0,O,7511,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+854,7512,L,841200.0,O,7512,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+855,7513,L,841300.0,O,7513,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+856,7519,L,841900.0,O,7519,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+857,7521,L,842100.0,O,7521,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+858,7522,L,842200.0,O,7522,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+859,7524,L,842300.0,O,7524,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+860,7523,L,842400.0,O,7523,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+861,7525,L,842500.0,O,7525,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+862,8530,N,851010.0,P,8530,N,N,N,Servicios sociales y de salud
+863,8530,N,855000.0,P,8530,N,N,N,Servicios sociales y de salud
+864,8530,N,870210.0,Q,8530,N,N,N,Servicios sociales y de salud
+865,8530,N,870220.0,Q,8530,N,N,N,Servicios sociales y de salud
+866,8530,N,870910.0,Q,8530,N,N,N,Servicios sociales y de salud
+867,8530,N,870920.0,Q,8530,N,N,N,Servicios sociales y de salud
+868,8530,N,870990.0,Q,8530,N,N,N,Servicios sociales y de salud
+869,8530,N,880000.0,Q,8530,N,N,N,Servicios sociales y de salud
+870,8000,M,854940.0,P,8000,M,M,M,Enseñanza
+871,8000,M,851020.0,P,8000,M,M,M,Enseñanza
+872,8000,M,852100.0,P,8000,M,M,M,Enseñanza
+873,8000,M,852200.0,P,8000,M,M,M,Enseñanza
+874,8000,M,853100.0,P,8000,M,M,M,Enseñanza
+875,8000,M,853201.0,P,8000,M,M,M,Enseñanza
+876,8000,M,853300.0,P,8000,M,M,M,Enseñanza
+877,8000,M,854910.0,P,8000,M,M,M,Enseñanza
+878,8000,M,854920.0,P,8000,M,M,M,Enseñanza
+879,8000,M,854930.0,P,8000,M,M,M,Enseñanza
+880,8000,M,854960.0,P,8000,M,M,M,Enseñanza
+881,8000,M,854990.0,P,8000,M,M,M,Enseñanza
+882,9241,O,931010.0,R,9241,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+883,9241,O,931020.0,R,9241,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+884,9241,O,931030.0,R,9241,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+885,9241,O,931041.0,R,9241,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+886,9241,O,931042.0,R,9241,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+887,9241,O,931050.0,R,9241,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+888,9241,O,931090.0,R,9241,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+889,9241,O,854950.0,P,9241,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+890,9219,O,900091.0,R,9219,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+891,9219,O,939010.0,R,9219,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+892,9219,O,939030.0,R,9219,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+893,8510,N,861010.0,Q,8510,N,N,N,Servicios sociales y de salud
+894,8510,N,861020.0,Q,8510,N,N,N,Servicios sociales y de salud
+895,8510,N,862110.0,Q,8510,N,N,N,Servicios sociales y de salud
+896,8510,N,862120.0,Q,8510,N,N,N,Servicios sociales y de salud
+897,8510,N,862130.0,Q,8510,N,N,N,Servicios sociales y de salud
+898,8510,N,862200.0,Q,8510,N,N,N,Servicios sociales y de salud
+899,8510,N,863110.0,Q,8510,N,N,N,Servicios sociales y de salud
+900,8510,N,863120.0,Q,8510,N,N,N,Servicios sociales y de salud
+901,8510,N,863190.0,Q,8510,N,N,N,Servicios sociales y de salud
+902,8510,N,863200.0,Q,8510,N,N,N,Servicios sociales y de salud
+903,8510,N,863300.0,Q,8510,N,N,N,Servicios sociales y de salud
+904,8510,N,864000.0,Q,8510,N,N,N,Servicios sociales y de salud
+905,8510,N,869010.0,Q,8510,N,N,N,Servicios sociales y de salud
+906,8510,N,869090.0,Q,8510,N,N,N,Servicios sociales y de salud
+907,8510,N,870100.0,Q,8510,N,N,N,Servicios sociales y de salud
+908,9230,O,910100.0,R,9230,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+909,9230,O,910200.0,R,9230,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+910,9230,O,910300.0,R,9230,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+911,9100,O,910900.0,R,9100,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+912,9100,O,941100.0,S,9100,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+913,9100,O,941200.0,S,9100,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+914,9100,O,942000.0,S,9100,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+915,9100,O,949100.0,S,9100,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+916,9100,O,949200.0,S,9100,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+917,9100,O,949910.0,S,9100,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+918,9100,O,949930.0,S,9100,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+919,9100,O,949990.0,S,9100,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+920,9249,O,920001.0,R,9249,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+921,9249,O,920009.0,R,9249,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+922,9249,O,939020.0,R,9249,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+923,9249,O,939090.0,R,9249,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+924,5269,G,331101.0,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+925,5269,G,331210.0,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+926,5269,G,331220.0,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+927,5269,G,331290.0,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+928,5269,G,331301.0,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+929,5269,G,331400.0,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+930,5269,G,331900.0,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+931,5269,G,951200.0,S,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+932,5269,G,952300.0,S,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+933,5269,G,952910.0,S,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+934,5269,G,952920.0,S,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+935,5269,G,952990.0,S,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+936,5262,G,952100.0,S,5262,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+937,5261,G,952200.0,S,5261,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+938,9301,O,960101.0,S,9301,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+939,9301,O,960102.0,S,9301,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+940,9302,O,960201.0,S,9302,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+941,9302,O,960202.0,S,9302,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+942,9303,O,960300.0,S,9303,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+943,9309,O,960910.0,S,9309,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+944,9309,O,960990.0,S,9309,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
+945,9500,P,970000.0,T,9500,P,P,P,Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores
+946,9900,Q,990000.0,U,9900,Q,Q,Q,Organizaciones y órganos extraterritoriales
+947,2429,D,204000.0,C,2429,D,D_24,D_24,Productos químicos
+948,6350,I,523032.0,H,6350,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
+949,5121,G,462110.0,G,462110.0,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+950,29_30_31_32_33,D,332000.0,C,29_30_31_32_33,D,D_29_30_31_32_33,D_29_30_31_32_33,D_29_30_31_32_33
 951,CONS,CONS,,,CONS,CONS,CONS,CONS,Consumo
