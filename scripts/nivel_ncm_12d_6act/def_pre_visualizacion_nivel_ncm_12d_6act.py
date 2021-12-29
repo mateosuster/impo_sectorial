@@ -105,20 +105,22 @@ def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest, largo_activi
     plt.savefig('../data/resultados/comercio_y_propio_letra_'+ue_dest+'.png')
 
 
-def top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec):
+def top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec, bien, n=5):
 
     x = asign_pre_matriz.groupby(["hs6_d12", "sd"], as_index=False)['valor_pond'].sum("valor_pond")
     top_5_impo = x.reset_index(drop = True).sort_values(by = ["sd", "valor_pond"],ascending = False)
     top_5_impo["HS6"] = top_5_impo["hs6_d12"].str.slice(0,6).astype(int)
-    top_5_impo  = top_5_impo.groupby(["sd"], as_index = True).head(5)
+    top_5_impo  = top_5_impo.groupby(["sd"], as_index = True).head(n)
     top_5_impo  = pd.merge(left=top_5_impo, right=ncm12_desc, left_on="hs6_d12", right_on="HS_12d", how="left").drop("HS_12d", axis=1)
     top_5_impo  = pd.merge(top_5_impo  , impo_tot_sec, left_on="sd", right_on="letra", how = "left")
     top_5_impo["impo_relativa"] = top_5_impo["valor_pond"]/top_5_impo["impo_tot"] 
     top_5_impo["short_name"] = top_5_impo["hs6_d12_desc"].str.slice(0,15)
 
+    top_5_impo.to_excel("../data/resultados/top"+str(n)+"_impo_"+bien+".xlsx")
+    
     return top_5_impo
 
-
+############################################################################################################
 def predo_mca(matriz_sisd_final, do):
     #groupby para el mca producto-. Poner en el archivo de visualización
     matriz_mca = matriz_sisd_final.copy()

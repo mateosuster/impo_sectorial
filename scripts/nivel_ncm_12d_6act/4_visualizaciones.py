@@ -59,11 +59,8 @@ graficos(dic_propio, impo_tot_sec_ci, comercio_y_propio_ci,  ue_dest= "ci")
 # =============================================================================
 #                   Top 5 de importaciones de cada sector
 # =============================================================================
-top_5_impo = top_5(asign_pre_matriz, ncm12_desc_mod, impo_tot_sec) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
-top_5_impo.to_excel("../data/resultados/top5_impo.xlsx")
-
-top_5_impo_ci = top_5(asign_pre_matriz_ci, letras_ciiu , ncm12_desc_mod, impo_tot_sec_ci) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
-top_5_impo_ci.to_excel("../data/resultados/top5_impo_ci.xlsx")
+top_5_impo = top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec, bien = "bk", n=5) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
+top_5_impo_ci = top_5(asign_pre_matriz_ci, ncm12_desc, ncm12_desc_mod, impo_tot_sec_ci,bien = "ci", n=5) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
 
 
 asign_pre_matriz_ci[asign_pre_matriz_ci.sd == "P"]
