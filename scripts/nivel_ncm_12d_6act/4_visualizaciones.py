@@ -31,7 +31,7 @@ from def_pre_visualizacion_nivel_ncm_12d_6act import *
 
 dic_propio = pd.read_csv("../data/resultados/dic_clae_ciiu_propio.csv")
 ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
-ncm12_desc = predo_ncm12_desc(ncm12_desc )["ncm_desc"]    
+ncm12_desc = predo_ncm12_desc(ncm12_desc )   
 
 
 # BK
@@ -59,7 +59,7 @@ graficos(dic_propio, impo_tot_sec_ci, comercio_y_propio_ci,  ue_dest= "ci")
 # =============================================================================
 #                   Top 5 de importaciones de cada sector
 # =============================================================================
-top_5_impo = top_5(asign_pre_matriz, letras_ciiu , ncm12_desc_mod, impo_tot_sec) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
+top_5_impo = top_5(asign_pre_matriz, ncm12_desc_mod, impo_tot_sec) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
 top_5_impo.to_excel("../data/resultados/top5_impo.xlsx")
 
 top_5_impo_ci = top_5(asign_pre_matriz_ci, letras_ciiu , ncm12_desc_mod, impo_tot_sec_ci) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento

@@ -49,7 +49,7 @@ def impo_total(matriz_sisd, dic_propio, sectores_desc =False, largo_actividad=20
 
 
     
-def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest):
+def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest, largo_actividad=20):
     #parametro para graficos
     params = {'legend.fontsize': 20,
               'figure.figsize': (20, 10),
@@ -61,9 +61,11 @@ def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest):
     plt.rcParams.update(params)
 
     #diccionario para el eje x y ordenamiento de los datos
-    dic_graf = pd.concat([dic_propio[["propio_letra_2", "desc"]], pd.DataFrame({"propio_letra_2": ["CONS"], "desc": ["Consumo"]})], axis=0).drop_duplicates()
+    # dic_graf = pd.concat([dic_propio[["propio_letra_2", "desc"]], pd.DataFrame({"propio_letra_2": ["CONS"], "desc": ["Consumo"]})], axis=0).drop_duplicates()
+    dic_graf = dic_propio[["propio_letra_2", "desc"]].drop_duplicates()
+    
     impo_tot_sec = pd.merge(impo_tot_sec,dic_graf , how = "left", left_on ="letra", right_on="propio_letra_2")#.drop("propio_letra_2",1)
-    impo_tot_sec["desc"] =  impo_tot_sec["desc"].str.slice(0,20)
+    impo_tot_sec["desc"] =  impo_tot_sec["desc"].str.slice(0,largo_actividad)
     impo_tot_sec.set_index(["desc"],inplace=True)
     impo_tot_sec.sort_values("impo_tot",ascending=False, inplace=True)
 
@@ -103,14 +105,12 @@ def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest):
     plt.savefig('../data/resultados/comercio_y_propio_letra_'+ue_dest+'.png')
 
 
-def top_5(asign_pre_matriz, letras_ciiu , ncm12_desc, impo_tot_sec):
+def top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec):
 
     x = asign_pre_matriz.groupby(["hs6_d12", "sd"], as_index=False)['valor_pond'].sum("valor_pond")
     top_5_impo = x.reset_index(drop = True).sort_values(by = ["sd", "valor_pond"],ascending = False)
     top_5_impo["HS6"] = top_5_impo["hs6_d12"].str.slice(0,6).astype(int)
     top_5_impo  = top_5_impo.groupby(["sd"], as_index = True).head(5)
-    # top_5_impo  = pd.merge(left=top_5_impo, right=letras_ciiu, left_on="sd", right_on="letra", how="left").drop(["sd"], axis=1) # ACA OBTENIA LA DESCLASIFICACION
-    # top_5_impo  = pd.merge(left=top_5_impo, right=bec[["HS6","HS6Desc"]], left_on="HS6", right_on="HS6", how="left").drop("HS6", axis=1)
     top_5_impo  = pd.merge(left=top_5_impo, right=ncm12_desc, left_on="hs6_d12", right_on="HS_12d", how="left").drop("HS_12d", axis=1)
     top_5_impo  = pd.merge(top_5_impo  , impo_tot_sec, left_on="sd", right_on="letra", how = "left")
     top_5_impo["impo_relativa"] = top_5_impo["valor_pond"]/top_5_impo["impo_tot"] 

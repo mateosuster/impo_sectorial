@@ -33,7 +33,7 @@ dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
 ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 
 vector_comercio_bk = pd.read_csv("../data/vector_de_comercio_clae_bk.csv", sep = ";").drop("Unnamed: 0", 1)
-vector_comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";")
+vector_comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";")#.drop(["letra", "clae6_desc"] , axis = 1)
 
 #############################################
 #           preparación bases               #

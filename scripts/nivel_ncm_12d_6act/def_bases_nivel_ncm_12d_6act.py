@@ -227,55 +227,50 @@ def def_join_impo_clae_bec_bk(join_impo_clae, bec_bk):
 
 def def_join_comercio(join_impo_clae_bec_bk, comercio, ci = False):
     
+    # join_impo_clae_bec_bk, comercio = datos_bk_sin_picks , vector_comercio_bk
+    
     # conversion de vector de comercio para que se pueda realizar el merge
+    comercio = comercio.copy()
     comercio["clae6"] = comercio["clae6"].astype(str)
+    comercio.drop(["letra", "clae6_desc"] , axis = 1, inplace = True)
     
     if ci == False:    
         #comercio = comercio.drop(["vta_vehiculos"], axis=1)
-        comercio2 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk2", "vta_sec": "vta_sec2"})
-        comercio3 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk3", "vta_sec": "vta_sec3"})    
-        comercio4 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk4", "vta_sec": "vta_sec4"})
-        comercio5 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk5", "vta_sec": "vta_sec5"})
-        comercio6 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_bk": "vta_bk6", "vta_sec": "vta_sec6"})
+        comercio2 = comercio.rename(columns = {"vta_bk": "vta_bk2", "vta_sec": "vta_sec2"})
+        comercio3 = comercio.rename(columns = {"vta_bk": "vta_bk3", "vta_sec": "vta_sec3"})    
+        comercio4 = comercio.rename(columns = {"vta_bk": "vta_bk4", "vta_sec": "vta_sec4"})
+        comercio5 = comercio.rename(columns = {"vta_bk": "vta_bk5", "vta_sec": "vta_sec5"})
+        comercio6 = comercio.rename(columns = {"vta_bk": "vta_bk6", "vta_sec": "vta_sec6"})
     elif ci == True:
-        comercio2 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_sec": "vta_sec2"})
-        comercio3 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_sec": "vta_sec3"})    
-        comercio4 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_sec": "vta_sec4"})
-        comercio5 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_sec": "vta_sec5"})
-        comercio6 = comercio.drop(["letra", "clae6_desc"] , axis = 1).rename(columns = {"vta_sec": "vta_sec6"})
+        comercio2 = comercio.rename(columns = {"vta_sec": "vta_sec2"})
+        comercio3 = comercio.rename(columns = {"vta_sec": "vta_sec3"})    
+        comercio4 = comercio.rename(columns = {"vta_sec": "vta_sec4"})
+        comercio5 = comercio.rename(columns = {"vta_sec": "vta_sec5"})
+        comercio6 = comercio.rename(columns = {"vta_sec": "vta_sec6"})
             
     # join de la matriz con el sector comercio
     ## Comercio 1
-    impo17_bec_complete = pd.merge(join_impo_clae_bec_bk, comercio.drop(["letra", "clae6_desc"], axis = 1), 
-                             how = "left", left_on = "actividad1", right_on = "clae6")
-    impo17_bec_complete.drop("clae6", axis=1, inplace = True) 
+    impo17_bec_complete = pd.merge(join_impo_clae_bec_bk, comercio, how = "left", left_on = "actividad1", right_on = "clae6").drop("clae6", axis=1) 
 
     ## Comercio 2
     impo17_bec_complete = pd.merge(impo17_bec_complete, comercio2, 
-                                   how = "left", left_on = "actividad2", right_on = "clae6")
-    impo17_bec_complete.drop("clae6", axis=1, inplace = True) 
+                                   how = "left", left_on = "actividad2", right_on = "clae6").drop("clae6", axis=1) 
 
     ## Comercio 3
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio3 , 
-                          how = "left", left_on = "actividad3", right_on = "clae6")
-    impo17_bec_complete.drop("clae6", axis=1, inplace = True) 
+                          how = "left", left_on = "actividad3", right_on = "clae6").drop("clae6", axis=1) 
 
     ## Comercio 4
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio4 , 
-                          how = "left", left_on = "actividad3", right_on = "clae6")
-    impo17_bec_complete.drop("clae6", axis=1, inplace = True) 
+                          how = "left", left_on = "actividad3", right_on = "clae6").drop("clae6", axis=1) 
     
     ## Comercio 5
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio5 , 
-                          how = "left", left_on = "actividad3", right_on = "clae6")
-    
-    impo17_bec_complete.drop("clae6", axis=1, inplace = True) 
+                          how = "left", left_on = "actividad3", right_on = "clae6").drop("clae6", axis=1) 
     
     ## Comercio 6
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio6 , 
-                          how = "left", left_on = "actividad3", right_on = "clae6")
-    
-    impo17_bec_complete.drop("clae6", axis=1, inplace = True) 
+                          how = "left", left_on = "actividad3", right_on = "clae6").drop("clae6", axis=1) 
 
     return  impo17_bec_complete   
 
@@ -351,19 +346,22 @@ def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
     
     #convierto a string los digitos del ciiu
     ciiu_dig_let["ciiu3_4c"] = ciiu_dig_let["ciiu3_4c"].astype(int).astype(str)
+    ciiu_dig_let["clae6"] = ciiu_dig_let["clae6"].astype(int).astype(str)
+    clae["clae6"] = clae["clae6"].astype(int).astype(str)
     
     #filtro el caso problematico del clae    
-    ciiu_dig_let = ciiu_dig_let[ciiu_dig_let["clae6"] !=332000] 
+    ciiu_dig_let = ciiu_dig_let[ciiu_dig_let["clae6"] !="332000"] 
     
     #agrego los clae faltantes
-    claes_faltantes = pd.DataFrame({'clae6': [204000, 523032, 462110, 332000, np.nan], 'ciiu3_letra': ["D", "I", "G", "D" ,"CONS" ] , 
+    claes_faltantes = pd.DataFrame({'clae6': ["204000", "523032", "462110", "332000", np.nan], 'ciiu3_letra': ["D", "I", "G", "D" ,"CONS" ] , 
                                     # "ciiu3_4c_desc" : ["", "", "", ""],
                                     'ciiu3_4c': ["2429", "6350", "5121", "29_30_31_32_33", "CONS"]})    
     ciiu_dig_let = pd.concat([ciiu_dig_let, claes_faltantes ], axis = 0)
-    clae["clae6"] = clae["clae6"].astype("int64")
+  
     ciiu_dig_let = pd.merge(ciiu_dig_let , clae[["clae6", "letra"]], how = "left", left_on= "clae6", right_on= "clae6").rename(columns = {"letra": "clae6_letra"})
     
-    ciiu_dig_let["propio"] = np.where(ciiu_dig_let["clae6_letra"]=="G",ciiu_dig_let["clae6"], ciiu_dig_let["ciiu3_4c"]   )  
+    # ciiu_dig_let["clae6"] = ciiu_dig_let["clae6"].astype(int).astype(str)
+    ciiu_dig_let["propio"] = np.where(ciiu_dig_let["clae6_letra"]=="G",ciiu_dig_let["clae6"], ciiu_dig_let["ciiu3_4c"]   )#.astype(str)  
     ciiu_dig_let["propio_letra"] = np.where(ciiu_dig_let["clae6_letra"]=="G", ciiu_dig_let["clae6_letra"], ciiu_dig_let["ciiu3_letra"]   )
     ciiu_dig_let["propio_letra_2"] =np.where(ciiu_dig_let["propio_letra"].isin( ["I"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
                                              np.where(ciiu_dig_let["propio_letra"].isin( ["H"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=3),
@@ -385,8 +383,7 @@ def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
 
 def diccionario_especial(datos, dic_propio):
     # conversion CLAE a CIIU (codigo para funcion)
-    datos_bk_a_ciiu= datos#[[ "actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6" ,
-                              # "letra1","letra2","letra3","letra4", "letra5", "letra6"]].copy()
+    datos_bk_a_ciiu= datos
     
     ciiu_dig_let = dic_propio[["clae6", "propio", "propio_letra_2"]]
     # ESTE ES EL POSTA
@@ -394,9 +391,12 @@ def diccionario_especial(datos, dic_propio):
                                ["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"]):
         
         # ciiu_data.rename(columns = {"ciiu3_4c": ciiu_name })
+        datos_bk_a_ciiu[clae_i] = datos_bk_a_ciiu[clae_i].astype(int).astype(str)
         datos_bk_a_ciiu= pd.merge(datos_bk_a_ciiu , ciiu_dig_let, how = "left" ,left_on = clae_i, right_on= "clae6" ).drop(["clae6",clae_i,letra_i ], 1)
         datos_bk_a_ciiu.rename(columns = {"propio": clae_i, "propio_letra_2": letra_i  }, inplace = True)
-    
+        
+        
+        
     return datos_bk_a_ciiu
 
 
