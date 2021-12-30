@@ -20,7 +20,7 @@ from def_pre_visualizacion_nivel_ncm_12d_6act import *
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
-datos = pd.read_csv("../data/heavys/datos_clasificados_modelo_all_data.csv", sep = ";") #faltan columnas (creo q me quedó un archivo viejo)
+datos = pd.read_csv("../data/heavys/datos_clasificados_modelo_all_data.csv", sep = ";") 
 
 #auxiliares
 clae = pd.read_csv( "../data/clae_nombre.csv")
@@ -81,7 +81,12 @@ asign_pre_matriz_ci= def_asignacion_prob(matriz_sisd_insumo_ci)
 matriz_sisd_ci = to_matriz(asign_pre_matriz_ci, ci = True)
 matriz_hssd_ci  = pd.pivot_table(asign_pre_matriz_ci, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
 
-# matriz_sisd_ci= pd.read_csv("../data/resultados/matriz_sisd_ci.csv")
+# asign_pre_matriz_ci.to_csv("../data/resultados/asign_pre_matriz_ci.csv")
+# matriz_sisd_ci.to_csv("../data/resultados/matriz_sisd_ci.csv")
+
+# asign_pre_matriz_ci = pd.read_csv("../data/resultados/asign_pre_matriz_ci.csv")
+# matriz_sisd_ci = pd.read_csv("../data/resultados/matriz_sisd_ci.csv")
+
 
 
 # =============================================================================

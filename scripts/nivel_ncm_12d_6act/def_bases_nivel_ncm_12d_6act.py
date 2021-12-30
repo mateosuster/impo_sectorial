@@ -361,20 +361,24 @@ def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
     ciiu_dig_let = pd.merge(ciiu_dig_let , clae[["clae6", "letra"]], how = "left", left_on= "clae6", right_on= "clae6").rename(columns = {"letra": "clae6_letra"})
     
     # ciiu_dig_let["clae6"] = ciiu_dig_let["clae6"].astype(int).astype(str)
-    ciiu_dig_let["propio"] = np.where(ciiu_dig_let["clae6_letra"]=="G",ciiu_dig_let["clae6"], ciiu_dig_let["ciiu3_4c"]   )#.astype(str)  
+    ciiu_dig_let["propio"] = np.where((ciiu_dig_let["clae6_letra"]=="G") |(ciiu_dig_let["clae6"]=="99000") ,ciiu_dig_let["clae6"], ciiu_dig_let["ciiu3_4c"]   )#.astype(str)  
     ciiu_dig_let["propio_letra"] = np.where(ciiu_dig_let["clae6_letra"]=="G", ciiu_dig_let["clae6_letra"], ciiu_dig_let["ciiu3_letra"]   )
     ciiu_dig_let["propio_letra_2"] =np.where(ciiu_dig_let["propio_letra"].isin( ["I"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
                                              np.where(ciiu_dig_let["propio_letra"].isin( ["H"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=3),
-                                                      np.where(ciiu_dig_let["propio_letra"]=="D", np.where(ciiu_dig_let["propio"]=="29_30_31_32_33", "D_29_30_31_32_33",
-                                                                                                    "D"+"_"+ciiu_dig_let["propio"].str.slice(start=0,stop=2) 
-                                                                                                    ), 
-                                                               ciiu_dig_let["propio_letra"]
-                                                               ) 
+                                                      np.where(ciiu_dig_let["clae6"]=="99000", ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["clae6"].str.slice(start=0,stop=2),
+                                                               np.where(ciiu_dig_let["propio_letra"]=="K", ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
+                                                                        np.where(ciiu_dig_let["propio_letra"]=="D", np.where(ciiu_dig_let["propio"]=="29_30_31_32_33", "D_29_30_31_32_33",
+                                                                                                                             "D"+"_"+ciiu_dig_let["propio"].str.slice(start=0,stop=2) 
+                                                                                                                             ), 
+                                                                                 ciiu_dig_let["propio_letra"]
+                                                                                 ) 
+                                                                        )
+                                                               )
                                                       )
                                              )
                    
     #join descripcion                                   
-    desc = pd.read_csv("../data/resultados/desc_letra_propio.csv")
+    desc = pd.read_csv("../data/resultados/desc_letra_propio.csv", sep = ";").drop("Unnamed: 2",1)
     ciiu_dig_let = pd.merge(ciiu_dig_let, desc, how= "left", left_on = "propio_letra_2", right_on = "letra")
     ciiu_dig_let.to_csv("../data/resultados/dic_clae_ciiu_propio.csv", index=False)
 

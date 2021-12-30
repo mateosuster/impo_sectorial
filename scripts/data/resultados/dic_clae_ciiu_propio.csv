@@ -75,13 +75,13 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 141,A,16150,A,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
 141,A,16190,A,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
 141,A,813000,N,141,A,A,A,"Agricultura, ganadería, caza y silvicultura"
-5121,G,461014,G,461014,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5121,G,462120,G,462120,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5121,G,462131,G,462131,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5121,G,462132,G,462132,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5121,G,462190,G,462190,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5121,G,462201,G,462201,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5121,G,462209,G,462209,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+5121,G,461014,G,461014,G,G,G,Comercio al por mayor y al por menor
+5121,G,462120,G,462120,G,G,G,Comercio al por mayor y al por menor
+5121,G,462131,G,462131,G,G,G,Comercio al por mayor y al por menor
+5121,G,462132,G,462132,G,G,G,Comercio al por mayor y al por menor
+5121,G,462190,G,462190,G,G,G,Comercio al por mayor y al por menor
+5121,G,462201,G,462201,G,G,G,Comercio al por mayor y al por menor
+5121,G,462209,G,462209,G,G,G,Comercio al por mayor y al por menor
 142,A,16210,A,142,A,A,A,"Agricultura, ganadería, caza y silvicultura"
 142,A,16220,A,142,A,A,A,"Agricultura, ganadería, caza y silvicultura"
 142,A,16230,A,142,A,A,A,"Agricultura, ganadería, caza y silvicultura"
@@ -120,10 +120,10 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 1422,C,89300,B,1422,C,C,C,Explotación de minas y canteras
 1429,C,89900,B,1429,C,C,C,Explotación de minas y canteras
 1120,C,91000,B,1120,C,C,C,Explotación de minas y canteras
-7421,K,711001,M,7421,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7421,K,711002,M,7421,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7421,K,711003,M,7421,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7421,K,711009,M,7421,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+7421,K,711001,M,7421,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7421,K,711002,M,7421,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7421,K,711003,M,7421,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7421,K,711009,M,7421,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
 1511,D,101011,C,1511,D,D_15,D_15,Alimentos
 1511,D,101012,C,1511,D,D_15,D_15,Alimentos
 1511,D,101013,C,1511,D,D_15,D_15,Alimentos
@@ -380,23 +380,23 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 3692,D,322001,C,3692,D,D_36,D_36,Muebles
 3693,D,323001,C,3693,D,D_36,D_36,Muebles
 2211,D,581100,J,2211,D,D_22,D_22,Edición
-7250,K,951100,S,7250,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+7250,K,951100,S,7250,K,K_72,K_72,Actividades de inform�tica
 4011,E,351110,D,4011,E,E,E,"Suministro de electricidad, gas y agua"
 4011,E,351120,D,4011,E,E,E,"Suministro de electricidad, gas y agua"
 4011,E,351130,D,4011,E,E,E,"Suministro de electricidad, gas y agua"
 4011,E,351190,D,4011,E,E,E,"Suministro de electricidad, gas y agua"
 4012,E,351201,D,4012,E,E,E,"Suministro de electricidad, gas y agua"
-5119,G,351310,D,5119,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5119,G,461031,G,461031,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5119,G,461032,G,461032,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5119,G,461039,G,461039,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5119,G,461040,G,461040,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5119,G,461091,G,461091,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5119,G,461092,G,461092,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5119,G,461093,G,461093,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5119,G,461094,G,461094,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5119,G,461095,G,461095,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5119,G,461099,G,461099,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+5119,G,351310,D,5119,G,G,G,Comercio al por mayor y al por menor
+5119,G,461031,G,461031,G,G,G,Comercio al por mayor y al por menor
+5119,G,461032,G,461032,G,G,G,Comercio al por mayor y al por menor
+5119,G,461039,G,461039,G,G,G,Comercio al por mayor y al por menor
+5119,G,461040,G,461040,G,G,G,Comercio al por mayor y al por menor
+5119,G,461091,G,461091,G,G,G,Comercio al por mayor y al por menor
+5119,G,461092,G,461092,G,G,G,Comercio al por mayor y al por menor
+5119,G,461093,G,461093,G,G,G,Comercio al por mayor y al por menor
+5119,G,461094,G,461094,G,G,G,Comercio al por mayor y al por menor
+5119,G,461095,G,461095,G,G,G,Comercio al por mayor y al por menor
+5119,G,461099,G,461099,G,G,G,Comercio al por mayor y al por menor
 4013,E,351320,D,4013,E,E,E,"Suministro de electricidad, gas y agua"
 4020,E,352010,D,4020,E,E,E,"Suministro de electricidad, gas y agua"
 4020,E,352020,D,4020,E,E,E,"Suministro de electricidad, gas y agua"
@@ -421,10 +421,10 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 4531,F,432190,F,4531,F,F,F,Construcción
 4531,F,432910,F,4531,F,F,F,Construcción
 4531,F,422200,F,4531,F,F,F,Construcción
-7010,K,681010,L,7010,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7010,K,681020,L,7010,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7010,K,681098,L,7010,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7010,K,681099,L,7010,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+7010,K,681010,L,7010,K,K_70,K_70,Servicios inmobiliarios
+7010,K,681020,L,7010,K,K_70,K_70,Servicios inmobiliarios
+7010,K,681098,L,7010,K,K_70,K_70,Servicios inmobiliarios
+7010,K,681099,L,7010,K,K_70,K_70,Servicios inmobiliarios
 4539,F,432990,F,4539,F,F,F,Construcción
 4539,F,439990,F,4539,F,F,F,Construcción
 4511,F,431100,F,4511,F,F,F,Construcción
@@ -437,209 +437,209 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 4543,F,433030,F,4543,F,F,F,Construcción
 4544,F,433040,F,4544,F,F,F,Construcción
 4549,F,433090,F,4549,F,F,F,Construcción
-5011,G,451110,G,451110,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5011,G,451190,G,451190,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5012,G,451210,G,451210,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5012,G,451290,G,451290,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5020,G,452101,G,452101,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5020,G,452210,G,452210,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5020,G,452220,G,452220,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5020,G,452300,G,452300,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5020,G,452401,G,452401,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5020,G,452500,G,452500,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5020,G,452600,G,452600,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5020,G,452700,G,452700,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5020,G,452800,G,452800,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5020,G,452910,G,452910,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5020,G,452990,G,452990,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5031,G,453100,G,453100,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5032,G,453210,G,453210,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5032,G,453220,G,453220,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5032,G,453291,G,453291,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5032,G,453292,G,453292,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5040,G,454010,G,454010,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5040,G,454020,G,454020,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5111,G,461011,G,461011,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5111,G,461012,G,461012,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5111,G,461013,G,461013,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5111,G,461019,G,461019,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5111,G,461021,G,461021,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5111,G,461022,G,461022,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5111,G,461029,G,461029,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463111,G,463111,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463112,G,463112,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463121,G,463121,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463129,G,463129,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463130,G,463130,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463140,G,463140,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463151,G,463151,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463152,G,463152,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463153,G,463153,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463154,G,463154,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463159,G,463159,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463160,G,463160,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463170,G,463170,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463191,G,463191,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5122,G,463199,G,463199,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5123,G,463211,G,463211,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5123,G,463212,G,463212,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5123,G,463219,G,463219,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5123,G,463220,G,463220,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5124,G,463300,G,463300,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464111,G,464111,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464112,G,464112,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464113,G,464113,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464114,G,464114,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464119,G,464119,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464121,G,464121,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464122,G,464122,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464129,G,464129,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464130,G,464130,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464141,G,464141,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464142,G,464142,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464149,G,464149,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5131,G,464150,G,464150,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5132,G,464211,G,464211,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5132,G,464212,G,464212,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5132,G,464221,G,464221,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5132,G,464222,G,464222,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5132,G,464223,G,464223,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5133,G,464310,G,464310,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5133,G,464320,G,464320,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5133,G,464330,G,464330,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5133,G,464340,G,464340,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5134,G,464410,G,464410,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5134,G,464420,G,464420,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5135,G,464501,G,464501,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5135,G,464502,G,464502,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5135,G,464610,G,464610,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5135,G,464620,G,464620,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5135,G,464631,G,464631,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5135,G,464632,G,464632,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5135,G,464910,G,464910,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5139,G,463180,G,463180,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5139,G,464920,G,464920,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5139,G,464930,G,464930,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5139,G,464940,G,464940,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5139,G,464950,G,464950,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5139,G,464991,G,464991,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5139,G,464999,G,464999,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5139,G,466370,G,466370,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5159,G,465100,G,465100,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5159,G,465210,G,465210,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5159,G,465220,G,465220,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5159,G,465910,G,465910,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5159,G,465920,G,465920,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5159,G,465930,G,465930,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5159,G,465990,G,465990,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5159,G,474010,G,474010,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5151,G,465310,G,465310,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5151,G,465320,G,465320,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5151,G,465330,G,465330,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5151,G,465340,G,465340,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5151,G,465350,G,465350,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5151,G,465360,G,465360,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5151,G,465390,G,465390,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5152,G,465400,G,465400,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5153,G,465500,G,465500,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5154,G,465610,G,465610,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5154,G,465690,G,465690,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5141,G,466110,G,466110,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5141,G,466121,G,466121,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5141,G,466129,G,466129,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5142,G,466200,G,466200,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5143,G,466310,G,466310,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5143,G,466320,G,466320,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5143,G,466330,G,466330,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5143,G,466340,G,466340,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5143,G,466350,G,466350,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5143,G,466360,G,466360,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5143,G,466391,G,466391,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5143,G,466399,G,466399,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5149,G,466910,G,466910,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5149,G,466920,G,466920,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5149,G,466931,G,466931,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5149,G,466932,G,466932,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5149,G,466939,G,466939,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5149,G,466940,G,466940,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5149,G,466990,G,466990,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5190,G,469010,G,469010,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5190,G,469090,G,469090,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5211,G,471110,G,471110,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5211,G,471120,G,471120,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5211,G,471130,G,471130,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5211,G,471190,G,471190,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5212,G,471900,G,471900,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5221,G,472111,G,472111,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5221,G,472112,G,472112,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5221,G,472120,G,472120,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5222,G,472130,G,472130,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5222,G,472140,G,472140,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5229,G,472150,G,472150,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5229,G,472190,G,472190,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5229,G,472300,G,472300,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5223,G,472160,G,472160,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5224,G,472171,G,472171,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5224,G,472172,G,472172,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5225,G,472200,G,472200,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5050,G,473000,G,473000,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5239,G,474020,G,474020,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5239,G,476310,G,476310,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5239,G,476320,G,476320,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5239,G,476400,G,476400,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5239,G,477140,G,477140,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5239,G,477440,G,477440,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5239,G,477450,G,477450,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5239,G,477460,G,477460,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5239,G,477470,G,477470,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5239,G,477480,G,477480,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5239,G,477490,G,477490,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5239,G,477840,G,477840,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5235,G,475300,G,475300,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5235,G,475410,G,475410,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5235,G,475420,G,475420,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5235,G,475430,G,475430,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5235,G,475440,G,475440,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5235,G,475490,G,475490,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5235,G,476200,G,476200,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5232,G,475110,G,475110,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5232,G,475120,G,475120,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5232,G,475190,G,475190,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5236,G,475210,G,475210,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5236,G,475220,G,475220,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5236,G,475230,G,475230,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5236,G,475240,G,475240,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5236,G,475250,G,475250,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5236,G,475260,G,475260,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5236,G,475270,G,475270,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5236,G,475290,G,475290,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5238,G,476110,G,476110,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5238,G,476120,G,476120,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5238,G,476130,G,476130,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5233,G,477110,G,477110,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5233,G,477120,G,477120,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5233,G,477130,G,477130,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5233,G,477150,G,477150,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5233,G,477190,G,477190,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5234,G,477210,G,477210,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5234,G,477220,G,477220,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5234,G,477230,G,477230,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5234,G,477290,G,477290,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5231,G,477310,G,477310,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5231,G,477320,G,477320,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5231,G,477330,G,477330,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5237,G,477410,G,477410,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5237,G,477420,G,477420,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5237,G,477430,G,477430,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5241,G,477810,G,477810,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5242,G,477820,G,477820,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5249,G,477830,G,477830,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5249,G,477890,G,477890,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5252,G,478010,G,478010,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5252,G,478090,G,478090,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5251,G,479101,G,479101,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5251,G,479109,G,479109,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5259,G,479900,G,479900,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+5011,G,451110,G,451110,G,G,G,Comercio al por mayor y al por menor
+5011,G,451190,G,451190,G,G,G,Comercio al por mayor y al por menor
+5012,G,451210,G,451210,G,G,G,Comercio al por mayor y al por menor
+5012,G,451290,G,451290,G,G,G,Comercio al por mayor y al por menor
+5020,G,452101,G,452101,G,G,G,Comercio al por mayor y al por menor
+5020,G,452210,G,452210,G,G,G,Comercio al por mayor y al por menor
+5020,G,452220,G,452220,G,G,G,Comercio al por mayor y al por menor
+5020,G,452300,G,452300,G,G,G,Comercio al por mayor y al por menor
+5020,G,452401,G,452401,G,G,G,Comercio al por mayor y al por menor
+5020,G,452500,G,452500,G,G,G,Comercio al por mayor y al por menor
+5020,G,452600,G,452600,G,G,G,Comercio al por mayor y al por menor
+5020,G,452700,G,452700,G,G,G,Comercio al por mayor y al por menor
+5020,G,452800,G,452800,G,G,G,Comercio al por mayor y al por menor
+5020,G,452910,G,452910,G,G,G,Comercio al por mayor y al por menor
+5020,G,452990,G,452990,G,G,G,Comercio al por mayor y al por menor
+5031,G,453100,G,453100,G,G,G,Comercio al por mayor y al por menor
+5032,G,453210,G,453210,G,G,G,Comercio al por mayor y al por menor
+5032,G,453220,G,453220,G,G,G,Comercio al por mayor y al por menor
+5032,G,453291,G,453291,G,G,G,Comercio al por mayor y al por menor
+5032,G,453292,G,453292,G,G,G,Comercio al por mayor y al por menor
+5040,G,454010,G,454010,G,G,G,Comercio al por mayor y al por menor
+5040,G,454020,G,454020,G,G,G,Comercio al por mayor y al por menor
+5111,G,461011,G,461011,G,G,G,Comercio al por mayor y al por menor
+5111,G,461012,G,461012,G,G,G,Comercio al por mayor y al por menor
+5111,G,461013,G,461013,G,G,G,Comercio al por mayor y al por menor
+5111,G,461019,G,461019,G,G,G,Comercio al por mayor y al por menor
+5111,G,461021,G,461021,G,G,G,Comercio al por mayor y al por menor
+5111,G,461022,G,461022,G,G,G,Comercio al por mayor y al por menor
+5111,G,461029,G,461029,G,G,G,Comercio al por mayor y al por menor
+5122,G,463111,G,463111,G,G,G,Comercio al por mayor y al por menor
+5122,G,463112,G,463112,G,G,G,Comercio al por mayor y al por menor
+5122,G,463121,G,463121,G,G,G,Comercio al por mayor y al por menor
+5122,G,463129,G,463129,G,G,G,Comercio al por mayor y al por menor
+5122,G,463130,G,463130,G,G,G,Comercio al por mayor y al por menor
+5122,G,463140,G,463140,G,G,G,Comercio al por mayor y al por menor
+5122,G,463151,G,463151,G,G,G,Comercio al por mayor y al por menor
+5122,G,463152,G,463152,G,G,G,Comercio al por mayor y al por menor
+5122,G,463153,G,463153,G,G,G,Comercio al por mayor y al por menor
+5122,G,463154,G,463154,G,G,G,Comercio al por mayor y al por menor
+5122,G,463159,G,463159,G,G,G,Comercio al por mayor y al por menor
+5122,G,463160,G,463160,G,G,G,Comercio al por mayor y al por menor
+5122,G,463170,G,463170,G,G,G,Comercio al por mayor y al por menor
+5122,G,463191,G,463191,G,G,G,Comercio al por mayor y al por menor
+5122,G,463199,G,463199,G,G,G,Comercio al por mayor y al por menor
+5123,G,463211,G,463211,G,G,G,Comercio al por mayor y al por menor
+5123,G,463212,G,463212,G,G,G,Comercio al por mayor y al por menor
+5123,G,463219,G,463219,G,G,G,Comercio al por mayor y al por menor
+5123,G,463220,G,463220,G,G,G,Comercio al por mayor y al por menor
+5124,G,463300,G,463300,G,G,G,Comercio al por mayor y al por menor
+5131,G,464111,G,464111,G,G,G,Comercio al por mayor y al por menor
+5131,G,464112,G,464112,G,G,G,Comercio al por mayor y al por menor
+5131,G,464113,G,464113,G,G,G,Comercio al por mayor y al por menor
+5131,G,464114,G,464114,G,G,G,Comercio al por mayor y al por menor
+5131,G,464119,G,464119,G,G,G,Comercio al por mayor y al por menor
+5131,G,464121,G,464121,G,G,G,Comercio al por mayor y al por menor
+5131,G,464122,G,464122,G,G,G,Comercio al por mayor y al por menor
+5131,G,464129,G,464129,G,G,G,Comercio al por mayor y al por menor
+5131,G,464130,G,464130,G,G,G,Comercio al por mayor y al por menor
+5131,G,464141,G,464141,G,G,G,Comercio al por mayor y al por menor
+5131,G,464142,G,464142,G,G,G,Comercio al por mayor y al por menor
+5131,G,464149,G,464149,G,G,G,Comercio al por mayor y al por menor
+5131,G,464150,G,464150,G,G,G,Comercio al por mayor y al por menor
+5132,G,464211,G,464211,G,G,G,Comercio al por mayor y al por menor
+5132,G,464212,G,464212,G,G,G,Comercio al por mayor y al por menor
+5132,G,464221,G,464221,G,G,G,Comercio al por mayor y al por menor
+5132,G,464222,G,464222,G,G,G,Comercio al por mayor y al por menor
+5132,G,464223,G,464223,G,G,G,Comercio al por mayor y al por menor
+5133,G,464310,G,464310,G,G,G,Comercio al por mayor y al por menor
+5133,G,464320,G,464320,G,G,G,Comercio al por mayor y al por menor
+5133,G,464330,G,464330,G,G,G,Comercio al por mayor y al por menor
+5133,G,464340,G,464340,G,G,G,Comercio al por mayor y al por menor
+5134,G,464410,G,464410,G,G,G,Comercio al por mayor y al por menor
+5134,G,464420,G,464420,G,G,G,Comercio al por mayor y al por menor
+5135,G,464501,G,464501,G,G,G,Comercio al por mayor y al por menor
+5135,G,464502,G,464502,G,G,G,Comercio al por mayor y al por menor
+5135,G,464610,G,464610,G,G,G,Comercio al por mayor y al por menor
+5135,G,464620,G,464620,G,G,G,Comercio al por mayor y al por menor
+5135,G,464631,G,464631,G,G,G,Comercio al por mayor y al por menor
+5135,G,464632,G,464632,G,G,G,Comercio al por mayor y al por menor
+5135,G,464910,G,464910,G,G,G,Comercio al por mayor y al por menor
+5139,G,463180,G,463180,G,G,G,Comercio al por mayor y al por menor
+5139,G,464920,G,464920,G,G,G,Comercio al por mayor y al por menor
+5139,G,464930,G,464930,G,G,G,Comercio al por mayor y al por menor
+5139,G,464940,G,464940,G,G,G,Comercio al por mayor y al por menor
+5139,G,464950,G,464950,G,G,G,Comercio al por mayor y al por menor
+5139,G,464991,G,464991,G,G,G,Comercio al por mayor y al por menor
+5139,G,464999,G,464999,G,G,G,Comercio al por mayor y al por menor
+5139,G,466370,G,466370,G,G,G,Comercio al por mayor y al por menor
+5159,G,465100,G,465100,G,G,G,Comercio al por mayor y al por menor
+5159,G,465210,G,465210,G,G,G,Comercio al por mayor y al por menor
+5159,G,465220,G,465220,G,G,G,Comercio al por mayor y al por menor
+5159,G,465910,G,465910,G,G,G,Comercio al por mayor y al por menor
+5159,G,465920,G,465920,G,G,G,Comercio al por mayor y al por menor
+5159,G,465930,G,465930,G,G,G,Comercio al por mayor y al por menor
+5159,G,465990,G,465990,G,G,G,Comercio al por mayor y al por menor
+5159,G,474010,G,474010,G,G,G,Comercio al por mayor y al por menor
+5151,G,465310,G,465310,G,G,G,Comercio al por mayor y al por menor
+5151,G,465320,G,465320,G,G,G,Comercio al por mayor y al por menor
+5151,G,465330,G,465330,G,G,G,Comercio al por mayor y al por menor
+5151,G,465340,G,465340,G,G,G,Comercio al por mayor y al por menor
+5151,G,465350,G,465350,G,G,G,Comercio al por mayor y al por menor
+5151,G,465360,G,465360,G,G,G,Comercio al por mayor y al por menor
+5151,G,465390,G,465390,G,G,G,Comercio al por mayor y al por menor
+5152,G,465400,G,465400,G,G,G,Comercio al por mayor y al por menor
+5153,G,465500,G,465500,G,G,G,Comercio al por mayor y al por menor
+5154,G,465610,G,465610,G,G,G,Comercio al por mayor y al por menor
+5154,G,465690,G,465690,G,G,G,Comercio al por mayor y al por menor
+5141,G,466110,G,466110,G,G,G,Comercio al por mayor y al por menor
+5141,G,466121,G,466121,G,G,G,Comercio al por mayor y al por menor
+5141,G,466129,G,466129,G,G,G,Comercio al por mayor y al por menor
+5142,G,466200,G,466200,G,G,G,Comercio al por mayor y al por menor
+5143,G,466310,G,466310,G,G,G,Comercio al por mayor y al por menor
+5143,G,466320,G,466320,G,G,G,Comercio al por mayor y al por menor
+5143,G,466330,G,466330,G,G,G,Comercio al por mayor y al por menor
+5143,G,466340,G,466340,G,G,G,Comercio al por mayor y al por menor
+5143,G,466350,G,466350,G,G,G,Comercio al por mayor y al por menor
+5143,G,466360,G,466360,G,G,G,Comercio al por mayor y al por menor
+5143,G,466391,G,466391,G,G,G,Comercio al por mayor y al por menor
+5143,G,466399,G,466399,G,G,G,Comercio al por mayor y al por menor
+5149,G,466910,G,466910,G,G,G,Comercio al por mayor y al por menor
+5149,G,466920,G,466920,G,G,G,Comercio al por mayor y al por menor
+5149,G,466931,G,466931,G,G,G,Comercio al por mayor y al por menor
+5149,G,466932,G,466932,G,G,G,Comercio al por mayor y al por menor
+5149,G,466939,G,466939,G,G,G,Comercio al por mayor y al por menor
+5149,G,466940,G,466940,G,G,G,Comercio al por mayor y al por menor
+5149,G,466990,G,466990,G,G,G,Comercio al por mayor y al por menor
+5190,G,469010,G,469010,G,G,G,Comercio al por mayor y al por menor
+5190,G,469090,G,469090,G,G,G,Comercio al por mayor y al por menor
+5211,G,471110,G,471110,G,G,G,Comercio al por mayor y al por menor
+5211,G,471120,G,471120,G,G,G,Comercio al por mayor y al por menor
+5211,G,471130,G,471130,G,G,G,Comercio al por mayor y al por menor
+5211,G,471190,G,471190,G,G,G,Comercio al por mayor y al por menor
+5212,G,471900,G,471900,G,G,G,Comercio al por mayor y al por menor
+5221,G,472111,G,472111,G,G,G,Comercio al por mayor y al por menor
+5221,G,472112,G,472112,G,G,G,Comercio al por mayor y al por menor
+5221,G,472120,G,472120,G,G,G,Comercio al por mayor y al por menor
+5222,G,472130,G,472130,G,G,G,Comercio al por mayor y al por menor
+5222,G,472140,G,472140,G,G,G,Comercio al por mayor y al por menor
+5229,G,472150,G,472150,G,G,G,Comercio al por mayor y al por menor
+5229,G,472190,G,472190,G,G,G,Comercio al por mayor y al por menor
+5229,G,472300,G,472300,G,G,G,Comercio al por mayor y al por menor
+5223,G,472160,G,472160,G,G,G,Comercio al por mayor y al por menor
+5224,G,472171,G,472171,G,G,G,Comercio al por mayor y al por menor
+5224,G,472172,G,472172,G,G,G,Comercio al por mayor y al por menor
+5225,G,472200,G,472200,G,G,G,Comercio al por mayor y al por menor
+5050,G,473000,G,473000,G,G,G,Comercio al por mayor y al por menor
+5239,G,474020,G,474020,G,G,G,Comercio al por mayor y al por menor
+5239,G,476310,G,476310,G,G,G,Comercio al por mayor y al por menor
+5239,G,476320,G,476320,G,G,G,Comercio al por mayor y al por menor
+5239,G,476400,G,476400,G,G,G,Comercio al por mayor y al por menor
+5239,G,477140,G,477140,G,G,G,Comercio al por mayor y al por menor
+5239,G,477440,G,477440,G,G,G,Comercio al por mayor y al por menor
+5239,G,477450,G,477450,G,G,G,Comercio al por mayor y al por menor
+5239,G,477460,G,477460,G,G,G,Comercio al por mayor y al por menor
+5239,G,477470,G,477470,G,G,G,Comercio al por mayor y al por menor
+5239,G,477480,G,477480,G,G,G,Comercio al por mayor y al por menor
+5239,G,477490,G,477490,G,G,G,Comercio al por mayor y al por menor
+5239,G,477840,G,477840,G,G,G,Comercio al por mayor y al por menor
+5235,G,475300,G,475300,G,G,G,Comercio al por mayor y al por menor
+5235,G,475410,G,475410,G,G,G,Comercio al por mayor y al por menor
+5235,G,475420,G,475420,G,G,G,Comercio al por mayor y al por menor
+5235,G,475430,G,475430,G,G,G,Comercio al por mayor y al por menor
+5235,G,475440,G,475440,G,G,G,Comercio al por mayor y al por menor
+5235,G,475490,G,475490,G,G,G,Comercio al por mayor y al por menor
+5235,G,476200,G,476200,G,G,G,Comercio al por mayor y al por menor
+5232,G,475110,G,475110,G,G,G,Comercio al por mayor y al por menor
+5232,G,475120,G,475120,G,G,G,Comercio al por mayor y al por menor
+5232,G,475190,G,475190,G,G,G,Comercio al por mayor y al por menor
+5236,G,475210,G,475210,G,G,G,Comercio al por mayor y al por menor
+5236,G,475220,G,475220,G,G,G,Comercio al por mayor y al por menor
+5236,G,475230,G,475230,G,G,G,Comercio al por mayor y al por menor
+5236,G,475240,G,475240,G,G,G,Comercio al por mayor y al por menor
+5236,G,475250,G,475250,G,G,G,Comercio al por mayor y al por menor
+5236,G,475260,G,475260,G,G,G,Comercio al por mayor y al por menor
+5236,G,475270,G,475270,G,G,G,Comercio al por mayor y al por menor
+5236,G,475290,G,475290,G,G,G,Comercio al por mayor y al por menor
+5238,G,476110,G,476110,G,G,G,Comercio al por mayor y al por menor
+5238,G,476120,G,476120,G,G,G,Comercio al por mayor y al por menor
+5238,G,476130,G,476130,G,G,G,Comercio al por mayor y al por menor
+5233,G,477110,G,477110,G,G,G,Comercio al por mayor y al por menor
+5233,G,477120,G,477120,G,G,G,Comercio al por mayor y al por menor
+5233,G,477130,G,477130,G,G,G,Comercio al por mayor y al por menor
+5233,G,477150,G,477150,G,G,G,Comercio al por mayor y al por menor
+5233,G,477190,G,477190,G,G,G,Comercio al por mayor y al por menor
+5234,G,477210,G,477210,G,G,G,Comercio al por mayor y al por menor
+5234,G,477220,G,477220,G,G,G,Comercio al por mayor y al por menor
+5234,G,477230,G,477230,G,G,G,Comercio al por mayor y al por menor
+5234,G,477290,G,477290,G,G,G,Comercio al por mayor y al por menor
+5231,G,477310,G,477310,G,G,G,Comercio al por mayor y al por menor
+5231,G,477320,G,477320,G,G,G,Comercio al por mayor y al por menor
+5231,G,477330,G,477330,G,G,G,Comercio al por mayor y al por menor
+5237,G,477410,G,477410,G,G,G,Comercio al por mayor y al por menor
+5237,G,477420,G,477420,G,G,G,Comercio al por mayor y al por menor
+5237,G,477430,G,477430,G,G,G,Comercio al por mayor y al por menor
+5241,G,477810,G,477810,G,G,G,Comercio al por mayor y al por menor
+5242,G,477820,G,477820,G,G,G,Comercio al por mayor y al por menor
+5249,G,477830,G,477830,G,G,G,Comercio al por mayor y al por menor
+5249,G,477890,G,477890,G,G,G,Comercio al por mayor y al por menor
+5252,G,478010,G,478010,G,G,G,Comercio al por mayor y al por menor
+5252,G,478090,G,478090,G,G,G,Comercio al por mayor y al por menor
+5251,G,479101,G,479101,G,G,G,Comercio al por mayor y al por menor
+5251,G,479109,G,479109,G,G,G,Comercio al por mayor y al por menor
+5259,G,479900,G,479900,G,G,G,Comercio al por mayor y al por menor
 6010,I,491110,H,6010,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
 6010,I,491120,H,6010,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
 6010,I,491200,H,6010,I,I_60,I_60,Transporte ferroviario y automotor y por tuberias
@@ -714,9 +714,9 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 5522,H,561040,I,5522,H,H_552,H_552,Servicios de expendio de comidas y bebidas
 5522,H,562010,I,5522,H,H_552,H_552,Servicios de expendio de comidas y bebidas
 5522,H,562099,I,5522,H,H_552,H_552,Servicios de expendio de comidas y bebidas
-7240,K,631120,J,7240,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7240,K,631190,J,7240,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7240,K,631200,J,7240,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+7240,K,631120,J,7240,K,K_72,K_72,Actividades de inform�tica
+7240,K,631190,J,7240,K,K_72,K_72,Actividades de inform�tica
+7240,K,631200,J,7240,K,K_72,K_72,Actividades de inform�tica
 2212,D,581300,J,2212,D,D_22,D_22,Edición
 2219,D,581200,J,2219,D,D_22,D_22,Edición
 2219,D,581900,J,2219,D,D_22,D_22,Edición
@@ -743,25 +743,25 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 6420,I,602900,J,6420,I,I_64,I_64,Correos y telecomunicaciones
 9213,O,601000,J,9213,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
 9213,O,602320,J,9213,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-7220,K,620100,J,7220,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7210,K,620200,J,7210,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7210,K,620300,J,7210,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7290,K,620900,J,7290,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7230,K,631110,J,7230,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+7220,K,620100,J,7220,K,K_72,K_72,Actividades de inform�tica
+7210,K,620200,J,7210,K,K_72,K_72,Actividades de inform�tica
+7210,K,620300,J,7210,K,K_72,K_72,Actividades de inform�tica
+7290,K,620900,J,7290,K,K_72,K_72,Actividades de inform�tica
+7230,K,631110,J,7230,K,K_72,K_72,Actividades de inform�tica
 9220,O,639100,J,9220,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
 9220,O,639900,J,9220,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-7499,K,99000,B,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7499,K,109000,C,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7499,K,663000,K,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7499,K,741000,M,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7499,K,749001,M,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7499,K,749009,M,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7499,K,774000,N,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7499,K,822000,N,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7499,K,823000,N,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7499,K,829100,N,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7499,K,829900,N,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7499,K,821100,N,7499,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+7499,K,99000,B,99000,K,K_99,K_99,Servicios de apoyo para la miner�a
+7499,K,109000,C,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7499,K,663000,K,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7499,K,741000,M,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7499,K,749001,M,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7499,K,749009,M,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7499,K,774000,N,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7499,K,822000,N,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7499,K,823000,N,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7499,K,829100,N,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7499,K,829900,N,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7499,K,821100,N,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
 6511,J,641100,K,6511,J,J,J,Intermediación financiera
 6521,J,641910,K,6521,J,J,J,Intermediación financiera
 6521,J,641920,K,6521,J,J,J,Intermediación financiera
@@ -786,8 +786,8 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 6610,J,651220,K,6610,J,J,J,Intermediación financiera
 6610,J,651320,K,6610,J,J,J,Intermediación financiera
 6610,J,652000,K,6610,J,J,J,Intermediación financiera
-7530,L,843000,O,7530,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-7530,L,651310,K,7530,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+7530,L,843000,O,7530,L,L,L,Administración pública y defensa
+7530,L,651310,K,7530,L,L,L,Administración pública y defensa
 6620,J,653000,K,6620,J,J,J,Intermediación financiera
 6711,J,661111,K,6711,J,J,J,Intermediación financiera
 6711,J,661121,K,6711,J,J,J,Intermediación financiera
@@ -801,66 +801,66 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 6721,J,662010,K,6721,J,J,J,Intermediación financiera
 6721,J,662020,K,6721,J,J,J,Intermediación financiera
 6721,J,662090,K,6721,J,J,J,Intermediación financiera
-7020,K,682010,L,7020,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7020,K,682091,L,7020,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7020,K,682099,L,7020,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7020,K,811000,N,7020,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7020,K,949920,S,7020,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7410,K,691001,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7410,K,691002,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7410,K,692000,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7410,K,702010,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7410,K,702091,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7410,K,702092,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7410,K,702099,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7410,K,732000,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7410,K,749003,M,7410,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7422,K,712000,M,7422,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7492,K,801010,N,7492,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7492,K,801020,N,7492,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7492,K,801090,N,7492,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7311,K,721010,M,7311,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7312,K,721020,M,7312,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7313,K,721030,M,7313,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7319,K,721090,M,7319,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7321,K,722010,M,7321,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7322,K,722020,M,7322,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7430,K,731001,M,7430,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7430,K,731009,M,7430,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7494,K,742000,M,7494,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+7020,K,682010,L,7020,K,K_70,K_70,Servicios inmobiliarios
+7020,K,682091,L,7020,K,K_70,K_70,Servicios inmobiliarios
+7020,K,682099,L,7020,K,K_70,K_70,Servicios inmobiliarios
+7020,K,811000,N,7020,K,K_70,K_70,Servicios inmobiliarios
+7020,K,949920,S,7020,K,K_70,K_70,Servicios inmobiliarios
+7410,K,691001,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7410,K,691002,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7410,K,692000,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7410,K,702010,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7410,K,702091,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7410,K,702092,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7410,K,702099,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7410,K,732000,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7410,K,749003,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7422,K,712000,M,7422,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7492,K,801010,N,7492,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7492,K,801020,N,7492,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7492,K,801090,N,7492,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7311,K,721010,M,7311,K,K_73,K_73,Investigaci�n y desarrollo
+7312,K,721020,M,7312,K,K_73,K_73,Investigaci�n y desarrollo
+7313,K,721030,M,7313,K,K_73,K_73,Investigaci�n y desarrollo
+7319,K,721090,M,7319,K,K_73,K_73,Investigaci�n y desarrollo
+7321,K,722010,M,7321,K,K_73,K_73,Investigaci�n y desarrollo
+7322,K,722020,M,7322,K,K_73,K_73,Investigaci�n y desarrollo
+7430,K,731001,M,7430,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7430,K,731009,M,7430,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7494,K,742000,M,7494,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
 8520,N,750000,M,8520,N,N,N,Servicios sociales y de salud
-7111,K,771110,N,7111,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7111,K,771190,N,7111,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7111,K,771290,N,7111,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7112,K,771210,N,7112,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7113,K,771220,N,7113,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7130,K,772010,N,7130,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7130,K,772091,N,7130,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7130,K,772099,N,7130,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7120,K,773010,N,7120,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7120,K,773020,N,7120,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7120,K,773030,N,7120,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7120,K,773040,N,7120,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7120,K,773090,N,7120,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7491,K,780000,N,7491,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
+7111,K,771110,N,7111,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7111,K,771190,N,7111,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7111,K,771290,N,7111,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7112,K,771210,N,7112,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7113,K,771220,N,7113,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7130,K,772010,N,7130,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7130,K,772091,N,7130,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7130,K,772099,N,7130,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7120,K,773010,N,7120,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7120,K,773020,N,7120,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7120,K,773030,N,7120,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7120,K,773040,N,7120,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7120,K,773090,N,7120,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
+7491,K,780000,N,7491,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
 6340,I,791100,N,6340,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
 6340,I,791200,N,6340,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
 6340,I,791901,N,6340,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
 6340,I,791909,N,6340,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-7493,K,812010,N,7493,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7493,K,812020,N,7493,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7493,K,812090,N,7493,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7496,K,821900,N,7496,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7495,K,829200,N,7495,K,K,K,"Actividades inmobiliarias, empresariales y de alquiler"
-7511,L,841100,O,7511,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-7512,L,841200,O,7512,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-7513,L,841300,O,7513,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-7519,L,841900,O,7519,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-7521,L,842100,O,7521,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-7522,L,842200,O,7522,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-7524,L,842300,O,7524,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-7523,L,842400,O,7523,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
-7525,L,842500,O,7525,L,L,L,Administración pública y defensa; planes de seguridad social de afiliación obligatoria
+7493,K,812010,N,7493,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7493,K,812020,N,7493,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7493,K,812090,N,7493,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7496,K,821900,N,7496,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7495,K,829200,N,7495,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7511,L,841100,O,7511,L,L,L,Administración pública y defensa
+7512,L,841200,O,7512,L,L,L,Administración pública y defensa
+7513,L,841300,O,7513,L,L,L,Administración pública y defensa
+7519,L,841900,O,7519,L,L,L,Administración pública y defensa
+7521,L,842100,O,7521,L,L,L,Administración pública y defensa
+7522,L,842200,O,7522,L,L,L,Administración pública y defensa
+7524,L,842300,O,7524,L,L,L,Administración pública y defensa
+7523,L,842400,O,7523,L,L,L,Administración pública y defensa
+7525,L,842500,O,7525,L,L,L,Administración pública y defensa
 8530,N,851010,P,8530,N,N,N,Servicios sociales y de salud
 8530,N,855000,P,8530,N,N,N,Servicios sociales y de salud
 8530,N,870210,Q,8530,N,N,N,Servicios sociales y de salud
@@ -923,20 +923,20 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 9249,O,920009,R,9249,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
 9249,O,939020,R,9249,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
 9249,O,939090,R,9249,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-5269,G,331101,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5269,G,331210,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5269,G,331220,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5269,G,331290,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5269,G,331301,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5269,G,331400,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5269,G,331900,C,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5269,G,951200,S,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5269,G,952300,S,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5269,G,952910,S,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5269,G,952920,S,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5269,G,952990,S,5269,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5262,G,952100,S,5262,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
-5261,G,952200,S,5261,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+5269,G,331101,C,5269,G,G,G,Comercio al por mayor y al por menor
+5269,G,331210,C,5269,G,G,G,Comercio al por mayor y al por menor
+5269,G,331220,C,5269,G,G,G,Comercio al por mayor y al por menor
+5269,G,331290,C,5269,G,G,G,Comercio al por mayor y al por menor
+5269,G,331301,C,5269,G,G,G,Comercio al por mayor y al por menor
+5269,G,331400,C,5269,G,G,G,Comercio al por mayor y al por menor
+5269,G,331900,C,5269,G,G,G,Comercio al por mayor y al por menor
+5269,G,951200,S,5269,G,G,G,Comercio al por mayor y al por menor
+5269,G,952300,S,5269,G,G,G,Comercio al por mayor y al por menor
+5269,G,952910,S,5269,G,G,G,Comercio al por mayor y al por menor
+5269,G,952920,S,5269,G,G,G,Comercio al por mayor y al por menor
+5269,G,952990,S,5269,G,G,G,Comercio al por mayor y al por menor
+5262,G,952100,S,5262,G,G,G,Comercio al por mayor y al por menor
+5261,G,952200,S,5261,G,G,G,Comercio al por mayor y al por menor
 9301,O,960101,S,9301,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
 9301,O,960102,S,9301,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
 9302,O,960201,S,9302,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
@@ -948,6 +948,6 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 9900,Q,990000,U,9900,Q,Q,Q,Organizaciones y órganos extraterritoriales
 2429,D,204000,C,2429,D,D_24,D_24,Productos químicos
 6350,I,523032,H,6350,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-5121,G,462110,G,462110,G,G,G,"Comercio al por mayor y al por menor; reparación de vehículos automotores, motocicletas, y efectos personales y enseres domésticos"
+5121,G,462110,G,462110,G,G,G,Comercio al por mayor y al por menor
 29_30_31_32_33,D,332000,C,29_30_31_32_33,D,D_29_30_31_32_33,D_29_30_31_32_33,D_29_30_31_32_33
 CONS,CONS,,,CONS,CONS,CONS,CONS,Consumo

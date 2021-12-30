@@ -1,47 +1,53 @@
-letra,desc
-A,"Agricultura, ganader铆a, caza y silvicultura"
-B,Pesca
-C,Explotaci贸n de minas y canteras
-D_15,Alimentos
-D_16,Tabaco
-D_17,Productos textiles
-D_18,Confecciones
-D_19,Cuero
-D_20,Madera
-D_21,Papel
-D_22,Edici贸n
-D_23,Productos de petr贸leo
-D_24,Productos qu铆micos
-D_25,Productos de caucho y pl谩stico
-D_26,Otros minerales no met谩licos
-D_27,Metales comunes
-D_28,Otros productos de metal
-D_29,Maquinaria y equipo
-D_29_30_31_32_33,D_29_30_31_32_33
-D_30,Maquinaria de oficina
-D_31,Aparatos el茅ctricos
-D_32,Radio y televisi贸n
-D_33,Instrumentos m茅dicos
-D_34,Automotores
-D_35,Otros equipo de transporte
-D_36,Muebles
-D_37,Reciclamiento de desperdicios y desechos
-E,"Suministro de electricidad, gas y agua"
-F,Construcci贸n
-G,"Comercio al por mayor y al por menor; reparaci贸n de veh铆culos automotores, motocicletas, y efectos personales y enseres dom茅sticos"
-H_551,"Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"
-H_552,Servicios de expendio de comidas y bebidas
-I_60,Transporte ferroviario y automotor y por tuberias
-I_61,Transporte mar铆timo y fluvial
-I_62,Transporte a茅reo de cargas y de pasajeros
-I_63,"Manipulaci贸n de carga, almacenamiento y dep贸sito"
-I_64,Correos y telecomunicaciones
-J,Intermediaci贸n financiera
-K,"Actividades inmobiliarias, empresariales y de alquiler"
-L,Administraci贸n p煤blica y defensa; planes de seguridad social de afiliaci贸n obligatoria
-M,Ense帽anza
-N,Servicios sociales y de salud
-O,"Otras actividades de servicios comunitarios, sociales y personales"
-P,Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores
-Q,Organizaciones y 贸rganos extraterritoriales
-CONS,Consumo
+letra;desc;
+A;Agricultura, ganader铆a, caza y silvicultura;
+B;Pesca;
+C;Explotaci贸n de minas y canteras;
+D_15;Alimentos;
+D_16;Tabaco;
+D_17;Productos textiles;
+D_18;Confecciones;
+D_19;Cuero;
+D_20;Madera;
+D_21;Papel;
+D_22;Edici贸n;
+D_23;Productos de petr贸leo;
+D_24;Productos qu铆micos;
+D_25;Productos de caucho y pl谩stico;
+D_26;Otros minerales no met谩licos;
+D_27;Metales comunes;
+D_28;Otros productos de metal;
+D_29;Maquinaria y equipo;
+D_29_30_31_32_33;D_29_30_31_32_33;
+D_30;Maquinaria de oficina;
+D_31;Aparatos el茅ctricos;
+D_32;Radio y televisi贸n;
+D_33;Instrumentos m茅dicos;
+D_34;Automotores;
+D_35;Otros equipo de transporte;
+D_36;Muebles;
+D_37;Reciclamiento de desperdicios y desechos;
+E;Suministro de electricidad, gas y agua;
+F;Construcci贸n;
+G;Comercio al por mayor y al por menor;
+H_551;Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal;
+H_552;Servicios de expendio de comidas y bebidas;
+I_60;Transporte ferroviario y automotor y por tuberias;
+I_61;Transporte mar铆timo y fluvial;
+I_62;Transporte a茅reo de cargas y de pasajeros;
+I_63;Manipulaci贸n de carga, almacenamiento y dep贸sito;
+I_64;Correos y telecomunicaciones;
+J;Intermediaci贸n financiera;
+K;Actividades inmobiliarias, empresariales y de alquiler;
+L;Administraci贸n p煤blica y defensa;
+M;Ense帽anza;
+N;Servicios sociales y de salud;
+O;Otras actividades de servicios comunitarios, sociales y personales;
+P;Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores;
+Q;Organizaciones y 贸rganos extraterritoriales;
+CONS;Consumo;
+K_70;Servicios inmobiliarios;
+K_71;Alquiler de equipo de transporte y de maquinaria;
+K_72;Actividades de inform醫ica;
+K_73;Investigaci髇 y desarrollo;
+K_74;Servicios jur韉icos, contables y otros servicios a empresas (sin miner韆);
+K_99;Servicios de apoyo para la miner韆; excepto para la extracci髇 de petr髄eo y gas natual

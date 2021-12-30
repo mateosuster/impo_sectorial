@@ -39,6 +39,8 @@ matriz_sisd_bk = pd.read_csv("../data/resultados/matriz_sisd.csv").set_index("si
 asign_pre_matriz= pd.read_csv("../data/resultados/asign_pre_matriz.csv")
 
 # CI
+# asign_pre_matriz_ci = pd.read_csv("../data/resultados/asign_pre_matriz_ci.csv")
+# matriz_sisd_ci = pd.read_csv("../data/resultados/matriz_sisd_ci.csv")
 
 
 ##########################
@@ -59,8 +61,8 @@ graficos(dic_propio, impo_tot_sec_ci, comercio_y_propio_ci,  ue_dest= "ci")
 # =============================================================================
 #                   Top 5 de importaciones de cada sector
 # =============================================================================
-top_5_impo = top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec, bien = "bk", n=5) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
-top_5_impo_ci = top_5(asign_pre_matriz_ci, ncm12_desc, ncm12_desc_mod, impo_tot_sec_ci,bien = "ci", n=5) # a veces rompe por la var HS12, pero se soluciona corriendo de nuevo el preprocesamiento
+top_5_impo = top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec, bien = "bk", n=5) 
+top_5_impo_ci = top_5(asign_pre_matriz_ci, ncm12_desc, ncm12_desc_mod, impo_tot_sec_ci,bien = "ci", n=5)
 
 
 asign_pre_matriz_ci[asign_pre_matriz_ci.sd == "P"]
