@@ -37,11 +37,12 @@ switch ( Sys.info()[['sysname']],
 
 #CLAE to CIIU_LETRA
 clae_ciiu_letra.propios.path <- paste0(data.folder,"/resultados/dic_clae_ciiu_propio.csv")
-clae_ciiu_letra <- fread(clae_ciiu_letra.propios.path, colClasses = c("character","character",
-                                                        "character","character",
-                                                        "character","character",
-                                                        "character"),
-                      select = c("clae6","propio_letra_2"))
+# clae_ciiu_letra <- fread(clae_ciiu_letra.propios.path, colClasses = c("character","character",
+#                                                         "character","character",
+#                                                         "character","character",
+#                                                         "character"),
+#                       select = c("clae6","propio_letra_2"))
+clae_ciiu_letra <- fread(clae_ciiu_letra.propios.path, select = c("clae6","propio_letra_2"))
 clae_ciiu_letra <- clae_ciiu_letra[ , clae6:=str_pad(clae6, 6, pad = "0")]
 clae_ciiu_letra <- clae_ciiu_letra[clae6!="000000",]
 
