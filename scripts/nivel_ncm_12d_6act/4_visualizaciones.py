@@ -46,26 +46,50 @@ matriz_sisd_ci = pd.read_csv("../data/resultados/matriz_sisd_ci.csv")
 ##########################
 # Resultados propios 
 ##########################
-impo_tot_sec, comercio_y_propio = impo_total(matriz_sisd_bk, dic_propio, sectores_desc= False, largo_actividad=30)
-impo_tot_sec_ci, comercio_y_propio_ci  = impo_total(matriz_sisd_ci,dic_propio, sectores_desc= False)
 
-x = pd.merge(matriz_sisd_bk.reset_index(),letras_ciiu, how = "outer", left_on= "si",  right_on="letra")
+
+# =============================================================================
+# Impo total 
+# =============================================================================
+impo_tot_sec, comercio_y_propio = impo_total(matriz_sisd_bk, dic_propio, sectores_desc= False, largo_actividad=30)
+impo_tot_sec_ci, comercio_y_propio_ci  = impo_total(matriz_sisd_ci,dic_propio, sectores_desc= False, largo_actividad=30)
 
 # graficos
 graficos(dic_propio, impo_tot_sec, comercio_y_propio, ue_dest = "bk", largo_actividad=30)
-graficos(dic_propio, impo_tot_sec_ci, comercio_y_propio_ci,  ue_dest= "ci")
+graficos(dic_propio, impo_tot_sec_ci, comercio_y_propio_ci,  ue_dest= "ci", largo_actividad=30)
+
+# =============================================================================
+#                   Top n de importaciones de cada sector
+# =============================================================================
+top_5_impo = top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec,dic_propio, bien = "bk", n=10) 
+top_5_impo_ci = top_5(asign_pre_matriz_ci, ncm12_desc,  impo_tot_sec_ci, dic_propio, bien = "ci", n=10)
+
+# =============================================================================
+#  top 50 de productos, los primeros 5 sectores importadores
+# =============================================================================
+
+top_productos = def_top_hs(asign_pre_matriz, ncm12_desc)
+top_sd_de_top_hs = def_top_sd_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_productos)
+
+# =============================================================================
+# 10 primeros cuit (razón social) importadores por sector
+# =============================================================================
+top_cuits = def_top_cuits(asign_pre_matriz, dic_propio)
+
+# =============================================================================
+# 10 primeros cuit importadores de los 50 productos más importados
+# =============================================================================
+top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_productos)
+
+
+
 
 
 
 # =============================================================================
-#                   Top 5 de importaciones de cada sector
+# # VIEJO
 # =============================================================================
-top_5_impo = top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec,dic_propio, bien = "bk", n=5) 
-top_5_impo_ci = top_5(asign_pre_matriz_ci, ncm12_desc, ncm12_desc_mod, impo_tot_sec_ci,bien = "ci", n=5)
-
-
-asign_pre_matriz_ci[asign_pre_matriz_ci.sd == "P"]
-
+######################
 #CUITS QUE IMPORTAN TOP HS6 Industria
 # top_industria = top_5_impo[top_5_impo["letra"]=="C"]["hs6"].iloc[[0,3]]
 # cuit_top_c = join_impo_clae[join_impo_clae["HS6"].isin(top_industria )].sort_values("valor",ascending=False)#["CUIT_IMPOR"].unique()

@@ -378,7 +378,8 @@ def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
                                              )
                    
     #join descripcion                                   
-    desc = pd.read_csv("../data/resultados/desc_letra_propio.csv", sep = ";").drop("Unnamed: 2",1)
+    # desc = pd.read_csv("../data/resultados/desc_letra_propio_2.csv")#.drop("Unnamed: 2",1)
+    desc = pd.read_csv("../data/resultados/desc_letra_propio_2.txt", sep = "\t", encoding="latin").drop("Unnamed: 2",1)
     ciiu_dig_let = pd.merge(ciiu_dig_let, desc, how= "left", left_on = "propio_letra_2", right_on = "letra")
     ciiu_dig_let.to_csv("../data/resultados/dic_clae_ciiu_propio.csv", index=False)
 

@@ -120,10 +120,10 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 1422,C,89300,B,1422,C,C,C,Explotación de minas y canteras
 1429,C,89900,B,1429,C,C,C,Explotación de minas y canteras
 1120,C,91000,B,1120,C,C,C,Explotación de minas y canteras
-7421,K,711001,M,7421,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7421,K,711002,M,7421,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7421,K,711003,M,7421,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7421,K,711009,M,7421,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7421,K,711001,M,7421,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7421,K,711002,M,7421,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7421,K,711003,M,7421,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7421,K,711009,M,7421,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
 1511,D,101011,C,1511,D,D_15,D_15,Alimentos
 1511,D,101012,C,1511,D,D_15,D_15,Alimentos
 1511,D,101013,C,1511,D,D_15,D_15,Alimentos
@@ -380,7 +380,7 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 3692,D,322001,C,3692,D,D_36,D_36,Muebles
 3693,D,323001,C,3693,D,D_36,D_36,Muebles
 2211,D,581100,J,2211,D,D_22,D_22,Edición
-7250,K,951100,S,7250,K,K_72,K_72,Actividades de inform�tica
+7250,K,951100,S,7250,K,K_72,K_72,Actividades de informática
 4011,E,351110,D,4011,E,E,E,"Suministro de electricidad, gas y agua"
 4011,E,351120,D,4011,E,E,E,"Suministro de electricidad, gas y agua"
 4011,E,351130,D,4011,E,E,E,"Suministro de electricidad, gas y agua"
@@ -714,9 +714,9 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 5522,H,561040,I,5522,H,H_552,H_552,Servicios de expendio de comidas y bebidas
 5522,H,562010,I,5522,H,H_552,H_552,Servicios de expendio de comidas y bebidas
 5522,H,562099,I,5522,H,H_552,H_552,Servicios de expendio de comidas y bebidas
-7240,K,631120,J,7240,K,K_72,K_72,Actividades de inform�tica
-7240,K,631190,J,7240,K,K_72,K_72,Actividades de inform�tica
-7240,K,631200,J,7240,K,K_72,K_72,Actividades de inform�tica
+7240,K,631120,J,7240,K,K_72,K_72,Actividades de informática
+7240,K,631190,J,7240,K,K_72,K_72,Actividades de informática
+7240,K,631200,J,7240,K,K_72,K_72,Actividades de informática
 2212,D,581300,J,2212,D,D_22,D_22,Edición
 2219,D,581200,J,2219,D,D_22,D_22,Edición
 2219,D,581900,J,2219,D,D_22,D_22,Edición
@@ -743,25 +743,25 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 6420,I,602900,J,6420,I,I_64,I_64,Correos y telecomunicaciones
 9213,O,601000,J,9213,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
 9213,O,602320,J,9213,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-7220,K,620100,J,7220,K,K_72,K_72,Actividades de inform�tica
-7210,K,620200,J,7210,K,K_72,K_72,Actividades de inform�tica
-7210,K,620300,J,7210,K,K_72,K_72,Actividades de inform�tica
-7290,K,620900,J,7290,K,K_72,K_72,Actividades de inform�tica
-7230,K,631110,J,7230,K,K_72,K_72,Actividades de inform�tica
+7220,K,620100,J,7220,K,K_72,K_72,Actividades de informática
+7210,K,620200,J,7210,K,K_72,K_72,Actividades de informática
+7210,K,620300,J,7210,K,K_72,K_72,Actividades de informática
+7290,K,620900,J,7290,K,K_72,K_72,Actividades de informática
+7230,K,631110,J,7230,K,K_72,K_72,Actividades de informática
 9220,O,639100,J,9220,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
 9220,O,639900,J,9220,O,O,O,"Otras actividades de servicios comunitarios, sociales y personales"
-7499,K,99000,B,99000,K,K_99,K_99,Servicios de apoyo para la miner�a
-7499,K,109000,C,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7499,K,663000,K,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7499,K,741000,M,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7499,K,749001,M,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7499,K,749009,M,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7499,K,774000,N,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7499,K,822000,N,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7499,K,823000,N,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7499,K,829100,N,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7499,K,829900,N,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7499,K,821100,N,7499,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7499,K,99000,B,99000,K,K_99,K_99,Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual
+7499,K,109000,C,7499,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7499,K,663000,K,7499,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7499,K,741000,M,7499,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7499,K,749001,M,7499,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7499,K,749009,M,7499,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7499,K,774000,N,7499,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7499,K,822000,N,7499,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7499,K,823000,N,7499,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7499,K,829100,N,7499,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7499,K,829900,N,7499,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7499,K,821100,N,7499,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
 6511,J,641100,K,6511,J,J,J,Intermediación financiera
 6521,J,641910,K,6521,J,J,J,Intermediación financiera
 6521,J,641920,K,6521,J,J,J,Intermediación financiera
@@ -806,28 +806,28 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 7020,K,682099,L,7020,K,K_70,K_70,Servicios inmobiliarios
 7020,K,811000,N,7020,K,K_70,K_70,Servicios inmobiliarios
 7020,K,949920,S,7020,K,K_70,K_70,Servicios inmobiliarios
-7410,K,691001,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7410,K,691002,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7410,K,692000,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7410,K,702010,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7410,K,702091,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7410,K,702092,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7410,K,702099,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7410,K,732000,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7410,K,749003,M,7410,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7422,K,712000,M,7422,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7492,K,801010,N,7492,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7492,K,801020,N,7492,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7492,K,801090,N,7492,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7311,K,721010,M,7311,K,K_73,K_73,Investigaci�n y desarrollo
-7312,K,721020,M,7312,K,K_73,K_73,Investigaci�n y desarrollo
-7313,K,721030,M,7313,K,K_73,K_73,Investigaci�n y desarrollo
-7319,K,721090,M,7319,K,K_73,K_73,Investigaci�n y desarrollo
-7321,K,722010,M,7321,K,K_73,K_73,Investigaci�n y desarrollo
-7322,K,722020,M,7322,K,K_73,K_73,Investigaci�n y desarrollo
-7430,K,731001,M,7430,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7430,K,731009,M,7430,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7494,K,742000,M,7494,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7410,K,691001,M,7410,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7410,K,691002,M,7410,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7410,K,692000,M,7410,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7410,K,702010,M,7410,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7410,K,702091,M,7410,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7410,K,702092,M,7410,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7410,K,702099,M,7410,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7410,K,732000,M,7410,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7410,K,749003,M,7410,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7422,K,712000,M,7422,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7492,K,801010,N,7492,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7492,K,801020,N,7492,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7492,K,801090,N,7492,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7311,K,721010,M,7311,K,K_73,K_73,Investigación y desarrollo
+7312,K,721020,M,7312,K,K_73,K_73,Investigación y desarrollo
+7313,K,721030,M,7313,K,K_73,K_73,Investigación y desarrollo
+7319,K,721090,M,7319,K,K_73,K_73,Investigación y desarrollo
+7321,K,722010,M,7321,K,K_73,K_73,Investigación y desarrollo
+7322,K,722020,M,7322,K,K_73,K_73,Investigación y desarrollo
+7430,K,731001,M,7430,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7430,K,731009,M,7430,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7494,K,742000,M,7494,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
 8520,N,750000,M,8520,N,N,N,Servicios sociales y de salud
 7111,K,771110,N,7111,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
 7111,K,771190,N,7111,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
@@ -842,16 +842,16 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 7120,K,773030,N,7120,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
 7120,K,773040,N,7120,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
 7120,K,773090,N,7120,K,K_71,K_71,Alquiler de equipo de transporte y de maquinaria
-7491,K,780000,N,7491,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7491,K,780000,N,7491,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
 6340,I,791100,N,6340,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
 6340,I,791200,N,6340,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
 6340,I,791901,N,6340,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
 6340,I,791909,N,6340,I,I_63,I_63,"Manipulación de carga, almacenamiento y depósito"
-7493,K,812010,N,7493,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7493,K,812020,N,7493,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7493,K,812090,N,7493,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7496,K,821900,N,7496,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
-7495,K,829200,N,7495,K,K_74,K_74,"Servicios jur�dicos, contables y otros servicios a empresas (sin miner�a)"
+7493,K,812010,N,7493,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7493,K,812020,N,7493,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7493,K,812090,N,7493,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7496,K,821900,N,7496,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
+7495,K,829200,N,7495,K,K_74,K_74,Servicios jurídicos contables y otros servicios a empresas (sin minería)
 7511,L,841100,O,7511,L,L,L,Administración pública y defensa
 7512,L,841200,O,7512,L,L,L,Administración pública y defensa
 7513,L,841300,O,7513,L,L,L,Administración pública y defensa

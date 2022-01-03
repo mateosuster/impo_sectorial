@@ -53,7 +53,7 @@ def impo_total(matriz_sisd, dic_propio, sectores_desc =False, largo_actividad=20
     
 def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest, largo_actividad=20):
    
-   titulo =np.nan 
+    titulo =np.nan 
    #parametro para graficos
     params = {'legend.fontsize': 20,
               'figure.figsize': (20, 10),
@@ -61,7 +61,7 @@ def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest, largo_activi
              'axes.titlesize': 30,
               'xtick.labelsize':15,
               'ytick.labelsize':20
-             }
+             } 
     plt.rcParams.update(params)
 
     #diccionario para el eje x y ordenamiento de los datos
@@ -76,8 +76,8 @@ def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest, largo_activi
     #titulo
     if ue_dest == "bk":
         titulo = "Bienes de Capital"
-    elif titulo == "ci":
-        ue_dest = "Consumos Intermedios"
+    elif ue_dest == "ci":
+        titulo = "Consumos Intermedios"
     
     ##### grafico 1
     #posiciones para graf
@@ -125,6 +125,46 @@ def top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec, dic_propio, bien, n=5):
     top_5_impo.to_excel("../data/resultados/top"+str(n)+"_impo_"+bien+".xlsx")
     
     return top_5_impo
+
+
+def def_top_hs(asign_pre_matriz, ncm12_desc):
+    top_productos = asign_pre_matriz.groupby(["hs6_d12"], as_index=False)['valor_pond'].sum("valor_pond").sort_values("valor_pond", ascending=False).iloc[0:50]
+    top_productos  = pd.merge(left=top_productos , right=ncm12_desc, left_on="hs6_d12", right_on="HS_12d", how="left").drop("HS_12d", axis=1)
+    return top_productos  
+
+def def_top_sd_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio,top_productos):
+    prpal_sd = asign_pre_matriz[asign_pre_matriz["hs6_d12"].isin(top_productos["hs6_d12"])].groupby(["sd", "hs6_d12"], as_index=False)["valor_pond"].sum().sort_values(["sd","valor_pond"], ascending = False)
+    prpal_sd  = prpal_sd .groupby(["hs6_d12"], as_index = False).head(5).sort_values(["hs6_d12", "valor_pond"], ascending=False)
+    prpal_sd  = pd.merge(left=prpal_sd  , right=ncm12_desc, left_on="hs6_d12", right_on="HS_12d", how="left").drop("HS_12d", axis=1)
+    prpal_sd   = pd.merge(prpal_sd  , dic_propio[["propio_letra_2", "desc"]].drop_duplicates(), how = "left", left_on="sd", right_on = "propio_letra_2").drop("propio_letra_2", 1)
+    return prpal_sd
+
+def def_top_cuits(asign_pre_matriz, dic_propio):
+    top_cuits= asign_pre_matriz.groupby(["cuit", "sd"], as_index=False)['valor_pond'].sum("valor_pond").sort_values("sd", ascending=False)#.iloc[0:50]
+    top_cuits =  top_cuits.groupby(["sd"], as_index=False).head(10)
+    top_cuits   = pd.merge(top_cuits  , dic_propio[["propio_letra_2", "desc"]].drop_duplicates(), how = "left", left_on="sd", right_on = "propio_letra_2").drop("propio_letra_2", 1)
+    return top_cuits 
+
+def def_top_cuit_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_productos):
+    prpal_sd = asign_pre_matriz[asign_pre_matriz["hs6_d12"].isin(top_productos["hs6_d12"])].groupby(["cuit", "hs6_d12"], as_index=False)["valor_pond"].sum().sort_values(["cuit","hs6_d12", "valor_pond"], ascending = False)
+    prpal_sd  = prpal_sd .groupby(["hs6_d12"], as_index = False).head(10).sort_values(["hs6_d12", "valor_pond"], ascending=False)
+    prpal_sd  = pd.merge(left=prpal_sd  , right=ncm12_desc, left_on="hs6_d12", right_on="HS_12d", how="left").drop("HS_12d", axis=1)
+    # prpal_sd   = pd.merge(prpal_sd  , dic_propio[["propio_letra_2", "desc"]].drop_duplicates(), how = "left", left_on="sd", right_on = "propio_letra_2").drop("propio_letra_2", 1)
+    return prpal_sd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ############################################################################################################
 def predo_mca(matriz_sisd_final, do):

@@ -3,9 +3,9 @@
 # Directorio de trabajo y librerias
 # =============================================================================
 import os 
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
-# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 # os.getcwd()
 import pandas as pd
@@ -31,7 +31,6 @@ cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
 bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
 ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
-
 vector_comercio_bk = pd.read_csv("../data/vector_de_comercio_clae_bk.csv", sep = ";").drop("Unnamed: 0", 1)
 vector_comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";")#.drop(["letra", "clae6_desc"] , axis = 1)
 
