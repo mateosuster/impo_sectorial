@@ -1,0 +1,53 @@
+﻿letra,desc
+"A,""Agricultura, ganadería, caza y silvicultura"""
+B,Pesca
+C,Explotación de minas y canteras
+D_15,Alimentos
+D_16,Tabaco
+D_17,Productos textiles
+D_18,Confecciones
+D_19,Cuero
+D_20,Madera
+D_21,Papel
+D_22,Edición
+D_23,Productos de petróleo
+D_24,Productos químicos
+D_25,Productos de caucho y plástico
+D_26,Otros minerales no metálicos
+D_27,Metales comunes
+D_28,Otros productos de metal
+D_29,Maquinaria y equipo
+D_29_30_31_32_33,D_29_30_31_32_33
+D_30,Maquinaria de oficina
+D_31,Aparatos eléctricos
+D_32,Radio y televisión
+D_33,Instrumentos médicos
+D_34,Automotores
+D_35,Otros equipo de transporte
+D_36,Muebles
+D_37,Reciclamiento de desperdicios y desechos
+"E,""Suministro de electricidad, gas y agua"""
+F,Construcción
+G,Comercio al por mayor y al por menor
+"H_551,""Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal"""
+H_552,Servicios de expendio de comidas y bebidas
+I_60,Transporte ferroviario y automotor y por tuberias
+I_61,Transporte marítimo y fluvial
+I_62,Transporte aéreo de cargas y de pasajeros
+"I_63,""Manipulación de carga, almacenamiento y depósito"""
+I_64,Correos y telecomunicaciones
+J,Intermediación financiera
+"K,""Actividades inmobiliarias, empresariales y de alquiler"""
+L,Administración pública y defensa
+M,Enseñanza
+N,Servicios sociales y de salud
+"O,""Otras actividades de servicios comunitarios, sociales y personales"""
+P,Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores
+Q,Organizaciones y órganos extraterritoriales
+CONS,Consumo
+K_70,Servicios inmobiliarios
+K_71,Alquiler de equipo de transporte y de maquinaria
+K_72,Actividades de informática
+K_73,Investigación y desarrollo
+K_74,Servicios jurídicos, contables y otros servicios a empresas (sin minería)
+K_99,Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual
