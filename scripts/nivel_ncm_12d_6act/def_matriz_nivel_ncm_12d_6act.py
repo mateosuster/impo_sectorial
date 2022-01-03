@@ -111,7 +111,22 @@ def def_asignacion_prob(prob):
     matriz_sisd_final = pd.concat([sisd_final[sisd_final["sd"].notnull()], calc_none])
     
     return matriz_sisd_final
-                   
+
+def def_asignacion_picks(bk_picks, mectra_pond):
+    cols = ["cuit", "HS6_d12", "valor", "ue_dest", "letra1"]
+    lista= []
+    for impo_i in bk_picks[cols].itertuples():
+        for coef in mectra_pond.itertuples():
+            dic = {"cuit": impo_i[1],
+                   "hs6_d12": impo_i[2],
+                   "valor_pond": impo_i[3]*coef[2],
+                   "si": impo_i[5],
+                   "sd": coef[1],
+                   "ue_dest": impo_i[4]
+                   }
+            lista.append(dic)   
+    asign_pre_matriz_pick = pd.DataFrame.from_dict(lista)
+    return asign_pre_matriz_pick                   
     
 def to_matriz(matriz_sisd_final, ci = False):
     #probar con index = hs6

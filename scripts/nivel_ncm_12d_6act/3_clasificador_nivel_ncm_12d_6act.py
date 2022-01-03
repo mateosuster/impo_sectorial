@@ -35,6 +35,10 @@ ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 vector_comercio_bk = pd.read_csv("../data/vector_de_comercio_clae_bk.csv", sep = ";").drop("Unnamed: 0", 1)
 vector_comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";")#.drop(["letra", "clae6_desc"] , axis = 1)
 
+#mectra
+mectra_pond = pd.read_csv("../data/resultados/agr_csv_files/mectra_agr_2021-12-30.csv")
+mectra_pond = mectra_pond[mectra_pond["anio"] ==2017].drop("anio", 1).rename(columns = {"propio_letra_2":"sd"})
+
 #############################################
 #           preparación bases               #
 #############################################
@@ -43,6 +47,7 @@ letras = predo_sectores_nombres(clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae) #meter loop aca
 dic_stp = predo_stp(dic_stp)
 dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
+
 
 datos = diccionario_especial(datos, dic_propio) 
 # datos.to_csv("../data/heavys/importaciones_pre_intro_matriz.csv")
@@ -54,18 +59,25 @@ datos_ci = filtro_ci(datos)
 #############################################
 #         BK                                #
 #############################################
-datos_bk_comercio = def_join_comercio(datos_bk_sin_picks , vector_comercio_bk)  #emprolijar esta funcion con un loop
+# non pick ups
+datos_bk_comercio = def_join_comercio(datos_bk_sin_picks , vector_comercio_bk)  
 tabla_contingencia = def_contingencia(datos_bk_comercio , datos) #Tabla de contingencia producto-sector   
 datos_bk_comercio_pond= def_ponderaciones(datos_bk_comercio,tabla_contingencia, ci = False) #ponderación por ncm y letra
 matriz_sisd_insumo = def_asignacion_sec(datos_bk_comercio_pond) ##asignación por probabilidad de G-bk (insumo para la matriz)
 asign_pre_matriz= def_asignacion_prob(matriz_sisd_insumo)
-matriz_sisd_bk = to_matriz(asign_pre_matriz) #matriz SISD
+
+# picks ups
+asign_pre_matriz_pick  = def_asignacion_picks(bk_picks, mectra_pond)
+# asign_pre_matriz_pick .groupby("sd")["valor_pond"].sum().sort_values()
+
+# ALL
+matriz_sisd_bk = to_matriz(pd.concat([asign_pre_matriz, asign_pre_matriz_pick ], 0)) #matriz SISD
 matriz_hssd_bk  = pd.pivot_table(asign_pre_matriz, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0)
 
-# matriz_sisd_insumo.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
-# asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
-# matriz_sisd_bk.to_csv("../data/resultados/matriz_sisd.csv")
-# matriz_hssd_bk.to_csv("../data/resultados/matriz_hssd_bk.csv")
+matriz_sisd_insumo.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
+asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
+matriz_sisd_bk.to_csv("../data/resultados/matriz_sisd.csv")
+matriz_hssd_bk.to_csv("../data/resultados/matriz_hssd_bk.csv")
 
 #matriz_sisd_insumo= pd.read_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv")
 #matriz_sisd= pd.read_csv("../data/resultados/matriz_sisd.csv")
@@ -81,8 +93,8 @@ asign_pre_matriz_ci= def_asignacion_prob(matriz_sisd_insumo_ci)
 matriz_sisd_ci = to_matriz(asign_pre_matriz_ci, ci = True)
 matriz_hssd_ci  = pd.pivot_table(asign_pre_matriz_ci, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
 
-# asign_pre_matriz_ci.to_csv("../data/resultados/asign_pre_matriz_ci.csv")
-# matriz_sisd_ci.to_csv("../data/resultados/matriz_sisd_ci.csv")
+asign_pre_matriz_ci.to_csv("../data/resultados/asign_pre_matriz_ci.csv")
+matriz_sisd_ci.to_csv("../data/resultados/matriz_sisd_ci.csv")
 
 # asign_pre_matriz_ci = pd.read_csv("../data/resultados/asign_pre_matriz_ci.csv")
 # matriz_sisd_ci = pd.read_csv("../data/resultados/matriz_sisd_ci.csv")

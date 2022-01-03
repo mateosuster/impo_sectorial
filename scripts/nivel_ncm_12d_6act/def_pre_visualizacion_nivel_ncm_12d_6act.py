@@ -43,14 +43,18 @@ def impo_total(matriz_sisd, dic_propio, sectores_desc =False, largo_actividad=20
     #diagonal sobre total col y comercio sobre total
     diag_total_col = diagonal/col_sum
     g_total_col = z_visual[29][:]/col_sum
-    comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = indice ).sort_values(by = 'Propio', ascending = False) 
+    comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = indice )
+        
+    comercio_y_propio.iloc[29, 1] = 0
     
-    return impo_tot_sec, comercio_y_propio
+    return impo_tot_sec, comercio_y_propio.sort_values(by = 'Propio', ascending = False)
 
 
     
 def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest, largo_actividad=20):
-    #parametro para graficos
+   
+   titulo =np.nan 
+   #parametro para graficos
     params = {'legend.fontsize': 20,
               'figure.figsize': (20, 10),
              'axes.labelsize': 15,
@@ -105,7 +109,7 @@ def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest, largo_activi
     plt.savefig('../data/resultados/comercio_y_propio_letra_'+ue_dest+'.png')
 
 
-def top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec, bien, n=5):
+def top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec, dic_propio, bien, n=5):
 
     x = asign_pre_matriz.groupby(["hs6_d12", "sd"], as_index=False)['valor_pond'].sum("valor_pond")
     top_5_impo = x.reset_index(drop = True).sort_values(by = ["sd", "valor_pond"],ascending = False)
@@ -115,7 +119,9 @@ def top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec, bien, n=5):
     top_5_impo  = pd.merge(top_5_impo  , impo_tot_sec, left_on="sd", right_on="letra", how = "left")
     top_5_impo["impo_relativa"] = top_5_impo["valor_pond"]/top_5_impo["impo_tot"] 
     top_5_impo["short_name"] = top_5_impo["hs6_d12_desc"].str.slice(0,15)
-
+    
+    top_5_impo = pd.merge(top_5_impo, dic_propio[["propio_letra_2", "desc"]].drop_duplicates(), how = "left", left_on="sd", right_on = "propio_letra_2").drop("propio_letra_2", 1)
+    
     top_5_impo.to_excel("../data/resultados/top"+str(n)+"_impo_"+bien+".xlsx")
     
     return top_5_impo
