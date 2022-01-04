@@ -71,7 +71,8 @@ def filtro_ci(datos):
                 datos_2trans.loc[index, act_i] = "G_mayorista"
                 
     
-    rtr = pd.concat([datos_2trans, datos_ok ], axis = 0)    
+    rtr = pd.concat([datos_2trans, datos_ok ], axis = 0)
+    return rtr    
 
 
 #############################################
