@@ -2,7 +2,7 @@
 # =============================================================================
 # Directorio de trabajo y librerias
 # =============================================================================
-globals().clear()
+
 
 import os
 # os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
@@ -14,6 +14,7 @@ import numpy as np
 from def_bases_nivel_ncm_12d_6act import *
 from def_pre_visualizacion_nivel_ncm_12d_6act import *
 import datetime
+
 
 start = datetime.datetime.now()
 #############################################
@@ -32,12 +33,11 @@ ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 #           preparación bases               #
 #############################################
 # impo_d12 = predo_impo_all(impo_d12,  name_file ="cuit_explotacion_2013a2017.csv")
-ncm12_desc = predo_ncm12_desc(ncm12_desc )["ncm_desc"]
+ncm12_desc = predo_ncm12_desc(ncm12_desc )
 impo_d12  = predo_impo_12d(impo_d12, ncm12_desc) # FILTRO AÑO 2017
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae)
-bec_bk = predo_bec_bk(bec)#, bec_to_clae)
 dic_stp = predo_stp(dic_stp )
 
 #############################################
@@ -81,7 +81,7 @@ print( "los BK quedan del mismo largo?" , len(data_not_clasif_bk) + len(data_cla
 # VENN CI
 # =============================================================================
 cons_int_clasif, impo_bec_ci = clasificacion_CI(impo_bec)
-cons_int_clasif ["ue_dest"].value_counts()#.sum()
+cons_int_clasif["ue_dest"].value_counts()#.sum()
 cons_int_clasif [["filtro", "ue_dest"]].value_counts()#.sum()
 
 # =============================================================================
@@ -105,8 +105,11 @@ data_model = concatenacion_ue_dest(cons_fin_clasif, cons_int_clasif,data_clasif_
 data_model["ue_dest"].value_counts()
 len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()] ))
 
+
+
 # preprocesamiento
 data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model) #deja los datos listo para entrenar el modelo
+
 
 # exportacion de datos
 data_train.to_csv("../data/heavys/data_train_test.csv", index=False)
@@ -115,3 +118,4 @@ data_model.to_csv("../data/heavys/data_modelo_diaria.csv", index=False)
 
 end = datetime.datetime.now()
 print(end-start)
+

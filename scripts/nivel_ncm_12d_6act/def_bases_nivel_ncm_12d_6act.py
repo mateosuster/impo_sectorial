@@ -433,8 +433,7 @@ def fun_filtro_stp(dic_stp, impo_bec):
 
 def clasif_diag(impo_bec, tipo_bien):
     impo_bec_ci = impo_bec[impo_bec["BEC5EndUse"].str.startswith(tipo_bien, na=False)]
-    impo_bec_ci["dest_clean"].value_counts()  # .sum()
-
+  
     filtro1st = impo_bec_ci[impo_bec_ci["dest_clean"] == "S/TR"]
     filtro1ct = impo_bec_ci[impo_bec_ci["dest_clean"] == "C/TR"]
     filtro1co = impo_bec_ci[impo_bec_ci["dest_clean"] == "CONS&Otros"]
@@ -531,7 +530,6 @@ def clasificacion_BK(filtro1):
     filtro2_D_bk["ue_dest"] = "BK"
 
     clasif_D = pd.concat([filtro2_D_bk, filtro2_D.drop(["median", "mad", "brecha", "z_score"], axis = 1)] )
-    clasif_D["ue_dest"].value_counts()
     clasif_D.groupby(["ue_dest"])["valor"].sum()
 
     # CASO E
@@ -550,7 +548,6 @@ def clasificacion_BK(filtro1):
     filtro2_E_ci["ue_dest"] = "CI"
 
     clasif_E = pd.concat([filtro2_E_ci, filtro2_E.drop(["median", "mad", "brecha", "z_score"], axis = 1) ])
-    clasif_E["ue_dest"].value_counts()
 
 
     # CASO G
@@ -572,16 +569,12 @@ def clasificacion_BK(filtro1):
     filtro2_G ["z_score_ci"] = filtro2_G .apply(lambda x: 0.6745*((x["metric"]-x["median_ci"]))/(x["mad_ci"]), axis =1 )
 
     filtro2_G["ue_dest"] = np.where(np.abs(filtro2_G["z_score_ci"]) > np.abs(filtro2_G["z_score_bk"]), "BK", "CI" )
-    filtro2_G["ue_dest"].value_counts()
-
+ 
     filtro2_G_clas = filtro2[(filtro2["filtro"]=="G")  & (filtro2["dest_clean"]!="CONS&Otros")]
     filtro2_G_clas ["ue_dest"] = np.where(filtro2_G_clas["dest_clean"]== "S/TR","BK", "CI" )
-    filtro2_G_clas["ue_dest"].value_counts()
-
+  
     clasif_G = pd.concat([filtro2_G_clas, filtro2_G.drop(["median_bk", "median_ci",  "mad_bk", "mad_ci", "z_score_bk", "z_score_ci"],axis =1 )], axis = 0)
-    clasif_G ["ue_dest"].value_counts()
-
-
+   
     ## EDA de Datos ya clasificados
     clasif_AB = filtro1[filtro1["ue_dest"] != "" ]
     clasif_AB["metric"] = clasif_AB.apply(lambda x: metrica(x), axis = 1)
@@ -589,7 +582,7 @@ def clasificacion_BK(filtro1):
     data_clasif = pd.concat([clasif_AB, clasif_D ,clasif_E,clasif_G  ], axis= 0)
     # data_clasif["metric_zscore"] = (data_clasif["metric"] -data_clasif["metric"].mean())/ data_clasif["metric"].std(ddof=1)
 
-    data_clasif[["filtro", "ue_dest"]].value_counts()
+    # data_clasif[["filtro", "ue_dest"]].value_counts()
 
     ###############################################
     ## DATOS NO CLASIFICADOS
@@ -608,12 +601,12 @@ def clasificacion_BK(filtro1):
 # JOIN CON DATOS STP Y CLASIFICADOS PROPIOS
 def join_stp_clasif_prop(join_impo_clae_bec_bk, data_clasif):
     stp_ue_dest = join_impo_clae_bec_bk[join_impo_clae_bec_bk["ue_dest"]=="BK" ]
-    stp_ue_dest ["ue_dest"].value_counts()
+    
     stp_ue_dest ["metric"] = stp_ue_dest .apply(lambda x: metrica(x), axis = 1)
     stp_ue_dest["filtro"] = "STP"
 
     data_clasif_ue_dest = pd.concat([data_clasif, stp_ue_dest], axis = 0)
-    data_clasif_ue_dest ["ue_dest"].value_counts()
+
 
     data_clasif_ue_dest["precio_kilo"]= data_clasif_ue_dest["valor"]/data_clasif_ue_dest["kilos"]
 
@@ -690,7 +683,6 @@ def clasificacion_CI(impo_bec):
                                                 axis=1)
 
     cons_int_G["ue_dest"] = np.where(np.abs(cons_int_G["z_score_ci"]) > np.abs(cons_int_G["z_score_bk"]), "BK", "CI")
-    cons_int_G["ue_dest"].value_counts()
 
     cons_int_G_no_cons = cons_int[(cons_int["filtro"] == "G") & (cons_int["dest_clean"] != "CONS&Otros")]
     cons_int_G_no_cons["ue_dest"] = np.where(cons_int_G_no_cons["dest_clean"] == "S/TR", "BK", "CI")
@@ -698,8 +690,7 @@ def clasificacion_CI(impo_bec):
 
     cons_int_G_clasif = pd.concat([cons_int_G_no_cons, cons_int_G.drop(
         ["median_bk", "median_ci", "mad_bk", "mad_ci", "z_score_bk", "z_score_ci"], axis=1)], axis=0)
-    cons_int_G_clasif["ue_dest"].value_counts()  # .sum()
-
+   
     cons_int_clasif = pd.concat([cons_int_D, cons_int_G_clasif, cons_int[cons_int["filtro"].str.contains("A|B|C|E")]])
 
     return cons_int_clasif ,impo_bec_ci
@@ -715,7 +706,6 @@ def clasificacion_CONS(impo_bec):
                                    (cons_fin["filtro"] == "C"), "CI",
                                    np.where((cons_fin["filtro"] == "A"), "BK",
                                             np.nan))
-    cons_fin["ue_dest"].value_counts()
 
     cons_fin["metric"] = cons_fin.apply(lambda x: metrica(x), axis=1)
 
@@ -842,17 +832,20 @@ def predo_datos_modelo(data_model):
     # Filtros de columnas
     cols_reservadas = ["cuit", "NOMBRE", "HS6_d12",  "dest_clean",
                        "actividad1","actividad2","actividad3","actividad4","actividad5","actividad6",
-                       "act_ordenadas",
+                     # "act_ordenadas",
                        "uni_est", "uni_decl", "BEC5EndUse", "filtro" ,
                        "ue_dest" ]
-    cat_col = list(data_model.select_dtypes(include=['object']).columns)
-    cat_col = [elem for elem in cat_col if elem not in cols_reservadas ]
+    # cat_col = list(data_model.select_dtypes(include=['object']).columns)
+    # cat_col = [elem for elem in cat_col if elem not in cols_reservadas ]
+    
+    labeled_cols = ["HS6", "HS8", "HS10", "act_ordenadas"]
+    ohe_cols= ["BEC5EndUse", "dest_clean",  'letra1','letra2',     'letra3', 'letra4', 'letra5', 'letra6']
     
     num_col = list(data_model.select_dtypes(include=['float', "int64"]).columns)
     num_col = [elem for elem in num_col if elem != "cuit"]
 
-    one_hot = pd.get_dummies(data_model, columns= ["BEC5EndUse"])[["BEC5EndUse_CAP", "BEC5EndUse_INT", "BEC5EndUse_CONS"]]
-    data_pre = pd.concat( [ str_a_num(data_model[cat_col]) , data_model[num_col], one_hot, data_model["ue_dest"] ], axis = 1  )
+    one_hot = pd.get_dummies(data_model[ohe_cols])
+    data_pre = pd.concat( [ str_a_num(data_model[labeled_cols]) ,  data_model[num_col], one_hot, data_model["ue_dest"] ], axis = 1  )
 
     # datos etiquetados
     data_train = data_pre[data_pre ["ue_dest"] != "?" ]
