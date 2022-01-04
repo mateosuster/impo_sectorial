@@ -3,9 +3,9 @@
 # Directorio de trabajo y librerias
 # =============================================================================
 import os 
-# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 # os.getcwd()
 import pandas as pd
@@ -53,6 +53,25 @@ datos = diccionario_especial(datos, dic_propio)
 
 datos_bk , datos_bk_sin_picks, bk_picks = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
+
+def filtro_ci(datos):
+    datos_ci= datos[datos["ue_dest"]== "CI"]
+    
+    datos_2trans = datos_ci[ (datos_ci["act_ordenadas"].str.contains("G") ) & (datos_ci["act_ordenadas"].str.contains("K|O|H|J|N") ) ] #O coincide entre CLAE e CIIU, J = K, I = H|J|N
+    datos_ok= datos_ci[ ~datos_ci.index.isin(datos_2trans.index) ]
+    print("Está ok el split?", len(datos_ok)+ len(datos_2trans) == len(datos_ci))
+    
+    x= datos_2trans[datos_2trans["letra3"]=="J"]
+    
+    for index, row in datos_2trans.iterrows():    
+        for letra_i, act_i in zip(["letra1", "letra2", "letra3","letra4", "letra5", "letra6"], 
+                              ["actividad1", "actividad2", "actividad3","actividad4", "actividad5", "actividad6"]):
+            if row[letra_i] in ["J","I", "O"]:
+                datos_2trans.loc[index, letra_i] = "G"
+                datos_2trans.loc[index, act_i] = "G_mayorista"
+                
+    
+    rtr = pd.concat([datos_2trans, datos_ok ], axis = 0)    
 
 
 #############################################
