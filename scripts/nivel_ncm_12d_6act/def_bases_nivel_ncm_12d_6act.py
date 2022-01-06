@@ -838,8 +838,8 @@ def predo_datos_modelo(data_model):
     # cat_col = list(data_model.select_dtypes(include=['object']).columns)
     # cat_col = [elem for elem in cat_col if elem not in cols_reservadas ]
     
-    labeled_cols = ["HS6", "HS8", "HS10", "act_ordenadas"]
-    ohe_cols= ["BEC5EndUse", "dest_clean",  'letra1','letra2',     'letra3', 'letra4', 'letra5', 'letra6']
+    labeled_cols = ["HS6", "HS8", "HS10", "act_ordenadas",  'letra1','letra2', 'letra3', 'letra4', 'letra5', 'letra6']
+    ohe_cols= ["BEC5EndUse", "dest_clean",  'letra1','letra2', 'letra3', 'letra4', 'letra5', 'letra6']
     
     num_col = list(data_model.select_dtypes(include=['float', "int64"]).columns)
     num_col = [elem for elem in num_col if elem != "cuit"]
