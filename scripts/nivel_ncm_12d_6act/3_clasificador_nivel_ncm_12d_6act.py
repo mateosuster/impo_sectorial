@@ -28,9 +28,7 @@ dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
 hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
 cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
-bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
-ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 vector_comercio_bk = pd.read_csv("../data/vector_de_comercio_clae_bk.csv", sep = ";").drop("Unnamed: 0", 1)
 vector_comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";")#.drop(["letra", "clae6_desc"] , axis = 1)
 
@@ -41,27 +39,34 @@ mectra_pond = mectra_pond[mectra_pond["anio"] ==2017].drop("anio", 1).rename(col
 #############################################
 #           preparación bases               #
 #############################################
-ncm12_desc_mod = predo_ncm12_desc(ncm12_desc )
 letras = predo_sectores_nombres(clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae) #meter loop aca
 dic_stp = predo_stp(dic_stp)
 dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
 
-
 datos = diccionario_especial(datos, dic_propio) 
 # datos.to_csv("../data/heavys/importaciones_pre_intro_matriz.csv")
+
+datos = def_act_ordenadas(datos)
 
 datos_bk , datos_bk_sin_picks, bk_picks = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
 
+
+########
+ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
+ncm12_desc_mod = predo_ncm12_desc(ncm12_desc )
+
+
+
 def filtro_ci(datos):
     datos_ci= datos[datos["ue_dest"]== "CI"]
     
-    datos_2trans = datos_ci[ (datos_ci["act_ordenadas"].str.contains("G") ) & (datos_ci["act_ordenadas"].str.contains("K|O|H|J|N") ) ] #O coincide entre CLAE e CIIU, J = K, I = H|J|N
+    datos_2trans = datos_ci[ (datos_ci["act_ordenadas"].str.contains("G") ) & (datos_ci["act_ordenadas"].str.contains("J|I|O") ) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
     datos_ok= datos_ci[ ~datos_ci.index.isin(datos_2trans.index) ]
     print("Está ok el split?", len(datos_ok)+ len(datos_2trans) == len(datos_ci))
     
-    x= datos_2trans[datos_2trans["letra3"]=="J"]
+    # x= datos_2trans[datos_2trans["letra3"]=="J"]
     
     for index, row in datos_2trans.iterrows():    
         for letra_i, act_i in zip(["letra1", "letra2", "letra3","letra4", "letra5", "letra6"], 

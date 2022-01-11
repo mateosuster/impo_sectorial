@@ -85,6 +85,8 @@ def predo_ncm12_desc(ncm12_desc ):
     ncm12_desc.rename(columns = {"POSICION": "HS_12d", "DESCRIPCIO":"hs6_d12_desc"}, inplace = True) 
     ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['hs6_d12_desc'].str.split('//', expand=True))], axis=1)
     dic = {"ncm_desc": ncm12_desc, "ncm_split": ncm12_desc_split }
+    
+    dic["ncm_desc"].to_csv("../data/resultados/ncm_12digits.csv", index =False) 
     return dic["ncm_desc"]
 
 def predo_sectores_nombres(clae):
@@ -98,6 +100,7 @@ def predo_sectores_nombres(clae):
     
     cons = pd.DataFrame([{"letra": "CONS", "letra_desc": "CONSUMO"}] )
     letras  = pd.concat([letras, cons] , axis =0)
+    
     
     return letras
 
@@ -780,6 +783,13 @@ def clasificacion_CONS(impo_bec):
     cons_fin_clasif = pd.concat([cons_fin_D, cons_fin_G_clasif, cons_fin[cons_fin["filtro"].str.contains("A|B|C|E")]])
     return cons_fin_clasif, impo_bec_cons
 
+def def_act_ordenadas(data_model):
+    data_model["actividades"] = data_model["letra1"] + data_model["letra2"] + data_model["letra3"] + data_model[
+        "letra4"] + data_model["letra5"] + data_model["letra6"]
+    data_model["act_ordenadas"] = data_model["actividades"].apply(
+        lambda x: "".join(sorted(x)))  # "".join(sorted(data_model["actividades"]))
+    return data_model
+
 def concatenacion_ue_dest(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif, join_impo_clae, impo_bec):
     # impo_ue_dest = pd.concat([pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha", 'metric', 'ue_dest', 'mad', 'median', 'z_score'], axis = 1), bk], axis =0)
     cicf_ue_dest = pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha",  'mad', 'median', 'z_score'], axis = 1) #, bk], axis =0)
@@ -795,10 +805,7 @@ def concatenacion_ue_dest(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,d
     data_model ['HS6'] = data_model ['HS6'].astype("str")
     data_model ['HS8'] = data_model ['HS6_d12'].str.slice(0,8)
     data_model ['HS10'] = data_model ['HS6_d12'].str.slice(0,10)
-    data_model["actividades"] = data_model["letra1"] + data_model["letra2"] + data_model["letra3"] + data_model[
-        "letra4"] + data_model["letra5"] + data_model["letra6"]
-    data_model["act_ordenadas"] = data_model["actividades"].apply(
-        lambda x: "".join(sorted(x)))  # "".join(sorted(data_model["actividades"]))
+    data_model = def_act_ordenadas(data_model)
 
     # preprocesamiento etiquetados
     cols = ["cuit", "NOMBRE",
