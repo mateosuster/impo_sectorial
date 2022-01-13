@@ -835,8 +835,7 @@ def str_a_num(df):
   return df
 
 def predo_datos_modelo(data_model):
-    # data_model = pd.read_csv("../data/resultados/data_modelo_diaria.csv")
-    # Filtros de columnas
+   # Filtros de columnas
     cols_reservadas = ["cuit", "NOMBRE", "HS6_d12",  "dest_clean",
                        "actividad1","actividad2","actividad3","actividad4","actividad5","actividad6",
                      # "act_ordenadas",
@@ -867,3 +866,32 @@ def predo_datos_modelo(data_model):
 
     return data_pre, data_train, data_to_clasif
 
+def predo_datos_modelo_21oct(data_model):
+    # Filtros de columnas
+    cols_reservadas = ["cuit", "NOMBRE", "HS6_d12",  "dest_clean",
+                       "actividad1","actividad2","actividad3","actividad4","actividad5","actividad6",
+                     # "act_ordenadas",
+                       "uni_est", "uni_decl", "BEC5EndUse", "filtro" ,
+                       "ue_dest" ]
+    # cat_col = list(data_model.select_dtypes(include=['object']).columns)
+    # cat_col = [elem for elem in cat_col if elem not in cols_reservadas ]
+    
+    labeled_cols = ["HS6", "HS8", "HS10", "act_ordenadas",  'letra1','letra2', 'letra3', 'letra4', 'letra5', 'letra6', "uni_est", "uni_decl"]
+    ohe_cols= ["BEC5EndUse", "dest_clean",  'letra1','letra2', 'letra3', 'letra4', 'letra5', 'letra6']
+    
+    num_col = [  'valor',  'kilos', "precio_kilo" , "metric", "cant_est", "cant_decl"]
+
+    data_pre = pd.concat( [ str_a_num(data_model[labeled_cols]) ,  data_model[num_col], data_model["ue_dest"] ], axis = 1  )
+
+    # datos etiquetados
+    data_train = data_pre[data_pre ["ue_dest"] != "?" ]
+    data_train["bk_dummy"] = data_train["ue_dest"].map({"BK": 1, "CI": 0})
+    data_train.drop("ue_dest", axis = 1, inplace = True)
+
+    # datos no etiquetados
+    data_to_clasif = data_pre[data_pre["ue_dest"] == "?" ]
+    data_to_clasif.drop("ue_dest", axis = 1, inplace = True)
+
+    print(len(data_pre) == (len(data_train) + len(data_to_clasif)))
+
+    return data_pre, data_train, data_to_clasif

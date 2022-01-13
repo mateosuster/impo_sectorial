@@ -3,9 +3,9 @@
 # Directorio de trabajo y librerias
 # =============================================================================
 import os 
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
-# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 # os.getcwd()
 import pandas as pd
@@ -20,7 +20,7 @@ from def_pre_visualizacion_nivel_ncm_12d_6act import *
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
-datos = pd.read_csv("../data/heavys/datos_clasificados_modelo_all_data.csv", sep = ";") 
+datos = pd.read_csv("../data/heavys/datos_clasificados_modelo_all_data_21oct_100iters.csv", sep = ";")
 
 #auxiliares
 clae = pd.read_csv( "../data/clae_nombre.csv")

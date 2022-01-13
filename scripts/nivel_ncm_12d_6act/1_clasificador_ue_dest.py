@@ -106,15 +106,25 @@ data_model["ue_dest"].value_counts()
 len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()] ))
 
 
-
 # preprocesamiento
 data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model) #deja los datos listo para entrenar el modelo
-
 
 # exportacion de datos
 data_train.to_csv("../data/heavys/data_train_test.csv", index=False)
 data_to_clasif.to_csv("../data/resultados/data_to_pred.csv", index=False)
 data_model.to_csv("../data/heavys/data_modelo_diaria.csv", index=False)
+
+
+end = datetime.datetime.now()
+print(end-start)
+
+###############################
+# preprocesamiento 21 oct
+data_pre, data_train, data_to_clasif = predo_datos_modelo_21oct(data_model) #deja los datos listo para entrenar el modelo
+data_train.to_csv("../data/heavys/data_train_test_21oct.csv", index=False)
+data_to_clasif.to_csv("../data/resultados/data_to_pred_21oct.csv", index=False)
+
+
 
 end = datetime.datetime.now()
 print(end-start)
