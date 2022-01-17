@@ -82,14 +82,16 @@ def def_asignacion_sec(raw_data, ci = False):
 
     for_fill = pd.DataFrame.from_dict(dictionary_list)
 
-    for_fill["sd"] = np.where(for_fill["hs6_d12"].str.startswith("8703"), 
+    for_fill["sd"] = np.where(for_fill["hs6_d12"].str.startswith(("8703", "640399","490199", "621111", "620342", "620293", "611241", "902131" )), 
                               "CONS", for_fill["sd"] )
     
-    for_fill["si"] = np.where(for_fill["hs6_d12"].str.startswith(("8702", "8703", "8704")), 
+    for_fill["si"] = np.where(for_fill["hs6_d12"].str.startswith(("8702", "8703", "8704", "640399","490199", "621111", "620342", "620293", "611241", "902131" )), 
                               "G", for_fill["si"] )
 
     return for_fill
-    
+  
+
+  
 def def_asignacion_prob(prob):
     
     calc_prob = prob.copy()
@@ -144,7 +146,7 @@ def to_matriz(matriz_sisd_final, ci = False):
         
     elif ci == True:
         z.insert(29, "G", 0)
-        z.insert(44, "Q", 0)
+        #z.insert(44, "Q", 0)
 
    
     

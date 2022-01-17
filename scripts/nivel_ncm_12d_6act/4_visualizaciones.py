@@ -69,19 +69,25 @@ top_5_impo_ci = top_5(asign_pre_matriz_ci, ncm12_desc,  impo_tot_sec_ci, dic_pro
 #  top 50 de productos, los primeros 5 sectores importadores
 # =============================================================================
 
-top_productos = def_top_hs(asign_pre_matriz, ncm12_desc)
-top_sd_de_top_hs = def_top_sd_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_productos)
+top_productos = def_top_hs(asign_pre_matriz, ncm12_desc, "bk")
+top_productos_ci = def_top_hs(asign_pre_matriz_ci, ncm12_desc, "ci")
+
+top_sd_de_top_hs = def_top_sd_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_productos, "bk")
+top_sd_de_top_hs_ci = def_top_sd_de_top_hs(asign_pre_matriz_ci, ncm12_desc, dic_propio, top_productos_ci, "ci")
+
 
 # =============================================================================
 # 10 primeros cuit (razón social) importadores por sector
 # =============================================================================
-top_cuits = def_top_cuits(asign_pre_matriz, dic_propio)
+top_cuits = def_top_cuits(asign_pre_matriz, dic_propio, "bk")
+top_cuits_ci = def_top_cuits(asign_pre_matriz_ci, dic_propio, "ci")
+
 
 # =============================================================================
 # 10 primeros cuit importadores de los 50 productos más importados
 # =============================================================================
-top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_productos)
-
+top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_productos, "bk")
+top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz_ci, ncm12_desc, dic_propio, top_productos, "ci")
 
 
 

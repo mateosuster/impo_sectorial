@@ -349,7 +349,7 @@ def filtro_ci(datos):
     # x= datos_2trans[datos_2trans["letra3"]=="J"]
     for letra_i, act_i in zip(["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"],
                               ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]):
-        for letrita in ["J", "I", "O"]:
+        for letrita in ["J", "I_60", "I_61", "I_62", "I_64", "O"]:
             datos_2trans.loc[:, letra_i] = datos_2trans[letra_i].apply(lambda x: x.replace(letrita, "G"))
 
     # for index, row in datos_2trans.iterrows():    # ALTERNATIVA LENTA
