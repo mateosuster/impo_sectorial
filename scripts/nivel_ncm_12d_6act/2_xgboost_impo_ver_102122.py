@@ -297,10 +297,10 @@ print(end-start)
 #######################################
 # Modelos
 pickle.dump(best_xgb, open('modelos\\xgboost_train_cv_21oct_100iters.sav', 'wb')) #guarda el modelo
-best_xgb = pickle.load(open('modelos\\xgboost_train_cv.sav', 'rb')) #carga
+best_xgb = pickle.load(open('modelos\\xgboost_train_cv_21oct.sav', 'rb')) #carga
 
 pickle.dump(xgb_all, open('modelos\\xgboost_all_data_21oct_100iters.sav', 'wb'))
-xgb_all = pickle.load(open('modelos\\xgboost_all_data.sav', 'rb'))
+xgb_all = pickle.load(open('modelos\\xgboost_all_data_21oct.sav', 'rb'))
 
 with open('modelos\\mejores_parametros_150iters.json', 'w') as fp:
     json.dump(mejores_parametros, fp)
@@ -310,7 +310,7 @@ with open('modelos\\mejores_estables_150iters.json', 'w') as fp:
 ###############################################
 # Predección de nuevas observaciones
 ################################################
-punto_optimo  =0.5
+punto_optimo  =0.6
 clasificacion = xgb_all.predict_proba(data_2pred)
 clasificacion_df = pd.DataFrame(clasificacion, index=data_2pred.index , columns= ["prob_CI", "prob_BK"])
 clasificacion_df["ue_dest"]  = np.where(clasificacion_df["prob_BK"] > punto_optimo, "BK", "CI")
@@ -326,7 +326,7 @@ ncm12_desc_mod = predo_ncm12_desc(ncm12_desc )
 
 datos_predichos= pd.merge(datos_predichos, ncm12_desc_mod, left_on = "HS6_d12", right_on ="HS_12d", how = "left")
 
-datos_predichos.to_csv("../data/resultados/predicciones_model_21oct_100iters.csv" , sep = ";") 
+datos_predichos.to_csv("../data/resultados/predicciones_model_21oct.csv" , sep = ";") 
 
 #plt.hist(x = "ue_dest", data = datos_predichos )
 
@@ -342,7 +342,7 @@ for boolean , text in zip([True, False], ["Frecuencias Relativas", "Frecuencias 
 datos_all = pd.concat([datos_predichos , data_model[data_model ["ue_dest"] != "?" ] ] , axis = 0) 
 len(data_model )== len(datos_all)
 
-datos_all.to_csv("../data/heavys/datos_clasificados_modelo_all_data_21oct_100iters.csv", index= False, sep = ";")
+datos_all.to_csv("../data/heavys/datos_clasificados_modelo_all_data_21oct.csv", index= False, sep = ";")
 # datos_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
 
 

@@ -34,6 +34,7 @@ ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 ncm12_desc = predo_ncm12_desc(ncm12_desc )   
 
 
+
 # BK
 matriz_sisd_bk = pd.read_csv("../data/resultados/matriz_sisd.csv").set_index("si")
 asign_pre_matriz= pd.read_csv("../data/resultados/asign_pre_matriz.csv")

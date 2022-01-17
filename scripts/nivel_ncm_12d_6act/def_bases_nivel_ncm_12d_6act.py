@@ -335,11 +335,35 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     
     return datos_bk, datos_bk_sin_picks, bk_picks
 
+
+
 def filtro_ci(datos):
+    import datetime
+    start = datetime.datetime.now()
     datos_ci= datos[datos["ue_dest"]== "CI"]
-    return datos_ci
+    
+    datos_2trans = datos_ci[ (datos_ci["act_ordenadas"].str.contains("G") ) & (datos_ci["act_ordenadas"].str.contains("J|I|O") ) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
+    datos_ok= datos_ci[ ~datos_ci.index.isin(datos_2trans.index) ]
+    print("Está ok el split?", len(datos_ok)+ len(datos_2trans) == len(datos_ci))
+    
+    # x= datos_2trans[datos_2trans["letra3"]=="J"]
+    for letra_i, act_i in zip(["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"],
+                              ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]):
+        for letrita in ["J", "I", "O"]:
+            datos_2trans.loc[:, letra_i] = datos_2trans[letra_i].apply(lambda x: x.replace(letrita, "G"))
 
-
+    # for index, row in datos_2trans.iterrows():    # ALTERNATIVA LENTA
+    #     for letra_i, act_i in zip(["letra1", "letra2", "letra3","letra4", "letra5", "letra6"],
+    #                           ["actividad1", "actividad2", "actividad3","actividad4", "actividad5", "actividad6"]):
+    #         if row[letra_i] in ["J","I", "O"]:
+    #             datos_2trans.loc[index, letra_i] = "G"
+    #             datos_2trans.loc[index, act_i] = "G_mayorista"
+                
+    
+    rtr = pd.concat([datos_2trans, datos_ok ], axis = 0)
+    end = datetime.datetime.now()
+    print(end-start)
+    return rtr
 
 
 def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
@@ -786,9 +810,10 @@ def clasificacion_CONS(impo_bec):
 def def_act_ordenadas(data_model):
     data_model["actividades"] = data_model["letra1"] + data_model["letra2"] + data_model["letra3"] + data_model[
         "letra4"] + data_model["letra5"] + data_model["letra6"]
+    data_model["actividades"] = data_model["actividades"].str.replace('\d+|_', '')
     data_model["act_ordenadas"] = data_model["actividades"].apply(
         lambda x: "".join(sorted(x)))  # "".join(sorted(data_model["actividades"]))
-    return data_model
+    return data_model.drop("actividades", 1)
 
 def concatenacion_ue_dest(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif, join_impo_clae, impo_bec):
     # impo_ue_dest = pd.concat([pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha", 'metric', 'ue_dest', 'mad', 'median', 'z_score'], axis = 1), bk], axis =0)

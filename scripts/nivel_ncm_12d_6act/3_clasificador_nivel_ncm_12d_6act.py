@@ -20,7 +20,7 @@ from def_pre_visualizacion_nivel_ncm_12d_6act import *
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
-datos = pd.read_csv("../data/heavys/datos_clasificados_modelo_all_data_21oct_100iters.csv", sep = ";")
+datos = pd.read_csv("../data/heavys/datos_clasificados_modelo_all_data_21oct.csv", sep = ";")
 
 #auxiliares
 clae = pd.read_csv( "../data/clae_nombre.csv")
@@ -48,36 +48,11 @@ datos = diccionario_especial(datos, dic_propio)
 # datos.to_csv("../data/heavys/importaciones_pre_intro_matriz.csv")
 
 datos = def_act_ordenadas(datos)
+datos.drop("prob_bk", 1, inplace=True)
 
 datos_bk , datos_bk_sin_picks, bk_picks = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
 
-
-########
-ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
-ncm12_desc_mod = predo_ncm12_desc(ncm12_desc )
-
-
-
-def filtro_ci(datos):
-    datos_ci= datos[datos["ue_dest"]== "CI"]
-    
-    datos_2trans = datos_ci[ (datos_ci["act_ordenadas"].str.contains("G") ) & (datos_ci["act_ordenadas"].str.contains("J|I|O") ) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
-    datos_ok= datos_ci[ ~datos_ci.index.isin(datos_2trans.index) ]
-    print("Está ok el split?", len(datos_ok)+ len(datos_2trans) == len(datos_ci))
-    
-    # x= datos_2trans[datos_2trans["letra3"]=="J"]
-    
-    for index, row in datos_2trans.iterrows():    
-        for letra_i, act_i in zip(["letra1", "letra2", "letra3","letra4", "letra5", "letra6"], 
-                              ["actividad1", "actividad2", "actividad3","actividad4", "actividad5", "actividad6"]):
-            if row[letra_i] in ["J","I", "O"]:
-                datos_2trans.loc[index, letra_i] = "G"
-                datos_2trans.loc[index, act_i] = "G_mayorista"
-                
-    
-    rtr = pd.concat([datos_2trans, datos_ok ], axis = 0)
-    return rtr    
 
 
 #############################################
