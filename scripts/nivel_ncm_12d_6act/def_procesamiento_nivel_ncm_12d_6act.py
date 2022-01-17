@@ -60,11 +60,6 @@ def def_ponderaciones(impo,cont, ci = False):
     join_final["letra5_pond"] = np.nan
     join_final["letra6_pond"] = np.nan
     
-     #impo = join_impo_clae_bec_bk_comercio_pond
-     #cont = tabla_contingencia
-     #join_final = join_impo_clae_bec_ci_comercio_pond
-    # join_final = impo.copy()
-
     letra1 = join_final.columns.get_loc("letra1") + 1
     letra2 = join_final.columns.get_loc("letra2") + 1
     letra3 = join_final.columns.get_loc("letra3") + 1
@@ -74,8 +69,6 @@ def def_ponderaciones(impo,cont, ci = False):
     HSd12 = join_final.columns.get_loc("HS6_d12") + 1
 
     dictionary_list = []
-
-
     for a in tqdm(join_final.itertuples()):
         letra_1 = a[letra1]
         letra_2 = a[letra2]

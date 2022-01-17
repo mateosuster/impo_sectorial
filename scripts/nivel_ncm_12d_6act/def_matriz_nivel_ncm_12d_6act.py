@@ -63,11 +63,10 @@ def def_asignacion_sec(raw_data, ci = False):
                 if ci == False:
                     if a[c] == 0:
                         letra_sd = a[b]
-                elif a[d] ==0:
-                    letra_sd = "CONS"
-
-                else:
-                   letra_sd = None #np.nan #asigno por probabilidad
+                    elif a[d] ==0:
+                        letra_sd = "CONS"
+                    else:
+                       letra_sd = None #np.nan #asigno por probabilidad
 
             else:
                 letra_sd = a[b]
