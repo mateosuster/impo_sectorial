@@ -61,7 +61,7 @@ datos_ci = filtro_ci(datos)
 # non pick ups
 datos_bk_comercio = def_join_comercio(datos_bk_sin_picks , vector_comercio_bk)  
 tabla_contingencia = def_contingencia(datos_bk_comercio , datos) #Tabla de contingencia producto-sector   
-datos_bk_comercio_pond= def_ponderaciones(datos_bk_comercio,tabla_contingencia, ci = False) #ponderación por ncm y letra
+datos_bk_comercio_pond= def_ponderaciones(datos_bk_comercio, tabla_contingencia, ci = False) #ponderación por ncm y letra
 matriz_sisd_insumo = def_asignacion_sec(datos_bk_comercio_pond) ##asignación por probabilidad de G-bk (insumo para la matriz)
 asign_pre_matriz= def_asignacion_prob(matriz_sisd_insumo)
 
