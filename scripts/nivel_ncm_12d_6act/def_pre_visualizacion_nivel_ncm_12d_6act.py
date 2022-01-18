@@ -143,8 +143,8 @@ def def_top_sd_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio,top_productos,
     return prpal_sd
 
 def def_top_cuits(asign_pre_matriz, dic_propio, bien, cuits_desc ):
-    top_cuits= asign_pre_matriz.groupby(["cuit", "sd"], as_index=False)['valor_pond'].sum("valor_pond").sort_values("sd", ascending=False)#.iloc[0:50]
-    top_cuits =  top_cuits.groupby(["sd"], as_index=False).head(10)
+    top_cuits= asign_pre_matriz.groupby(["cuit", "sd"], as_index=False)['valor_pond'].sum("valor_pond").sort_values("valor_pond", ascending=False)#.iloc[0:50]
+    top_cuits =  top_cuits.groupby(["sd"], as_index=False).head(10).sort_values("sd")
     top_cuits   = pd.merge(top_cuits  ,cuits_desc , how = "left", left_on="cuit", right_on = "cuit")
     top_cuits   = pd.merge(top_cuits  , dic_propio[["propio_letra_2", "desc"]].drop_duplicates(), how = "left", left_on="sd", right_on = "propio_letra_2").drop("propio_letra_2", 1)    
     top_cuits.to_csv("../data/resultados/principales_cuits_"+bien+".csv", index =False)
