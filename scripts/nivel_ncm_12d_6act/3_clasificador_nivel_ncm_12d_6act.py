@@ -66,7 +66,7 @@ asign_pre_matriz_pick  = def_asignacion_picks(bk_picks, mectra_pond)
 matriz_sisd_bk = to_matriz(pd.concat([asign_pre_matriz, asign_pre_matriz_pick ], 0)) #matriz SISD
 matriz_hssd_bk  = pd.pivot_table(asign_pre_matriz, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0)
 
-matriz_sisd_insumo.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
+# matriz_sisd_insumo.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
 asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
 matriz_sisd_bk.to_csv("../data/resultados/matriz_sisd.csv")
 matriz_hssd_bk.to_csv("../data/resultados/matriz_hssd_bk.csv")
