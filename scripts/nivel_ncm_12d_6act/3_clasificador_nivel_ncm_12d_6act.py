@@ -47,6 +47,7 @@ datos = preprocesamiento_datos(datos, dic_propio)
 datos_bk , datos_bk_sin_picks, bk_picks = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
 
+
 #############################################
 #         BK                                #
 #############################################
