@@ -7,7 +7,8 @@ Created on Fri Nov 12 17:48:20 2021
 
 import os 
 #Mateo
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 #igal
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
@@ -32,7 +33,7 @@ from def_pre_visualizacion_nivel_ncm_12d_6act import *
 dic_propio = pd.read_csv("../data/resultados/dic_clae_ciiu_propio.csv")
 ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 ncm12_desc = predo_ncm12_desc(ncm12_desc )   
-
+cuits_desc = pd.read_csv("../data/resultados/cuits_unicos.csv")
 
 
 # BK
@@ -68,7 +69,6 @@ top_5_impo_ci = top_5(asign_pre_matriz_ci, ncm12_desc,  impo_tot_sec_ci, dic_pro
 # =============================================================================
 #  top 50 de productos, los primeros 5 sectores importadores
 # =============================================================================
-
 top_productos = def_top_hs(asign_pre_matriz, ncm12_desc, "bk")
 top_productos_ci = def_top_hs(asign_pre_matriz_ci, ncm12_desc, "ci")
 
@@ -79,8 +79,8 @@ top_sd_de_top_hs_ci = def_top_sd_de_top_hs(asign_pre_matriz_ci, ncm12_desc, dic_
 # =============================================================================
 # 10 primeros cuit (razón social) importadores por sector
 # =============================================================================
-top_cuits = def_top_cuits(asign_pre_matriz, dic_propio, "bk")
-top_cuits_ci = def_top_cuits(asign_pre_matriz_ci, dic_propio, "ci")
+top_cuits = def_top_cuits(asign_pre_matriz, dic_propio, "bk", cuits_desc )
+top_cuits_ci = def_top_cuits(asign_pre_matriz_ci, dic_propio, "ci", cuits_desc )
 
 
 # =============================================================================

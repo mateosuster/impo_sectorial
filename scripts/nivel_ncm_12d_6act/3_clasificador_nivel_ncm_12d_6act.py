@@ -1,4 +1,3 @@
-
 # =============================================================================
 # Directorio de trabajo y librerias
 # =============================================================================
@@ -44,16 +43,9 @@ cuit_empresas= predo_cuit_clae(cuit_clae, clae) #meter loop aca
 dic_stp = predo_stp(dic_stp)
 dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
 
-datos = diccionario_especial(datos, dic_propio) 
-# datos.to_csv("../data/heavys/importaciones_pre_intro_matriz.csv")
-
-datos = def_act_ordenadas(datos)
-datos.drop("prob_bk", 1, inplace=True)
-
+datos = preprocesamiento_datos(datos, dic_propio)
 datos_bk , datos_bk_sin_picks, bk_picks = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
-
-
 
 #############################################
 #         BK                                #

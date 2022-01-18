@@ -299,6 +299,34 @@ def mod_z(col: pd.Series, thresh: float=3.5):
 # =============================================================================
 # ordenamiento de los datos de modelo
 # =============================================================================
+def preprocesamiento_datos(datos, dic_propio,  export_cuit = False):
+    datos = diccionario_especial(datos, dic_propio) 
+    datos = def_act_ordenadas(datos)
+    
+    datos.drop("prob_bk", 1, inplace=True)
+    
+    datos_2trans = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["act_ordenadas"].str.contains("J|I|O") ) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
+    datos_ok= datos[ ~datos.index.isin(datos_2trans.index) ]
+    print("Está ok el split?", len(datos_ok)+ len(datos_2trans) == len(datos))
+    
+    # x= datos_2trans[datos_2trans["letra3"]=="J"]
+    for letra_i, act_i in zip(["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"],
+                              ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]):
+        
+        letritas = ["J", "I_60", "I_61", "I_62", "I_64", "O"]
+        act_2change = dic_propio[dic_propio["propio_letra_2"].isin(letritas)]["propio"]
+        datos_2trans[act_i]  = np.where(datos_2trans[act_i].isin(act_2change), "999999" , datos_2trans[act_i])
+
+        for letrita in letritas :
+            datos_2trans.loc[:, letra_i] = datos_2trans[letra_i].apply(lambda x: x.replace(letrita, "G"))
+    
+    rtr = pd.concat([datos_2trans, datos_ok ], axis = 0)
+    
+    if export_cuit == True:
+        datos[["cuit", "NOMBRE"]].drop_duplicates().to_csv("../data/resultados/cuits_unicos.csv", index = False)
+        
+    return rtr
+
 
 def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     datos_bk = datos[datos["ue_dest"]== "BK"]
@@ -342,28 +370,20 @@ def filtro_ci(datos):
     start = datetime.datetime.now()
     datos_ci= datos[datos["ue_dest"]== "CI"]
     
-    datos_2trans = datos_ci[ (datos_ci["act_ordenadas"].str.contains("G") ) & (datos_ci["act_ordenadas"].str.contains("J|I|O") ) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
-    datos_ok= datos_ci[ ~datos_ci.index.isin(datos_2trans.index) ]
-    print("Está ok el split?", len(datos_ok)+ len(datos_2trans) == len(datos_ci))
+    # datos_2trans = datos_ci[ (datos_ci["act_ordenadas"].str.contains("G") ) & (datos_ci["act_ordenadas"].str.contains("J|I|O") ) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
+    # datos_ok= datos_ci[ ~datos_ci.index.isin(datos_2trans.index) ]
+    # print("Está ok el split?", len(datos_ok)+ len(datos_2trans) == len(datos_ci))
     
-    # x= datos_2trans[datos_2trans["letra3"]=="J"]
-    for letra_i, act_i in zip(["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"],
-                              ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]):
-        for letrita in ["J", "I_60", "I_61", "I_62", "I_64", "O"]:
-            datos_2trans.loc[:, letra_i] = datos_2trans[letra_i].apply(lambda x: x.replace(letrita, "G"))
-
-    # for index, row in datos_2trans.iterrows():    # ALTERNATIVA LENTA
-    #     for letra_i, act_i in zip(["letra1", "letra2", "letra3","letra4", "letra5", "letra6"],
-    #                           ["actividad1", "actividad2", "actividad3","actividad4", "actividad5", "actividad6"]):
-    #         if row[letra_i] in ["J","I", "O"]:
-    #             datos_2trans.loc[index, letra_i] = "G"
-    #             datos_2trans.loc[index, act_i] = "G_mayorista"
-                
+    # # x= datos_2trans[datos_2trans["letra3"]=="J"]
+    # for letra_i, act_i in zip(["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"],
+    #                           ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]):
+    #     for letrita in ["J", "I_60", "I_61", "I_62", "I_64", "O"]:
+    #         datos_2trans.loc[:, letra_i] = datos_2trans[letra_i].apply(lambda x: x.replace(letrita, "G"))
+    # rtr = pd.concat([datos_2trans, datos_ok ], axis = 0)
     
-    rtr = pd.concat([datos_2trans, datos_ok ], axis = 0)
     end = datetime.datetime.now()
     print(end-start)
-    return rtr
+    return datos_ci
 
 
 def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
