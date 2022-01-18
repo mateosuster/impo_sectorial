@@ -83,8 +83,10 @@ def graficos(dic_propio, impo_tot_sec, comercio_y_propio,  ue_dest, largo_activi
     #posiciones para graf
     y_pos = np.arange(len(impo_tot_sec.index))
     
-    plt.bar(y_pos , impo_tot_sec.iloc[:,0]/(10**6) )
+    values = impo_tot_sec.iloc[:,0]/(10**6)
+    plt.bar(y_pos ,values  )
     plt.xticks(y_pos , impo_tot_sec.index, rotation = 90)
+    plt.yticks(np.arange(0, values.max(), 1000))
     plt.title("Importaciones de "+ titulo + " destinadas a cada sector")#, fontsize = 30)
     plt.ylabel("Millones de USD")
     plt.xlabel("Sector \n \n Fuente: CEPXXI en base a Aduana, AFIP y UN Comtrade")
@@ -133,7 +135,7 @@ def def_top_hs(asign_pre_matriz, ncm12_desc, bien):
     return top_productos  
 
 def def_top_sd_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio,top_productos, bien):
-    prpal_sd = asign_pre_matriz[asign_pre_matriz["hs6_d12"].isin(top_productos["hs6_d12"])].groupby(["sd", "hs6_d12"], as_index=False)["valor_pond"].sum().sort_values(["sd","valor_pond"], ascending = False)
+    prpal_sd = asign_pre_matriz[asign_pre_matriz["hs6_d12"].isin(top_productos["hs6_d12"])].groupby(["sd", "hs6_d12"], as_index=False)["valor_pond"].sum().sort_values(["valor_pond"], ascending = False)
     prpal_sd  = prpal_sd .groupby(["hs6_d12"], as_index = False).head(5).sort_values(["hs6_d12", "valor_pond"], ascending=False)
     prpal_sd  = pd.merge(left=prpal_sd  , right=ncm12_desc, left_on="hs6_d12", right_on="HS_12d", how="left").drop("HS_12d", axis=1)
     prpal_sd   = pd.merge(prpal_sd  , dic_propio[["propio_letra_2", "desc"]].drop_duplicates(), how = "left", left_on="sd", right_on = "propio_letra_2").drop("propio_letra_2", 1)

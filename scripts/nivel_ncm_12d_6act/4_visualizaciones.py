@@ -90,7 +90,10 @@ top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz, ncm12_desc, dic_pr
 top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz_ci, ncm12_desc, dic_propio, top_productos, "ci")
 
 
-
+# =============================================================================
+#  Tree map
+# =============================================================================
+top_5_impo
 
 
 # =============================================================================
