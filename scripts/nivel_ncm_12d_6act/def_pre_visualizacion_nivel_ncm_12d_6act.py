@@ -123,7 +123,7 @@ def top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec, dic_propio, bien, n=5):
     top_5_impo = pd.merge(top_5_impo, dic_propio[["propio_letra_2", "desc"]].drop_duplicates(), how = "left", left_on="sd", right_on = "propio_letra_2").drop("propio_letra_2", 1)
     
     top_5_impo.to_excel("../data/resultados/top"+str(n)+"_impo_"+bien+".xlsx")
-    top_5_impo.to_csv("../data/resultados/top"+str(n)+"_impo_"+bien+".csv", index = False, sep=";")
+    top_5_impo.to_csv("../data/resultados/top"+str(n)+"_impo_"+bien+".csv", index = False, sep=";" , encoding='utf-8-sig')
     
     return top_5_impo
 
