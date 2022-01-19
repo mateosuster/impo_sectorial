@@ -32,6 +32,8 @@ data_pre = pd.read_csv( "../data/heavys/data_train_test_21oct.csv") #data_pre y 
 data_2pred = pd.read_csv("../data/resultados/data_to_pred_21oct.csv")
 data_model = pd.read_csv("../data/heavys/data_modelo_diaria.csv")  #data_model posee los datos que se utilizaran en el script 3
 
+data_model.ue_dest.value_counts()
+
 data_pre.info()
 data_2pred.info()
 data_model.info()

@@ -131,7 +131,7 @@ def top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec, dic_propio, bien, n=5):
 def def_top_hs(asign_pre_matriz, ncm12_desc, bien):
     top_productos = asign_pre_matriz.groupby(["hs6_d12"], as_index=False)['valor_pond'].sum("valor_pond").sort_values("valor_pond", ascending=False).iloc[0:50]
     top_productos  = pd.merge(left=top_productos , right=ncm12_desc, left_on="hs6_d12", right_on="HS_12d", how="left").drop("HS_12d", axis=1)
-    top_productos.to_csv("../data/resultados/top_productos_"+bien+".csv", index=False, sep=";")
+    top_productos.to_csv("../data/resultados/top_productos_"+bien+".csv", index=False, sep=";", encoding='utf-8-sig')
     return top_productos  
 
 def def_top_sd_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio,top_productos, bien):
@@ -139,7 +139,7 @@ def def_top_sd_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio,top_productos,
     prpal_sd  = prpal_sd .groupby(["hs6_d12"], as_index = False).head(5).sort_values(["hs6_d12", "valor_pond"], ascending=False)
     prpal_sd  = pd.merge(left=prpal_sd  , right=ncm12_desc, left_on="hs6_d12", right_on="HS_12d", how="left").drop("HS_12d", axis=1)
     prpal_sd   = pd.merge(prpal_sd  , dic_propio[["propio_letra_2", "desc"]].drop_duplicates(), how = "left", left_on="sd", right_on = "propio_letra_2").drop("propio_letra_2", 1)
-    prpal_sd.to_csv("../data/resultados/principales_destinos_del_top_hs_"+bien+".csv", index = False, sep=";")
+    prpal_sd.to_csv("../data/resultados/principales_destinos_del_top_hs_"+bien+".csv", index = False, sep=";",  encoding='utf-8-sig')
     return prpal_sd
 
 def def_top_cuits(asign_pre_matriz, dic_propio, bien, cuits_desc ):
@@ -147,7 +147,7 @@ def def_top_cuits(asign_pre_matriz, dic_propio, bien, cuits_desc ):
     top_cuits =  top_cuits.groupby(["sd"], as_index=False).head(10).sort_values("sd")
     top_cuits   = pd.merge(top_cuits  ,cuits_desc , how = "left", left_on="cuit", right_on = "cuit")
     top_cuits   = pd.merge(top_cuits  , dic_propio[["propio_letra_2", "desc"]].drop_duplicates(), how = "left", left_on="sd", right_on = "propio_letra_2").drop("propio_letra_2", 1)    
-    top_cuits.to_csv("../data/resultados/principales_cuits_"+bien+".csv", index =False, sep=";")
+    top_cuits.to_csv("../data/resultados/principales_cuits_"+bien+".csv", index =False, sep=";", encoding='utf-8-sig')
     return top_cuits 
 
 def def_top_cuit_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_productos, bien, cuits_desc):
@@ -157,7 +157,7 @@ def def_top_cuit_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_product
     prpal_sd   = pd.merge(prpal_sd  ,cuits_desc , how = "left", left_on="cuit", right_on = "cuit")
   
     # prpal_sd   = pd.merge(prpal_sd  , dic_propio[["propio_letra_2", "desc"]].drop_duplicates(), how = "left", left_on="sd", right_on = "propio_letra_2").drop("propio_letra_2", 1)
-    prpal_sd.to_csv("../data/resultados/principales_cuits_top_hs_"+bien+".csv", index = False, sep=";")  
+    prpal_sd.to_csv("../data/resultados/principales_cuits_top_hs_"+bien+".csv", index = False, sep=";", encoding='utf-8-sig')  
     return prpal_sd
 
 
