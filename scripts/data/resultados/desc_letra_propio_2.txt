@@ -17,7 +17,7 @@ D_26	Otros minerales no metálicos
 D_27	Metales comunes	
 D_28	Otros productos de metal	
 D_29	Maquinaria y equipo	
-D_29_30_31_32_33	D_29_30_31_32_33	
+D_29_30_31_32_33	Maquinaria n.c.p.	
 D_30	Maquinaria de oficina	
 D_31	Aparatos eléctricos	
 D_32	Radio y televisión	

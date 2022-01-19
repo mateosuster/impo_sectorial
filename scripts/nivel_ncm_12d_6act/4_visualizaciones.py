@@ -35,6 +35,7 @@ ncm12_desc = pd.read_csv("../data/d12_2012-2017.csv", sep=";")
 ncm12_desc = predo_ncm12_desc(ncm12_desc )   
 cuits_desc = pd.read_csv("../data/resultados/cuits_unicos.csv")
 
+dic_propio[["propio_letra_2", "desc"]].drop_duplicates().to_csv("../data/resultados/desc_actividades.csv", index=False, sep=";", encoding='utf-8-sig')
 
 # BK
 matriz_sisd_bk = pd.read_csv("../data/resultados/matriz_sisd.csv").set_index("si")
