@@ -10,7 +10,7 @@ os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 import pandas as pd
 import numpy as np
 import seaborn as sns
-
+import datetime
 from def_bases_nivel_ncm_12d_6act import *
 from def_procesamiento_nivel_ncm_12d_6act import *
 from def_matriz_nivel_ncm_12d_6act import *
@@ -19,6 +19,7 @@ from def_pre_visualizacion_nivel_ncm_12d_6act import *
 #############################################
 # Cargar bases con las que vamos a trabajar #
 #############################################
+start = datetime.datetime.now()
 datos = pd.read_csv("../data/heavys/datos_clasificados_modelo_all_data_21oct.csv", sep = ";")
 
 #auxiliares
@@ -91,6 +92,8 @@ matriz_sisd_ci.to_csv("../data/resultados/matriz_sisd_ci.csv")
 # asign_pre_matriz_ci = pd.read_csv("../data/resultados/asign_pre_matriz_ci.csv")
 # matriz_sisd_ci = pd.read_csv("../data/resultados/matriz_sisd_ci.csv")
 
+end = datetime.datetime.now()
+print(end-start)
 
 
 # =============================================================================

@@ -305,7 +305,9 @@ def preprocesamiento_datos(datos, dic_propio,  export_cuit = False):
     
     datos.drop("prob_bk", 1, inplace=True)
     
-    datos_2trans = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["act_ordenadas"].str.contains("J|I|O|K") ) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
+    datos_2trans = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["act_ordenadas"].str.contains("J|I|O|K")) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
+    datos_2trans = datos_2trans[(datos_2trans["act_ordenadas"].str.contains("A|B|C|D|E|F|H|L|M|N|P|Q|R|P|S|T|U"))   ]
+    
     datos_ok= datos[ ~datos.index.isin(datos_2trans.index) ]
     print("Está ok el split?", len(datos_ok)+ len(datos_2trans) == len(datos))
     
@@ -313,7 +315,7 @@ def preprocesamiento_datos(datos, dic_propio,  export_cuit = False):
     for letra_i, act_i in zip(["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"],
                               ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]):
         
-        letritas = ["J", "I_60", "I_61", "I_62",  "I_63", "I_64", "O", "K_70", "K_74"]
+        letritas = ["J", "I_60", "I_61", "I_62",  "I_63", "I_64", "O", "K_70","K_71", "K_74"]
         act_2change = dic_propio[dic_propio["propio_letra_2"].isin(letritas)]["propio"]
         datos_2trans[act_i]  = np.where(datos_2trans[act_i].isin(act_2change), "999999" , datos_2trans[act_i])
 

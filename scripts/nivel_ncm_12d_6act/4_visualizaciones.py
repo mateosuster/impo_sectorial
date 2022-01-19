@@ -86,8 +86,8 @@ top_cuits_ci = def_top_cuits(asign_pre_matriz_ci, dic_propio, "ci", cuits_desc )
 # =============================================================================
 # 10 primeros cuit importadores de los 50 productos más importados
 # =============================================================================
-top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_productos, "bk")
-top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz_ci, ncm12_desc, dic_propio, top_productos, "ci")
+top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_productos, "bk", cuits_desc)
+top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz_ci, ncm12_desc, dic_propio, top_productos, "ci", cuits_desc)
 
 
 # =============================================================================
