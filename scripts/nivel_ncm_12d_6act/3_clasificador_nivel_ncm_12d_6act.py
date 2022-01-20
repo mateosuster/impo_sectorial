@@ -2,15 +2,16 @@
 # Directorio de trabajo y librerias
 # =============================================================================
 import os 
-# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
-os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
 # os.getcwd()
 import pandas as pd
 import numpy as np
 import seaborn as sns
 import datetime
+
 from def_bases_nivel_ncm_12d_6act import *
 from def_procesamiento_nivel_ncm_12d_6act import *
 from def_matriz_nivel_ncm_12d_6act import *

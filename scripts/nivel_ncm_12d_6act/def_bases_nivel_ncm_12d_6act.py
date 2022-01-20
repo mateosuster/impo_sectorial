@@ -335,8 +335,9 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     
     ncm_trans = [
                 870421, 870431, #pick-ups confirmado por Maito
-                 870422, 870423, 870490, 870432, 
-                 870210, 870210,870290 
+                 870422, 870423, 870490, 870432, # camiones
+                 870210, 870210,870290, # transporte de pasajeros
+                 870120, 870130, 870190 # Tractores de carretera para semirremolques 
                  # 870310, 870321, 870322, 870323, 870324, 870331, 870332,
                  # 870333, 870390 # mandar a consumo
                  ]

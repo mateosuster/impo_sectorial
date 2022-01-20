@@ -58,7 +58,6 @@ def def_asignacion_sec(raw_data, ci = False):
                               [vta_bk, vta_bk2, vta_bk3,vta_bk4, vta_bk5, vta_bk6],
                               [vta_sec, vta_sec2, vta_sec3, vta_sec4, vta_sec5, vta_sec6],
                               [letra1_pond, letra2_pond, letra3_pond, letra4_pond, letra5_pond, letra6_pond]):
-
             if a[b] == "G":
                 if ci == False:
                     if a[c] == 0:
@@ -67,7 +66,11 @@ def def_asignacion_sec(raw_data, ci = False):
                         letra_sd = "CONS"
                     else:
                        letra_sd = None #np.nan #asigno por probabilidad
-
+                else:
+                    if a[d] ==0:
+                        letra_sd = "CONS"
+                    else:
+                       letra_sd = None 
             else:
                 letra_sd = a[b]
 
@@ -82,12 +85,11 @@ def def_asignacion_sec(raw_data, ci = False):
 
     for_fill = pd.DataFrame.from_dict(dictionary_list)
 
-    for_fill["sd"] = np.where(for_fill["hs6_d12"].str.startswith(("8703", "640399","490199", "621111", "620342", "620293", "611241", "902131" )), 
+    for_fill["sd"] = np.where(for_fill["hs6_d12"].str.startswith(( "8703", "640399","490199", "621111", "620342", "620293", "611241", "902131" )), 
                               "CONS", for_fill["sd"] )
-    
-    for_fill["si"] = np.where(for_fill["hs6_d12"].str.startswith(("8702", "8703", "8704", "640399","490199", "621111", "620342", "620293", "611241", "902131" )), 
+    for_fill["si"] = np.where(for_fill["hs6_d12"].str.startswith(( "8703", "8704", "640399","490199", "621111", "620342", "620293", "611241", "902131" )), 
                               "G", for_fill["si"] )
-
+        
     return for_fill
   
 
