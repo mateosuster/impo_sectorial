@@ -1,0 +1,502 @@
+﻿;;;;;Consumo;
+cuit;sd;;;Actividad;Empresa; Valor asignado (USD) 
+20175603698;P;;;Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores;GANE FRANCISCO; 1,760 
+30691324563;P;;;Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores;TECHNOLOGY GROUPSRL; 97 
+20076409960;P;;;Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores;VIO DANIEL PEDRO; 22 
+20119533903;P;;;Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores;ARCASTI MARCELO GABRIEL; 4 
+30628323603;P;;;Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores;GRUPO SIMPA S A; 1 
+33711348919;P;;;Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores;CERVERE S.A.; 1 
+20109542157;P;;;Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores;CATAVORELLO ROBERTO MARIO; 1 
+20227782189;P;;;Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores;YRRAZABAL MARCELO ADALBERTO; 0 
+30521329242;P;;;Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores;MAQUINARIAS CASEROS S A; 0 
+20139660189;P;;;Actividades de hogares privados como empleadores y actividades no diferenciadas de hogares privados como productores;PICCOTTO MARIO ROBERTO; 0 
+30525309262;K_72;;;Actividades de informática;NCR ARGENTINA SOCIEDAD DE RESPONSABILIDAD LIMITADA; 18,415,934 
+30503961268;K_72;;;Actividades de informática;IBM ARGENTINA SRL; 10,516,330 
+30630402073;K_72;;;Actividades de informática;TELLEX S A; 7,968,651 
+30640142673;K_72;;;Actividades de informática;ORACLE ARGENTINA S.R.L; 7,097,698 
+33708632959;K_72;;;Actividades de informática;FIRST SYSTEMS S.R.L.; 6,313,976 
+30708408243;K_72;;;Actividades de informática;PIXART SOCIEDAD DE RESPONSABILIDAD LIMITADA; 5,886,439 
+30707689915;K_72;;;Actividades de informática;HUAWEI TECH INVESTMENT CO LTD.; 3,296,651 
+30692877817;K_72;;;Actividades de informática;ACCESS MEDICAL SYSTEMS S A; 2,759,636 
+30542034552;K_72;;;Actividades de informática;HEWLETT PACKARD ARGENTINA SOCIEDAD DE RESPONSABILI; 2,700,300 
+30707198423;K_72;;;Actividades de informática;DELL AMERICA LATINA CORP; 2,291,667 
+30711655197;L;;;Administración pública y defensa;MINISTERIO DE SEGURIDAD; 23,457,776 
+30715127209;L;;;Administración pública y defensa;MINISTERIO DE TRANSPORTE; 17,100,132 
+30647227119;L;;;Administración pública y defensa;FINNING ARGENTINA SOCIEDAD ANONIMA; 14,876,127 
+30709925977;L;;;Administración pública y defensa;MINISTERIO DE AMBIENTE Y DESARROLLO SOSTENIBLE; 12,328,050 
+30710100140;L;;;Administración pública y defensa;CENTRO CIENTIFICO TECNOLOGICO CONICET LA PLATA (CC; 8,412,607 
+30675428081;L;;;Administración pública y defensa;SUPERIOR GOBIERNO DE LA PCIA DE TUCUMAN; 7,389,706 
+30648839088;L;;;Administración pública y defensa;MINISTERIO DE SEGURIDAD -SEGURIDAD PROVINCIAL; 7,064,782 
+30546662507;L;;;Administración pública y defensa;REGISTRO NACIONAL DE LAS PERSONAS; 6,463,735 
+30653139507;L;;;Administración pública y defensa;SECRETARIA GENERAL DE LA GOBERNACION; 5,329,970 
+30707219536;L;;;Administración pública y defensa;EDUC.AR SOCIEDAD DEL ESTADO; 4,919,597 
+30585895268;A;;;Agricultura, ganadería, caza y silvicultura;CNH INDUSTRIAL ARGENTINA S.A.; 210,693,099 
+30503720236;A;;;Agricultura, ganadería, caza y silvicultura;INDUSTRIAS JOHN DEERE ARGENTINA S A; 154,394,261 
+30503858327;A;;;Agricultura, ganadería, caza y silvicultura;AGCO ARGENTINA SOCIEDAD ANONIMA; 72,150,009 
+30707003118;A;;;Agricultura, ganadería, caza y silvicultura;CLAAS ARGENTINA SOCIEDAD ANONIMA; 29,110,046 
+30647227119;A;;;Agricultura, ganadería, caza y silvicultura;FINNING ARGENTINA SOCIEDAD ANONIMA; 7,971,172 
+30632089739;A;;;Agricultura, ganadería, caza y silvicultura;MULTIJACTO S A; 7,802,377 
+33599594839;A;;;Agricultura, ganadería, caza y silvicultura;REPAS S A; 5,782,202 
+30590428775;A;;;Agricultura, ganadería, caza y silvicultura;ROBERTO C RUMBO S R L; 5,619,693 
+30531489086;A;;;Agricultura, ganadería, caza y silvicultura;PATRICIO PALMERO S A I C Y A; 5,463,151 
+30709627062;A;;;Agricultura, ganadería, caza y silvicultura;CAPEI S R L; 5,210,035 
+33508358259;D_15;;;Alimentos;CERVECERIA Y MALTERIA QUILMES SAICA Y G; 15,750,241 
+30546764040;D_15;;;Alimentos;NESTLE ARGENTINA S A; 11,923,420 
+30709590894;D_15;;;Alimentos;RENOVA S.A; 8,791,522 
+30500858628;D_15;;;Alimentos;MOLINOS RIO DE LA PLATA S A; 6,379,683 
+30502793175;D_15;;;Alimentos;ARCOR S A I C; 6,305,022 
+30708668733;D_15;;;Alimentos;REFRES NOW S.A.; 6,115,320 
+30537647716;D_15;;;Alimentos;PEPSICO DE ARGENTINA SOCIEDAD DE RESPONSABILIDAD L; 5,395,635 
+30500974016;D_15;;;Alimentos;ASOCIACION ARGENTINA DE LOS ADVENTISTAS DEL SEPTIM; 5,000,787 
+33627088499;D_15;;;Alimentos;CUENCA DEL SALADO SA; 4,482,238 
+30678213094;D_15;;;Alimentos;GROUPE SEB ARGENTINA  S A; 4,164,729 
+30682526544;K_71;;;Alquiler de equipo de transporte y de maquinaria;VERIFONE ARGENTINA S A; 12,930,078 
+33661932509;K_71;;;Alquiler de equipo de transporte y de maquinaria;IGT ARGENTINA S A; 8,787,068 
+30647227119;K_71;;;Alquiler de equipo de transporte y de maquinaria;FINNING ARGENTINA SOCIEDAD ANONIMA; 8,555,261 
+30709514632;K_71;;;Alquiler de equipo de transporte y de maquinaria;ARISTOCRAT (ARGENTINA) PTY LIMITED SOCIEDAD EXTRAN; 7,696,059 
+30682440003;K_71;;;Alquiler de equipo de transporte y de maquinaria;IGARRETA MAQUINAS SA; 4,688,659 
+30576721710;K_71;;;Alquiler de equipo de transporte y de maquinaria;SULLAIR ARGENTINA S A; 3,858,953 
+30715233599;K_71;;;Alquiler de equipo de transporte y de maquinaria;PETREX S.A., SUCURSAL ARGENTINA; 3,288,556 
+30714019348;K_71;;;Alquiler de equipo de transporte y de maquinaria;AGT PTY ARGENTINA SRL; 2,790,403 
+33599594839;K_71;;;Alquiler de equipo de transporte y de maquinaria;REPAS S A; 2,417,311 
+30711901996;K_71;;;Alquiler de equipo de transporte y de maquinaria;ALEQUIP S.A.; 2,134,954 
+33714924619;D_31;;;Aparatos eléctricos;SIGNIFY ARGENTINA S.A.; 8,958,497 
+30592199544;D_31;;;Aparatos eléctricos;SCHNEIDER ELECTRIC ARGENTINA SOCIEDAD ANONIMA; 5,847,577 
+30500914277;D_31;;;Aparatos eléctricos;LEDVANCE S A; 5,522,183 
+30690833413;D_31;;;Aparatos eléctricos;TICAR S R L; 4,846,921 
+30601166158;D_31;;;Aparatos eléctricos;LUMENAC SOCIEDAD ANONIMA; 3,579,750 
+30690376527;D_31;;;Aparatos eléctricos;DISTRIBUIDORA INTERELEC S A; 3,112,978 
+30711784469;D_31;;;Aparatos eléctricos;CORESA GROUP S.R.L.; 2,818,692 
+30611906079;D_31;;;Aparatos eléctricos;PALMERO SAN LUIS SA; 2,469,648 
+30502414719;D_31;;;Aparatos eléctricos;PRYSMIAN ENERGIA CABLES Y SISTEMAS DE ARGENTINA SO; 2,220,112 
+30502891584;D_31;;;Aparatos eléctricos;INDUSTRIAS SICA S A I C; 2,132,049 
+30502987360;D_34;;;Automotores;MERCEDES-BENZ ARGENTINA S.A.U; 100,708,365 
+30504018845;D_34;;;Automotores;VOLKSWAGEN ARGENTINA S A; 73,697,537 
+30503317814;D_34;;;Automotores;RENAULT ARGENTINA S.A; 62,991,122 
+30678519681;D_34;;;Automotores;FORD ARGENTINA SOCIEDAD EN COMANDITA POR ACCIONES; 59,062,140 
+30516150641;D_34;;;Automotores;VOLVO TRUCKS Y BUSES  ARGENTINA S.A.; 49,795,333 
+30682450963;D_34;;;Automotores;FCA AUTOMOBILES ARGENTINA S A; 19,286,802 
+30585895268;D_34;;;Automotores;CNH INDUSTRIAL ARGENTINA S.A.; 14,360,385 
+30685014420;D_34;;;Automotores;DENSO MANUFACTURING ARGENTINA S.A.; 13,961,220 
+30711585350;D_34;;;Automotores;NISSAN ARGENTINA S.A.; 12,788,870 
+30578036071;D_34;;;Automotores;MIRGOR SA C I F I A; 10,133,138 
+30517424303;G;;;Comercio al por mayor y al por menor;SCANIA ARGENTINA S A U; 138,000,334 
+30663288497;G;;;Comercio al por mayor y al por menor;AMX ARGENTINA SOCIEDAD ANONIMA; 55,398,491 
+30516150641;G;;;Comercio al por mayor y al por menor;VOLVO TRUCKS Y BUSES  ARGENTINA S.A.; 50,654,750 
+30708602309;G;;;Comercio al por mayor y al por menor;PC-ARTS ARGENTINA S.A.; 37,834,877 
+30585895268;G;;;Comercio al por mayor y al por menor;CNH INDUSTRIAL ARGENTINA S.A.; 35,175,559 
+30682347194;G;;;Comercio al por mayor y al por menor;MINERA ANDINA DEL SOL SRL; 33,095,939 
+30677423141;G;;;Comercio al por mayor y al por menor;ROBERT BOSCH ARGENTINA INDUSTRIAL SA; 32,355,953 
+30707975020;G;;;Comercio al por mayor y al por menor;SOLUTION BOX S.R.L.; 26,905,880 
+33650305499;G;;;Comercio al por mayor y al por menor;CENTRAL PUERTO S A; 25,126,734 
+30711588910;G;;;Comercio al por mayor y al por menor;INFORMATICA FUEGUINA S.A.; 24,171,153 
+30677291083;D_18;;;Confecciones;CHEEK SOCIEDAD ANONIMA; 444,715 
+30690333917;D_18;;;Confecciones;RESEARCH TEXTIL S R L; 356,238 
+30712002944;D_18;;;Confecciones;BWK 1924 SRL; 341,082 
+30708539739;D_18;;;Confecciones;VIU  SA; 311,638 
+30707607544;D_18;;;Confecciones;REALTEX S.A.; 266,436 
+30710791879;D_18;;;Confecciones;IMPORBAMAS SOCIEDAD ANONIMA; 231,419 
+30576630057;D_18;;;Confecciones;HINCK SA; 193,116 
+30709936766;D_18;;;Confecciones;LEMALA S A; 166,098 
+30643620525;D_18;;;Confecciones;TESSICOT S A; 139,674 
+33542082459;D_18;;;Confecciones;TOPYED SA; 121,122 
+30647227119;F;;;Construcción;FINNING ARGENTINA SOCIEDAD ANONIMA; 61,090,742 
+30501598131;F;;;Construcción;INDUSTRIAS JUAN F SECCO S A; 54,284,737 
+30682440003;F;;;Construcción;IGARRETA MAQUINAS SA; 22,760,413 
+33599594839;F;;;Construcción;REPAS S A; 19,365,974 
+30576721710;F;;;Construcción;SULLAIR ARGENTINA S A; 18,691,467 
+30531489086;F;;;Construcción;PATRICIO PALMERO S A I C Y A; 16,974,523 
+30714272671;F;;;Construcción;CONSORCIO CMI GHELLA S.P.A SUCURSAL ARGENTINA GHEL; 14,804,234 
+33714250359;F;;;Construcción;SALINI IMPREGILO S.P.A - THE LANE CONSTRUCTION COR; 13,237,689 
+30715363697;F;;;Construcción;NONOGASTA SOLAR S.A.; 11,943,684 
+30547981029;F;;;Construcción;TECHINT COMPA?IA TECNICA INTERNACIONAL SOCIEDAD AN; 11,545,521 
+30504018845;CONS;;;Consumo;VOLKSWAGEN ARGENTINA S A; 1,148,404,524 
+30662071680;CONS;;;Consumo;GENERAL MOTORS DE ARGENTINA SOCIEDAD DE RESPONSABI; 898,011,440 
+30504744538;CONS;;;Consumo;PEUGEOT CITROEN ARGENTINA SOCIEDAD ANONIMA; 780,910,740 
+30678519681;CONS;;;Consumo;FORD ARGENTINA SOCIEDAD EN COMANDITA POR ACCIONES; 780,764,040 
+33679139369;CONS;;;Consumo;TOYOTA ARGENTINA S A; 668,203,855 
+30503317814;CONS;;;Consumo;RENAULT ARGENTINA S.A; 660,579,256 
+30682450963;CONS;;;Consumo;FCA AUTOMOBILES ARGENTINA S A; 464,997,953 
+30711585350;CONS;;;Consumo;NISSAN ARGENTINA S.A.; 210,395,078 
+30577546777;CONS;;;Consumo;HONDA MOTOR DE ARGENTINA SOCIEDAD ANONIMA; 144,137,219 
+30682963464;CONS;;;Consumo;BMW DE ARGENTINA S.A.; 109,994,892 
+30639453738;I_64;;;Correos y telecomunicaciones;TELECOM ARGENTINA SOCIEDAD ANONIMA; 104,499,709 
+30640897267;I_64;;;Correos y telecomunicaciones;TELECENTRO S A; 58,788,666 
+30663288497;I_64;;;Correos y telecomunicaciones;AMX ARGENTINA SOCIEDAD ANONIMA; 22,804,816 
+33621885559;I_64;;;Correos y telecomunicaciones;LOGICALIS ARGENTINA SA; 17,015,079 
+30632043224;I_64;;;Correos y telecomunicaciones;ITALTEL ARGENTINA S.A.; 13,077,343 
+30685889397;I_64;;;Correos y telecomunicaciones;DIRECTV ARGENTINA SOCIEDAD ANONIMA; 12,095,713 
+30678814357;I_64;;;Correos y telecomunicaciones;TELEFONICA MOVILES ARGENTINA SOCIEDAD ANONIMA; 11,872,723 
+30639453975;I_64;;;Correos y telecomunicaciones;TELEFONICA DE ARGENTINA SA; 10,870,650 
+30707689915;I_64;;;Correos y telecomunicaciones;HUAWEI TECH INVESTMENT CO LTD.; 9,000,747 
+30503961268;I_64;;;Correos y telecomunicaciones;IBM ARGENTINA SRL; 6,916,191 
+30573011879;D_19;;;Cuero;DISTRINANDO S A; 2,490,287 
+30698783032;D_19;;;Cuero;LADY STORK S A; 1,577,133 
+30709114766;D_19;;;Cuero;RAVEQUIO S.A.; 985,286 
+30682450963;D_19;;;Cuero;FCA AUTOMOBILES ARGENTINA S A; 768,736 
+30707243976;D_19;;;Cuero;SCHUSTER MAQUINARIAS SOCIEDAD ANONIMA; 710,546 
+30707784292;D_19;;;Cuero;INDUSTRIAS DE PASCALE S.A.; 605,588 
+30703468515;D_19;;;Cuero;TECAL SA; 554,455 
+30715300105;D_19;;;Cuero;INDUSTRIAS G&D S.A.; 532,812 
+30500608656;D_19;;;Cuero;SA LA HISPANO ARGENTINA CURTIEMBRE Y CHAROLERIA; 515,736 
+30624054438;D_19;;;Cuero;JBS LEATHER ARGENTINA S.A.; 462,559 
+30548089405;D_22;;;Edición;INTERPACK  S A; 2,679,037 
+30708108304;D_22;;;Edición;FLEXIMPRESS S.R.L.; 1,639,399 
+30541682372;D_22;;;Edición;XEROX ARGENTINA I C S A; 1,357,135 
+30500229973;D_22;;;Edición;AKIAN GRAFICA EDITORA SOCIEDAD ANONIMA; 1,322,677 
+30614104712;D_22;;;Edición;EPSON ARGENTINA S.R.L.; 1,300,817 
+30613078181;D_22;;;Edición;CONTARTESE GRAFICA SRL; 1,197,509 
+33600427879;D_22;;;Edición;BORSELLINO IMPRESOS SOCIEDAD DE RESPONSABILIDAD LI; 1,097,787 
+30709968250;D_22;;;Edición;BOLDT IMPRESORES SA; 1,095,476 
+30660361959;D_22;;;Edición;LABELS PLAST SA; 993,743 
+30714809373;D_22;;;Edición;HP INC ARGENTINA S.R.L.; 971,884 
+30632884385;M;;;Enseñanza;JENCK S A; 558,373 
+30546671166;M;;;Enseñanza;UNIVERSIDAD TECNOLOGICA NACIONAL; 553,826 
+30520079129;M;;;Enseñanza;PROANALISIS SA; 477,728 
+30546668785;M;;;Enseñanza;UNIVERSIDAD NACIONAL DEL SUR; 458,826 
+30713748508;M;;;Enseñanza;YPF TECNOLOGIA S.A.; 354,344 
+30546670550;M;;;Enseñanza;UNIVERSIDAD NACIONAL DEL LITORAL; 341,532 
+30586762024;M;;;Enseñanza;UNIVERSIDAD NACIONAL DE JUJUY; 236,462 
+30711590567;M;;;Enseñanza;DEHNER S.R.L.; 235,639 
+30711706417;M;;;Enseñanza;BIO-OPTIC S.R.L.; 227,531 
+30614104712;M;;;Enseñanza;EPSON ARGENTINA S.R.L.; 215,036 
+30647227119;C;;;Explotación de minas y canteras;FINNING ARGENTINA SOCIEDAD ANONIMA; 24,954,124 
+30707992669;C;;;Explotación de minas y canteras;YACIMIENTO CARBONIFERO RIO TURBIO Y DE LOS SERVICI; 22,748,148 
+30546689979;C;;;Explotación de minas y canteras;YPF SOCIEDAD ANONIMA; 18,639,316 
+30503610988;C;;;Explotación de minas y canteras;HALLIBURTON ARGENTINA SOCIEDAD DE RESPONSABILIDAD; 17,184,075 
+30526552659;C;;;Explotación de minas y canteras;PAMPA ENERGIA S A; 17,110,274 
+30708380829;C;;;Explotación de minas y canteras;ESTELAR RESOURCES LIMITED  S.A; 13,726,426 
+30715233599;C;;;Explotación de minas y canteras;PETREX S.A., SUCURSAL ARGENTINA; 11,882,817 
+30682440003;C;;;Explotación de minas y canteras;IGARRETA MAQUINAS SA; 11,822,511 
+30576721710;C;;;Explotación de minas y canteras;SULLAIR ARGENTINA S A; 8,140,206 
+30708625414;C;;;Explotación de minas y canteras;OROPLATA SOCIEDAD ANONIMA; 7,200,247 
+30585581247;D_33;;;Instrumentos médicos;INVAP SOCIEDAD DEL ESTADO; 4,767,683 
+30707766316;D_33;;;Instrumentos médicos;ITRON ARGENTINA  SA; 4,460,042 
+30703459192;D_33;;;Instrumentos médicos;TECNO STAFF S A.U.; 2,489,882 
+33685159649;D_33;;;Instrumentos médicos;STOREY SA; 1,437,668 
+30522674172;D_33;;;Instrumentos médicos;IMPLANTES F. I. C. O.  ALEMANA S.A.; 1,128,448 
+30566535005;D_33;;;Instrumentos médicos;TECME S A; 1,087,912 
+30613926905;D_33;;;Instrumentos médicos;J Y R CAPELLO SA; 1,081,996 
+30709042269;D_33;;;Instrumentos médicos;KINETICAL SRL; 884,119 
+30592199544;D_33;;;Instrumentos médicos;SCHNEIDER ELECTRIC ARGENTINA SOCIEDAD ANONIMA; 718,375 
+30708690925;D_33;;;Instrumentos médicos;GTE S.R.L.; 674,331 
+33500005179;J;;;Intermediación financiera;BANCO SUPERVIELLE SOCIEDAD ANONIMA; 19,314,948 
+33999242109;J;;;Intermediación financiera;BANCO DE LA PROVINCIA DE BUENOS AIRES; 8,032,359 
+30692432661;J;;;Intermediación financiera;NUEVO BANCO DE SANTA FE SA; 7,969,171 
+30708762047;J;;;Intermediación financiera;BAF CAPITAL SA; 7,938,940 
+30604731018;J;;;Intermediación financiera;BANCO COMAFI SOCIEDAD ANONIMA; 4,798,723 
+30500005625;J;;;Intermediación financiera;CITIBANK N A; 4,679,383 
+30500008454;J;;;Intermediación financiera;BANCO SANTANDER RIO SOCIEDAD ANONIMA; 4,413,056 
+30647227119;J;;;Intermediación financiera;FINNING ARGENTINA SOCIEDAD ANONIMA; 4,366,747 
+30576721710;J;;;Intermediación financiera;SULLAIR ARGENTINA S A; 3,912,802 
+30708687800;J;;;Intermediación financiera;TOYOTA MATERIAL HANDLING MERCOSUR INDUSTRIA E COME; 3,434,760 
+30709670413;K_73;;;Investigación y desarrollo;EMPRESA ARGENTINA DE SOLUCIONES SATELITALES SOCIED; 17,331,029 
+30546660210;K_73;;;Investigación y desarrollo;COMISION NACIONAL DE ENERGIA ATOMICA; 9,514,459 
+30713977906;K_73;;;Investigación y desarrollo;INFINERA CORPORATION ARGENTINA SRL; 1,834,724 
+33621885559;K_73;;;Investigación y desarrollo;LOGICALIS ARGENTINA SA; 1,807,315 
+30546660385;K_73;;;Investigación y desarrollo;CONSEJO NACIONAL DE INVESTIGACIONES CIENTIFICAS Y; 1,723,981 
+30632043224;K_73;;;Investigación y desarrollo;ITALTEL ARGENTINA S.A.; 1,331,432 
+30585581247;K_73;;;Investigación y desarrollo;INVAP SOCIEDAD DEL ESTADO; 1,236,126 
+30663288497;K_73;;;Investigación y desarrollo;AMX ARGENTINA SOCIEDAD ANONIMA; 1,164,028 
+30700473658;K_73;;;Investigación y desarrollo;BECTON DICKINSON ARGENTINA S R L; 916,065 
+30503364898;K_73;;;Investigación y desarrollo;SIEMENS ENERGY S.A.; 761,416 
+30518455970;D_20;;;Madera;COMPA?IA AMERICANA DE LAPICES SOCIEDAD DE RESPONSA; 2,523,915 
+30656553711;D_20;;;Madera;EGGER  ARGENTINA  S A U; 1,808,036 
+33563240119;D_20;;;Madera;ARAUCO ARGENTINA S.A; 1,574,593 
+30503664131;D_20;;;Madera;OBLAK HNOS S A C I F I; 278,468 
+30607086989;D_20;;;Madera;FORESTAL GUARANI SA; 274,817 
+30576209890;D_20;;;Madera;FORESTADORA TAPEBICUA S.A.U.; 242,305 
+30691732629;D_20;;;Madera;SADEPAN LATINOAMERICANA SA; 233,950 
+30709993050;D_20;;;Madera;ASERRADERO JESKE SRL; 207,094 
+30685115359;D_20;;;Madera;INDELAMA SRL; 189,854 
+30708490799;D_20;;;Madera;FORMANOVA SOCIEDAD DE RESPONSABILIDAD LIMITADA; 180,623 
+30714101443;I_63;;;Manipulación de carga, almacenamiento y depósito;BELGRANO CARGAS Y LOGISTICA SA; 221,793,000 
+30701009610;I_63;;;Manipulación de carga, almacenamiento y depósito;ICON ARGENTINA S.A; 17,650,635 
+30641405554;I_63;;;Manipulación de carga, almacenamiento y depósito;AEROLINEAS ARGENTINAS SOCIEDAD ANONIMA; 15,835,483 
+30710225768;I_63;;;Manipulación de carga, almacenamiento y depósito;WAIVER LOGISTICA ARGENTINA SA; 10,358,963 
+30707542329;I_63;;;Manipulación de carga, almacenamiento y depósito;LAN ARGENTINA SOCIEDAD ANONIMA; 7,969,000 
+30710695993;I_63;;;Manipulación de carga, almacenamiento y depósito;ADMINISTRACION DE INFRAESTRUCTURAS FERROVIARIA SOC; 4,890,019 
+33708052979;I_63;;;Manipulación de carga, almacenamiento y depósito;HIGH FLIGHT LOGISTICS SRL; 3,827,224 
+33621885559;I_63;;;Manipulación de carga, almacenamiento y depósito;LOGICALIS ARGENTINA SA; 3,344,767 
+30505012182;I_63;;;Manipulación de carga, almacenamiento y depósito;VIAL AGRO S A; 2,819,679 
+30632043224;I_63;;;Manipulación de carga, almacenamiento y depósito;ITALTEL ARGENTINA S.A.; 2,311,866 
+30614104712;D_30;;;Maquinaria de oficina;EPSON ARGENTINA S.R.L.; 1,548,242 
+30710779054;D_30;;;Maquinaria de oficina;IATEC S.A. (INDUSTRIA AUSTRAL DE TECNOLOGIA S.A.); 1,375,900 
+30651655516;D_30;;;Maquinaria de oficina;ELIT S A; 829,054 
+30592746898;D_30;;;Maquinaria de oficina;PERMAQUIM SOCIEDAD ANONIMA; 583,318 
+30714508748;D_30;;;Maquinaria de oficina;IKON SOLUTIONS S.A.; 505,616 
+30516336885;D_30;;;Maquinaria de oficina;STENFAR S.A. INDUSTRIAL COMERCIAL IMP. Y EXP.; 388,363 
+30709436429;D_30;;;Maquinaria de oficina;PLOTTERDOC. COM S.R.L.; 293,848 
+30610400562;D_30;;;Maquinaria de oficina;COMPA?IA HASAR S A I C; 253,490 
+30714809373;D_30;;;Maquinaria de oficina;HP INC ARGENTINA S.R.L.; 208,922 
+30619453685;D_30;;;Maquinaria de oficina;INTERMACO S R L; 176,258 
+33689206099;D_29_30_31_32_33;;;Maquinaria n.c.p.;T6 INDUSTRIAL SOCIEDAD ANONIMA; 491,212 
+30711828326;D_29_30_31_32_33;;;Maquinaria n.c.p.;COMPLEJO ALIMENTICIO SAN SALVADOR S.A.; 143,002 
+30525778467;D_29_30_31_32_33;;;Maquinaria n.c.p.;PRILLWITZ Y CIA SRL; 132,241 
+30710265093;D_29_30_31_32_33;;;Maquinaria n.c.p.;CABBONLINE S.A.; 110,819 
+20218422013;D_29_30_31_32_33;;;Maquinaria n.c.p.;LOPEZ EDUARDO CARLOS; 42,050 
+33688426249;D_29_30_31_32_33;;;Maquinaria n.c.p.;GRUAPA SRL; 28,092 
+30709944076;D_29_30_31_32_33;;;Maquinaria n.c.p.;MOLINOS ALEJO LEDESMA S.R.L.; 24,712 
+20126984465;D_29_30_31_32_33;;;Maquinaria n.c.p.;AMBORT ALBERTO JUAN; 15,576 
+33710594479;D_29_30_31_32_33;;;Maquinaria n.c.p.;ELIOVAC SA; 7,693 
+30715164104;D_29_30_31_32_33;;;Maquinaria n.c.p.;COMPLEJO INDUSTRIAL ALIMENTARY S.A.; 5,645 
+30710779054;D_29;;;Maquinaria y equipo;IATEC S.A. (INDUSTRIA AUSTRAL DE TECNOLOGIA S.A.); 66,719,179 
+30617907530;D_29;;;Maquinaria y equipo;EL DORADO SOCIEDAD ANONIMA; 14,716,559 
+30604514009;D_29;;;Maquinaria y equipo;KRONEN INTERNACIONAL S A; 13,118,999 
+30647227119;D_29;;;Maquinaria y equipo;FINNING ARGENTINA SOCIEDAD ANONIMA; 12,835,301 
+30503771655;D_29;;;Maquinaria y equipo;BRIKET S A; 11,366,908 
+30710418302;D_29;;;Maquinaria y equipo;TECNOSUR S.A.; 10,926,336 
+30533119227;D_29;;;Maquinaria y equipo;TALLERES METALURGICOS BAMBI S A; 9,657,188 
+33547788589;D_29;;;Maquinaria y equipo;PRODISMO SRL; 8,812,217 
+30584811982;D_29;;;Maquinaria y equipo;RADIO VICTORIA  ARGENTINA SOCIEDAD ANONIMA; 8,722,590 
+30503612891;D_29;;;Maquinaria y equipo;B G H S A; 7,286,679 
+30550815997;D_27;;;Metales comunes;SIDERCA S A I C; 1,788,318 
+33644120479;D_27;;;Metales comunes;ETC S A; 1,697,881 
+30615368292;D_27;;;Metales comunes;SIDERSA SA; 1,521,477 
+20131594101;D_27;;;Metales comunes;MOGNO LUIS SEBASTIAN; 1,262,604 
+30500776524;D_27;;;Metales comunes;CINTOLO HNOS METALURGICA SAIC; 1,213,801 
+30502414719;D_27;;;Metales comunes;PRYSMIAN ENERGIA CABLES Y SISTEMAS DE ARGENTINA SO; 999,312 
+30682450963;D_27;;;Metales comunes;FCA AUTOMOBILES ARGENTINA S A; 861,259 
+33568813419;D_27;;;Metales comunes;ACEROS CUYANOS S.A.; 777,536 
+20228883868;D_27;;;Metales comunes;ROSSI RACCA ADRIAN MARCELO; 756,835 
+30683903767;D_27;;;Metales comunes;A B ACEROS S A; 567,319 
+30515772436;D_36;;;Muebles;BIC ARGENTINA SOCIEDAD ANONIMA; 4,735,449 
+30504622963;D_36;;;Muebles;GOOD COLD S A.I.C Y A; 3,233,342 
+30614104712;D_36;;;Muebles;EPSON ARGENTINA S.R.L.; 1,452,645 
+30709135135;D_36;;;Muebles;COMPA?IA ARGENTINA DE MERCHANDISING S.A.; 1,433,985 
+30678718471;D_36;;;Muebles;SERIN S A; 1,038,610 
+30642617555;D_36;;;Muebles;NEWSAN SOCIEDAD ANONIMA; 852,008 
+30651655516;D_36;;;Muebles;ELIT S A; 796,958 
+30502414719;D_36;;;Muebles;PRYSMIAN ENERGIA CABLES Y SISTEMAS DE ARGENTINA SO; 769,116 
+30677041877;D_36;;;Muebles;GARDEN LIFE S A; 755,553 
+30501991070;D_36;;;Muebles;JOHNSON ACERO S. A. INDUSTRIAL Y COMERCIAL; 695,826 
+30688985281;O;;;Otras actividades de servicios comunitarios, sociales y personales;FUNDACION MALBA; 7,838,530 
+30710068786;O;;;Otras actividades de servicios comunitarios, sociales y personales;PM ARGENTINA SISTEMAS DE ELEVACION S.A.; 5,486,431 
+30709514632;O;;;Otras actividades de servicios comunitarios, sociales y personales;ARISTOCRAT (ARGENTINA) PTY LIMITED SOCIEDAD EXTRAN; 2,015,048 
+30712071156;O;;;Otras actividades de servicios comunitarios, sociales y personales;LUSQTOFF ARGENTINA S.A.; 1,974,862 
+33661932509;O;;;Otras actividades de servicios comunitarios, sociales y personales;IGT ARGENTINA S A; 1,916,621 
+33710074289;O;;;Otras actividades de servicios comunitarios, sociales y personales;FEMAT AGRUPACION DE COLABORACION EMPRESARIA; 1,807,674 
+30999270804;O;;;Otras actividades de servicios comunitarios, sociales y personales;TEATRO COLON MUNICIPALIDAD DE LA CIUDAD DE BUENOS; 1,337,178 
+30714281972;O;;;Otras actividades de servicios comunitarios, sociales y personales;ASHIRA S.A. - MARTIN Y MARTIN S.A. - UNION TRANSIT; 1,301,430 
+30533675812;O;;;Otras actividades de servicios comunitarios, sociales y personales;FEDERACION MEDICA DE LA PROVINCIA DE BUENOS AIRES; 1,289,778 
+30642908304;O;;;Otras actividades de servicios comunitarios, sociales y personales;ARES SA; 1,047,199 
+30687234754;D_35;;;Otros equipo de transporte;YAMAHA MOTOR ARGENTINA SA; 21,968,085 
+30714946192;D_35;;;Otros equipo de transporte;DRAGADOS ARGENTINOS DASA SA; 9,079,211 
+30577546777;D_35;;;Otros equipo de transporte;HONDA MOTOR DE ARGENTINA SOCIEDAD ANONIMA; 6,470,562 
+30682963464;D_35;;;Otros equipo de transporte;BMW DE ARGENTINA S.A.; 5,722,394 
+30639169088;D_35;;;Otros equipo de transporte;LA EMILIA S A; 3,256,289 
+30678149639;D_35;;;Otros equipo de transporte;HARLEY DAVIDSON BUENOS AIRES SA; 2,458,666 
+30628323603;D_35;;;Otros equipo de transporte;GRUPO SIMPA S A; 2,150,718 
+30715162519;D_35;;;Otros equipo de transporte;GREAT CARS S.A.; 1,499,546 
+30663512850;D_35;;;Otros equipo de transporte;AVIAN LINEAS AEREAS S A; 1,104,965 
+30708784164;D_35;;;Otros equipo de transporte;GRUPO PROPELLER S.A.; 801,694 
+30644406799;D_26;;;Otros minerales no metálicos;INDUSTRIAS CERAMICAS LOURDES SA; 15,355,047 
+33508358259;D_26;;;Otros minerales no metálicos;CERVECERIA Y MALTERIA QUILMES SAICA Y G; 6,422,848 
+30714279684;D_26;;;Otros minerales no metálicos;TECNOCER S.A.; 5,839,645 
+30501010053;D_26;;;Otros minerales no metálicos;CANTERAS CERRO NEGRO SA; 5,575,731 
+30715331868;D_26;;;Otros minerales no metálicos;BRIMAX S.A.; 5,146,630 
+30500530851;D_26;;;Otros minerales no metálicos;LOMA NEGRA CIA INDUSTRIAL ARGENTINA SA; 4,857,001 
+30708130695;D_26;;;Otros minerales no metálicos;OWENS ILLINOIS ARGENTINA S.A.; 4,837,872 
+30616106119;D_26;;;Otros minerales no metálicos;ILVA SOCIEDAD ANONIMA; 3,421,540 
+30541739056;D_26;;;Otros minerales no metálicos;CATTORINI HNOS S A I C F E I; 2,956,774 
+30700760681;D_26;;;Otros minerales no metálicos;CALERAS SAN JUAN S A; 2,687,809 
+30546676974;D_28;;;Otros productos de metal;SOCIEDAD DEL ESTADO CASA DE MONEDA; 7,692,810 
+30682450963;D_28;;;Otros productos de metal;FCA AUTOMOBILES ARGENTINA S A; 2,737,135 
+30550815997;D_28;;;Otros productos de metal;SIDERCA S A I C; 2,602,136 
+30586423513;D_28;;;Otros productos de metal;ARNEG ARGENTINA S.A.; 2,256,748 
+30689024439;D_28;;;Otros productos de metal;TAVAL SA; 2,128,839 
+30678154926;D_28;;;Otros productos de metal;BALL ENVASES DE ALUMINIO S.A.; 2,054,674 
+30680823185;D_28;;;Otros productos de metal;ENVASES DEL PLATA S A; 1,963,139 
+30577546777;D_28;;;Otros productos de metal;HONDA MOTOR DE ARGENTINA SOCIEDAD ANONIMA; 1,601,449 
+30546693968;D_28;;;Otros productos de metal;FABRICACIONES MILITARES SOCIEDAD DEL ESTADO; 1,599,990 
+33658615969;D_28;;;Otros productos de metal;BLACK Y DECKER ARGENTINA S A; 1,434,924 
+30655275998;D_21;;;Papel;PAPELERA SAMSENG SA; 4,970,928 
+30615265450;D_21;;;Papel;PROCTER & GAMBLE ARGENTINA SRL; 4,173,964 
+30590203056;D_21;;;Papel;PAPELERA SAN ANDRES DE GILES SA; 3,997,514 
+30597971598;D_21;;;Papel;CELULOSA CAMPANA SOCIEDAD ANONIMA; 3,406,476 
+33707121829;D_21;;;Papel;CELUPAPER S A; 3,275,403 
+30548089405;D_21;;;Papel;INTERPACK  S A; 1,057,894 
+30687314499;D_21;;;Papel;KLABIN ARGENTINA S A; 1,020,944 
+30501250305;D_21;;;Papel;LEDESMA SOCIEDAD ANONIMA AGRICOLA INDUSTRIAL; 977,288 
+30506445600;D_21;;;Papel;PAPELTECNICA SAIC; 940,478 
+30710232675;D_21;;;Papel;ENVACO SRL; 787,788 
+30685185438;B;;;Pesca;ALTAMARE S.A.; 1,475,178 
+30620827653;B;;;Pesca;EMPESUR SOCIEDAD ANONIMA; 1,158,741 
+30500914277;B;;;Pesca;LEDVANCE S A; 627,811 
+30585895268;B;;;Pesca;CNH INDUSTRIAL ARGENTINA S.A.; 599,007 
+30503720236;B;;;Pesca;INDUSTRIAS JOHN DEERE ARGENTINA S A; 511,748 
+33714924619;B;;;Pesca;SIGNIFY ARGENTINA S.A.; 477,810 
+30679555479;B;;;Pesca;PESQUERA CERES S A; 355,382 
+30605737648;B;;;Pesca;HANSUNG AR S A; 297,447 
+30625390636;B;;;Pesca;ARGENOVA SOCIEDAD ANONIMA; 288,383 
+30687325415;B;;;Pesca;TESAM ARGENTINA S A; 249,008 
+30707416013;D_25;;;Productos de caucho y plástico;ACSUR SOCIEDAD ANONIMA; 7,006,380 
+30682450963;D_25;;;Productos de caucho y plástico;FCA AUTOMOBILES ARGENTINA S A; 5,115,008 
+30505817423;D_25;;;Productos de caucho y plástico;INDUSTRIA DEL PLASTICO Y  METALURGICA ALBANO COZZU; 4,022,442 
+30500842586;D_25;;;Productos de caucho y plástico;FATE SAICI; 3,558,428 
+30655534462;D_25;;;Productos de caucho y plástico;VISUAR S.A.; 2,845,883 
+30587546147;D_25;;;Productos de caucho y plástico;APTAR ARGENTINA S.A.; 2,443,678 
+30631926491;D_25;;;Productos de caucho y plástico;PETROPACK S.A.; 2,325,278 
+30504115026;D_25;;;Productos de caucho y plástico;MEXICHEM ARGENTINA SA; 2,230,591 
+30521494839;D_25;;;Productos de caucho y plástico;BEMIS ARGENTINA SAU; 2,217,544 
+30628323603;D_25;;;Productos de caucho y plástico;GRUPO SIMPA S A; 2,020,922 
+30506919009;D_23;;;Productos de petróleo;AXION ENERGY ARGENTINA SA; 1,992,817 
+30691278707;D_23;;;Productos de petróleo;DIOXITEK SA; 1,232,176 
+30546689979;D_23;;;Productos de petróleo;YPF SOCIEDAD ANONIMA; 429,205 
+30526552659;D_23;;;Productos de petróleo;PAMPA ENERGIA S A; 416,815 
+30589673804;D_23;;;Productos de petróleo;CONUAR S A (COMBUSTIBLES NUCLEARES ARGENTINOS); 266,410 
+33688933639;D_23;;;Productos de petróleo;BECHEM SUDAMERIKA S A; 120,049 
+30554496101;D_23;;;Productos de petróleo;TOTAL ESPECIALIDADES ARGENTINA SOCIEDAD ANONIMA; 82,477 
+30695542476;D_23;;;Productos de petróleo;PAN AMERICAN ENERGY, S.L.,  SUCURSAL ARGENTINA; 70,708 
+33504113049;D_23;;;Productos de petróleo;CABOT ARGENTINA S A I C; 67,582 
+30575001641;D_23;;;Productos de petróleo;KLUBER LUBRICATION ARGENTINA S A; 47,034 
+30526552659;D_24;;;Productos químicos;PAMPA ENERGIA S A; 47,526,766 
+30535994540;D_24;;;Productos químicos;QUIMICA MONTPELLIER S A; 3,062,058 
+30518455970;D_24;;;Productos químicos;COMPA?IA AMERICANA DE LAPICES SOCIEDAD DE RESPONSA; 3,001,014 
+30500842586;D_24;;;Productos químicos;FATE SAICI; 2,516,978 
+30709590894;D_24;;;Productos químicos;RENOVA S.A; 2,397,052 
+30517130032;D_24;;;Productos químicos;GLAXOSMITHKLINE ARGENTINA SOCIEDAD ANONIMA; 2,295,489 
+30546693968;D_24;;;Productos químicos;FABRICACIONES MILITARES SOCIEDAD DEL ESTADO; 1,943,826 
+30614751750;D_24;;;Productos químicos;TRIQUIM SA; 1,648,266 
+30501596082;D_24;;;Productos químicos;LABORATORIOS CASASCO S A I C; 1,565,211 
+33500606989;D_24;;;Productos químicos;MASSALIN PARTICULARES SRL; 1,525,420 
+30502671126;D_17;;;Productos textiles;TIPOITI S A T I C; 4,332,278 
+30611724728;D_17;;;Productos textiles;ALGODONERA DEL VALLE S A; 4,284,961 
+30550851268;D_17;;;Productos textiles;CLADD INDUSTRIA TEXTIL ARGENTINA S.A.; 2,726,604 
+30597188710;D_17;;;Productos textiles;MANUFACTURA DE FIBRAS SINTETICAS SA; 2,423,760 
+30657237449;D_17;;;Productos textiles;ENOD S A; 1,749,905 
+23126289219;D_17;;;Productos textiles;GARCIA GUSTAVO ENRIQUE; 1,597,876 
+30626369622;D_17;;;Productos textiles;HILADO SOCIEDAD ANONIMA; 1,577,672 
+30690341413;D_17;;;Productos textiles;PGI ARGENTINA S.A.; 1,499,564 
+30612113331;D_17;;;Productos textiles;RICOLTEX SRL; 1,227,865 
+33709635129;D_17;;;Productos textiles;SANTANA TEXTIL CHACO SA; 1,131,874 
+30710779054;D_32;;;Radio y televisión;IATEC S.A. (INDUSTRIA AUSTRAL DE TECNOLOGIA S.A.); 317,204,343 
+30708574798;D_32;;;Radio y televisión;BRIGHTSTAR FUEGUINA  SA; 120,397,024 
+30710418302;D_32;;;Radio y televisión;TECNOSUR S.A.; 30,248,823 
+30503612891;D_32;;;Radio y televisión;B G H S A; 9,212,593 
+30709453250;D_32;;;Radio y televisión;SOLNIK S.A.; 9,106,227 
+30709564907;D_32;;;Radio y televisión;DIGITAL FUEGUINA SA; 7,535,903 
+30711498520;D_32;;;Radio y televisión;TELECOMUNICACIONES FUEGUINAS S.A.; 5,716,567 
+30584811982;D_32;;;Radio y televisión;RADIO VICTORIA  ARGENTINA SOCIEDAD ANONIMA; 5,211,895 
+30597066763;D_32;;;Radio y televisión;FAMAR FUEGUINA SA; 4,155,295 
+30593208563;D_32;;;Radio y televisión;AUDIVIC S A; 3,849,038 
+30518478385;D_37;;;Reciclamiento de desperdicios y desechos;RUBOL S.A.I.C.F.; 115,720 
+30712110488;D_37;;;Reciclamiento de desperdicios y desechos;RECICLADOS PALPALA S.R.L.; 96,208 
+30500834087;D_37;;;Reciclamiento de desperdicios y desechos;VIDRIERIA ARGENTINA SOCIEDAD ANONIMA; 73,224 
+30711927219;D_37;;;Reciclamiento de desperdicios y desechos;AUSTRAL SERVICIOS AMBIENTALES SRL; 63,157 
+30655275998;D_37;;;Reciclamiento de desperdicios y desechos;PAPELERA SAMSENG SA; 56,829 
+30709188913;D_37;;;Reciclamiento de desperdicios y desechos;DEPOSITOS LEM SOCIEDAD ANONIMA; 52,446 
+30662102292;D_37;;;Reciclamiento de desperdicios y desechos;TRANE DE ARGENTINA S A; 46,975 
+33709635129;D_37;;;Reciclamiento de desperdicios y desechos;SANTANA TEXTIL CHACO SA; 39,585 
+30689358892;D_37;;;Reciclamiento de desperdicios y desechos;PAPELERA ROSATO SA; 39,388 
+30504797933;D_37;;;Reciclamiento de desperdicios y desechos;INDUSTRIAS QUIMETAL S A I C; 32,074 
+30589622932;H_551;;;Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal;VALLE DE LAS LE?AS SOCIEDAD ANONIMA; 55,141 
+30675789777;H_551;;;Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal;CERRO CASTOR SOCIEDAD ANONIMA; 44,572 
+30647227119;H_551;;;Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal;FINNING ARGENTINA SOCIEDAD ANONIMA; 43,288 
+30576721710;H_551;;;Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal;SULLAIR ARGENTINA S A; 31,326 
+30709353116;H_551;;;Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal;DAYS TOUR S.A.; 29,319 
+30568205339;H_551;;;Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal;TURBODISEL SOCIEDAD ANONIMA; 22,713 
+30609611541;H_551;;;Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal;CETEC SUDAMERICANA SOCIEDAD ANONIMA; 10,326 
+30669160662;H_551;;;Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal;WEG EQUIPAMIENTOS ELECTRICOS SA; 9,540 
+30682498761;H_551;;;Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal;BOMBAS GRUNDFOS DE ARGENTINA S.A.U; 8,590 
+30662071680;H_551;;;Servicios de alojamiento en hoteles, campamentos y otros tipos de hospedaje temporal;GENERAL MOTORS DE ARGENTINA SOCIEDAD DE RESPONSABI; 7,892 
+30682440003;K_99;;;Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual;IGARRETA MAQUINAS SA; 2,990,311 
+30682494634;K_99;;;Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual;MAJOR PERFORACIONES S.A.; 1,750,962 
+30647227119;K_99;;;Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual;FINNING ARGENTINA SOCIEDAD ANONIMA; 1,658,385 
+33709322139;K_99;;;Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual;BURGWARDT MINERA S.A.; 1,144,104 
+30576721710;K_99;;;Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual;SULLAIR ARGENTINA S A; 917,637 
+33599594839;K_99;;;Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual;REPAS S A; 911,071 
+30715472615;K_99;;;Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual;TRIDENT SOUTHERN EXPLORATIONS DE ARGENTINA SRL; 763,819 
+30614916490;K_99;;;Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual;TRANSPORTE CO-BA SOCIEDAD ANONIMA; 706,436 
+30711901996;K_99;;;Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual;ALEQUIP S.A.; 416,783 
+30531489086;K_99;;;Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual;PATRICIO PALMERO S A I C Y A; 362,640 
+30654936419;H_552;;;Servicios de expendio de comidas y bebidas;FAST FOOD SUDAMERICANA S A; 1,513,535 
+33707261329;H_552;;;Servicios de expendio de comidas y bebidas;AGRO INDUSTRIAS BAIRES SA; 493,438 
+30709199206;H_552;;;Servicios de expendio de comidas y bebidas;PRETOREAN ARGENTINA S.R.L.; 441,598 
+30610252334;H_552;;;Servicios de expendio de comidas y bebidas;ARCOS DORADOS ARGENTINA SOCIEDAD ANONIMA; 413,991 
+30711163790;H_552;;;Servicios de expendio de comidas y bebidas;SERVICOM ARGENTINA SA; 208,952 
+20232231336;H_552;;;Servicios de expendio de comidas y bebidas;FRASCONA LEONARDO HERNAN; 177,148 
+30711625433;H_552;;;Servicios de expendio de comidas y bebidas;FRANCHRIS2010 SRL; 174,358 
+30715343297;H_552;;;Servicios de expendio de comidas y bebidas;MAJDALANI INOX S.A; 153,659 
+33707317499;H_552;;;Servicios de expendio de comidas y bebidas;TECHNOGEL AMERICA LATINA SA; 113,146 
+30569766253;H_552;;;Servicios de expendio de comidas y bebidas;INGENIERIA GASTRONOMICA S A; 106,612 
+30545758314;K_70;;;Servicios inmobiliarios;SUBTERRANEOS DE BUENOS AIRES SOCIEDAD DEL ESTADO; 48,618,740 
+30546689979;K_70;;;Servicios inmobiliarios;YPF SOCIEDAD ANONIMA; 6,133,164 
+30647227119;K_70;;;Servicios inmobiliarios;FINNING ARGENTINA SOCIEDAD ANONIMA; 4,656,336 
+33537186009;K_70;;;Servicios inmobiliarios;HSBC BANK ARGENTINA SA; 3,359,165 
+30614104712;K_70;;;Servicios inmobiliarios;EPSON ARGENTINA S.R.L.; 3,063,421 
+30639453738;K_70;;;Servicios inmobiliarios;TELECOM ARGENTINA SOCIEDAD ANONIMA; 1,749,924 
+30682440003;K_70;;;Servicios inmobiliarios;IGARRETA MAQUINAS SA; 1,560,694 
+30516712593;K_70;;;Servicios inmobiliarios;ANSAL REFRIGERACION SA; 1,488,501 
+20065127157;K_70;;;Servicios inmobiliarios;FEDERICO PABLO AUGUSTO; 1,377,757 
+30500008454;K_70;;;Servicios inmobiliarios;BANCO SANTANDER RIO SOCIEDAD ANONIMA; 1,281,959 
+30707689915;K_74;;;Servicios jurídicos contables y otros servicios a empresas (sin minería);HUAWEI TECH INVESTMENT CO LTD.; 27,936,388 
+30710025718;K_74;;;Servicios jurídicos contables y otros servicios a empresas (sin minería);CENTRAL TERMICA LOMA DE LA LATA S A; 27,772,177 
+30682526544;K_74;;;Servicios jurídicos contables y otros servicios a empresas (sin minería);VERIFONE ARGENTINA S A; 13,288,136 
+33680059999;K_74;;;Servicios jurídicos contables y otros servicios a empresas (sin minería);NUCLEOELECTRICA ARGENTINA SA; 12,693,850 
+30707522778;K_74;;;Servicios jurídicos contables y otros servicios a empresas (sin minería);SANDVIK MINING AND CONSTRUCTION ARGENTINA S.A.; 8,495,125 
+30587480359;K_74;;;Servicios jurídicos contables y otros servicios a empresas (sin minería);CONSULTATIO S A; 8,436,170 
+30707862927;K_74;;;Servicios jurídicos contables y otros servicios a empresas (sin minería);CIENA COMMUNICATIONS MEXICO S.A. DE C.V. SUC. ARGE; 8,082,026 
+30542034552;K_74;;;Servicios jurídicos contables y otros servicios a empresas (sin minería);HEWLETT PACKARD ARGENTINA SOCIEDAD DE RESPONSABILI; 7,159,943 
+33709585229;K_74;;;Servicios jurídicos contables y otros servicios a empresas (sin minería);GOOGLE ARGENTINA S.R.L.; 5,999,632 
+30707513981;K_74;;;Servicios jurídicos contables y otros servicios a empresas (sin minería);SIREX  MEDICA S A; 5,456,928 
+30522763922;N;;;Servicios sociales y de salud;INSTITUTO NACIONAL DE SERVICIOS SOCIALES PARA JUBI; 15,974,370 
+30714968633;N;;;Servicios sociales y de salud;SIEMENS HEALTHCARE S.A.; 8,541,676 
+30500527230;N;;;Servicios sociales y de salud;PHILIPS ARGENTINA SOCIEDAD ANONIMA; 7,729,466 
+33653235939;N;;;Servicios sociales y de salud;GE HEALTHCARE ARGENTINA S.A.; 7,681,427 
+30624438929;N;;;Servicios sociales y de salud;FUNDACION MEDICA DE RIO NEGRO Y         NEUQUEN; 5,924,392 
+30654855168;N;;;Servicios sociales y de salud;SWISS MEDICAL S A; 5,627,890 
+33707044239;N;;;Servicios sociales y de salud;TECNOIMAGEN S A; 4,899,633 
+30526498468;N;;;Servicios sociales y de salud;GRIENSU S A; 4,309,980 
+30672394631;N;;;Servicios sociales y de salud;JEFATURA DE POLICIA DE MISIONES; 3,795,924 
+30710170718;N;;;Servicios sociales y de salud;INSTITUTO PRIVADO DE RADIOTERAPIA ONCOLOGICA SA; 3,733,471 
+30715207970;E;;;Suministro de electricidad, gas y agua;ARAUCARIA ENERGY SA; 246,380,072 
+30682434720;E;;;Suministro de electricidad, gas y agua;GENERACION MEDITERRANEA S.A.; 127,926,820 
+30710567308;E;;;Suministro de electricidad, gas y agua;GREENWIND S.A.; 83,178,074 
+30715252526;E;;;Suministro de electricidad, gas y agua;Y-GEN ELECTRICA II S.A.U.; 81,870,994 
+30715345435;E;;;Suministro de electricidad, gas y agua;CP LA CASTELLANA SOCIEDAD ANONIMA UNIPERSONAL; 63,732,145 
+30715252550;E;;;Suministro de electricidad, gas y agua;Y-GEN ELECTRICA S.A.U.; 55,324,576 
+30710025718;E;;;Suministro de electricidad, gas y agua;CENTRAL TERMICA LOMA DE LA LATA S A; 52,280,135 
+30715407791;E;;;Suministro de electricidad, gas y agua;VIENTOS DE ARAUCO RENOVABLES S.A.U.; 51,619,854 
+33710410599;E;;;Suministro de electricidad, gas y agua;APR ENERGY S.R.L.; 42,242,030 
+30715207962;E;;;Suministro de electricidad, gas y agua;SPI ENERGY SA; 40,103,387 
+33500606989;D_16;;;Tabaco;MASSALIN PARTICULARES SRL; 2,229,753 
+30677421548;D_16;;;Tabaco;TABACALERA SARANDI S.A.; 747,388 
+30710219865;D_16;;;Tabaco;BRONWAY TECHNOLOGY SA; 320,898 
+30669160662;D_16;;;Tabaco;WEG EQUIPAMIENTOS ELECTRICOS SA; 163,164 
+30696930852;D_16;;;Tabaco;STIHL MOTOIMPLEMENTOS SAU; 147,370 
+30501112662;D_16;;;Tabaco;BRITISH AMERICAN TOBACCO ARGENTINA SAICYF; 142,510 
+30518293687;D_16;;;Tabaco;COOPERATIVA DE TABACALEROS DE JUJUY LIMITADA.-; 138,087 
+30519336274;D_16;;;Tabaco;MUNDITOL SA I C E F E I; 77,005 
+33503921249;D_16;;;Tabaco;CARRIER S.R.L; 76,320 
+33516444539;D_16;;;Tabaco;DANFOSS SA; 63,662 
+30641405554;I_62;;;Transporte aéreo de cargas y de pasajeros;AEROLINEAS ARGENTINAS SOCIEDAD ANONIMA; 603,583,518 
+30707542329;I_62;;;Transporte aéreo de cargas y de pasajeros;LAN ARGENTINA SOCIEDAD ANONIMA; 303,413,710 
+30709251739;I_62;;;Transporte aéreo de cargas y de pasajeros;ANDES LINEAS AEREAS SA; 131,795,087 
+30715418939;I_62;;;Transporte aéreo de cargas y de pasajeros;FB LINEAS AEREAS S.A.; 38,912,353 
+30663512850;I_62;;;Transporte aéreo de cargas y de pasajeros;AVIAN LINEAS AEREAS S A; 31,778,910 
+30709643769;I_62;;;Transporte aéreo de cargas y de pasajeros;ALBA JET SA; 18,213,884 
+30711915385;I_62;;;Transporte aéreo de cargas y de pasajeros;ALAS DEL FIN DEL MUNDO S.R.L.; 14,813,278 
+30707437606;I_62;;;Transporte aéreo de cargas y de pasajeros;AMERICAN LOGISTIC SA; 13,971,354 
+30686320010;I_62;;;Transporte aéreo de cargas y de pasajeros;SUDFLUG SA; 13,013,790 
+33711613329;I_62;;;Transporte aéreo de cargas y de pasajeros;BENAIR S.A.; 10,551,560 
+30502987360;I_60;;;Transporte ferroviario y automotor y por tuberias;MERCEDES-BENZ ARGENTINA S.A.U; 233,064,163 
+30678519681;I_60;;;Transporte ferroviario y automotor y por tuberias;FORD ARGENTINA SOCIEDAD EN COMANDITA POR ACCIONES; 128,130,505 
+30504018845;I_60;;;Transporte ferroviario y automotor y por tuberias;VOLKSWAGEN ARGENTINA S A; 105,345,937 
+30517424303;I_60;;;Transporte ferroviario y automotor y por tuberias;SCANIA ARGENTINA S A U; 88,935,881 
+30585895268;I_60;;;Transporte ferroviario y automotor y por tuberias;CNH INDUSTRIAL ARGENTINA S.A.; 87,614,027 
+30516150641;I_60;;;Transporte ferroviario y automotor y por tuberias;VOLVO TRUCKS Y BUSES  ARGENTINA S.A.; 63,674,545 
+30545758314;I_60;;;Transporte ferroviario y automotor y por tuberias;SUBTERRANEOS DE BUENOS AIRES SOCIEDAD DEL ESTADO; 46,992,704 
+30608027102;I_60;;;Transporte ferroviario y automotor y por tuberias;METALPAR ARGENTINA SA; 25,941,569 
+30708427949;I_60;;;Transporte ferroviario y automotor y por tuberias;GRUPO FENIX SA; 15,300,303 
+30714101443;I_60;;;Transporte ferroviario y automotor y por tuberias;BELGRANO CARGAS Y LOGISTICA SA; 14,105,437 
+30697997071;I_61;;;Transporte marítimo y fluvial;NATIONAL SHIPPING S.A.; 10,666,018 
+33693449389;I_61;;;Transporte marítimo y fluvial;INVERSIONES MARITIMAS UNIVERSALES SA; 1,277,378 
+30707588965;I_61;;;Transporte marítimo y fluvial;EMPRESA NAVIERA PETROLERA ATLANTICA S.A.; 257,949 
+30503720236;I_61;;;Transporte marítimo y fluvial;INDUSTRIAS JOHN DEERE ARGENTINA S A; 121,455 
+30585895268;I_61;;;Transporte marítimo y fluvial;CNH INDUSTRIAL ARGENTINA S.A.; 114,651 
+30635572287;I_61;;;Transporte marítimo y fluvial;ANTARES NAVIERA SOCIEDAD ANONIMA; 81,474 
+30678519681;I_61;;;Transporte marítimo y fluvial;FORD ARGENTINA SOCIEDAD EN COMANDITA POR ACCIONES; 79,270 
+30663288497;I_61;;;Transporte marítimo y fluvial;AMX ARGENTINA SOCIEDAD ANONIMA; 64,560 
+30501598131;I_61;;;Transporte marítimo y fluvial;INDUSTRIAS JUAN F SECCO S A; 46,964 
+30679861472;I_61;;;Transporte marítimo y fluvial;C T M EVERGREEN S R L; 45,111 
