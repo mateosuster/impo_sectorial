@@ -148,7 +148,7 @@ def to_matriz(matriz_sisd_final, ci = False):
         
     elif ci == True:
         z.insert(29, "G", 0)
-        #z.insert(44, "Q", 0)
+        z.insert(49, "Q", 0)
 
    
     

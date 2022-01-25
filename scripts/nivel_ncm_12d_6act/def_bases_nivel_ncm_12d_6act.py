@@ -285,6 +285,17 @@ def def_join_comercio(join_impo_clae_bec_bk, comercio, ci = False):
     
 def metrica(x):
     return (x["valor"] * x["kilos"])/x["cant_decl"]
+    
+def metrica_(x):    
+    if x["cant_decl"] != "Kilogramo":
+        divisor = x["cant_decl"]
+    elif x["cant_est"] != "Kilogramo":
+        divisor = x["cant_est"]
+    else: 
+        divisor = x["cant_decl"]
+
+    rtn = (x["valor"] * x["kilos"])/divisor
+    return rtn
 
 def mod_z(col: pd.Series, thresh: float=3.5):
     med_col = col.median()
@@ -300,13 +311,17 @@ def mod_z(col: pd.Series, thresh: float=3.5):
 # ordenamiento de los datos de modelo
 # =============================================================================
 def preprocesamiento_datos(datos, dic_propio,  export_cuit = False):
-    datos = diccionario_especial(datos, dic_propio) 
-    datos = def_act_ordenadas(datos)
     
     datos.drop("prob_bk", 1, inplace=True)
     
-    datos_2trans = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["act_ordenadas"].str.contains("J|I|O|K")) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
-    datos_2trans = datos_2trans[(datos_2trans["act_ordenadas"].str.contains("A|B|C|D|E|F|H|L|M|N|P|Q|R|P|S|T|U"))   ]
+    datos = diccionario_especial(datos, dic_propio) 
+    datos = def_actividades(datos)
+    
+    datos_2trans_1 = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["act_ordenadas"].str.contains("J|I|O|K")) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
+    datos_2trans_1 = datos_2trans_1[(datos_2trans_1["act_ordenadas"].str.contains("A|B|C|D|E|F|H|L|M|N|P|Q|R|P|S|T|U"))   ]
+    datos_2trans_2 = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["actividades"].str.contains("K_70|J")) &~(datos["actividades"].str.contains("A|B|C|D|E|F|H|I|L|M|N|O|P|Q|R|P|S|T|U|K_71|K_72|K_73|K_74|K_99")) ]
+    
+    datos_2trans = pd.concat([datos_2trans_1, datos_2trans_2  ],0)
     
     datos_ok= datos[ ~datos.index.isin(datos_2trans.index) ]
     print("Está ok el split?", len(datos_ok)+ len(datos_2trans) == len(datos))
@@ -830,13 +845,13 @@ def clasificacion_CONS(impo_bec):
     cons_fin_clasif = pd.concat([cons_fin_D, cons_fin_G_clasif, cons_fin[cons_fin["filtro"].str.contains("A|B|C|E")]])
     return cons_fin_clasif, impo_bec_cons
 
-def def_act_ordenadas(data_model):
+def def_actividades(data_model):
     data_model["actividades"] = data_model["letra1"] + data_model["letra2"] + data_model["letra3"] + data_model[
         "letra4"] + data_model["letra5"] + data_model["letra6"]
-    data_model["actividades"] = data_model["actividades"].str.replace('\d+|_', '')
-    data_model["act_ordenadas"] = data_model["actividades"].apply(
-        lambda x: "".join(sorted(x)))  # "".join(sorted(data_model["actividades"]))
-    return data_model.drop("actividades", 1)
+    data_model["actividades_ordenadas"] = data_model["actividades"].str.replace('\d+|_', '')
+    data_model["act_ordenadas"] = data_model["actividades_ordenadas"].apply( lambda x: "".join(sorted(x)))  # "".join(sorted(data_model["actividades"]))
+    return data_model.drop("actividades_ordenadas", 1)
+
 
 def concatenacion_ue_dest(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,data_not_clasif, join_impo_clae, impo_bec):
     # impo_ue_dest = pd.concat([pd.concat([cons_fin_clasif, cons_int_clasif], axis = 0).drop(["brecha", 'metric', 'ue_dest', 'mad', 'median', 'z_score'], axis = 1), bk], axis =0)

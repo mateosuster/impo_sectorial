@@ -2,11 +2,9 @@
 # Directorio de trabajo y librerias
 # =============================================================================
 import os 
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/laburo/CEP/procesamiento impo/nuevo1/impo_sectorial/scripts/nivel_ncm_12d_6act")
-# os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
-
-# os.getcwd()
+os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -25,13 +23,14 @@ datos = pd.read_csv("../data/heavys/datos_clasificados_modelo_all_data_21oct.csv
 
 #auxiliares
 clae = pd.read_csv( "../data/clae_nombre.csv")
-dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
-clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
 hs_to_isic = pd.read_csv("../data/JobID-64_Concordance_HS_to_I3.csv", encoding = "latin" )
 cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
 vector_comercio_bk = pd.read_csv("../data/vector_de_comercio_clae_bk.csv", sep = ";").drop("Unnamed: 0", 1)
 vector_comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";")#.drop(["letra", "clae6_desc"] , axis = 1)
+
+dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
+dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
 
 #mectra
 mectra_pond = pd.read_csv("../data/resultados/agr_csv_files/mectra_agr_2021-12-30.csv")
@@ -43,7 +42,6 @@ mectra_pond = mectra_pond[mectra_pond["anio"] ==2017].drop("anio", 1).rename(col
 letras = predo_sectores_nombres(clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae) #meter loop aca
 dic_stp = predo_stp(dic_stp)
-dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
 
 datos = preprocesamiento_datos(datos, dic_propio)
 datos_bk , datos_bk_sin_picks, bk_picks = asignacion_stp_BK(datos, dic_stp)
@@ -100,6 +98,18 @@ print(end-start)
 # =============================================================================
 #                       Otros
 # =============================================================================
+
+query = datos[datos["HS6"]==490199] #libros
+
+query = datos[datos["HS6"]==640419] #zapatillas
+
+query = datos[datos["HS6"]==842959] #topadoras
+query_1 = query[query["act_ordenadas"].str.contains("K")]
+
+query_a = datos[datos["HS6"]==842920]
+query_a1 = query[query["act_ordenadas"].str.contains("K")]
+
+
 #filtro para destinación de productos
 # x = matriz_hssd[matriz_hssd.index.str.startswith(("870421", "870431"))]
 # x.sum(axis = 0)

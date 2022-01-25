@@ -21,7 +21,11 @@ start = datetime.datetime.now()
 # Cargar bases con las que vamos a trabajar #
 #############################################
 impo_d12 = pd.read_csv("../data/M_2013a2017_d12.csv", encoding="latin1")      # impo DIARIA
+
 clae = pd.read_csv( "../data/clae_nombre.csv")
+dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
+clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
+
 comercio = pd.read_csv("../data/comercio_clae.csv", encoding="latin1")
 cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
 bec = pd.read_csv( "../data/HS2012-17-BEC5 -- 08 Nov 2018_HS12.csv", sep = ";")
@@ -39,12 +43,14 @@ letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
 cuit_empresas= predo_cuit_clae(cuit_clae, clae)
 dic_stp = predo_stp(dic_stp )
+dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
 
 #############################################
 #                joins                      #
 #############################################
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas) #incorpora var destinacion limpia y borra destinacion
-#join_impo_clae_bec_bk = def_join_impo_clae_bec_bk(join_impo_clae, bec_bk)
+join_impo_clae = diccionario_especial(join_impo_clae, dic_propio) 
+join_impo_clae= def_actividades(join_impo_clae)
 impo_bec = def_join_impo_clae_bec(join_impo_clae, bec)
 
 # =============================================================================

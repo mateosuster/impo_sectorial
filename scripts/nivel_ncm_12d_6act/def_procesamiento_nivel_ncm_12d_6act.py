@@ -88,9 +88,9 @@ def def_ponderaciones(impo,cont, ci = False):
         act6_pond = ncm_val[letra_6] / total
 
         if ci == False:
-            values = [*a[1:44], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
+            values = [*a[1:45], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
         elif ci == True:
-            values = [*a[1:38], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
+            values = [*a[1:39], act1_pond, act2_pond, act3_pond, act4_pond, act5_pond, act6_pond] #el asterisco sirve para seleccionando los elementos de la lista (tupla) a
         dictionary_list.append(values)
 
     rtn = pd.DataFrame.from_dict(dictionary_list)
