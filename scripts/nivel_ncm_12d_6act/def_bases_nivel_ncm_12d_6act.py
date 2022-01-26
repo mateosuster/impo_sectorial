@@ -430,17 +430,20 @@ def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
     ciiu_dig_let["propio_letra"] = np.where(ciiu_dig_let["clae6_letra"]=="G", ciiu_dig_let["clae6_letra"], ciiu_dig_let["ciiu3_letra"]   )
     ciiu_dig_let["propio_letra_2"] =np.where(ciiu_dig_let["propio_letra"].isin( ["I"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
                                              np.where(ciiu_dig_let["propio_letra"].isin( ["H"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=3),
-                                                      np.where(ciiu_dig_let["clae6"]=="99000", ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["clae6"].str.slice(start=0,stop=2),
-                                                               np.where(ciiu_dig_let["propio_letra"]=="K", ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
-                                                                        np.where(ciiu_dig_let["propio_letra"]=="D", np.where(ciiu_dig_let["propio"]=="29_30_31_32_33", "D_29_30_31_32_33",
-                                                                                                                             "D"+"_"+ciiu_dig_let["propio"].str.slice(start=0,stop=2) 
-                                                                                                                             ), 
-                                                                                 ciiu_dig_let["propio_letra"]
-                                                                                 ) 
-                                                                        )
-                                                               )
-                                                      )
-                                             )
+                                                      np.where(ciiu_dig_let["propio_letra"].isin( ["C"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
+                                                          np.where(ciiu_dig_let["clae6"]=="99000", ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["clae6"].str.slice(start=0,stop=2),
+                                                                   np.where(ciiu_dig_let["propio_letra"]=="K", ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
+                                                                            np.where(ciiu_dig_let["propio_letra"]=="D", np.where(ciiu_dig_let["propio"]=="29_30_31_32_33", "D_29_30_31_32_33",
+                                                                                                                                 "D"+"_"+ciiu_dig_let["propio"].str.slice(start=0,stop=2) 
+                                                                                                                                 ), 
+                                                                                     ciiu_dig_let["propio_letra"]
+                                                                                     ) 
+                                                                            )
+                                                                   )
+                                                          )
+                                                 )
+                                            )
+    
                    
     #join descripcion                                   
     # desc = pd.read_csv("../data/resultados/desc_letra_propio_2.csv")#.drop("Unnamed: 2",1)
