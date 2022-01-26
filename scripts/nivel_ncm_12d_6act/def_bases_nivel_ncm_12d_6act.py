@@ -174,7 +174,8 @@ def predo_cuit_clae(cuit_clae , clae):
     cuit_clae6 = cuit_clae6.drop(["suma"], axis=1)
     
     #procesamiento a letras
-    clae["clae6"] = clae["clae6"].astype("Int64").astype(str)
+    #clae["clae6"] = clae["clae6"].astype("Int64").astype(str)
+    clae["clae6"] = clae["clae6"].astype(str)
     cuit_clae6 = cuit_clae6.reset_index().astype(str)
     
     letra1 = pd.merge(cuit_clae6[["CUIT","actividad1"]].astype(str), clae[["clae6", "letra"]], left_on="actividad1", right_on="clae6", how="left").drop(["actividad1", "clae6"], axis=1).rename(columns={"letra": "letra1"})
@@ -313,18 +314,31 @@ def mod_z(col: pd.Series, thresh: float=3.5):
 def preprocesamiento_datos(datos, dic_propio,  export_cuit = False):
     
     datos.drop("prob_bk", 1, inplace=True)
-    
+
+    #para pasar el script 1
     datos = diccionario_especial(datos, dic_propio) 
     datos = def_actividades(datos)
-    
+    ########
+
     datos_2trans_1 = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["act_ordenadas"].str.contains("J|I|O|K")) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
     datos_2trans_1 = datos_2trans_1[(datos_2trans_1["act_ordenadas"].str.contains("A|B|C|D|E|F|H|L|M|N|P|Q|R|P|S|T|U"))   ]
-    datos_2trans_2 = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["actividades"].str.contains("K_70|J")) &~(datos["actividades"].str.contains("A|B|C|D|E|F|H|I|L|M|N|O|P|Q|R|P|S|T|U|K_71|K_72|K_73|K_74|K_99")) ]
-    
-    datos_2trans = pd.concat([datos_2trans_1, datos_2trans_2  ],0)
-    
-    datos_ok= datos[ ~datos.index.isin(datos_2trans.index) ]
-    print("Está ok el split?", len(datos_ok)+ len(datos_2trans) == len(datos))
+    #datos_2trans_2 = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["actividades"].str.contains("K_70|J"))]
+
+    datos_2trans_2 = datos[datos["actividades"].str.contains("K_70|J")]
+    datos_2trans_2 = datos_2trans_2[datos_2trans_2["actividades"].str.contains("A|B|C|D|E|F|G|H|I|L|M|N|O|P|Q|R|P|S|T|U|K_71|K_72|K_73|K_74|K_99")]
+
+    datos_2trans = pd.concat([datos_2trans_1, datos_2trans_2], 0, ignore_index=True).drop_duplicates()
+    datos_2trans["nro"] = "123"
+
+    prueba = pd.merge(datos, datos_2trans, how="left")
+
+    datos_ok = prueba[prueba["nro"].isnull()]
+
+    datos[~datos.index.isin(datos_2trans.index)]
+
+    print("Está ok el split?", len(datos_ok) + len(datos_2trans) - len(datos))
+
+    print (len(datos_2trans_1) + len(datos_2trans_2) - len(datos_2trans))
     
     # x= datos_2trans[datos_2trans["letra3"]=="J"]
     for letra_i, act_i in zip(["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"],
@@ -335,6 +349,7 @@ def preprocesamiento_datos(datos, dic_propio,  export_cuit = False):
         datos_2trans[act_i]  = np.where(datos_2trans[act_i].isin(act_2change), "999999" , datos_2trans[act_i])
 
         for letrita in letritas :
+            datos_2trans.loc[:, letra_i] = datos_2trans[letra_i].astype(str)
             datos_2trans.loc[:, letra_i] = datos_2trans[letra_i].apply(lambda x: x.replace(letrita, "G"))
     
     rtr = pd.concat([datos_2trans, datos_ok ], axis = 0)

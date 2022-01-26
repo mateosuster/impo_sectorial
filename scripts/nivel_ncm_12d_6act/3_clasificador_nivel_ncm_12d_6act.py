@@ -28,6 +28,7 @@ cuit_clae = pd.read_csv( "../data/Cuit_todas_las_actividades.csv")
 dic_stp = pd.read_excel("../data/bsk-prod-clasificacion.xlsx")
 vector_comercio_bk = pd.read_csv("../data/vector_de_comercio_clae_bk.csv", sep = ";").drop("Unnamed: 0", 1)
 vector_comercio_ci = pd.read_csv("../data/vector_de_comercio_clae_ci.csv", sep = ";")#.drop(["letra", "clae6_desc"] , axis = 1)
+clae_to_ciiu = pd.read_excel("../data/Pasar de CLAE6 a CIIU3.xlsx")
 
 dic_ciiu = pd.read_excel("../data/Diccionario CIIU3.xlsx")
 dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
