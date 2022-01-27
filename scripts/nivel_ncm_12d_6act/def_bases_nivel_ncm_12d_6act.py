@@ -15,6 +15,17 @@ from scipy.stats import median_abs_deviation , zscore
 import datetime
 
 
+# Script 1
+def predo_ncm12_desc(ncm12_desc ):
+    ncm12_desc = ncm12_desc[["POSICION", "DESCRIPCIO"]]
+    ncm12_desc.rename(columns = {"POSICION": "HS_12d", "DESCRIPCIO":"hs6_d12_desc"}, inplace = True) 
+    ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['hs6_d12_desc'].str.split('//', expand=True))], axis=1)
+    dic = {"ncm_desc": ncm12_desc, "ncm_split": ncm12_desc_split }
+    
+    dic["ncm_desc"].to_csv("../data/resultados/ncm_12digits.csv", index =False) 
+    return dic["ncm_desc"]
+
+
 # def carga_de_bases(x):
 #     impo_17 = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/IMPO_2017.csv", sep=";")
 #     clae = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/clae_nombre.csv")
@@ -80,14 +91,6 @@ def predo_impo_12d(impo_d12, ncm_desc):
     
     return impo_d12
 
-def predo_ncm12_desc(ncm12_desc ):
-    ncm12_desc = ncm12_desc[["POSICION", "DESCRIPCIO"]]
-    ncm12_desc.rename(columns = {"POSICION": "HS_12d", "DESCRIPCIO":"hs6_d12_desc"}, inplace = True) 
-    ncm12_desc_split = pd.concat([ncm12_desc.iloc[:,0], pd.DataFrame(ncm12_desc['hs6_d12_desc'].str.split('//', expand=True))], axis=1)
-    dic = {"ncm_desc": ncm12_desc, "ncm_split": ncm12_desc_split }
-    
-    dic["ncm_desc"].to_csv("../data/resultados/ncm_12digits.csv", index =False) 
-    return dic["ncm_desc"]
 
 def predo_sectores_nombres(clae):
     letras_np = pd.unique(clae['letra'])
@@ -323,24 +326,18 @@ def preprocesamiento_datos(datos, dic_propio,  export_cuit = False):
     datos_2trans_1 = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["act_ordenadas"].str.contains("J|I|O|K")) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
     datos_2trans_1 = datos_2trans_1[(datos_2trans_1["act_ordenadas"].str.contains("A|B|C|D|E|F|H|L|M|N|P|Q|R|P|S|T|U"))   ]
     #datos_2trans_2 = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["actividades"].str.contains("K_70|J"))]
+    datos_ok = datos[~datos.index.isin(datos_2trans_1.index)]
+    print("Está ok el split?", len(datos_ok) + len(datos_2trans_1) == len(datos))
 
-    datos_2trans_2 = datos[datos["actividades"].str.contains("K_70|J")]
+    datos_2trans_2 = datos_ok[datos_ok["actividades"].str.contains("K_70|J")]
     datos_2trans_2 = datos_2trans_2[datos_2trans_2["actividades"].str.contains("A|B|C|D|E|F|G|H|I|L|M|N|O|P|Q|R|P|S|T|U|K_71|K_72|K_73|K_74|K_99")]
+    datos_ok_2 = datos_ok[~datos_ok.index.isin(datos_2trans_2.index)]
+    print("Está ok el split?", len(datos_ok_2) + len(datos_2trans_1) + len(datos_2trans_2)  == len(datos))
 
-    datos_2trans = pd.concat([datos_2trans_1, datos_2trans_2], 0, ignore_index=True).drop_duplicates()
-    datos_2trans["nro"] = "123"
+    datos_2trans = pd.concat([datos_2trans_1, datos_2trans_2], 0, ignore_index=True)#.drop_duplicates()
+    print("Está ok el split?", len(datos_ok_2) + len(datos_2trans) == len(datos))
 
-    prueba = pd.merge(datos, datos_2trans, how="left")
-
-    datos_ok = prueba[prueba["nro"].isnull()]
-
-    datos[~datos.index.isin(datos_2trans.index)]
-
-    print("Está ok el split?", len(datos_ok) + len(datos_2trans) - len(datos))
-
-    print (len(datos_2trans_1) + len(datos_2trans_2) - len(datos_2trans))
-    
-    # x= datos_2trans[datos_2trans["letra3"]=="J"]
+       # x= datos_2trans[datos_2trans["letra3"]=="J"]
     for letra_i, act_i in zip(["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"],
                               ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]):
         
@@ -352,7 +349,7 @@ def preprocesamiento_datos(datos, dic_propio,  export_cuit = False):
             datos_2trans.loc[:, letra_i] = datos_2trans[letra_i].astype(str)
             datos_2trans.loc[:, letra_i] = datos_2trans[letra_i].apply(lambda x: x.replace(letrita, "G"))
     
-    rtr = pd.concat([datos_2trans, datos_ok ], axis = 0)
+    rtr = pd.concat([datos_2trans, datos_ok_2 ], axis = 0)
     
     if export_cuit == True:
         datos[["cuit", "NOMBRE"]].drop_duplicates().to_csv("../data/resultados/cuits_unicos.csv", index = False)
@@ -463,6 +460,7 @@ def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
     #join descripcion                                   
     # desc = pd.read_csv("../data/resultados/desc_letra_propio_2.csv")#.drop("Unnamed: 2",1)
     desc = pd.read_csv("../data/resultados/desc_letra_propio_2.txt", sep = "\t", encoding="latin").drop("Unnamed: 2",1)
+    desc.columns = ["letra", "desc"]
     ciiu_dig_let = pd.merge(ciiu_dig_let, desc, how= "left", left_on = "propio_letra_2", right_on = "letra")
     ciiu_dig_let.to_csv("../data/resultados/dic_clae_ciiu_propio.csv", index=False)
 

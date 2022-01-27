@@ -832,23 +832,23 @@ ciiu3_4c,ciiu3_letra,clae6,clae6_letra,propio,propio_letra,propio_letra_2,letra,
 1511,D,101040,C,1511,D,D_15,D_15,Alimentos
 1511,D,101091,C,1511,D,D_15,D_15,Alimentos
 1511,D,101099,C,1511,D,D_15,D_15,Alimentos
-1429,C,89900,B,1429,C,C_14,,
-1422,C,89300,B,1422,C,C_14,,
-1421,C,89110,B,1421,C,C_14,,
-1421,C,89120,B,1421,C,C_14,,
-1414,C,81400,B,1414,C,C_14,,
-1413,C,81300,B,1413,C,C_14,,
-1412,C,81200,B,1412,C,C_14,,
-1411,C,81100,B,1411,C,C_14,,
-1320,C,72910,B,1320,C,C_13,,
-1320,C,72990,B,1320,C,C_13,,
-1310,C,71000,B,1310,C,C_13,,
-1200,C,72100,B,1200,C,C_12,,
-1120,C,91000,B,1120,C,C_11,,
-1110,C,61000,B,1110,C,C_11,,
-1110,C,62000,B,1110,C,C_11,,
-1030,C,89200,B,1030,C,C_10,,
-1010,C,51000,B,1010,C,C_10,,
+1429,C,89900,B,1429,C,C_14,C_14,Explotacion de otras minas y canteras
+1422,C,89300,B,1422,C,C_14,C_14,Explotacion de otras minas y canteras
+1421,C,89110,B,1421,C,C_14,C_14,Explotacion de otras minas y canteras
+1421,C,89120,B,1421,C,C_14,C_14,Explotacion de otras minas y canteras
+1414,C,81400,B,1414,C,C_14,C_14,Explotacion de otras minas y canteras
+1413,C,81300,B,1413,C,C_14,C_14,Explotacion de otras minas y canteras
+1412,C,81200,B,1412,C,C_14,C_14,Explotacion de otras minas y canteras
+1411,C,81100,B,1411,C,C_14,C_14,Explotacion de otras minas y canteras
+1320,C,72910,B,1320,C,C_13,C_13,Extraccion de minerales metaliferos
+1320,C,72990,B,1320,C,C_13,C_13,Extraccion de minerales metaliferos
+1310,C,71000,B,1310,C,C_13,C_13,Extraccion de minerales metaliferos
+1200,C,72100,B,1200,C,C_12,C_12,Extraccion de minerales de uranio y torio
+1120,C,91000,B,1120,C,C_11,C_11,Extraccion de petroleo crudo y gas natural
+1110,C,61000,B,1110,C,C_11,C_11,Extraccion de petroleo crudo y gas natural
+1110,C,62000,B,1110,C,C_11,C_11,Extraccion de petroleo crudo y gas natural
+1030,C,89200,B,1030,C,C_10,C_10,"ExtracciÃ³n de carbon, lignito y turba"
+1010,C,51000,B,1010,C,C_10,C_10,"ExtracciÃ³n de carbon, lignito y turba"
 503,B,31300,A,503,B,B,B,Pesca
 502,B,32000,A,502,B,B,B,Pesca
 501,B,31110,A,501,B,B,B,Pesca

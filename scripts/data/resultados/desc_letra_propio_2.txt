@@ -1,7 +1,11 @@
-letra	desc	
+﻿letra	desc	
 A	Agricultura, ganadería, caza y silvicultura	
 B	Pesca	
-C	Explotación de minas y canteras	
+C_10	Extracción de carbon, lignito y turba
+C_11	Extraccion de petroleo crudo y gas natural
+C_12	Extraccion de minerales de uranio y torio
+C_13	Extraccion de minerales metaliferos
+C_14	Explotacion de otras minas y canteras	
 D_15	Alimentos	
 D_16	Tabaco	
 D_17	Productos textiles	
@@ -51,9 +55,3 @@ K_72	Actividades de informática
 K_73	Investigación y desarrollo	
 K_74	Servicios jurídicos contables y otros servicios a empresas (sin minería)
 K_99	Servicios de apoyo para la minería excepto para la extracción de petróleo y gas natual
-C_14  Explotacion de otras minas y canteras
-C_13  Extraccion de minerales metaliferos
-C_12  Extraccion de minerales de uranio y torio
-C_11  Extraccion de petroleo crudo y gas natural
-C_10  Extraccion de carbón y lignito; Extracción de turba
-

@@ -48,7 +48,6 @@ datos = preprocesamiento_datos(datos, dic_propio)
 datos_bk , datos_bk_sin_picks, bk_picks = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
 
-
 #############################################
 #         BK                                #
 #############################################
@@ -67,14 +66,6 @@ asign_pre_matriz_pick  = def_asignacion_picks(bk_picks, mectra_pond)
 matriz_sisd_bk = to_matriz(pd.concat([asign_pre_matriz, asign_pre_matriz_pick ], 0)) #matriz SISD
 matriz_hssd_bk  = pd.pivot_table(asign_pre_matriz, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0)
 
-# matriz_sisd_insumo.to_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv", index= False)
-asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
-matriz_sisd_bk.to_csv("../data/resultados/matriz_sisd.csv")
-matriz_hssd_bk.to_csv("../data/resultados/matriz_hssd_bk.csv")
-
-#matriz_sisd_insumo= pd.read_csv("../data/resultados/matriz_pesada_12d_6act_postML.csv")
-#matriz_sisd= pd.read_csv("../data/resultados/matriz_sisd.csv")
-
 #############################################
 #             CI                          #
 #############################################
@@ -85,6 +76,13 @@ matriz_sisd_insumo_ci = def_asignacion_sec(datos_ci_comercio_pond, ci = True)
 asign_pre_matriz_ci= def_asignacion_prob(matriz_sisd_insumo_ci)
 matriz_sisd_ci = to_matriz(asign_pre_matriz_ci, ci = True)
 matriz_hssd_ci  = pd.pivot_table(asign_pre_matriz_ci, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0) 
+
+
+##########################################
+#       EXPORTACION DE RESULTADOS        #
+##########################################
+asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
+matriz_sisd_bk.to_csv("../data/resultados/matriz_sisd.csv")
 
 asign_pre_matriz_ci.to_csv("../data/resultados/asign_pre_matriz_ci.csv")
 matriz_sisd_ci.to_csv("../data/resultados/matriz_sisd_ci.csv")

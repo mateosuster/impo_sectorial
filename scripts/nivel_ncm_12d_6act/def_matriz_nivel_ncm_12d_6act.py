@@ -141,21 +141,24 @@ def to_matriz(matriz_sisd_final, ci = False):
     z=z[cols+["CONS"]] #ubicacion del consumo ultima colummna
     
     if ci == False:
-        z= z.append(pd.Series(name='P')) #imputacion de Q
+        z= z.append(pd.Series(name='P')) 
+        z= z.append(pd.Series(name='C_12'))
+        z.insert(5, "C_12", 0)
         z= z.replace(np.nan,0)
-        
-        # z.insert(29, "G", 0) # AGREGO G !!!
+        z.drop("C", 1, inplace = True)
         
     elif ci == True:
-        z.insert(29, "G", 0)
-        z.insert(49, "Q", 0)
+        z.insert(33, "G", 0)
+        z.insert(53, "Q", 0)
+        z= z.append(pd.Series(name='C_12')) #imputacion de Q
+        z= z.replace(np.nan,0)
 
-   
-    
+
     z= z.append(pd.Series(name='Q')) #imputacion de P
     z= z.replace(np.nan,0)
     
     z= z.append(pd.Series(name='CONS')) #imputacion de CONS
     z= z.replace(np.nan,0)
     
+    z.sort_index(inplace =True)
     return z

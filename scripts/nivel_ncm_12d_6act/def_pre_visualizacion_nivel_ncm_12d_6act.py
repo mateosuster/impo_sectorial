@@ -42,7 +42,7 @@ def impo_total(matriz_sisd, dic_propio, sectores_desc =False, largo_actividad=20
     
     #diagonal sobre total col y comercio sobre total
     diag_total_col = diagonal/col_sum
-    g_total_col = z_visual[29][:]/col_sum
+    g_total_col = z_visual[33][:]/col_sum
     comercio_y_propio = pd.DataFrame({"Propio": diag_total_col*100 , 'Comercio': g_total_col*100} , index = indice )
         
     comercio_y_propio.iloc[29, 1] = 0
