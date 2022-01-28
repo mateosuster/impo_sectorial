@@ -5,7 +5,7 @@
 
 
 import os
-# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
 os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
@@ -41,7 +41,7 @@ ncm12_desc = predo_ncm12_desc(ncm12_desc )
 impo_d12  = predo_impo_12d(impo_d12, ncm12_desc) # FILTRO AÑO 2017
 letras = predo_sectores_nombres(clae)
 comercio = predo_comercio(comercio, clae)
-cuit_empresas= predo_cuit_clae(cuit_clae, clae)
+cuit_empresas= predo_cuit_clae(cuit_clae, clae) #imputacion de actividades faltantes
 dic_stp = predo_stp(dic_stp )
 dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
 
@@ -49,7 +49,7 @@ dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
 #                joins                      #
 #############################################
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas) #incorpora var destinacion limpia y borra destinacion
-join_impo_clae = diccionario_especial(join_impo_clae, dic_propio) 
+join_impo_clae = diccionario_especial(join_impo_clae, dic_propio) #hace el cambio de actividades de CLAE a dicccionario propio
 join_impo_clae= def_actividades(join_impo_clae)
 impo_bec = def_join_impo_clae_bec(join_impo_clae, bec)
 

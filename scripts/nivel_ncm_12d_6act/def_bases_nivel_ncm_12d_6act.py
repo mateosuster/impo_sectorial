@@ -38,6 +38,7 @@ def predo_ncm12_desc(ncm12_desc ):
 # #     #transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
 # #     bec_to_clae = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/bec_to_clae.xlsx")
 # #     return impo_17
+
 def destinacion_limpio(x):
     if re.search("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", x)!=None:
         return "C/TR"
@@ -148,7 +149,6 @@ def predo_cuit_clae(cuit_clae , clae):
     
     #relleno los que tienen solo act 1
     cuit_clae6["suma"] = cuit_clae6.loc[:,["actividad2","actividad3","actividad4","actividad5","actividad6"]].sum(axis=1)
-
     for clae_i in ["actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]:
         cuit_clae6.loc[cuit_clae6['suma']<1, [clae_i]] = cuit_clae6['actividad1']
     
@@ -199,7 +199,6 @@ def predo_cuit_clae(cuit_clae , clae):
     return cuit_clae6 
     
      
-
 def predo_stp(dic_stp ):
     dic_stp.columns = ["NCM", "desc", "ciiu", "desc_gral", "utilizacion", "demanda"]
     dic_stp.dropna(thresh = 3, inplace= True)
@@ -210,6 +209,74 @@ def predo_stp(dic_stp ):
 def predo_ncm(ncm_sector):
     ncm_sector["hs6"] = ncm_sector["hs6"].astype(int)
     return ncm_sector
+
+
+def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
+    # Join ciiu digitos con letra (posee clae para hacer el join)
+    clae_to_ciiu.loc[clae_to_ciiu["ciiu3_4c"].isnull(),"ciiu3_4c"  ] = 4539
+    ciiu_dig_let = pd.merge(dic_ciiu[["ciiu3_4c", "ciiu3_letra"]], clae_to_ciiu.drop("clae6_desc", 1), left_on = "ciiu3_4c", right_on = "ciiu3_4c" , how = "inner") #"ciiu3_4c_desc"
+    
+    #convierto a string los digitos del ciiu
+    ciiu_dig_let["ciiu3_4c"] = ciiu_dig_let["ciiu3_4c"].astype(int).astype(str)
+    ciiu_dig_let["clae6"] = ciiu_dig_let["clae6"].astype(int).astype(str)
+    clae["clae6"] = clae["clae6"].astype(int).astype(str)
+    
+    #filtro el caso problematico del clae    
+    ciiu_dig_let = ciiu_dig_let[ciiu_dig_let["clae6"] !="332000"] 
+    
+    #agrego los clae faltantes
+    claes_faltantes = pd.DataFrame({'clae6': ["204000", "523032", "462110", "332000", np.nan], 'ciiu3_letra': ["D", "I", "G", "D" ,"CONS" ] , 
+                                    # "ciiu3_4c_desc" : ["", "", "", ""],
+                                    'ciiu3_4c': ["2429", "6350", "5121", "29_30_31_32_33", "CONS"]})    
+    ciiu_dig_let = pd.concat([ciiu_dig_let, claes_faltantes ], axis = 0)
+  
+    ciiu_dig_let = pd.merge(ciiu_dig_let , clae[["clae6", "letra"]], how = "left", left_on= "clae6", right_on= "clae6").rename(columns = {"letra": "clae6_letra"})
+    
+    # ciiu_dig_let["clae6"] = ciiu_dig_let["clae6"].astype(int).astype(str)
+    ciiu_dig_let["propio"] = np.where((ciiu_dig_let["clae6_letra"]=="G") |(ciiu_dig_let["clae6"]=="99000") ,ciiu_dig_let["clae6"], ciiu_dig_let["ciiu3_4c"]   )#.astype(str)  
+    ciiu_dig_let["propio_letra"] = np.where(ciiu_dig_let["clae6_letra"]=="G", ciiu_dig_let["clae6_letra"], ciiu_dig_let["ciiu3_letra"]   )
+    ciiu_dig_let["propio_letra_2"] =np.where(ciiu_dig_let["propio_letra"].isin( ["I"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
+                                             np.where(ciiu_dig_let["propio_letra"].isin( ["H"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=3),
+                                                      np.where(ciiu_dig_let["propio_letra"].isin( ["C"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
+                                                          np.where(ciiu_dig_let["clae6"]=="99000", ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["clae6"].str.slice(start=0,stop=2),
+                                                                   np.where(ciiu_dig_let["propio_letra"]=="K", ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
+                                                                            np.where(ciiu_dig_let["propio_letra"]=="D", np.where(ciiu_dig_let["propio"]=="29_30_31_32_33", "D_29_30_31_32_33",
+                                                                                                                                 "D"+"_"+ciiu_dig_let["propio"].str.slice(start=0,stop=2) 
+                                                                                                                                 ), 
+                                                                                     ciiu_dig_let["propio_letra"]
+                                                                                     ) 
+                                                                            )
+                                                                   )
+                                                          )
+                                                 )
+                                            )
+    
+                   
+    #join descripcion                                   
+    # desc = pd.read_csv("../data/resultados/desc_letra_propio_2.csv")#.drop("Unnamed: 2",1)
+    desc = pd.read_csv("../data/resultados/desc_letra_propio_2.txt", sep = "\t", encoding="latin").drop("Unnamed: 2",1)
+    desc.columns = ["letra", "desc"]
+    ciiu_dig_let = pd.merge(ciiu_dig_let, desc, how= "left", left_on = "propio_letra_2", right_on = "letra")
+    ciiu_dig_let.to_csv("../data/resultados/dic_clae_ciiu_propio.csv", index=False)
+
+    return ciiu_dig_let
+
+
+def diccionario_especial(datos, dic_propio):
+    # conversion CLAE a CIIU (codigo para funcion)
+    datos_bk_a_ciiu= datos
+    
+    ciiu_dig_let = dic_propio[["clae6", "propio", "propio_letra_2"]]
+    # ESTE ES EL POSTA
+    for clae_i, letra_i in zip(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"],
+                               ["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"]):
+        
+        # ciiu_data.rename(columns = {"ciiu3_4c": ciiu_name })
+        datos_bk_a_ciiu[clae_i] = datos_bk_a_ciiu[clae_i].astype(int).astype(str)
+        datos_bk_a_ciiu= pd.merge(datos_bk_a_ciiu , ciiu_dig_let, how = "left" ,left_on = clae_i, right_on= "clae6" ).drop(["clae6",clae_i,letra_i ], 1)
+        datos_bk_a_ciiu.rename(columns = {"propio": clae_i, "propio_letra_2": letra_i  }, inplace = True)
+    return datos_bk_a_ciiu
+
 
 def def_join_impo_clae(impo_anyo_12d, cuit_empresas):
     impo_clae = pd.merge(impo_anyo_12d, cuit_empresas, left_on = "cuit", right_on = "CUIT", how = "right")
@@ -258,30 +325,23 @@ def def_join_comercio(join_impo_clae_bec_bk, comercio, ci = False):
     # join de la matriz con el sector comercio
     ## Comercio 1
     impo17_bec_complete = pd.merge(join_impo_clae_bec_bk, comercio, how = "left", left_on = "actividad1", right_on = "clae6").drop("clae6", axis=1) 
-
     ## Comercio 2
     impo17_bec_complete = pd.merge(impo17_bec_complete, comercio2, 
                                    how = "left", left_on = "actividad2", right_on = "clae6").drop("clae6", axis=1) 
-
     ## Comercio 3
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio3 , 
                           how = "left", left_on = "actividad3", right_on = "clae6").drop("clae6", axis=1) 
-
     ## Comercio 4
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio4 , 
                           how = "left", left_on = "actividad3", right_on = "clae6").drop("clae6", axis=1) 
-    
     ## Comercio 5
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio5 , 
                           how = "left", left_on = "actividad3", right_on = "clae6").drop("clae6", axis=1) 
-    
     ## Comercio 6
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio6 , 
                           how = "left", left_on = "actividad3", right_on = "clae6").drop("clae6", axis=1) 
-
     return  impo17_bec_complete   
 
-    
 # =============================================================================
 # clasificación via destinación
 # =============================================================================
@@ -416,74 +476,6 @@ def filtro_ci(datos):
     return datos_ci
 
 
-def predo_dic_propio(clae_to_ciiu, dic_ciiu,clae):
-    # Join ciiu digitos con letra (posee clae para hacer el join)
-    clae_to_ciiu.loc[clae_to_ciiu["ciiu3_4c"].isnull(),"ciiu3_4c"  ] = 4539
-    ciiu_dig_let = pd.merge(dic_ciiu[["ciiu3_4c", "ciiu3_letra"]], clae_to_ciiu.drop("clae6_desc", 1), left_on = "ciiu3_4c", right_on = "ciiu3_4c" , how = "inner") #"ciiu3_4c_desc"
-    
-    #convierto a string los digitos del ciiu
-    ciiu_dig_let["ciiu3_4c"] = ciiu_dig_let["ciiu3_4c"].astype(int).astype(str)
-    ciiu_dig_let["clae6"] = ciiu_dig_let["clae6"].astype(int).astype(str)
-    clae["clae6"] = clae["clae6"].astype(int).astype(str)
-    
-    #filtro el caso problematico del clae    
-    ciiu_dig_let = ciiu_dig_let[ciiu_dig_let["clae6"] !="332000"] 
-    
-    #agrego los clae faltantes
-    claes_faltantes = pd.DataFrame({'clae6': ["204000", "523032", "462110", "332000", np.nan], 'ciiu3_letra': ["D", "I", "G", "D" ,"CONS" ] , 
-                                    # "ciiu3_4c_desc" : ["", "", "", ""],
-                                    'ciiu3_4c': ["2429", "6350", "5121", "29_30_31_32_33", "CONS"]})    
-    ciiu_dig_let = pd.concat([ciiu_dig_let, claes_faltantes ], axis = 0)
-  
-    ciiu_dig_let = pd.merge(ciiu_dig_let , clae[["clae6", "letra"]], how = "left", left_on= "clae6", right_on= "clae6").rename(columns = {"letra": "clae6_letra"})
-    
-    # ciiu_dig_let["clae6"] = ciiu_dig_let["clae6"].astype(int).astype(str)
-    ciiu_dig_let["propio"] = np.where((ciiu_dig_let["clae6_letra"]=="G") |(ciiu_dig_let["clae6"]=="99000") ,ciiu_dig_let["clae6"], ciiu_dig_let["ciiu3_4c"]   )#.astype(str)  
-    ciiu_dig_let["propio_letra"] = np.where(ciiu_dig_let["clae6_letra"]=="G", ciiu_dig_let["clae6_letra"], ciiu_dig_let["ciiu3_letra"]   )
-    ciiu_dig_let["propio_letra_2"] =np.where(ciiu_dig_let["propio_letra"].isin( ["I"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
-                                             np.where(ciiu_dig_let["propio_letra"].isin( ["H"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=3),
-                                                      np.where(ciiu_dig_let["propio_letra"].isin( ["C"]),   ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
-                                                          np.where(ciiu_dig_let["clae6"]=="99000", ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["clae6"].str.slice(start=0,stop=2),
-                                                                   np.where(ciiu_dig_let["propio_letra"]=="K", ciiu_dig_let["propio_letra"] +"_"+ ciiu_dig_let["propio"].str.slice(start=0,stop=2),
-                                                                            np.where(ciiu_dig_let["propio_letra"]=="D", np.where(ciiu_dig_let["propio"]=="29_30_31_32_33", "D_29_30_31_32_33",
-                                                                                                                                 "D"+"_"+ciiu_dig_let["propio"].str.slice(start=0,stop=2) 
-                                                                                                                                 ), 
-                                                                                     ciiu_dig_let["propio_letra"]
-                                                                                     ) 
-                                                                            )
-                                                                   )
-                                                          )
-                                                 )
-                                            )
-    
-                   
-    #join descripcion                                   
-    # desc = pd.read_csv("../data/resultados/desc_letra_propio_2.csv")#.drop("Unnamed: 2",1)
-    desc = pd.read_csv("../data/resultados/desc_letra_propio_2.txt", sep = "\t", encoding="latin").drop("Unnamed: 2",1)
-    desc.columns = ["letra", "desc"]
-    ciiu_dig_let = pd.merge(ciiu_dig_let, desc, how= "left", left_on = "propio_letra_2", right_on = "letra")
-    ciiu_dig_let.to_csv("../data/resultados/dic_clae_ciiu_propio.csv", index=False)
-
-    return ciiu_dig_let
-
-
-def diccionario_especial(datos, dic_propio):
-    # conversion CLAE a CIIU (codigo para funcion)
-    datos_bk_a_ciiu= datos
-    
-    ciiu_dig_let = dic_propio[["clae6", "propio", "propio_letra_2"]]
-    # ESTE ES EL POSTA
-    for clae_i, letra_i in zip(["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"],
-                               ["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"]):
-        
-        # ciiu_data.rename(columns = {"ciiu3_4c": ciiu_name })
-        datos_bk_a_ciiu[clae_i] = datos_bk_a_ciiu[clae_i].astype(int).astype(str)
-        datos_bk_a_ciiu= pd.merge(datos_bk_a_ciiu , ciiu_dig_let, how = "left" ,left_on = clae_i, right_on= "clae6" ).drop(["clae6",clae_i,letra_i ], 1)
-        datos_bk_a_ciiu.rename(columns = {"propio": clae_i, "propio_letra_2": letra_i  }, inplace = True)
-        
-        
-        
-    return datos_bk_a_ciiu
 
 
    
