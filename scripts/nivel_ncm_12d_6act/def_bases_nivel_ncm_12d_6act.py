@@ -439,13 +439,14 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     ncm_j = [880230, 842720, 901813, 491199, 845610, 842710, 850220,
              842720, 847150, 845710] #mierdas que caen en intermediación financiera
     data_financiera = datos_bk[datos_bk["HS6"].isin(ncm_j)].reset_index(drop = True)
-
+   
     ncm_k_70 = [901841, 843050, 842839, 860400, 901849, 842641, 940510,
                 847910, 847432, 846592]
     data_inmobiliaria = datos_bk[datos_bk["HS6"].isin(ncm_k_70)].reset_index(drop = True)
 
     
     letras = ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]
+    actividades = ["actividad1", "actividad2", "actividad4","actividad4","actividad5","actividad6"]
     for letra in letras:
         data_trans[letra] = data_trans[letra].replace(regex=[r'^D.*$'],value="I_60") #con regex, buscar que empiece con D_ y poner I_60
         data_trans[letra] = data_trans[letra].replace(["G","K_70", "J"] , "I_60") #CIIU => K: Act inmobiliarias y empresariales // J: intermediacion financiera
@@ -454,11 +455,16 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
         data_agro[letra] = data_agro[letra].replace(regex=[r'^D.*$'],value="A") #con regex, buscar que empiece con D_ y poner A
         data_agro[letra] = data_agro[letra].replace(["G","K_70", "J"] , "A")
 
-    for letra in letras:
+    for letra, act_i in zip(letras,actividades):
         data_financiera[letra] = data_financiera[letra].replace(["J"], "G")
+        data_financiera.loc[data_financiera[act_i].str.startswith(("67","66","65"), na=False), act_i] = "999999"
+        # act_2change_J = data_financiera[data_financiera[letra].isin(["J"])][act_i].unique()
+        # data_financiera [act_i]  = np.where(data_financiera [act_i].isin(act_2change_J), "999999" , data_financiera[act_i])
 
-    for letra in letras:
+
+    for letra, act_i in zip(letras,actividades):
         data_inmobiliaria[letra] = data_financiera[letra].replace(["K_70"], "G")
+        data_inmobiliaria.loc[data_inmobiliaria[act_i].str.startswith("70", na=False), act_i] = "999999"
     
     datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro, data_financiera, data_inmobiliaria], axis=0)
     
