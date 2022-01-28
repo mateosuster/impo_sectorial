@@ -85,8 +85,8 @@ def def_asignacion_sec(raw_data, ci = False):
 
     for_fill = pd.DataFrame.from_dict(dictionary_list)
 
-    for_fill["sd"] = np.where(for_fill["hs6_d12"].str.startswith(( "490199", "611241", "620293", "620342", "621111", "640419", "640399",  "8703", "902131")),
-                              "CONS", for_fill["sd"] )
+    for_fill["sd"] = np.where(for_fill["hs6_d12"].str.startswith(( "490199", "611241", "611030","620293", "620342", "621111", "640419",
+                                                                   "640399",  "8703", "900490", "902131")), "CONS", for_fill["sd"] )
     for_fill["si"] = np.where(for_fill["hs6_d12"].str.startswith(( "8703", "8704", "640399","490199", "621111", "620342", "620293", "611241", "902131" )), 
                               "G", for_fill["si"] )
         

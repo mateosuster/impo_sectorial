@@ -333,13 +333,13 @@ def def_join_comercio(join_impo_clae_bec_bk, comercio, ci = False):
                           how = "left", left_on = "actividad3", right_on = "clae6").drop("clae6", axis=1) 
     ## Comercio 4
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio4 , 
-                          how = "left", left_on = "actividad3", right_on = "clae6").drop("clae6", axis=1) 
+                          how = "left", left_on = "actividad4", right_on = "clae6").drop("clae6", axis=1)
     ## Comercio 5
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio5 , 
-                          how = "left", left_on = "actividad3", right_on = "clae6").drop("clae6", axis=1) 
+                          how = "left", left_on = "actividad5", right_on = "clae6").drop("clae6", axis=1)
     ## Comercio 6
     impo17_bec_complete = pd.merge(impo17_bec_complete , comercio6 , 
-                          how = "left", left_on = "actividad3", right_on = "clae6").drop("clae6", axis=1) 
+                          how = "left", left_on = "actividad6", right_on = "clae6").drop("clae6", axis=1)
     return  impo17_bec_complete   
 
 # =============================================================================
@@ -435,18 +435,32 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     data_agro = datos_bk[datos_bk["HS6"].isin(ncm_agro)].reset_index(drop = True)
     
     datos_bk_filtro = datos_bk[~(datos_bk["HS6"].isin(ncm_trans)) & ~(datos_bk["HS6"].isin(ncm_agro))]
-    
+
+    ncm_j = [880230, 842720, 901813, 491199, 845610, 842710, 850220,
+             842720, 847150, 845710] #mierdas que caen en intermediación financiera
+    data_financiera = datos_bk[datos_bk["HS6"].isin(ncm_j)].reset_index(drop = True)
+
+    ncm_k_70 = [901841, 843050, 842839, 860400, 901849, 842641, 940510,
+                847910, 847432, 846592]
+    data_inmobiliaria = datos_bk[datos_bk["HS6"].isin(ncm_k_70)].reset_index(drop = True)
+
     
     letras = ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]
     for letra in letras:
         data_trans[letra] = data_trans[letra].replace(regex=[r'^D.*$'],value="I_60") #con regex, buscar que empiece con D_ y poner I_60
-        data_trans[letra] = data_trans[letra].replace(["G","K", "J"] , "I_60") #CIIU => K: Act inmobiliarias y empresariales // J: intermediacion financiera 
+        data_trans[letra] = data_trans[letra].replace(["G","K_70", "J"] , "I_60") #CIIU => K: Act inmobiliarias y empresariales // J: intermediacion financiera
     
     for letra in letras:
         data_agro[letra] = data_agro[letra].replace(regex=[r'^D.*$'],value="A") #con regex, buscar que empiece con D_ y poner A
-        data_agro[letra] = data_agro[letra].replace(["G","K", "J"] , "A")
+        data_agro[letra] = data_agro[letra].replace(["G","K_70", "J"] , "A")
+
+    for letra in letras:
+        data_financiera[letra] = data_financiera[letra].replace(["J"], "G")
+
+    for letra in letras:
+    data_inmobiliaria[letra] = data_financiera[letra].replace(["K_70"], "G")
     
-    datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro], axis=0)
+    datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro, data_financiera, data_inmobiliaria], axis=0)
     
     datos_bk_sin_picks = datos_bk[~datos_bk["HS6"].isin([870421, 870431])]
     bk_picks = datos_bk[datos_bk["HS6"].isin([870421, 870431])]
