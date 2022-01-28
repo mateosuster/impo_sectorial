@@ -458,7 +458,7 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
         data_financiera[letra] = data_financiera[letra].replace(["J"], "G")
 
     for letra in letras:
-    data_inmobiliaria[letra] = data_financiera[letra].replace(["K_70"], "G")
+        data_inmobiliaria[letra] = data_financiera[letra].replace(["K_70"], "G")
     
     datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro, data_financiera, data_inmobiliaria], axis=0)
     
