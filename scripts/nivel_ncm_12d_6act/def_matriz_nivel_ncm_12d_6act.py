@@ -102,7 +102,7 @@ def def_asignacion_prob(prob):
     
    
     calc_prob = calc_prob[calc_prob["sd"].notnull()]
-    calc_prob = calc_prob[calc_prob["sd"]!="G"].groupby(["hs6_d12","sd"])["valor_pond"].agg("sum")
+    calc_prob = calc_prob[~calc_prob["sd"].isin(["G","K_70","J"])].groupby(["hs6_d12","sd"])["valor_pond"].agg("sum")
     calc_prob = calc_prob.groupby(level=0).apply(lambda x: x/float(x.sum())).reset_index().rename(columns={"valor_pond":"valor_prob"})
    
     

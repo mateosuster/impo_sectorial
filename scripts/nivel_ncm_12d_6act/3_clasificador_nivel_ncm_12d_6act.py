@@ -49,9 +49,7 @@ datos = preprocesamiento_datos(datos, dic_propio)
 datos_bk , datos_bk_sin_picks, bk_picks = asignacion_stp_BK(datos, dic_stp)
 datos_ci = filtro_ci(datos)
 
-#que trae intermediación financiera ?
-datos_bk = datos_bk.merge(ncm12_desc, how = "left", left_on = "HS6_d12", right_on="HS_12d")
-data_j = datos_bk[datos_bk["letra1"]=="J"].sort_values("valor", ascending=False)
+
 #############################################
 #         BK                                #
 #############################################

@@ -385,32 +385,43 @@ def preprocesamiento_datos(datos, dic_propio,  export_cuit = False):
 
     datos_2trans_1 = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["act_ordenadas"].str.contains("J|I|O|K")) ] # CLAE: K|O|H|J|N ---> O coincide entre CLAE e CIIU, J = K, I = H|J|N
     datos_2trans_1 = datos_2trans_1[(datos_2trans_1["act_ordenadas"].str.contains("A|B|C|D|E|F|H|L|M|N|P|Q|R|P|S|T|U"))   ]
-    #datos_2trans_2 = datos[ (datos["act_ordenadas"].str.contains("G") ) & (datos["actividades"].str.contains("K_70|J"))]
-    datos_ok = datos[~datos.index.isin(datos_2trans_1.index)]
-    print("Está ok el split?", len(datos_ok) + len(datos_2trans_1) == len(datos))
-
-    datos_2trans_2 = datos_ok[datos_ok["actividades"].str.contains("K_70|J")]
-    datos_2trans_2 = datos_2trans_2[datos_2trans_2["actividades"].str.contains("A|B|C|D|E|F|G|H|I|L|M|N|O|P|Q|R|P|S|T|U|K_71|K_72|K_73|K_74|K_99")]
-    datos_ok_2 = datos_ok[~datos_ok.index.isin(datos_2trans_2.index)]
-    print("Está ok el split?", len(datos_ok_2) + len(datos_2trans_1) + len(datos_2trans_2)  == len(datos))
-
-    datos_2trans = pd.concat([datos_2trans_1, datos_2trans_2], 0, ignore_index=True)#.drop_duplicates()
-    print("Está ok el split?", len(datos_ok_2) + len(datos_2trans) == len(datos))
-
-       # x= datos_2trans[datos_2trans["letra3"]=="J"]
+    
     for letra_i, act_i in zip(["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"],
                               ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]):
         
-        letritas = ["J", "I_60", "I_61", "I_62",  "I_63", "I_64", "O", "K_70","K_71", "K_74"]
+        letritas = ["J", "I_60", "I_61", "I_62",  "I_63", "I_64", "O", "K_70"]
         act_2change = dic_propio[dic_propio["propio_letra_2"].isin(letritas)]["propio"]
-        datos_2trans[act_i]  = np.where(datos_2trans[act_i].isin(act_2change), "999999" , datos_2trans[act_i])
+        datos_2trans_1[act_i]  = np.where(datos_2trans_1[act_i].isin(act_2change), "999999" , datos_2trans_1[act_i])
 
         for letrita in letritas :
-            datos_2trans.loc[:, letra_i] = datos_2trans[letra_i].astype(str)
-            datos_2trans.loc[:, letra_i] = datos_2trans[letra_i].apply(lambda x: x.replace(letrita, "G"))
+            datos_2trans_1.loc[:, letra_i] = datos_2trans_1 [letra_i].astype(str)
+            datos_2trans_1 .loc[:, letra_i] = datos_2trans_1 [letra_i].apply(lambda x: x.replace(letrita, "G"))
+
+    datos_ok = datos[~datos.index.isin(datos_2trans_1.index)]
+    print("Está ok el split?", len(datos_ok) + len(datos_2trans_1) == len(datos))
+    ##################  
+
+    datos_2trans_2 = datos_ok[datos_ok["actividades"].str.contains("K_70|J")]
+    datos_2trans_2 = datos_2trans_2[datos_2trans_2["actividades"].str.contains("A|B|C|D|E|F|G|H|I|L|M|N|O|P|Q|R|P|S|T|U|K_71|K_72|K_73|K_74|K_99")]
     
-    rtr = pd.concat([datos_2trans, datos_ok_2 ], axis = 0)
+    for letra_i, act_i in zip(["letra1", "letra2", "letra3", "letra4", "letra5", "letra6"],
+                              ["actividad1", "actividad2", "actividad3", "actividad4", "actividad5", "actividad6"]):
+        
+        letritas = ["J", "O", "K_70"]
+        act_2change = dic_propio[dic_propio["propio_letra_2"].isin(letritas)]["propio"]
+        datos_2trans_2 [act_i]  = np.where(datos_2trans_2[act_i].isin(act_2change), "999999" , datos_2trans_2[act_i])
+
+        for letrita in letritas :
+            datos_2trans_2.loc[:, letra_i] = datos_2trans_2[letra_i].astype(str)
+            datos_2trans_2.loc[:, letra_i] = datos_2trans_2[letra_i].apply(lambda x: x.replace(letrita, "G"))
+
+    datos_ok_2 = datos_ok[~datos_ok.index.isin(datos_2trans_2.index)]
+    print("Está ok el split?", len(datos_ok_2) + len(datos_2trans_1) + len(datos_2trans_2)  == len(datos))
+    ###########    
     
+    rtr = pd.concat([datos_2trans_1, datos_2trans_2, datos_ok_2 ], 0, ignore_index=True)#.drop_duplicates()
+    print("Está ok el split?", len(rtr) == len(datos))
+
     if export_cuit == True:
         datos[["cuit", "NOMBRE"]].drop_duplicates().to_csv("../data/resultados/cuits_unicos.csv", index = False)
         
@@ -420,6 +431,9 @@ def preprocesamiento_datos(datos, dic_propio,  export_cuit = False):
 def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
     datos_bk = datos[datos["ue_dest"]== "BK"]
     
+    letras = ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]
+    actividades = ["actividad1", "actividad2", "actividad4","actividad4","actividad5","actividad6"]
+  
     ncm_trans = [
                 870421, 870431, #pick-ups confirmado por Maito
                  870422, 870423, 870490, 870432, # camiones
@@ -430,43 +444,41 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
                  ]
 
     data_trans = datos_bk[datos_bk["HS6"].isin(ncm_trans)].reset_index(drop = True)
-    
-    ncm_agro = dic_stp[dic_stp["demanda"].str.contains("agríc", case =False)]["NCM"]
-    data_agro = datos_bk[datos_bk["HS6"].isin(ncm_agro)].reset_index(drop = True)
-    
-    datos_bk_filtro = datos_bk[~(datos_bk["HS6"].isin(ncm_trans)) & ~(datos_bk["HS6"].isin(ncm_agro))]
-
-    ncm_j = [880230, 842720, 901813, 491199, 845610, 842710, 850220,
-             842720, 847150, 845710] #mierdas que caen en intermediación financiera
-    data_financiera = datos_bk[datos_bk["HS6"].isin(ncm_j)].reset_index(drop = True)
-   
-    ncm_k_70 = [901841, 843050, 842839, 860400, 901849, 842641, 940510,
-                847910, 847432, 846592]
-    data_inmobiliaria = datos_bk[datos_bk["HS6"].isin(ncm_k_70)].reset_index(drop = True)
-
-    
-    letras = ["letra1", "letra2", "letra3","letra4", "letra5", "letra6"]
-    actividades = ["actividad1", "actividad2", "actividad4","actividad4","actividad5","actividad6"]
     for letra in letras:
         data_trans[letra] = data_trans[letra].replace(regex=[r'^D.*$'],value="I_60") #con regex, buscar que empiece con D_ y poner I_60
         data_trans[letra] = data_trans[letra].replace(["G","K_70", "J"] , "I_60") #CIIU => K: Act inmobiliarias y empresariales // J: intermediacion financiera
+    
+    
+    ncm_agro = dic_stp[dic_stp["demanda"].str.contains("agríc", case =False)]["NCM"]
+    data_agro = datos_bk[datos_bk["HS6"].isin(ncm_agro)].reset_index(drop = True)
     
     for letra in letras:
         data_agro[letra] = data_agro[letra].replace(regex=[r'^D.*$'],value="A") #con regex, buscar que empiece con D_ y poner A
         data_agro[letra] = data_agro[letra].replace(["G","K_70", "J"] , "A")
 
-    for letra, act_i in zip(letras,actividades):
-        data_financiera[letra] = data_financiera[letra].replace(["J"], "G")
-        data_financiera.loc[data_financiera[act_i].str.startswith(("67","66","65"), na=False), act_i] = "999999"
-        # act_2change_J = data_financiera[data_financiera[letra].isin(["J"])][act_i].unique()
-        # data_financiera [act_i]  = np.where(data_financiera [act_i].isin(act_2change_J), "999999" , data_financiera[act_i])
+    # INMBOIBLIARIA Y FINANCIERA
+    # ncm_j = [880230, 842720, 901813, 491199, 845610, 842710, 850220,
+    #          842720, 847150, 845710] #mierdas que caen en intermediación financiera
+    # data_financiera = datos_bk[datos_bk["HS6"].isin(ncm_j)].reset_index(drop = True)
+    # for letra, act_i in zip(letras,actividades):
+    #     data_financiera[letra] = data_financiera[letra].replace(["J"], "G")
+    #     data_financiera.loc[data_financiera[act_i].str.startswith(("67","66","65"), na=False), act_i] = "999999"
+    #     # act_2change_J = data_financiera[data_financiera[letra].isin(["J"])][act_i].unique()
+    #     # data_financiera [act_i]  = np.where(data_financiera [act_i].isin(act_2change_J), "999999" , data_financiera[act_i])
 
+    # ncm_k_70 = [901841, 843050, 842839, 860400, 901849, 842641, 940510,
+    #             847910, 847432, 846592]
+    # data_inmobiliaria = datos_bk[datos_bk["HS6"].isin(ncm_k_70)].reset_index(drop = True)
+    # for letra, act_i in zip(letras,actividades):
+    #     data_inmobiliaria[letra] = data_inmobiliaria[letra].replace(["K_70"], "G")
+    #     data_inmobiliaria.loc[data_inmobiliaria[act_i].str.startswith("70", na=False), act_i] = "999999"
 
-    for letra, act_i in zip(letras,actividades):
-        data_inmobiliaria[letra] = data_financiera[letra].replace(["K_70"], "G")
-        data_inmobiliaria.loc[data_inmobiliaria[act_i].str.startswith("70", na=False), act_i] = "999999"
+    datos_bk_filtro = datos_bk[~(datos_bk["HS6"].isin(ncm_trans)) & ~(datos_bk["HS6"].isin(ncm_agro))]
+
+    # datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro , data_financiera, data_inmobiliaria], axis=0)
+    datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro ], axis=0)
     
-    datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro, data_financiera, data_inmobiliaria], axis=0)
+
     
     datos_bk_sin_picks = datos_bk[~datos_bk["HS6"].isin([870421, 870431])]
     bk_picks = datos_bk[datos_bk["HS6"].isin([870421, 870431])]
