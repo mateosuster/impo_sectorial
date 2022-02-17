@@ -39,7 +39,7 @@ dic_propio[["propio_letra_2", "desc"]].drop_duplicates().to_csv("../data/resulta
 
 # BK
 matriz_sisd_bk = pd.read_csv("../data/resultados/matriz_sisd.csv").set_index("si")
-asign_pre_matriz= pd.read_csv("../data/resultados/asign_pre_matriz.csv")
+asign_pre_matriz_bk= pd.read_csv("../data/resultados/asign_pre_matriz.csv")
 
 # CI
 asign_pre_matriz_ci = pd.read_csv("../data/resultados/asign_pre_matriz_ci.csv")
@@ -64,36 +64,32 @@ graficos(dic_propio, impo_tot_sec_ci, comercio_y_propio_ci,  ue_dest= "ci", larg
 # =============================================================================
 #                   Top n de importaciones de cada sector
 # =============================================================================
-top_5_impo = top_5(asign_pre_matriz, ncm12_desc, impo_tot_sec,dic_propio, bien = "bk", n=10) 
+top_5_impo = top_5(asign_pre_matriz_bk, ncm12_desc, impo_tot_sec,dic_propio, bien = "bk", n=10) 
 top_5_impo_ci = top_5(asign_pre_matriz_ci, ncm12_desc,  impo_tot_sec_ci, dic_propio, bien = "ci", n=10)
 
 # =============================================================================
 #  top 50 de productos, los primeros 5 sectores importadores
 # =============================================================================
-top_productos = def_top_hs(asign_pre_matriz, ncm12_desc, "bk")
+top_productos = def_top_hs(asign_pre_matriz_bk, ncm12_desc, "bk")
 top_productos_ci = def_top_hs(asign_pre_matriz_ci, ncm12_desc, "ci")
 
-top_sd_de_top_hs = def_top_sd_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_productos, "bk")
+top_sd_de_top_hs = def_top_sd_de_top_hs(asign_pre_matriz_bk, ncm12_desc, dic_propio, top_productos, "bk")
 top_sd_de_top_hs_ci = def_top_sd_de_top_hs(asign_pre_matriz_ci, ncm12_desc, dic_propio, top_productos_ci, "ci")
 
 
 # =============================================================================
 # 10 primeros cuit (razón social) importadores por sector
 # =============================================================================
-top_cuits = def_top_cuits(asign_pre_matriz, dic_propio, "bk", cuits_desc )
+top_cuits = def_top_cuits(asign_pre_matriz_bk, dic_propio, "bk", cuits_desc )
 top_cuits_ci = def_top_cuits(asign_pre_matriz_ci, dic_propio, "ci", cuits_desc )
 
 
 # =============================================================================
 # 10 primeros cuit importadores de los 50 productos más importados
 # =============================================================================
-top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz, ncm12_desc, dic_propio, top_productos, "bk", cuits_desc)
+top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz_bk, ncm12_desc, dic_propio, top_productos, "bk", cuits_desc)
 top_cuit_de_top_hs = def_top_cuit_de_top_hs(asign_pre_matriz_ci, ncm12_desc, dic_propio, top_productos, "ci", cuits_desc)
 
-
-# =============================================================================
-#  Tree map
-# =============================================================================
 
 
 

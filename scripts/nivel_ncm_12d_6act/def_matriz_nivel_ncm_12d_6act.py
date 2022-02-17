@@ -156,9 +156,11 @@ def to_matriz(matriz_sisd_final, ci = False):
 
     z= z.append(pd.Series(name='Q')) #imputacion de P
     z= z.replace(np.nan,0)
+
+    z.sort_index(inplace =True)
     
     z= z.append(pd.Series(name='CONS')) #imputacion de CONS
     z= z.replace(np.nan,0)
     
-    z.sort_index(inplace =True)
+
     return z

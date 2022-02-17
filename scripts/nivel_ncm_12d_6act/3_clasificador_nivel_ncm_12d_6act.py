@@ -58,15 +58,16 @@ datos_bk_comercio = def_join_comercio(datos_bk_sin_picks , vector_comercio_bk)
 tabla_contingencia = def_contingencia(datos_bk_comercio , datos) #Tabla de contingencia producto-sector   
 datos_bk_comercio_pond= def_ponderaciones(datos_bk_comercio, tabla_contingencia, ci = False) #ponderación por ncm y letra
 matriz_sisd_insumo = def_asignacion_sec(datos_bk_comercio_pond) ##asignación por probabilidad de G-bk (insumo para la matriz)
-asign_pre_matriz= def_asignacion_prob(matriz_sisd_insumo)
+asign_pre_matriz_bk= def_asignacion_prob(matriz_sisd_insumo)
 
 # picks ups
 asign_pre_matriz_pick  = def_asignacion_picks(bk_picks, mectra_pond)
 # asign_pre_matriz_pick .groupby("sd")["valor_pond"].sum().sort_values()
 
 # ALL
-matriz_sisd_bk = to_matriz(pd.concat([asign_pre_matriz, asign_pre_matriz_pick ], 0)) #matriz SISD
-matriz_hssd_bk  = pd.pivot_table(asign_pre_matriz, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0)
+asign_pre_matriz_bk = pd.concat([asign_pre_matriz_bk, asign_pre_matriz_pick]) #igal 17/2
+matriz_sisd_bk = to_matriz(asign_pre_matriz_bk, 0) #matriz SISD
+matriz_hssd_bk  = pd.pivot_table(asign_pre_matriz_bk, values='valor_pond', index=['hs6_d12'], columns=['sd'], aggfunc=np.sum, fill_value=0)
 
 #############################################
 #             CI                          #
@@ -83,7 +84,7 @@ matriz_hssd_ci  = pd.pivot_table(asign_pre_matriz_ci, values='valor_pond', index
 ##########################################
 #       EXPORTACION DE RESULTADOS        #
 ##########################################
-asign_pre_matriz.to_csv("../data/resultados/asign_pre_matriz.csv")
+asign_pre_matriz_bk.to_csv("../data/resultados/asign_pre_matriz.csv")
 matriz_sisd_bk.to_csv("../data/resultados/matriz_sisd.csv")
 
 asign_pre_matriz_ci.to_csv("../data/resultados/asign_pre_matriz_ci.csv")
