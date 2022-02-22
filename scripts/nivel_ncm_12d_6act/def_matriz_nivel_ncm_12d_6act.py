@@ -85,12 +85,12 @@ def def_asignacion_sec(raw_data, ci = False):
 
     for_fill = pd.DataFrame.from_dict(dictionary_list)
 
-    for_fill["sd"] = np.where(for_fill["hs6_d12"].str.startswith(( "490199", #
-                                                                   "611241", "611030","620293", "620342", "621111", "640419", "640399",
-                                                                   "8703",
-                                                                   "900490", "902131")), "CONS", for_fill["sd"])
-    for_fill["si"] = np.where(for_fill["hs6_d12"].str.startswith(( "8703", "8704", "640399","490199", "621111", "620342", "620293", "611241", "902131" )), 
-                              "G", for_fill["si"] )
+    # for_fill["sd"] = np.where(for_fill["hs6_d12"].str.startswith(( "490199", #
+    #                                                                "611241", "611030","620293", "620342", "621111", "640419", "640399",
+    #                                                                "8703",
+    #                                                                "900490", "902131")), "CONS", for_fill["sd"])
+    # for_fill["si"] = np.where(for_fill["hs6_d12"].str.startswith(( "8703", "8704", "640399","490199", "621111", "620342", "620293", "611241", "902131" )), 
+    #                           "G", for_fill["si"] )
         
     return for_fill
   
@@ -151,13 +151,13 @@ def to_matriz(matriz_sisd_final, ci = False):
         
     elif ci == True:
         z.insert(33, "G", 0)
-        z.insert(53, "Q", 0)
+        # z.insert(53, "Q", 0)
         z= z.append(pd.Series(name='C_12')) #imputacion de Q
         z= z.replace(np.nan,0)
+    
 
-
-    z= z.append(pd.Series(name='Q')) #imputacion de P
-    z= z.replace(np.nan,0)
+    # z= z.append(pd.Series(name='Q')) #imputacion de P
+    # z= z.replace(np.nan,0)
 
     z.sort_index(inplace =True)
     

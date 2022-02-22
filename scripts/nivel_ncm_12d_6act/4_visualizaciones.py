@@ -43,7 +43,7 @@ asign_pre_matriz_bk= pd.read_csv("../data/resultados/asign_pre_matriz.csv")
 
 # CI
 asign_pre_matriz_ci = pd.read_csv("../data/resultados/asign_pre_matriz_ci.csv")
-matriz_sisd_ci = pd.read_csv("../data/resultados/matriz_sisd_ci.csv")
+matriz_sisd_ci = pd.read_csv("../data/resultados/matriz_sisd_ci.csv").set_index("si")
 
 
 ##########################
