@@ -6,8 +6,6 @@ Created on Tue Jun 29 11:06:12 2021
 """
 
 import os 
-os.getcwd()
-
 import pandas as pd
 import numpy as np
 import re
@@ -25,19 +23,6 @@ def predo_ncm12_desc(ncm12_desc ):
     dic["ncm_desc"].to_csv("../data/resultados/ncm_12digits.csv", index =False) 
     return dic["ncm_desc"]
 
-
-# def carga_de_bases(x):
-#     impo_17 = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/IMPO_2017.csv", sep=";")
-#     clae = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/clae_nombre.csv")
-#     print ("hola")
-#     return impo_17
-# #     comercio = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/comercio_clae.xlsx")
-# #     cuit_clae = pd.read_csv("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/cuit 2017 impo_con_actividad.csv")
-# #     bec = pd.read_excel( "/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/HS2012-17-BEC5 -- 08 Nov 2018.xlsx", sheet_name= "HS17BEC5" )
-# #     #parts_acces  =pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/nomenclador_28052021.xlsx", names=None  , header=None )
-# #     #transporte_reclasif  = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/resultados/bec_transporte (reclasificado).xlsx")
-# #     bec_to_clae = pd.read_excel("C:/Archivos/Investigación y docencia/Ministerio de Desarrollo Productivo/balanza comercial sectorial/tablas de correspondencias/bec_to_clae.xlsx")
-# #     return impo_17
 
 def destinacion_limpio(x):
     if re.search("PARA TRANSF|C/TRANS|P/TRANS|RAF|C/TRNSF|ING.ZF INSUMOS", x)!=None:
@@ -287,6 +272,13 @@ def def_join_impo_clae(impo_anyo_12d, cuit_empresas):
 
 def def_join_impo_clae_bec(join_impo_clae, bec):
     impo_bec = pd.merge(join_impo_clae, bec[["HS6", "BEC5EndUse" ]], how= "left" , left_on = "HS6", right_on= "HS6" )
+   
+   #cambio de las actividades 
+    impo_bec["uni_decl"] = np.where(impo_bec["uni_decl"] != "Kilogramo", 
+                                      impo_bec["uni_decl"], impo_bec["uni_est"])
+    impo_bec["cant_decl"] = np.where(impo_bec["uni_decl"] != "Kilogramo", 
+                                      impo_bec["cant_decl"], impo_bec["cant_est"])
+    
     return impo_bec
 
 def def_join_impo_clae_bec_bk(join_impo_clae, bec_bk):
@@ -350,16 +342,16 @@ def def_join_comercio(join_impo_clae_bec_bk, comercio, ci = False):
 def metrica(x):
     return (x["valor"] * x["kilos"])/x["cant_decl"]
     
-def metrica_(x):    
-    if x["cant_decl"] != "Kilogramo":
-        divisor = x["cant_decl"]
-    elif x["cant_est"] != "Kilogramo":
-        divisor = x["cant_est"]
-    else: 
-        divisor = x["cant_decl"]
+# def metrica_(x):     # alternativa que no va a funcionar
+#     if x["uni_decl"] != "Kilogramo":
+#         divisor = x["cant_decl"]
+#     elif x["uni_est"] != "Kilogramo":
+#         divisor = x["cant_est"]
+#     else: 
+#         divisor = x["cant_decl"]
 
-    rtn = (x["valor"] * x["kilos"])/divisor
-    return rtn
+#     rtn = (x["valor"] * x["kilos"])/divisor
+#     return rtn
 
 def mod_z(col: pd.Series, thresh: float=3.5):
     med_col = col.median()
@@ -477,9 +469,7 @@ def asignacion_stp_BK(datos, dic_stp): # input: all data; output: BK
 
     # datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro , data_financiera, data_inmobiliaria], axis=0)
     datos_bk = pd.concat([datos_bk_filtro, data_trans, data_agro ], axis=0)
-    
-
-    
+        
     datos_bk_sin_picks = datos_bk[~datos_bk["HS6"].isin([870421, 870431])]
     bk_picks = datos_bk[datos_bk["HS6"].isin([870421, 870431])]
     
@@ -908,7 +898,7 @@ def concatenacion_ue_dest(cons_fin_clasif, cons_int_clasif,data_clasif_ue_dest,d
     data_model ['HS6'] = data_model ['HS6'].astype("str")
     data_model ['HS8'] = data_model ['HS6_d12'].str.slice(0,8)
     data_model ['HS10'] = data_model ['HS6_d12'].str.slice(0,10)
-    data_model = def_act_ordenadas(data_model)
+    data_model = def_actividades(data_model)
 
     # preprocesamiento etiquetados
     cols = ["cuit", "NOMBRE",

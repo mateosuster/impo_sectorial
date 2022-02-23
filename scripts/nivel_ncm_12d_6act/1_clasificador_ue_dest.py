@@ -1,11 +1,6 @@
 
-# =============================================================================
-# Directorio de trabajo y librerias
-# =============================================================================
-
-
 import os
-os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
+# os.chdir("C:/Archivos/repos/impo_sectorial/scripts/nivel_ncm_12d_6act")
 # os.chdir("C:/Users/igalk/OneDrive/Documentos/CEP/procesamiento impo/script/impo_sectorial/scripts/nivel_ncm_12d_6act")
 os.chdir("D:/impo_sectorial/impo_sectorial/scripts/nivel_ncm_12d_6act")
 
@@ -51,7 +46,8 @@ dic_propio = predo_dic_propio(clae_to_ciiu, dic_ciiu,clae)
 join_impo_clae = def_join_impo_clae(impo_d12, cuit_empresas) #incorpora var destinacion limpia y borra destinacion
 join_impo_clae = diccionario_especial(join_impo_clae, dic_propio) #hace el cambio de actividades de CLAE a dicccionario propio
 join_impo_clae= def_actividades(join_impo_clae)
-impo_bec = def_join_impo_clae_bec(join_impo_clae, bec)
+impo_bec = def_join_impo_clae_bec(join_impo_clae, bec) #incorpora el cambio de kilogramos : antes habia 177302 uni_decl ==kg y ahora 173036 
+
 
 # =============================================================================
 # EDA BEC5
@@ -75,6 +71,7 @@ filtro1["dest_clean"].value_counts()#.sum()
 
 # filtro destinacion
 data_clasif_bk , data_not_clasif_bk= clasificacion_BK(filtro1)
+
 
 # =============================================================================
 #  Exportacion de datos clasificados con UE dest
@@ -111,22 +108,19 @@ data_model = concatenacion_ue_dest(cons_fin_clasif, cons_int_clasif,data_clasif_
 data_model["ue_dest"].value_counts()
 len(join_impo_clae) == (len(data_model) + len(impo_bec[impo_bec["BEC5EndUse"].isnull()] ))
 
-
-# preprocesamiento
-data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model) #deja los datos listo para entrenar el modelo
-
-# exportacion de datos
-data_train.to_csv("../data/heavys/data_train_test.csv", index=False)
-data_to_clasif.to_csv("../data/resultados/data_to_pred.csv", index=False)
-data_model.to_csv("../data/heavys/data_modelo_diaria.csv", index=False)
-
-
-end = datetime.datetime.now()
-print(end-start)
-
-###############################
 # preprocesamiento 21 oct
 data_pre, data_train, data_to_clasif = predo_datos_modelo_21oct(data_model) #deja los datos listo para entrenar el modelo
+
+# preprocesamiento
+# data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model) #deja los datos listo para entrenar el modelo
+
+# # exportacion de datos
+
+# data_train.to_csv("../data/heavys/data_train_test.csv", index=False)
+# data_to_clasif.to_csv("../data/resultados/data_to_pred.csv", index=False)
+data_model.to_csv("../data/heavys/data_modelo_diaria.csv", index=False)
+
+###############################
 data_train.to_csv("../data/heavys/data_train_test_21oct.csv", index=False)
 data_to_clasif.to_csv("../data/resultados/data_to_pred_21oct.csv", index=False)
 

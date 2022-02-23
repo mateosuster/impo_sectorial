@@ -27,7 +27,6 @@ import scipy.stats.distributions as dists
 semilla = 42
 
 """# Datos"""
-
 data_pre = pd.read_csv( "../data/heavys/data_train_test_21oct.csv") #data_pre y data_2pred posee los datos como los necesita el modelo
 data_2pred = pd.read_csv("../data/resultados/data_to_pred_21oct.csv")
 data_model = pd.read_csv("../data/heavys/data_modelo_diaria.csv")  #data_model posee los datos que se utilizaran en el script 3
@@ -54,6 +53,7 @@ np.isinf(data_pre).values.sum()
 data_pre.replace([np.inf, -np.inf], np.nan, inplace=True)
 
 
+# Prueba con todos los datos
 #########################
 # Split train test
 ###########################
@@ -141,7 +141,6 @@ random_search.fit(X_train, y_train)
 end = datetime.datetime.now()
 print(end-start)
 
-#correr desde aca
 #cv 's
 cv_results = pd.DataFrame(random_search.cv_results_)
 cv_results.to_csv("./modelos/random_cv_results_21oct_100iters.csv")
@@ -158,8 +157,6 @@ mejores_parametros
 #mejor modelo
 best_xgb = random_search.best_estimator_
 best_xgb
-
-
 
 ################################
 # Determinacion punto de corte 
@@ -209,7 +206,7 @@ recall_op =metrics.sort_values("auc", ascending=False)["recall"][0]
 # # ax.set_ylabel("Observaciones")
 # # # ax.axhline(200034)
 # # plt.show()
-#
+
 # #violin distribucion de probabilidades
 # violin_data = pd.DataFrame({"prob_bk": y_pred_df["BK"], "bk_dummy": y_test})
 # violin_data["bk_dummy"] = np.where(violin_data["bk_dummy"]==1, "BK", "CI")
@@ -346,5 +343,54 @@ len(data_model )== len(datos_all)
 
 datos_all.to_csv("../data/heavys/datos_clasificados_modelo_all_data_21oct.csv", index= False, sep = ";")
 # datos_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
+
+
+# =============================================================================
+# Prueba sin HS
+# =============================================================================
+#pruebo borrar las columnas de cantidad
+data_pre.drop(["cant_est", "cant_decl"], axis =1, inplace = True)
+data_2pred.drop(["cant_est", "cant_decl"], axis =1, inplace = True)
+
+
+X_train , X_test, y_train, y_test = train_test_split(data_pre.drop("bk_dummy", axis =1),  data_pre["bk_dummy"], test_size = 0.3, random_state = semilla )#, stratify=data_pre["bk_dummy"])
+
+#Revisar si es necesario pisar estas variables
+# classifier = xgb.sklearn.XGBClassifier(nthread=-1, seed=semilla)#objective= 'binary:logistic',  enable_categorical = False)
+
+# random_search = RandomizedSearchCV(
+#     estimator=classifier,
+#     param_distributions=parameters,
+#     scoring = 'roc_auc',
+#     random_state= semilla,
+#     n_jobs = -1,
+#     cv = 10,
+#      n_iter=150,
+#     verbose=True)
+
+start = datetime.datetime.now()
+random_search.fit(X_train, y_train)
+end = datetime.datetime.now()
+print(end-start)
+
+#mejor modelo
+best_xgb = random_search.best_estimator_
+best_xgb
+
+
+#############################
+# Métricas de test
+##############################
+y_pred_ = best_xgb.predict_proba(X_test)
+y_pred_df = pd.DataFrame( y_pred_, index=X_test.index , columns= [ "prob_CI", "prob_BK"])
+y_pred_df["y_test"] = y_test
+y_pred_df["y_pred"]  = np.where(y_pred_df["prob_BK"] > punto_optimo, 1, 0)
+y_pred_df["valor"] = X_test.valor
+
+
+
+
+
+
 
 
