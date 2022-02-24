@@ -115,15 +115,11 @@ data_pre, data_train, data_to_clasif = predo_datos_modelo_21oct(data_model) #dej
 # data_pre, data_train, data_to_clasif = predo_datos_modelo(data_model) #deja los datos listo para entrenar el modelo
 
 # # exportacion de datos
-
 # data_train.to_csv("../data/heavys/data_train_test.csv", index=False)
 # data_to_clasif.to_csv("../data/resultados/data_to_pred.csv", index=False)
 data_model.to_csv("../data/heavys/data_modelo_diaria.csv", index=False)
-
-###############################
 data_train.to_csv("../data/heavys/data_train_test_21oct.csv", index=False)
 data_to_clasif.to_csv("../data/resultados/data_to_pred_21oct.csv", index=False)
-
 
 
 end = datetime.datetime.now()

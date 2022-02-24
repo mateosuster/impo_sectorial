@@ -11,13 +11,8 @@ import seaborn as sns
 import  json
 import datetime
 import pickle
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import  RandomizedSearchCV
-from sklearn.metrics import confusion_matrix, plot_confusion_matrix
-from sklearn.metrics import accuracy_score#, scorer
-from sklearn.metrics import classification_report
-from sklearn.metrics import roc_auc_score, accuracy_score, precision_score, recall_score
-from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split, RandomizedSearchCV
+from sklearn.metrics import confusion_matrix, plot_confusion_matrix, accuracy_score,  classification_report, roc_auc_score, accuracy_score, precision_score, recall_score, mean_absolute_error
 from urllib.request import urlretrieve
 import xgboost as xgb
 # from xgboost import XGBClassifier
@@ -133,7 +128,7 @@ random_search = RandomizedSearchCV(
     random_state= semilla,
     n_jobs = -1,
     cv = 10,
-     n_iter=150,
+    n_iter=150,
     verbose=True)
 
 start = datetime.datetime.now()
@@ -343,54 +338,6 @@ len(data_model )== len(datos_all)
 
 datos_all.to_csv("../data/heavys/datos_clasificados_modelo_all_data_21oct.csv", index= False, sep = ";")
 # datos_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
-
-
-# =============================================================================
-# Prueba sin HS
-# =============================================================================
-#pruebo borrar las columnas de cantidad
-data_pre.drop(["cant_est", "cant_decl"], axis =1, inplace = True)
-data_2pred.drop(["cant_est", "cant_decl"], axis =1, inplace = True)
-
-
-X_train , X_test, y_train, y_test = train_test_split(data_pre.drop("bk_dummy", axis =1),  data_pre["bk_dummy"], test_size = 0.3, random_state = semilla )#, stratify=data_pre["bk_dummy"])
-
-#Revisar si es necesario pisar estas variables
-# classifier = xgb.sklearn.XGBClassifier(nthread=-1, seed=semilla)#objective= 'binary:logistic',  enable_categorical = False)
-
-# random_search = RandomizedSearchCV(
-#     estimator=classifier,
-#     param_distributions=parameters,
-#     scoring = 'roc_auc',
-#     random_state= semilla,
-#     n_jobs = -1,
-#     cv = 10,
-#      n_iter=150,
-#     verbose=True)
-
-start = datetime.datetime.now()
-random_search.fit(X_train, y_train)
-end = datetime.datetime.now()
-print(end-start)
-
-#mejor modelo
-best_xgb = random_search.best_estimator_
-best_xgb
-
-
-#############################
-# Métricas de test
-##############################
-y_pred_ = best_xgb.predict_proba(X_test)
-y_pred_df = pd.DataFrame( y_pred_, index=X_test.index , columns= [ "prob_CI", "prob_BK"])
-y_pred_df["y_test"] = y_test
-y_pred_df["y_pred"]  = np.where(y_pred_df["prob_BK"] > punto_optimo, 1, 0)
-y_pred_df["valor"] = X_test.valor
-
-
-
-
-
 
 
 
