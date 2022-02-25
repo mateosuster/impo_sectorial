@@ -22,6 +22,7 @@ import scipy.stats.distributions as dists
 
 ##
 semilla = 42
+version = "sin_HSs"
 
 """# Datos"""
 data_pre = pd.read_csv( "../data/heavys/data_train_test_21oct.csv") #data_pre y data_2pred posee los datos como los necesita el modelo
@@ -29,7 +30,7 @@ data_2pred = pd.read_csv("../data/resultados/data_to_pred_21oct.csv")
 data_model = pd.read_csv("../data/heavys/data_modelo_diaria.csv")  #data_model posee los datos que se utilizaran en el script 3
 
 
-#pruebo borrar las columnas 
+#pruebo borrar las columnas (CAMBIOS DE LA VERSION)
 data_pre.drop(["HS6", "HS8","HS10"], axis =1, inplace = True)
 data_2pred.drop(["HS6", "HS8","HS10"], axis =1, inplace = True)
 
@@ -169,16 +170,15 @@ print(end-start)
 # """### Exportacion de los modelos"""
 #######################################
 # Modelos
-pickle.dump(best_xgb, open('modelos\\xgboost_train_cv_21oct_100iters.sav', 'wb')) #guarda el modelo
-best_xgb = pickle.load(open('modelos\\xgboost_train_cv_21oct.sav', 'rb')) #carga
+pickle.dump(best_xgb, open('modelos\\xgboost_train_cv_21oct_100iters'+version+'.sav', 'wb')) #guarda el modelo
+best_xgb = pickle.load(open('modelos\\xgboost_train_cv_21oct'+version+'.sav', 'rb')) #carga
 
-pickle.dump(xgb_all, open('modelos\\xgboost_all_data_21oct_100iters.sav', 'wb'))
-xgb_all = pickle.load(open('modelos\\xgboost_all_data_21oct.sav', 'rb'))
+pickle.dump(xgb_all, open('modelos\\xgboost_all_data_21oct_100iters'+version+'.sav', 'wb'))
+xgb_all = pickle.load(open('modelos\\xgboost_all_data_21oct'+version+'.sav', 'rb'))
 
-with open('modelos\\mejores_parametros_150iters.json', 'w') as fp:
+with open('modelos\\mejores_parametros_150iters'+version+'.json', 'w') as fp:
     json.dump(mejores_parametros, fp)
-with open('modelos\\mejores_estables_150iters.json', 'w') as fp:
-    json.dump(params_stables, fp)
+
 
 ###############################################
 # Predección de nuevas observaciones
@@ -200,4 +200,17 @@ ncm12_desc_mod = predo_ncm12_desc(ncm12_desc )
 
 datos_predichos= pd.merge(datos_predichos, ncm12_desc_mod, left_on = "HS6_d12", right_on ="HS_12d", how = "left")
 
-datos_predichos.to_csv("../data/resultados/predicciones_model_21oct.csv" , sep = ";") 
+datos_predichos.to_csv("../data/resultados/predicciones_model_21oct"+version+".csv" , sep = ";") 
+
+
+#############################
+# Exportacion de resultados
+#############################
+
+datos_all = pd.concat([datos_predichos , data_model[data_model ["ue_dest"] != "?" ] ] , axis = 0) 
+len(data_model )== len(datos_all)
+
+datos_all.to_csv("../data/heavys/datos_clasificados_modelo_all_data_21oct"+version+".csv", index= False, sep = ";")
+# datos_predichos = pd.read_csv("../data/resultados/datos_clasificados_modelo_all_data.csv")
+
+
